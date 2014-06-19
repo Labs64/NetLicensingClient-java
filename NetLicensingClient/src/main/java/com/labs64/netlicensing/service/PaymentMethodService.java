@@ -8,50 +8,46 @@ import com.labs64.netlicensing.domain.vo.Context;
 /**
  * Provides payment method entity handling routines.
  */
-public interface PaymentMethodService {
+public class PaymentMethodService {
 
     /**
      * Gets payment method by its number.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param number
-     *            the payment method number
+     *
+     * @param context determines the vendor on whose behalf the call is performed
+     * @param number  the payment method number
      * @return the payment method
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    PaymentMethod get(Context context, String number) throws BaseCheckedException;
+    public static PaymentMethod get(Context context, String number) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
     /**
      * Returns payment methods of a vendor.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param filter
-     *            reserved for the future use, must be omitted / set to NULL
+     *
+     * @param context determines the vendor on whose behalf the call is performed
+     * @param filter  reserved for the future use, must be omitted / set to NULL
      * @return collection of payment method entities or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    Page<PaymentMethod> list(Context context, String filter) throws BaseCheckedException;
+    public static Page<PaymentMethod> list(Context context, String filter) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
     /**
      * Updates payment method properties.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param number
-     *            payment method number
-     * @param updatePaymentMethod
-     *            non-null properties will be updated to the provided values, null properties will stay unchanged.
+     *
+     * @param context             determines the vendor on whose behalf the call is performed
+     * @param number              payment method number
+     * @param updatePaymentMethod non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated PaymentMethod.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    PaymentMethod update(Context context, String number, PaymentMethod updatePaymentMethod) throws BaseCheckedException;
+    public static PaymentMethod update(Context context, String number, PaymentMethod updatePaymentMethod) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
 }

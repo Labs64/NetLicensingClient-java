@@ -7,7 +7,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 
 /**
  * Provides product handling routines.
- * <p>
+ * <p/>
  * {@linkplain Product Product entity} represents the vendor product within NetLicensing. Usually it corresponds to an
  * actual product of the vendor, but variations possible - in some cases it may be feasible to configure two or more
  * separate products within NetLicensing for a single actual product of the vendor. Products comprise of multiple
@@ -16,80 +16,73 @@ import com.labs64.netlicensing.domain.vo.Context;
  * {@linkplain LicenseeService licensees} can be registered with the product. Licensees can obtain
  * {@linkplain LicenseService licenses} according to configured {@linkplain LicenseTemplateService license templates}.
  */
-public interface ProductService {
+public class ProductService {
 
     /**
      * Creates new product with given properties.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param newProduct
-     *            non-null properties will be taken for the new object, null properties will either stay null, or will
-     *            be set to a default value, depending on property.
+     *
+     * @param context    determines the vendor on whose behalf the call is performed
+     * @param newProduct non-null properties will be taken for the new object, null properties will either stay null, or will
+     *                   be set to a default value, depending on property.
      * @return the newly created product object
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    Product create(Context context, Product newProduct) throws BaseCheckedException;
+    public static Product create(Context context, Product newProduct) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
     /**
      * Gets product by its number.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param number
-     *            the product number
+     *
+     * @param context determines the vendor on whose behalf the call is performed
+     * @param number  the product number
      * @return the product
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    Product get(Context context, String number) throws BaseCheckedException;
+    public static Product get(Context context, String number) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
     /**
      * Returns products of a vendor.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param filter
-     *            reserved for the future use, must be omitted / set to NULL
+     *
+     * @param context determines the vendor on whose behalf the call is performed
+     * @param filter  reserved for the future use, must be omitted / set to NULL
      * @return collection of product entities or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    Page<Product> list(Context context, String filter) throws BaseCheckedException;
+    public static Page<Product> list(Context context, String filter) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
     /**
      * Updates product properties.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param number
-     *            product number
-     * @param updateProduct
-     *            non-null properties will be updated to the provided values, null properties will stay unchanged.
+     *
+     * @param context       determines the vendor on whose behalf the call is performed
+     * @param number        product number
+     * @param updateProduct non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated product.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    Product update(Context context, String number, Product updateProduct) throws BaseCheckedException;
+    public static Product update(Context context, String number, Product updateProduct) throws BaseCheckedException {
+        return null;  // TODO: implement me...
+    }
 
     /**
      * Deletes product.
-     * 
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param number
-     *            product number
-     * @param forceCascade
-     *            if true, any entities that depend on the one being deleted will be deleted too
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     *
+     * @param context      determines the vendor on whose behalf the call is performed
+     * @param number       product number
+     * @param forceCascade if true, any entities that depend on the one being deleted will be deleted too
+     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *                              corresponding service response messages.
      */
-    void delete(Context context, String number, boolean forceCascade) throws BaseCheckedException;
+    public static void delete(Context context, String number, boolean forceCascade) throws BaseCheckedException {
+        // TODO: implement me...
+    }
 
 }

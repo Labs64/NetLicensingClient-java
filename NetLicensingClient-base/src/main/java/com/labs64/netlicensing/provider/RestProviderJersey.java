@@ -71,8 +71,7 @@ public class RestProviderJersey extends AbstractRestProvider {
                 HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(((UsernamePasswordAuthentication) auth).getUsername(), ((UsernamePasswordAuthentication) auth).getPassword());
                 target.register(feature);
             } else if (auth instanceof TokenAuthentication) {
-                // TODO: make it work...
-                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("APIKey", ((TokenAuthentication) auth).getToken());
+                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey", ((TokenAuthentication) auth).getToken());
                 target.register(feature);
             }
         }
