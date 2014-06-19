@@ -37,7 +37,6 @@
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.9.0</version>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
@@ -53,13 +52,6 @@
                     <args>
                         <arg>-Xvalue-constructor</arg>
                     </args>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.jvnet.jaxb2_commons</groupId>
-                            <artifactId>jaxb2-value-constructor</artifactId>
-                            <version>3.0</version>
-                        </plugin>
-                    </plugins>
                 </configuration>
             </plugin>
             <plugin>
