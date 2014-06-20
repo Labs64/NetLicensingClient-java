@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/r-brown/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/r-brown/NetLicensingClient-java)
+
 NetLicensingClient-java
 ======================
 
