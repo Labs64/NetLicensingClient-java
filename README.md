@@ -1,4 +1,4 @@
-# [Labs64 NetLicensing](http://www.labs64.com/netlicensing/) Client (java)
+# [Labs64 NetLicensing](http://www.labs64.com/netlicensing/) Client (Java)
 
 [![Build Status](https://travis-ci.org/r-brown/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/r-brown/NetLicensingClient-java)
 
