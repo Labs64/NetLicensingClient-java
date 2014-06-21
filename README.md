@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/r-brown/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/r-brown/NetLicensingClient-java)
+# [Labs64 NetLicensing](http://www.labs64.com/netlicensing/) Client (java)
 
-NetLicensingClient-java
-=======================
+[![Build Status](https://travis-ci.org/r-brown/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/r-brown/NetLicensingClient-java)
 
 Java wrapper for RESTful NetLicensing API - https://www.labs64.de/confluence/x/pwCo
 
