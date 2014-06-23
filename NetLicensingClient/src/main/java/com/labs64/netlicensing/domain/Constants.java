@@ -35,6 +35,9 @@ public final class Constants {
     public static final String RELOAD_FILTER_PARAMS = "reloadfilterparams";
     public static final int PRICE_SCALE = 2;
     public static final int MAX_PAGE_ITEMS = 100;
+    public static final String BASE_URL = "baseUrl";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
 
     public static final class Utility {
         public static final String ENDPOINT_PATH = "utility";

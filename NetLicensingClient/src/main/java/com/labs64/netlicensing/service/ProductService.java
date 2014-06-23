@@ -1,9 +1,9 @@
 package com.labs64.netlicensing.service;
 
 import com.labs64.netlicensing.domain.entity.Product;
+import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
-import com.labs64.netlicensing.domain.vo.Context;
 
 /**
  * Provides product handling routines.
@@ -42,6 +42,7 @@ public class ProductService {
      *                              corresponding service response messages.
      */
     public static Product get(Context context, String number) throws BaseCheckedException {
+        // RestProvider restProvider = new RestProviderJersey(context.getBaseUrl());
         return null;  // TODO: implement me...
     }
 
