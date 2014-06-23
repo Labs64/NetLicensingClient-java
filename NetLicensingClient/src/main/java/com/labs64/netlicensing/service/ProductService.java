@@ -1,9 +1,20 @@
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.ws.rs.HttpMethod;
+
+import com.labs64.netlicensing.converter.Converter;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.provider.RestProvider;
+import com.labs64.netlicensing.provider.RestProviderJersey;
+import com.labs64.netlicensing.schema.context.Item;
+import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.schema.converter.ItemToProductConverter;
 
 /**
  * Provides product handling routines.
@@ -42,8 +53,19 @@ public class ProductService {
      *                              corresponding service response messages.
      */
     public static Product get(Context context, String number) throws BaseCheckedException {
-        // RestProvider restProvider = new RestProviderJersey(context.getBaseUrl());
-        return null;  // TODO: implement me...
+        // TODO: externalize RestProvider creation; be aware of different auth methods: user/pass or token
+        RestProvider restProvider = new RestProviderJersey(context.getBaseUrl());
+        restProvider.authenticate(context.getUsername(), context.getPassword());
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("productNumber", number);
+        Netlicensing res = restProvider.call(HttpMethod.GET, "product/{productNumber}", null, Netlicensing.class, params);
+
+        // TODO: generalize convertors usage via factory class
+        Converter<Item, Product> converter = new ItemToProductConverter();
+
+        // TODO: find&use only suitable for this context item
+        return converter.convert(res.getItems().getItem().get(0));
     }
 
     /**

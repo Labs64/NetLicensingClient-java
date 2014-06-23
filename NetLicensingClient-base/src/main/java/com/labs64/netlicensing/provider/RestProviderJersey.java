@@ -3,7 +3,6 @@ package com.labs64.netlicensing.provider;
 
 import java.util.Map;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -38,16 +37,16 @@ public class RestProviderJersey extends AbstractRestProvider {
     }
 
     @Override
-    public <REQ, RES> RES call(final HttpMethod method, final String urlTemplate, final REQ request, final Class<RES> responseType, final Map<String, Object> namedParams) throws RestException {
+    public <REQ, RES> RES call(final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType, final Map<String, Object> namedParams) throws RestException {
         try {
             WebTarget target = getTarget();
             addAuthHeaders(authentication, target);
 
             Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_XML);
             if (namedParams == null) {
-                return target.path(urlTemplate).request(DEFAULT_ACCEPT_TYPES).method(method.value(), requestEntity, responseType);
+                return target.path(urlTemplate).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
             } else {
-                return target.path(urlTemplate).resolveTemplates(namedParams).request(DEFAULT_ACCEPT_TYPES).method(method.value(), requestEntity, responseType);
+                return target.path(urlTemplate).resolveTemplates(namedParams).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
             }
         } catch (Throwable e) {
             throw new RestException("Service call error!", e);

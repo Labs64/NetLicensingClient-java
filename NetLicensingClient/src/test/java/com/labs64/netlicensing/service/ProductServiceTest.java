@@ -14,9 +14,11 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
 import com.labs64.netlicensing.util.JAXBUtils;
@@ -45,7 +47,10 @@ public class ProductServiceTest extends BaseServiceTest {
         @Path("product/{productNumber}")
         public Response getSession(@PathParam("productNumber") final String productNumber) {
             Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml", Netlicensing.class);
-            // netlicensing.setId(productNumber);
+
+            SchemaFunction.propertyByName(netlicensing.getItems().getItem().iterator().next().getProperty(),
+                    Constants.NUMBER).setValue(productNumber);
+
             return Response.ok(netlicensing).build();
         }
 
@@ -73,7 +78,6 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test(expected = RestException.class)
-    @Ignore
     public void testNotExistingService() throws Exception {
         Context context = createContext();
         context.setBaseUrl("I_AM_NOT_EXISTING_SERVICE");
@@ -86,7 +90,6 @@ public class ProductServiceTest extends BaseServiceTest {
     }
 
     @Test
-    @Ignore
     public void testGet() throws Exception {
         final String number = RandomStringUtils.randomAlphanumeric(8);
 

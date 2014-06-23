@@ -18,7 +18,7 @@ abstract class BaseServiceTest extends JerseyTest {
     static final String USER = "demo";
     static final String PASS = "demo";
 
-    static final String TEST_CASE_BASE = "netlicensing/";
+    static final String TEST_CASE_BASE = "mock/";
 
     static Context createContext() {
         Context context = new Context();

@@ -2,8 +2,6 @@ package com.labs64.netlicensing.provider;
 
 import java.util.Map;
 
-import javax.ws.rs.HttpMethod;
-
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.auth.Authentication;
 
@@ -26,7 +24,7 @@ public interface RestProvider {
      * @param <RES>        type of the responseType entity
      * @return the responseType entity received from the server, or null if responseType is null.
      */
-    <REQ, RES> RES call(HttpMethod method, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> namedParams) throws RestException;
+    <REQ, RES> RES call(String method, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> namedParams) throws RestException;
 
     /**
      * @param username
