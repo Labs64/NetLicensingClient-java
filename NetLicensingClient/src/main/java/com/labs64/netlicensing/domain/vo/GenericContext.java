@@ -8,14 +8,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class GenericContext<T> {
 
-    private Map<String, T> contextMap = new ConcurrentHashMap<>();
+    private Map<String, T> contextMap = new ConcurrentHashMap<String, T>();
 
     public GenericContext() {
     }
 
     protected Map<String, T> getContextMap() {
         if (contextMap == null) {
-            contextMap = new ConcurrentHashMap<>();
+            contextMap = new ConcurrentHashMap<String, T>();
         }
         return contextMap;
     }

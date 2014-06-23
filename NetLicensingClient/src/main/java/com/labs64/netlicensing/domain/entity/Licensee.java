@@ -22,7 +22,7 @@ import com.labs64.netlicensing.domain.Constants;
  * <p>
  * Arbitrary additional user properties of string type may be associated with each licensee. The name of user property
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted,
- * productNumber</b>. See {@link PropertyBase} for details.
+ * productNumber</b>.
  */
 public class Licensee extends BaseEntity {
 
@@ -43,7 +43,7 @@ public class Licensee extends BaseEntity {
 
     public Collection<License> getLicenses() {
         if (licenses == null) {
-            licenses = new ArrayList<>();
+            licenses = new ArrayList<License>();
         }
         return licenses;
     }

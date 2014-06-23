@@ -27,7 +27,7 @@
         <project.title>${project.name}</project.title>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.version>1.7</java.version>
+        <java.version>1.6</java.version>
         <maven.version>3.0.5</maven.version>
 
         <!-- dependency.version>0.0.0</dependency.version -->

@@ -11,7 +11,7 @@ public class ValidationResult {
 
     public Map<String, Composition> getValidations() {
         if (validations == null) {
-            validations = new HashMap<>();
+            validations = new HashMap<String, Composition>();
         }
         return validations;
     }

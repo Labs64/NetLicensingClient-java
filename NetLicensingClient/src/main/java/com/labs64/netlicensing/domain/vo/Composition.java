@@ -19,7 +19,7 @@ public class Composition {
 
     public Map<String, Composition> getProperties() {
         if (properties == null) {
-            properties = new HashMap<>();
+            properties = new HashMap<String, Composition>();
         }
         return properties;
     }

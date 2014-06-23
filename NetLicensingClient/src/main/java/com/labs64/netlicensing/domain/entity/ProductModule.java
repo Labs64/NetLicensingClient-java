@@ -64,7 +64,7 @@ public class ProductModule extends BaseEntity {
 
     public Collection<LicenseTemplate> getLicenseTemplates() {
         if (licenseTemplates == null) {
-            licenseTemplates = new ArrayList<>();
+            licenseTemplates = new ArrayList<LicenseTemplate>();
         }
         return licenseTemplates;
     }

@@ -30,8 +30,7 @@ import com.labs64.netlicensing.domain.Constants;
  * <b>licensingInfo</b> - Licensing information. Optional.
  * <p>
  * Arbitrary additional user properties of string type may be associated with each product. The name of user property
- * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted</b>. See
- * {@link PropertyBase} for details.
+ * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted</b>.
  */
 public class Product extends BaseEntity {
 
@@ -95,7 +94,7 @@ public class Product extends BaseEntity {
 
     public Collection<ProductModule> getProductModules() {
         if (productModules == null) {
-            productModules = new ArrayList<>();
+            productModules = new ArrayList<ProductModule>();
         }
         return productModules;
     }
@@ -106,7 +105,7 @@ public class Product extends BaseEntity {
 
     public Collection<Licensee> getLicensees() {
         if (licensees == null) {
-            licensees = new ArrayList<>();
+            licensees = new ArrayList<Licensee>();
         }
         return licensees;
     }
@@ -117,7 +116,7 @@ public class Product extends BaseEntity {
 
     public List<ProductDiscount> getProductDiscounts() {
         if (productDiscounts == null) {
-            productDiscounts = new ArrayList<>();
+            productDiscounts = new ArrayList<ProductDiscount>();
         }
         return productDiscounts;
     }

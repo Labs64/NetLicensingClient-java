@@ -128,7 +128,7 @@ public class LicenseTemplate extends BaseEntity {
 
     public Collection<License> getLicenses() {
         if (licenses == null) {
-            licenses = new ArrayList<>();
+            licenses = new ArrayList<License>();
         }
         return licenses;
     }

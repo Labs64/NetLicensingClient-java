@@ -50,7 +50,7 @@ public abstract class BaseEntity {
      * @return the list of reserved property names
      */
     public static List<String> getReservedProps() {
-        final List<String> reserved = new ArrayList<>();
+        final List<String> reserved = new ArrayList<String>();
         reserved.add(Constants.ID);
         reserved.add(Constants.NUMBER);
         reserved.add(Constants.ACTIVE);
