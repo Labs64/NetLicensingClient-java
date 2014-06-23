@@ -15,3 +15,14 @@ target
 .idea
 *.iml
 
+# Eclipse #
+.classpath
+.project
+bin/**
+.settings/
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
