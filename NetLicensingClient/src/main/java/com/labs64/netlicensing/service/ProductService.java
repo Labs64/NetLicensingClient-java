@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.Form;
 
 import com.labs64.netlicensing.converter.Converter;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -40,7 +41,23 @@ public class ProductService {
      *                              corresponding service response messages.
      */
     public static Product create(Context context, Product newProduct) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        final RestProvider restProvider = new RestProviderJersey(context.getBaseUrl());
+        restProvider.authenticate(context.getUsername(), context.getPassword());
+
+        final Form form = new Form()
+            .param("number", newProduct.getNumber())
+            .param("active", newProduct.getActive().toString())
+            .param("name", newProduct.getName())
+            .param("version", newProduct.getVersion())
+            .param("licenseeAutoCreate", newProduct.getLicenseeAutoCreate().toString());
+        for (String propKey : newProduct.getProductProperties().keySet()) {
+            form.param(propKey, newProduct.getProductProperties().get(propKey));
+        }
+
+        final Netlicensing res = restProvider.call(HttpMethod.POST, "product", form, Netlicensing.class, null);
+
+        final Converter<Item, Product> converter = new ItemToProductConverter();
+        return converter.convert(res.getItems().getItem().get(0));
     }
 
     /**

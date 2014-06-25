@@ -42,7 +42,7 @@ public class RestProviderJersey extends AbstractRestProvider {
             WebTarget target = getTarget();
             addAuthHeaders(authentication, target);
 
-            Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_XML);
+            Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
             if (namedParams == null) {
                 return target.path(urlTemplate).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
             } else {
