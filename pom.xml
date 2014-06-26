@@ -30,6 +30,9 @@
         <java.version>1.6</java.version>
         <maven.version>3.0.5</maven.version>
 
+        <repo.releases.url>OVERRIDE_REPO_URL</repo.releases.url>
+        <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
+
         <!-- dependency.version>0.0.0</dependency.version -->
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <commons-collections4.version>4.0</commons-collections4.version>
@@ -204,5 +207,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>lmbox-snapshots</id>
+            <url>${repo.snapshots.url}</url>
+        </snapshotRepository>
+        <repository>
+            <id>lmbox-releases</id>
+            <url>${repo.releases.url}</url>
+        </repository>
+    </distributionManagement>
 
 </project>
