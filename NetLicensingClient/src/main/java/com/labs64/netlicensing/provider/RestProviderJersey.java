@@ -13,6 +13,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.filter.LoggingFilter;
 
+import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.auth.Authentication;
 import com.labs64.netlicensing.provider.auth.TokenAuthentication;
@@ -23,46 +24,69 @@ import com.labs64.netlicensing.provider.auth.UsernamePasswordAuthentication;
  * <p/>
  * This will also log each request in INFO level.
  */
-public class RestProviderJersey extends AbstractRestProvider {
+public class RestProviderJersey implements RestProvider {
 
-    static final MediaType[] DEFAULT_ACCEPT_TYPES = {MediaType.APPLICATION_XML_TYPE};
+    private static final MediaType[] DEFAULT_ACCEPT_TYPES = {MediaType.APPLICATION_XML_TYPE};
 
-    private Client client;
+    private static RestProviderJersey instance;
 
-    public RestProviderJersey(final String basePath) {
-        this.basePath = basePath;
-        ClientConfig clientConfig = new ClientConfig();
-        client = ClientBuilder.newClient(clientConfig);
+    private final Client client;
+
+    /**
+     * Private constructor
+     */
+    private RestProviderJersey() {
+        client = ClientBuilder.newClient(new ClientConfig());
         client.register(new LoggingFilter());
     }
 
-    @Override
-    public <REQ, RES> RES call(final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType, final Map<String, Object> namedParams) throws RestException {
-        try {
-            WebTarget target = getTarget();
-            addAuthHeaders(authentication, target);
+    public static RestProviderJersey getInstance() {
+        if (instance == null) {
+            synchronized (RestProviderJersey.class) {
+                if (instance == null) {
+                    instance = new RestProviderJersey();
+                }
+            }
+        }
+        return instance;
+    }
 
-            Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+    @Override
+    public <REQ, RES> RES call(Context context, String httpMethod, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> namedParams) throws RestException {
+        try {
+            final WebTarget target = getTarget(context.getBaseUrl());
+            if (context.getApiKey() != null) {
+                addAuthHeaders(new TokenAuthentication(context.getApiKey()), target);
+            } else {
+                addAuthHeaders(new UsernamePasswordAuthentication(context.getUsername(), context.getPassword()), target);
+            }
+
+            final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
             if (namedParams == null) {
                 return target.path(urlTemplate).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
             } else {
                 return target.path(urlTemplate).resolveTemplates(namedParams).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
             }
         } catch (Throwable e) {
-            throw new RestException("Service call error!", e);
+            throw new RestException("Exception while calling service", e);
         }
     }
 
     /**
      * Get the RESTful client target.
      *
+     * @param basePath
      * @return RESTful client target
      */
-    private WebTarget getTarget() {
+    private WebTarget getTarget(String basePath) {
         WebTarget target = client.target(basePath);
         return target;
     }
 
+    /**
+     * @param auth
+     * @param target
+     */
     private void addAuthHeaders(final Authentication auth, final WebTarget target) {
         if (auth != null) {
             if (auth instanceof UsernamePasswordAuthentication) {
