@@ -6,16 +6,14 @@ import java.util.Map;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Form;
 
-import com.labs64.netlicensing.converter.Converter;
+import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
 import com.labs64.netlicensing.provider.RestProvider;
 import com.labs64.netlicensing.provider.RestProviderJersey;
-import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
-import com.labs64.netlicensing.schema.converter.ItemToProductConverter;
 
 /**
  * Provides product handling routines.
@@ -55,9 +53,7 @@ public class ProductService {
         }
 
         final Netlicensing res = restProvider.call(HttpMethod.POST, "product", form, Netlicensing.class, null);
-
-        final Converter<Item, Product> converter = new ItemToProductConverter();
-        return converter.convert(res.getItems().getItem().get(0));
+        return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
 
     /**
@@ -78,11 +74,8 @@ public class ProductService {
         params.put("productNumber", number);
         Netlicensing res = restProvider.call(HttpMethod.GET, "product/{productNumber}", null, Netlicensing.class, params);
 
-        // TODO: generalize convertors usage via factory class
-        Converter<Item, Product> converter = new ItemToProductConverter();
-
         // TODO: find&use only suitable for this context item
-        return converter.convert(res.getItems().getItem().get(0));
+        return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
 
     /**
