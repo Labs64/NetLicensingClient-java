@@ -46,12 +46,6 @@ public class ProductServiceTest extends BaseServiceTest {
 
         private ObjectFactory objectFactory = new ObjectFactory();
 
-        @Path("hello")
-        @GET
-        public String getHello() {
-            return "Hello NetLicensing!";
-        }
-
         @Path("product")
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -98,12 +92,6 @@ public class ProductServiceTest extends BaseServiceTest {
     @BeforeClass
     public static void setup() {
         context = createContext();
-    }
-
-    @Test
-    public void testHello() {
-        final String hello = target(REST_API_PATH).path("hello").request().get(String.class);
-        assertEquals("Hello NetLicensing!", hello);
     }
 
     @Test(expected = RestException.class)
