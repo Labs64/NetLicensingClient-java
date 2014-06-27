@@ -1,9 +1,9 @@
 package com.labs64.netlicensing.service;
 
-
 import org.glassfish.jersey.test.JerseyTest;
 
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.SecurityMode;
 
 /**
  */
@@ -21,13 +21,11 @@ abstract class BaseServiceTest extends JerseyTest {
     static final String TEST_CASE_BASE = "mock/";
 
     static Context createContext() {
-        Context context = new Context();
-        context.setBaseUrl(BASE_URL);
-        context.setUsername(USER);
-        context.setPassword(PASS);
-        context.setApiKey("");
-        // TODO: add context.authentication
-        return context;
+        return new Context()
+                .setBaseUrl(BASE_URL)
+                .setSecurityMode(SecurityMode.BASIC_AUTHENTICATION)
+                .setUsername(USER)
+                .setPassword(PASS);
     }
 
 }

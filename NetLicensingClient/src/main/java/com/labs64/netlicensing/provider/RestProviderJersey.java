@@ -55,11 +55,7 @@ public class RestProviderJersey implements RestProvider {
     public <REQ, RES> RES call(Context context, String httpMethod, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> namedParams) throws RestException {
         try {
             final WebTarget target = getTarget(context.getBaseUrl());
-            if (context.getApiKey() != null) {
-                addAuthHeaders(new TokenAuthentication(context.getApiKey()), target);
-            } else {
-                addAuthHeaders(new UsernamePasswordAuthentication(context.getUsername(), context.getPassword()), target);
-            }
+            authenticate(context, target);
 
             final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
             if (namedParams == null) {
@@ -73,7 +69,7 @@ public class RestProviderJersey implements RestProvider {
     }
 
     /**
-     * Get the RESTful client target.
+     * Get the RESTful client target
      *
      * @param basePath
      * @return RESTful client target
@@ -81,6 +77,29 @@ public class RestProviderJersey implements RestProvider {
     private WebTarget getTarget(String basePath) {
         WebTarget target = client.target(basePath);
         return target;
+    }
+
+    /**
+     * @param context
+     * @param target
+     * @throws RestException
+     */
+    private void authenticate(Context context, final WebTarget target) throws RestException {
+        Authentication auth;
+        if (context.getSecurityMode() == null) {
+            throw new RestException("Security mode must be specified");
+        }
+        switch (context.getSecurityMode()) {
+            case BASIC_AUTHENTICATION:
+                auth = new UsernamePasswordAuthentication(context.getUsername(), context.getPassword());
+                break;
+            case APIKEY_IDENTIFICATION:
+                auth = new TokenAuthentication(context.getApiKey());
+                break;
+            default:
+                throw new RestException("Unknown security mode");
+        }
+        addAuthHeaders(auth, target);
     }
 
     /**

@@ -43,6 +43,15 @@ public class Context extends GenericContext<String> {
         return getValue(Constants.Token.API_KEY);
     }
 
+    public Context setSecurityMode(final SecurityMode securityMode) {
+        return (Context) this.setValue(Constants.SECURITY_MODE, securityMode.toString());
+    }
+
+    public SecurityMode getSecurityMode() {
+        final String securityMode = getValue(Constants.SECURITY_MODE);
+        return securityMode != null ?  SecurityMode.valueOf(securityMode) : null;
+    }
+
     public Context setVendorNumber(final String vendorNumber) {
         return (Context) this.setValue(Constants.Vendor.VENDOR_NUMBER, vendorNumber);
     }
