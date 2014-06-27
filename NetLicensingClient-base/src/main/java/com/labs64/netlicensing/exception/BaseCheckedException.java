@@ -1,3 +1,15 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.exception;
 
 /**
@@ -9,9 +21,8 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Construct a <code>BaseCheckedException</code> with the specified detail message.
-     * 
-     * @param msg
-     *            the detail message
+     *
+     * @param msg the detail message
      */
     public BaseCheckedException(final String msg) {
         super(msg);
@@ -19,11 +30,9 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Construct a <code>BaseCheckedException</code> with the specified detail message and cause exception.
-     * 
-     * @param msg
-     *            the detail message
-     * @param cause
-     *            the cause exception
+     *
+     * @param msg   the detail message
+     * @param cause the cause exception
      */
     public BaseCheckedException(final String msg, final Throwable cause) {
         super(msg, cause);
@@ -31,7 +40,7 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Return the detail message, including the message from the cause exception if there is one.
-     * 
+     *
      * @return error detail message
      */
     @Override
@@ -41,7 +50,7 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Retrieve the innermost cause of this exception, if any.
-     * 
+     *
      * @return the innermost exception, or <code>null</code> if none
      */
     public Throwable getRootCause() {
@@ -57,9 +66,9 @@ public abstract class BaseCheckedException extends Exception {
     /**
      * Retrieve the most specific cause of this exception, that is, either the innermost cause (root cause) or this
      * exception itself.
-     * <p>
+     * <p/>
      * Differs from {@link #getRootCause()} in that it falls back to the present exception if there is no root cause.
-     * 
+     *
      * @return the most specific cause (never <code>null</code>)
      */
     public Throwable getMostSpecificCause() {
@@ -74,9 +83,8 @@ public abstract class BaseCheckedException extends Exception {
     /**
      * Check whether this exception contains an exception of the given type: either it is of the given class itself or
      * it contains a cause cause of the given type.
-     * 
-     * @param exType
-     *            the exception type to look for
+     *
+     * @param exType the exception type to look for
      * @return whether there is a cause exception of the specified type
      */
     public boolean contains(final Class<Throwable> exType) {

@@ -1,3 +1,15 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.schema;
 
 import java.io.UnsupportedEncodingException;
@@ -19,11 +31,9 @@ public final class SchemaFunction {
 
     /**
      * Get {@link Property} by name. Property name is not case-sensitive!
-     * 
-     * @param properties
-     *            properties collection
-     * @param name
-     *            property name
+     *
+     * @param properties properties collection
+     * @param name       property name
      * @return {@link Property} object or "null"-property (w/o value) if no property with the given name is present
      */
     public static Property propertyByName(final List<Property> properties, final String name) {
@@ -33,13 +43,10 @@ public final class SchemaFunction {
     /**
      * Get {@link Property} by name. Property name is not case-sensitive! If property with the given name is not found,
      * a property with provided default value is returned.
-     * 
-     * @param properties
-     *            properties collection
-     * @param name
-     *            property name
-     * @param defaultValue
-     *            default value to be used if no property found
+     *
+     * @param properties   properties collection
+     * @param name         property name
+     * @param defaultValue default value to be used if no property found
      * @return {@link Property} object with found or default value
      */
     public static Property propertyByName(final List<Property> properties, final String name, final String defaultValue) {
@@ -53,11 +60,9 @@ public final class SchemaFunction {
 
     /**
      * Get url-encoded Property value by name. Property name is not case-sensitive!
-     * 
-     * @param properties
-     *            properties collection
-     * @param name
-     *            property name
+     *
+     * @param properties properties collection
+     * @param name       property name
      * @return {String} value or "null"-String if no property with the given name is present
      */
     public static String propertyEncodedValueByName(final List<Property> properties, final String name) {
@@ -75,11 +80,9 @@ public final class SchemaFunction {
     /**
      * Get {@link PropertyBase} derivative by name, converting it to {@link Property}. Property name is not
      * case-sensitive! If property with the given name is not found, a property with empty value is returned.
-     * 
-     * @param properties
-     *            properties collection
-     * @param name
-     *            property name
+     *
+     * @param properties properties collection
+     * @param name       property name
      * @return {@link Property} object with found or empty value
      */
     public static Property entityPropertyByName(final Map<String, String> properties, final String name) {
@@ -93,17 +96,14 @@ public final class SchemaFunction {
 
     /**
      * Get {@link Item} by existing property value. Comparison is not case-sensitive!
-     * 
-     * @param items
-     *            items collection
-     * @param propertyName
-     *            property name
-     * @param propertyValue
-     *            property value
+     *
+     * @param items         items collection
+     * @param propertyName  property name
+     * @param propertyValue property value
      * @return {@link Item} object or "null" if no property with the given name is present
      */
     public static Item findItemByProperty(final Netlicensing.Items items, final String propertyName,
-            final String propertyValue) {
+                                          final String propertyValue) {
         if (propertyValue != null) {
             for (final Item item : items.getItem()) {
                 final String value = propertyByName(item.getProperty(), propertyName).getValue();
@@ -117,11 +117,9 @@ public final class SchemaFunction {
 
     /**
      * Get {@link com.labs64.netlicensing.schema.context.List} by name from {@link Item}.
-     * 
-     * @param item
-     *            item containing (multiple) lists
-     * @param listName
-     *            the value of the list "name" attribute
+     *
+     * @param item     item containing (multiple) lists
+     * @param listName the value of the list "name" attribute
      * @return {@link com.labs64.netlicensing.schema.context.List} object or "null" if no list with the given name is
      *         present
      */

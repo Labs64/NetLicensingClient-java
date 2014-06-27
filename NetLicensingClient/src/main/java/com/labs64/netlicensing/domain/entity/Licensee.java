@@ -1,3 +1,15 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.domain.entity;
 
 import java.util.ArrayList;
@@ -10,16 +22,16 @@ import com.labs64.netlicensing.domain.Constants;
 
 /**
  * Licensee entity used internally by NetLicensing.
- * <p>
+ * <p/>
  * Properties visible via NetLicensing API:
- * <p>
+ * <p/>
  * <b>number</b> - Unique number (across all products of a vendor) that identifies the licensee. Vendor can assign this
  * number when creating a licensee or let NetLicensing generate one. Read-only after creation of the first license for
  * the licensee.
- * <p>
+ * <p/>
  * <b>active</b> - If set to false, the licensee is disabled. Licensee can not obtain new licenses, and validation is
  * disabled (tbd).
- * <p>
+ * <p/>
  * Arbitrary additional user properties of string type may be associated with each licensee. The name of user property
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted,
  * productNumber</b>.

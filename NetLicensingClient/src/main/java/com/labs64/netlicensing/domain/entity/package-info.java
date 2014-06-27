@@ -1,6 +1,6 @@
 /**
  * Classes in this package represent various NetLicensing objects.
- * 
+ *
  * These entities:
  *  - passed as parameters or returned from the NetLicensing API calls;
  *  - persisted in a database;

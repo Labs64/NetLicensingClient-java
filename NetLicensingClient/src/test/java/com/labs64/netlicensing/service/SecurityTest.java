@@ -1,8 +1,16 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.service;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -20,6 +28,10 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.provider.RestProviderJersey;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Tests for checking the ability to connect to services using different
  * security modes
@@ -33,7 +45,7 @@ public class SecurityTest extends BaseServiceTest {
 
         @Path("get-auth-header")
         @GET
-        public Response getAuthHeader(@HeaderParam("authorization") String authorization) {
+        public Response getAuthHeader(@HeaderParam("authorization") final String authorization) {
             return Response.ok(authorization).build();
         }
 

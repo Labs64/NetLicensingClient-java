@@ -1,3 +1,15 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.domain;
 
 import java.util.HashMap;
@@ -28,6 +40,7 @@ import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
 public class EntityFactory {
 
     private static final Map<Class<?>, Class<?>> entityToConverterMap = new HashMap<Class<?>, Class<?>>();
+
     static {
         entityToConverterMap.put(License.class, ItemToLicenseConverter.class);
         entityToConverterMap.put(Licensee.class, ItemToLicenseeConverter.class);
@@ -48,7 +61,7 @@ public class EntityFactory {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T create(Item item, Class<?> entityClass) {
+    public static <T> T create(final Item item, final Class<?> entityClass) {
         final Class<?> converterClass = entityToConverterMap.get(entityClass);
         if (converterClass == null) {
             throw new IllegalArgumentException(
@@ -56,7 +69,7 @@ public class EntityFactory {
                             + entityClass.getCanonicalName());
         }
 
-        Converter<Item, T> converter = null;
+        Converter<Item, T> converter;
         try {
             converter = (Converter<Item, T>) converterClass.newInstance();
         } catch (InstantiationException e) {

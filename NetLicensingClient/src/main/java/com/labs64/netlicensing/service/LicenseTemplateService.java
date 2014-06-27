@@ -1,9 +1,21 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.service;
 
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
+import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
-import com.labs64.netlicensing.domain.vo.Context;
 
 /**
  * Provides license template handling routines.
@@ -27,7 +39,7 @@ public class LicenseTemplateService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static LicenseTemplate create(Context context, String productModuleNumber, LicenseTemplate newLicenseTemplate)
+    public static LicenseTemplate create(final Context context, final String productModuleNumber, final LicenseTemplate newLicenseTemplate)
             throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
@@ -41,7 +53,7 @@ public class LicenseTemplateService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static LicenseTemplate get(Context context, String number) throws BaseCheckedException {
+    public static LicenseTemplate get(final Context context, final String number) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 
@@ -54,7 +66,7 @@ public class LicenseTemplateService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Page<LicenseTemplate> list(Context context, String filter) throws BaseCheckedException {
+    public static Page<LicenseTemplate> list(final Context context, final String filter) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 
@@ -68,7 +80,7 @@ public class LicenseTemplateService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static LicenseTemplate update(Context context, String number, LicenseTemplate updateLicenseTemplate)
+    public static LicenseTemplate update(final Context context, final String number, final LicenseTemplate updateLicenseTemplate)
             throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
@@ -82,7 +94,7 @@ public class LicenseTemplateService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static void delete(Context context, String number, boolean forceCascade) throws BaseCheckedException {
+    public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
         // TODO: implement me...
     }
 

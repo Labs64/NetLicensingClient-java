@@ -1,9 +1,21 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.service;
 
 import com.labs64.netlicensing.domain.entity.Transaction;
+import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
-import com.labs64.netlicensing.domain.vo.Context;
 
 /**
  * Provides transaction handling routines.
@@ -31,7 +43,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Transaction create(Context context, Transaction newTransaction) throws BaseCheckedException {
+    public static Transaction create(final Context context, final Transaction newTransaction) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 
@@ -47,7 +59,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Transaction createDefault(Context context, Transaction.Source source) throws BaseCheckedException {
+    public static Transaction createDefault(final Context context, final Transaction.Source source) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 
@@ -63,7 +75,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Transaction get(Context context, String number) throws BaseCheckedException {
+    public static Transaction get(final Context context, final String number) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 
@@ -78,7 +90,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Page<Transaction> list(Context context, String filter) throws BaseCheckedException {
+    public static Page<Transaction> list(final Context context, final String filter) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 
@@ -95,7 +107,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Transaction update(Context context, String number, Transaction updateTransaction)
+    public static Transaction update(final Context context, final String number, final Transaction updateTransaction)
             throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
@@ -108,7 +120,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static void sendOrderConfirmation(Context context, String number) throws BaseCheckedException {
+    public static void sendOrderConfirmation(final Context context, final String number) throws BaseCheckedException {
         // TODO: implement me...
     }
 

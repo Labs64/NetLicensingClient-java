@@ -1,3 +1,15 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.domain.entity;
 
 import java.util.ArrayList;
@@ -10,25 +22,25 @@ import com.labs64.netlicensing.domain.Constants;
 
 /**
  * Product entity used internally by NetLicensing.
- * <p>
+ * <p/>
  * Properties visible via NetLicensing API:
- * <p>
+ * <p/>
  * <b>number</b> - Unique number that identifies the product. Vendor can assign this number when creating a product or
  * let NetLicensing generate one. Read-only after creation of the first licensee for the product.
- * <p>
+ * <p/>
  * <b>active</b> - If set to false, the product is disabled. No new licensees can be registered for the product,
  * existing licensees can not obtain new licenses.
- * <p>
+ * <p/>
  * <b>name</b> - Product name. Together with the version identifies the product for the end customer.
- * <p>
+ * <p/>
  * <b>version</b> - Product version. Convenience parameter, additional to the product name.
- * <p>
+ * <p/>
  * <b>licenseeAutoCreate</b> - If set to 'true', non-existing licensees will be created at first validation attempt.
- * <p>
+ * <p/>
  * <b>description</b> - Product description. Optional.
- * <p>
+ * <p/>
  * <b>licensingInfo</b> - Licensing information. Optional.
- * <p>
+ * <p/>
  * Arbitrary additional user properties of string type may be associated with each product. The name of user property
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted</b>.
  */

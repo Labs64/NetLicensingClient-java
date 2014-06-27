@@ -1,8 +1,17 @@
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.labs64.netlicensing.service;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -33,6 +42,9 @@ import com.labs64.netlicensing.schema.context.ObjectFactory;
 import com.labs64.netlicensing.schema.context.Property;
 import com.labs64.netlicensing.util.JAXBUtils;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
  */
 public class ProductServiceTest extends BaseServiceTest {
@@ -44,19 +56,19 @@ public class ProductServiceTest extends BaseServiceTest {
     @Path(REST_API_PATH)
     public static class NLICResource {
 
-        private ObjectFactory objectFactory = new ObjectFactory();
+        private final ObjectFactory objectFactory = new ObjectFactory();
 
         @Path("product")
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response createProduct(MultivaluedMap<String, String> formParams) {
+        public Response createProduct(final MultivaluedMap<String, String> formParams) {
 
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
             netlicensing.setItems(objectFactory.createNetlicensingItems());
             netlicensing.getItems().getItem().add(objectFactory.createItem());
 
             final List<Property> property = netlicensing.getItems().getItem().get(0).getProperty();
-            for (String paramKey : formParams.keySet()) {
+            for (final String paramKey : formParams.keySet()) {
                 final Property prop = objectFactory.createProperty();
                 prop.setName(paramKey);
                 prop.setValue(formParams.getFirst(paramKey));
@@ -68,7 +80,7 @@ public class ProductServiceTest extends BaseServiceTest {
 
         @Path("product/{productNumber}")
         @GET
-        public Response getProduct(@PathParam("productNumber") String productNumber) {
+        public Response getProduct(@PathParam("productNumber") final String productNumber) {
             Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml", Netlicensing.class);
 
             SchemaFunction.propertyByName(netlicensing.getItems().getItem().iterator().next().getProperty(),
