@@ -52,7 +52,7 @@ public class RestProviderJersey implements RestProvider {
     }
 
     @Override
-    public <REQ, RES> RES call(Context context, String httpMethod, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> namedParams) throws RestException {
+    public <REQ, RES> RES call(final Context context, final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType, final Map<String, Object> namedParams) throws RestException {
         try {
             final WebTarget target = getTarget(context.getBaseUrl());
             authenticate(context, target);
@@ -74,7 +74,7 @@ public class RestProviderJersey implements RestProvider {
      * @param basePath
      * @return RESTful client target
      */
-    private WebTarget getTarget(String basePath) {
+    private WebTarget getTarget(final String basePath) {
         WebTarget target = client.target(basePath);
         return target;
     }
@@ -84,7 +84,7 @@ public class RestProviderJersey implements RestProvider {
      * @param target
      * @throws RestException
      */
-    private void authenticate(Context context, final WebTarget target) throws RestException {
+    private void authenticate(final Context context, final WebTarget target) throws RestException {
         Authentication auth;
         if (context.getSecurityMode() == null) {
             throw new RestException("Security mode must be specified");
