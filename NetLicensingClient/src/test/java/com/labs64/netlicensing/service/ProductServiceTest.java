@@ -13,6 +13,9 @@
 package com.labs64.netlicensing.service;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -41,9 +44,6 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
 import com.labs64.netlicensing.schema.context.Property;
 import com.labs64.netlicensing.util.JAXBUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  */
@@ -138,10 +138,12 @@ public class ProductServiceTest extends BaseServiceTest {
     public void testGet() throws Exception {
         final String number = RandomStringUtils.randomAlphanumeric(8);
 
-        Product res = ProductService.get(context, number);
+        final Product resultProduct = ProductService.get(context, number);
 
-        assertNotNull(res);
-        assertEquals(number, res.getNumber());
+        assertNotNull(resultProduct);
+        assertEquals(number, resultProduct.getNumber());
+        assertEquals("Product Numero Uno", resultProduct.getName());
+        assertEquals("CustomPropertyValue", resultProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
     @Ignore
