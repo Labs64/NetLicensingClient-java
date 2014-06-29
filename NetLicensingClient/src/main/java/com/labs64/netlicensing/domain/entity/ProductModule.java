@@ -117,20 +117,11 @@ public class ProductModule extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("ProductModule [");
-        builder.append(super.toString());
-        builder.append(", ");
-        builder.append(Constants.NAME);
-        builder.append("=");
-        builder.append(getName());
-        builder.append(", ");
-        builder.append(Constants.ProductModule.LICENSING_MODEL);
-        builder.append("=");
-        builder.append(getLicensingModel());
-        builder.append("]");
-        return builder.toString();
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
+        return map;
     }
 
 }

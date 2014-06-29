@@ -189,41 +189,16 @@ public class LicenseTemplate extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(LicenseTemplate.class.getSimpleName());
-        builder.append(" [");
-        builder.append(super.toString());
-        builder.append(", ");
-        builder.append(Constants.NAME);
-        builder.append("=");
-        builder.append(getName());
-        builder.append(", ");
-        builder.append(Constants.LicenseTemplate.LICENSE_TYPE);
-        builder.append("=");
-        builder.append(getLicenseType());
-        builder.append(", ");
-        builder.append(Constants.PRICE);
-        builder.append("=");
-        builder.append(getPrice());
-        builder.append(", ");
-        builder.append(Constants.CURRENCY);
-        builder.append("=");
-        builder.append(getCurrency());
-        builder.append(", ");
-        builder.append(Constants.LicenseTemplate.AUTOMATIC);
-        builder.append("=");
-        builder.append(getAutomatic());
-        builder.append(", ");
-        builder.append(Constants.LicenseTemplate.HIDDEN);
-        builder.append("=");
-        builder.append(getHidden());
-        builder.append(", ");
-        builder.append(Constants.LicenseTemplate.HIDE_LICENSES);
-        builder.append("=");
-        builder.append(getHideLicenses());
-        builder.append("]");
-        return builder.toString();
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.LicenseTemplate.LICENSE_TYPE, getLicenseType());
+        map.put(Constants.PRICE, getPrice());
+        map.put(Constants.CURRENCY, getCurrency());
+        map.put(Constants.LicenseTemplate.AUTOMATIC, getAutomatic());
+        map.put(Constants.LicenseTemplate.HIDDEN, getHidden());
+        map.put(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
+        return map;
     }
 
 }

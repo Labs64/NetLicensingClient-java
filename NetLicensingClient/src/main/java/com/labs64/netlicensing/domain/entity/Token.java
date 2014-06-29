@@ -95,29 +95,16 @@ public class Token extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Token [");
-        builder.append(super.toString());
-        builder.append(", ");
-        builder.append("expirationTime");
-        builder.append("=");
-        builder.append(getExpirationTime());
-        builder.append(", ");
-        builder.append("tokenType");
-        builder.append("=");
-        builder.append(getTokenType());
-        builder.append(", ");
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.Token.EXPIRATION_TIME, getExpirationTime());
+        map.put(Constants.Token.TOKEN_TYPE, getTokenType());
         if (tokenProperties != null) {
-            for (final Map.Entry<String, String> property : tokenProperties.entrySet()) {
-                builder.append(", ");
-                builder.append(property.getKey());
-                builder.append("=");
-                builder.append(property.getValue());
+            for (Map.Entry<String, String> property : tokenProperties.entrySet()) {
+                map.put(property.getKey(), property.getValue());
             }
         }
-        builder.append("]");
-        return builder.toString();
+        return map;
     }
 
 }

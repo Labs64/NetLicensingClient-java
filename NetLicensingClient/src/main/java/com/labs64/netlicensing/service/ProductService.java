@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Form;
 
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -58,7 +57,7 @@ public class ProductService {
     public static Product create(final Context context, final Product newProduct) throws BaseCheckedException {
 
         final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST, "product",
-                getProductAsRequest(newProduct), Netlicensing.class, null);
+                newProduct.asRequestForm(), Netlicensing.class, null);
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
 
@@ -115,7 +114,7 @@ public class ProductService {
         params.put("productNumber", number);
 
         final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST,
-                "product/{productNumber}", getProductAsRequest(updateProduct), Netlicensing.class, params);
+                "product/{productNumber}", updateProduct.asRequestForm(), Netlicensing.class, params);
 
         // TODO: find&use only suitable for this context item
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
@@ -134,32 +133,6 @@ public class ProductService {
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
         // TODO: implement me...
-    }
-
-    private static Form getProductAsRequest(final Product product) {
-        final Form form = new Form();
-        if (product.getNumber() != null) {
-            form.param("number", product.getNumber());
-        }
-        if (product.getActive() != null) {
-            form.param("active", product.getActive().toString());
-        }
-        if (product.getName() != null) {
-            form.param("name", product.getName());
-        }
-        if (product.getVersion() != null) {
-            form.param("version", product.getVersion());
-        }
-        if (product.getLicenseeAutoCreate() != null) {
-            form.param("licenseeAutoCreate", product.getLicenseeAutoCreate().toString());
-        }
-        for (String propKey : product.getProductProperties().keySet()) {
-            final String propValue = product.getProductProperties().get(propKey);
-            if (propValue != null) {
-                form.param(propKey, propValue);
-            }
-        }
-        return form;
     }
 
 }

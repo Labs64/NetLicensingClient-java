@@ -96,6 +96,7 @@ public final class Constants {
         public static final String LICENSEE_AUTO_CREATE = "licenseeAutoCreate";
         public static final String DESCRIPTION = "description";
         public static final String LICENSING_INFO = "licensingInfo";
+        public static final String DISCOUNTS = "discounts";
 
         public static final class Discount {
             public static final String TOTAL_PRICE = "totalPrice";

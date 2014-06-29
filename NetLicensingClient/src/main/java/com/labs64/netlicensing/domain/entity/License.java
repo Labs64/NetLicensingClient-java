@@ -150,37 +150,18 @@ public class License extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(License.class.getSimpleName());
-        builder.append(" [");
-        builder.append(super.toString());
-        builder.append(", ");
-        builder.append(Constants.NAME);
-        builder.append("=");
-        builder.append(getName());
-        builder.append(", ");
-        builder.append(Constants.PRICE);
-        builder.append("=");
-        builder.append(getPrice());
-        builder.append(", ");
-        builder.append(Constants.CURRENCY);
-        builder.append("=");
-        builder.append(getCurrency());
-        builder.append(", ");
-        builder.append(Constants.License.HIDDEN);
-        builder.append("=");
-        builder.append(getHidden());
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.PRICE, getPrice());
+        map.put(Constants.CURRENCY, getCurrency());
+        map.put(Constants.License.HIDDEN, getHidden());
         if (licenseProperties != null) {
-            for (final Map.Entry<String, String> lp : licenseProperties.entrySet()) {
-                builder.append(", ");
-                builder.append(lp.getKey());
-                builder.append("=");
-                builder.append(lp.getValue());
+            for (Map.Entry<String, String> lp : licenseProperties.entrySet()) {
+                map.put(lp.getKey(), lp.getValue());
             }
         }
-        builder.append("]");
-        return builder.toString();
+        return map;
     }
 
 }

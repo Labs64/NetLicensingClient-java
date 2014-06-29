@@ -13,7 +13,11 @@
 package com.labs64.netlicensing.domain.entity;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,16 +48,6 @@ public abstract class BaseEntity {
         this.active = active;
     }
 
-    protected void updateBase(final BaseEntity source) {
-        assert source != null; // called from derived classes only, source should never be null
-        if (StringUtils.isNotBlank(source.getNumber())) {
-            setNumber(source.getNumber());
-        }
-        if (source.getActive() != null) {
-            setActive(source.getActive());
-        }
-    }
-
     /**
      * List of reserved properties is used for handling of custom properties. Property name that is included in the list
      * can not be used as custom property name. The list is extended by each derived entity class until the final
@@ -72,15 +66,51 @@ public abstract class BaseEntity {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(Constants.NUMBER);
-        builder.append("=");
-        builder.append(getNumber());
-        builder.append(", ");
-        builder.append(Constants.ACTIVE);
-        builder.append("=");
-        builder.append(getActive());
-        return builder.toString();
+        return toString(asPropertiesMap());
+    }
+
+    public Form asRequestForm() {
+        final Form form = new Form();
+        final Map<String, Object> propMap = asPropertiesMap();
+        for (String propKey : propMap.keySet()) {
+            final Object propValue = propMap.get(propKey);
+            if (propValue != null) {
+                form.param(propKey, propValue.toString());
+            }
+        }
+        return form;
+    }
+
+    protected void updateBase(final BaseEntity source) {
+        assert source != null; // called from derived classes only, source should never be null
+        if (StringUtils.isNotBlank(source.getNumber())) {
+            setNumber(source.getNumber());
+        }
+        if (source.getActive() != null) {
+            setActive(source.getActive());
+        }
+    }
+
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put(Constants.NUMBER, getNumber());
+        map.put(Constants.ACTIVE, getActive());
+        return map;
+    }
+
+    protected String toString(final Map<String, Object> propMap) {
+        final StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+        builder.append(" [");
+        boolean firstProp = true;
+        for (String propKey : propMap.keySet()) {
+            builder.append(firstProp ? "" : ", ");
+            firstProp = false;
+
+            final String propValue = String.valueOf(propMap.get(propKey));
+            builder.append(propKey).append("=")
+                    .append(propValue.length() > 50 ? propValue.substring(0, 50) : propValue);
+        }
+        return builder.append("]").toString();
     }
 
 }

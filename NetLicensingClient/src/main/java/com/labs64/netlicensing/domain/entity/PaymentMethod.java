@@ -50,21 +50,14 @@ public class PaymentMethod extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("PaymentMethod [");
-        builder.append(super.toString());
-        builder.append(", ");
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
         if (paymentMethodProperties != null) {
-            for (final Map.Entry<String, String> property : paymentMethodProperties.entrySet()) {
-                builder.append(", ");
-                builder.append(property.getKey());
-                builder.append("=");
-                builder.append(property.getValue());
+            for (Map.Entry<String, String> property : paymentMethodProperties.entrySet()) {
+                map.put(property.getKey(), property.getValue());
             }
         }
-        builder.append("]");
-        return builder.toString();
+        return map;
     }
 
 }

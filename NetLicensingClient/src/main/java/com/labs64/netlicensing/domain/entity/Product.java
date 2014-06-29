@@ -177,48 +177,25 @@ public class Product extends BaseEntity {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Product [");
-        builder.append(super.toString());
-        builder.append(", ");
-        builder.append(Constants.NAME);
-        builder.append("=");
-        builder.append(getName());
-        builder.append(", ");
-        builder.append(Constants.VERSION);
-        builder.append("=");
-        builder.append(getVersion());
-        builder.append(", ");
-        builder.append(Constants.Product.LICENSEE_AUTO_CREATE);
-        builder.append("=");
-        builder.append(String.valueOf(getLicenseeAutoCreate()));
-        if (getDescription() != null) {
-            builder.append(", ");
-            builder.append(Constants.Product.DESCRIPTION);
-            builder.append("=");
-            builder.append((getDescription().length() > 50) ? getDescription().substring(0, 50) : getDescription());
-        }
-        if (getLicensingInfo() != null) {
-            builder.append(", ");
-            builder.append(Constants.Product.LICENSING_INFO);
-            builder.append("=");
-            builder.append((getLicensingInfo().length() > 50) ? getLicensingInfo().substring(0, 50)
-                    : getLicensingInfo());
-        }
-        for (final ProductDiscount discount : getProductDiscounts()) {
-            builder.append(", ");
-            builder.append(discount.toString());
-        }
+        final Map<String, Object> propMap = asPropertiesMap();
+        propMap.put(Constants.Product.DISCOUNTS, getProductDiscounts());
+        return toString(propMap);
+    }
+
+    @Override
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.VERSION, getVersion());
+        map.put(Constants.Product.LICENSEE_AUTO_CREATE, getLicenseeAutoCreate());
+        map.put(Constants.Product.DESCRIPTION, getDescription());
+        map.put(Constants.Product.LICENSING_INFO, getLicensingInfo());
         if (productProperties != null) {
-            for (final Map.Entry<String, String> property : productProperties.entrySet()) {
-                builder.append(", ");
-                builder.append(property.getKey());
-                builder.append("=");
-                builder.append(property.getValue());
+            for (Map.Entry<String, String> property : productProperties.entrySet()) {
+                map.put(property.getKey(), property.getValue());
             }
         }
-        builder.append("]");
-        return builder.toString();
+        return map;
     }
 
 }

@@ -240,25 +240,15 @@ public class Transaction extends BaseEntity {
     }
 
     @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Transaction [");
-        builder.append(super.toString());
-        builder.append(", ");
-        builder.append(Constants.Transaction.STATUS);
-        builder.append("=");
-        builder.append(getStatus());
-        builder.append(", ");
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.Transaction.STATUS, getStatus());
         if (transactionProperties != null) {
-            for (final Map.Entry<String, String> property : transactionProperties.entrySet()) {
-                builder.append(", ");
-                builder.append(property.getKey());
-                builder.append("=");
-                builder.append(property.getValue());
+            for (Map.Entry<String, String> property : transactionProperties.entrySet()) {
+                map.put(property.getKey(), property.getValue());
             }
         }
-        builder.append("]");
-        return builder.toString();
+        return map;
     }
 
 }
