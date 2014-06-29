@@ -12,11 +12,11 @@
  */
 package com.labs64.netlicensing.service;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -40,9 +40,10 @@ import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
+import com.labs64.netlicensing.schema.context.Info;
+import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
-import com.labs64.netlicensing.schema.context.Property;
 import com.labs64.netlicensing.util.JAXBUtils;
 
 /**
@@ -64,16 +65,30 @@ public class ProductServiceTest extends BaseServiceTest {
         public Response createProduct(final MultivaluedMap<String, String> formParams) {
 
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
+
+            if (!formParams.containsKey("name")) {
+                netlicensing.setInfos(objectFactory.createNetlicensingInfos());
+
+                final Info info = objectFactory.createInfo();
+                info.setId("MalformedRequestException");
+                info.setType(InfoEnum.ERROR);
+                info.setValue("Product name is required");
+                netlicensing.getInfos().getInfo().add(info);
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+
             netlicensing.setItems(objectFactory.createNetlicensingItems());
             netlicensing.getItems().getItem().add(objectFactory.createItem());
 
-            final List<Property> property = netlicensing.getItems().getItem().get(0).getProperty();
+            final Map<String, String> propertyValues = new HashMap<String, String>();
+            // default values
+            propertyValues.put("version", "");
+            // values from request
             for (final String paramKey : formParams.keySet()) {
-                final Property prop = objectFactory.createProperty();
-                prop.setName(paramKey);
-                prop.setValue(formParams.getFirst(paramKey));
-                property.add(prop);
+                propertyValues.put(paramKey, formParams.getFirst(paramKey));
             }
+            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
 
             return Response.ok(netlicensing).build();
         }
@@ -81,7 +96,8 @@ public class ProductServiceTest extends BaseServiceTest {
         @Path("product/{productNumber}")
         @GET
         public Response getProduct(@PathParam("productNumber") final String productNumber) {
-            Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml", Netlicensing.class);
+            Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml",
+                    Netlicensing.class);
 
             SchemaFunction.propertyByName(netlicensing.getItems().getItem().iterator().next().getProperty(),
                     Constants.NUMBER).setValue(productNumber);
@@ -116,22 +132,42 @@ public class ProductServiceTest extends BaseServiceTest {
     @Test
     public void testCreate() throws Exception {
         final Product newProduct = new Product();
-        newProduct.setNumber("P001-DEMO");
+        newProduct.setName("Test Product");
+        newProduct.setNumber("P001-TEST");
         newProduct.setActive(true);
-        newProduct.setName("Demo Product");
         newProduct.setVersion("v3.2");
         newProduct.setLicenseeAutoCreate(true);
-        newProduct.getProductProperties().put(PRODUCT_CUSTOM_PROPERTY, "CustomValue");
+        newProduct.getProductProperties().put(PRODUCT_CUSTOM_PROPERTY, "Test Value");
 
         final Product createdProduct = ProductService.create(context, newProduct);
 
         assertNotNull(createdProduct);
-        assertEquals("P001-DEMO", createdProduct.getNumber());
+        assertEquals("Test Product", createdProduct.getName());
+        assertEquals("P001-TEST", createdProduct.getNumber());
         assertEquals(true, createdProduct.getActive());
-        assertEquals("Demo Product", createdProduct.getName());
         assertEquals("v3.2", createdProduct.getVersion());
         assertEquals(true, createdProduct.getLicenseeAutoCreate());
-        assertEquals("CustomValue", createdProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
+        assertEquals("Test Value", createdProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
+    }
+
+    @Test(expected = RestException.class)
+    public void testCreateEmpty() throws Exception {
+        final Product newProduct = new Product();
+        ProductService.create(context, newProduct);
+    }
+
+    @Test
+    public void testCreateWithNameOnly() throws Exception {
+        final Product newProduct = new Product();
+        newProduct.setName("Test Product");
+
+        final Product createdProduct = ProductService.create(context, newProduct);
+
+        assertNotNull(createdProduct);
+        assertEquals("Test Product", createdProduct.getName());
+        assertEquals(true, createdProduct.getActive());
+        assertEquals("", createdProduct.getVersion());
+        assertEquals(false, createdProduct.getLicenseeAutoCreate());
     }
 
     @Test
