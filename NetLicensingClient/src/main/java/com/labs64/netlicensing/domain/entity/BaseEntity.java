@@ -26,7 +26,7 @@ public abstract class BaseEntity {
 
     private String number;
 
-    private Boolean active = Boolean.TRUE;
+    private Boolean active;
 
     public String getNumber() {
         return number;

@@ -1,0 +1,11 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="Product">
+            <property name="number">P001</property>
+            <property name="name">Product Numero Uno</property>
+            <property name="active">false</property>
+            <property name="version">v1.0</property>
+            <property name="licenseeAutoCreate">true</property>
+        </item>
+    </items>
+</netlicensing>

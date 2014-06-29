@@ -57,18 +57,8 @@ public class ProductService {
      */
     public static Product create(final Context context, final Product newProduct) throws BaseCheckedException {
 
-        final Form form = new Form()
-                .param("number", newProduct.getNumber())
-                .param("active", newProduct.getActive().toString())
-                .param("name", newProduct.getName())
-                .param("version", newProduct.getVersion())
-                .param("licenseeAutoCreate", newProduct.getLicenseeAutoCreate().toString());
-        for (final String propKey : newProduct.getProductProperties().keySet()) {
-            form.param(propKey, newProduct.getProductProperties().get(propKey));
-        }
-
-        final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST, "product", form,
-                Netlicensing.class, null);
+        final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST, "product",
+                getProductAsRequest(newProduct), Netlicensing.class, null);
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
 
@@ -121,7 +111,14 @@ public class ProductService {
      *                              response messages.
      */
     public static Product update(final Context context, final String number, final Product updateProduct) throws BaseCheckedException {
-        return null; // TODO: implement me...
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put("productNumber", number);
+
+        final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST,
+                "product/{productNumber}", getProductAsRequest(updateProduct), Netlicensing.class, params);
+
+        // TODO: find&use only suitable for this context item
+        return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
 
     /**
@@ -137,6 +134,32 @@ public class ProductService {
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
         // TODO: implement me...
+    }
+
+    private static Form getProductAsRequest(final Product product) {
+        final Form form = new Form();
+        if (product.getNumber() != null) {
+            form.param("number", product.getNumber());
+        }
+        if (product.getActive() != null) {
+            form.param("active", product.getActive().toString());
+        }
+        if (product.getName() != null) {
+            form.param("name", product.getName());
+        }
+        if (product.getVersion() != null) {
+            form.param("version", product.getVersion());
+        }
+        if (product.getLicenseeAutoCreate() != null) {
+            form.param("licenseeAutoCreate", product.getLicenseeAutoCreate().toString());
+        }
+        for (String propKey : product.getProductProperties().keySet()) {
+            final String propValue = product.getProductProperties().get(propKey);
+            if (propValue != null) {
+                form.param(propKey, propValue);
+            }
+        }
+        return form;
     }
 
 }

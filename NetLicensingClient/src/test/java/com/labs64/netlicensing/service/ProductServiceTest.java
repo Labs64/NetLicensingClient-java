@@ -66,7 +66,7 @@ public class ProductServiceTest extends BaseServiceTest {
 
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
 
-            if (!formParams.containsKey("name")) {
+            if (!formParams.containsKey(Constants.NAME)) {
                 netlicensing.setInfos(objectFactory.createNetlicensingInfos());
 
                 final Info info = objectFactory.createInfo();
@@ -83,7 +83,9 @@ public class ProductServiceTest extends BaseServiceTest {
 
             final Map<String, String> propertyValues = new HashMap<String, String>();
             // default values
-            propertyValues.put("version", "");
+            propertyValues.put(Constants.VERSION, "");
+            propertyValues.put(Constants.ACTIVE, "true");
+            propertyValues.put(Constants.Product.LICENSEE_AUTO_CREATE, "false");
             // values from request
             for (final String paramKey : formParams.keySet()) {
                 propertyValues.put(paramKey, formParams.getFirst(paramKey));
@@ -96,11 +98,29 @@ public class ProductServiceTest extends BaseServiceTest {
         @Path("product/{productNumber}")
         @GET
         public Response getProduct(@PathParam("productNumber") final String productNumber) {
-            Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml",
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml",
                     Netlicensing.class);
 
             SchemaFunction.propertyByName(netlicensing.getItems().getItem().iterator().next().getProperty(),
                     Constants.NUMBER).setValue(productNumber);
+
+            return Response.ok(netlicensing).build();
+        }
+
+        @Path("product/{productNumber}")
+        @POST
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        public Response updateProduct(@PathParam("productNumber") final String productNumber,
+                final MultivaluedMap<String, String> formParams) {
+
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-update.xml",
+                    Netlicensing.class);
+
+            final Map<String, String> propertyValues = new HashMap<String, String>();
+            for (final String paramKey : formParams.keySet()) {
+                propertyValues.put(paramKey, formParams.getFirst(paramKey));
+            }
+            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
 
             return Response.ok(netlicensing).build();
         }
@@ -187,9 +207,22 @@ public class ProductServiceTest extends BaseServiceTest {
 
     }
 
-    @Ignore
+    @Test
     public void testUpdate() throws Exception {
+        final Product product = new Product();
+        product.setName("Test Product");
+        product.setNumber("P002-TEST");
+        product.getProductProperties().put(PRODUCT_CUSTOM_PROPERTY, "Test Value");
 
+        final Product updatedProduct = ProductService.update(context, "P001", product);
+
+        assertNotNull(updatedProduct);
+        assertEquals("Test Product", updatedProduct.getName());
+        assertEquals("P002-TEST", updatedProduct.getNumber());
+        assertEquals(false, updatedProduct.getActive());
+        assertEquals("v1.0", updatedProduct.getVersion());
+        assertEquals(true, updatedProduct.getLicenseeAutoCreate());
+        assertEquals("Test Value", updatedProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
     @Ignore

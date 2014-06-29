@@ -50,7 +50,7 @@ public class Product extends BaseEntity {
 
     private String version;
 
-    private Boolean licenseeAutoCreate = Boolean.FALSE;
+    private Boolean licenseeAutoCreate;
 
     private String description;
 
