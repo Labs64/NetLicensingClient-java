@@ -157,6 +157,7 @@ public class ProductServiceTest extends BaseServiceTest {
         newProduct.setActive(true);
         newProduct.setVersion("v3.2");
         newProduct.setLicenseeAutoCreate(true);
+        newProduct.setDescription("Test Product description");
         newProduct.getProductProperties().put(PRODUCT_CUSTOM_PROPERTY, "Test Value");
 
         final Product createdProduct = ProductService.create(context, newProduct);
@@ -167,6 +168,7 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals(true, createdProduct.getActive());
         assertEquals("v3.2", createdProduct.getVersion());
         assertEquals(true, createdProduct.getLicenseeAutoCreate());
+        assertEquals("Test Product description", createdProduct.getDescription());
         assertEquals("Test Value", createdProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
@@ -199,6 +201,7 @@ public class ProductServiceTest extends BaseServiceTest {
         assertNotNull(resultProduct);
         assertEquals(number, resultProduct.getNumber());
         assertEquals("Product Numero Uno", resultProduct.getName());
+        assertEquals("Licensed to Licensee", resultProduct.getLicensingInfo());
         assertEquals("CustomPropertyValue", resultProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
