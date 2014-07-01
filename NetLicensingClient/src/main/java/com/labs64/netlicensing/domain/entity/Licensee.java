@@ -12,13 +12,8 @@
  */
 package com.labs64.netlicensing.domain.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.labs64.netlicensing.domain.Constants;
 
 /**
  * Licensee entity used internally by NetLicensing.
@@ -36,62 +31,22 @@ import com.labs64.netlicensing.domain.Constants;
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted,
  * productNumber</b>.
  */
-public class Licensee extends BaseEntity {
+public interface Licensee extends BaseEntity {
 
-    private Product product;
+    // Methods for working with properties
 
-    private Collection<License> licenses;
+    Map<String, String> getLicenseeProperties();
 
-    private Map<String, String> licenseeProperties;
+    void addProperty(String property, String value);
 
-    public Product getProduct() {
-        return product;
-    }
+    void removeProperty(String property);
 
-    public void setProduct(final Product product) {
-        product.getLicensees().add(this);
-        this.product = product;
-    }
+    // Methods for interacting with other entities
 
-    public Collection<License> getLicenses() {
-        if (licenses == null) {
-            licenses = new ArrayList<License>();
-        }
-        return licenses;
-    }
+    Product getProduct();
 
-    public void setLicenses(final Collection<License> licenses) {
-        this.licenses = licenses;
-    }
+    void setProduct(Product product);
 
-    public Map<String, String> getLicenseeProperties() {
-        if (licenseeProperties == null) {
-            licenseeProperties = new HashMap<String, String>();
-        }
-        return licenseeProperties;
-    }
-
-    public void setLicenseeProperties(final Map<String, String> licenseeProperties) {
-        this.licenseeProperties = licenseeProperties;
-    }
-
-    public void addProperty(final String property, final String value) {
-        getLicenseeProperties().put(property, value);
-    }
-
-    public void removeProperty(final String property) {
-        getLicenseeProperties().remove(property);
-    }
-
-    /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntity#getReservedProps()
-     */
-    public static List<String> getReservedProps() {
-        final List<String> reserved = BaseEntity.getReservedProps();
-        reserved.add(Constants.Product.PRODUCT_NUMBER); // maps to 'product'
-        reserved.add(Constants.IN_USE);
-        reserved.add(Constants.Vendor.VENDOR_NUMBER); // used by shop, therefore disallowed for user
-        return reserved;
-    }
+    Collection<License> getLicenses();
 
 }

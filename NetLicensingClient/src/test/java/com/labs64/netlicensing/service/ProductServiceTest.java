@@ -37,6 +37,7 @@ import org.junit.Test;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
+import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
@@ -151,14 +152,14 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreate() throws Exception {
-        final Product newProduct = new Product();
+        final Product newProduct = new ProductImpl();
         newProduct.setName("Test Product");
         newProduct.setNumber("P001-TEST");
         newProduct.setActive(true);
         newProduct.setVersion("v3.2");
         newProduct.setLicenseeAutoCreate(true);
         newProduct.setDescription("Test Product description");
-        newProduct.getProductProperties().put(PRODUCT_CUSTOM_PROPERTY, "Test Value");
+        newProduct.addProperty(PRODUCT_CUSTOM_PROPERTY, "Test Value");
 
         final Product createdProduct = ProductService.create(context, newProduct);
 
@@ -174,13 +175,13 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test(expected = RestException.class)
     public void testCreateEmpty() throws Exception {
-        final Product newProduct = new Product();
+        final Product newProduct = new ProductImpl();
         ProductService.create(context, newProduct);
     }
 
     @Test
     public void testCreateWithNameOnly() throws Exception {
-        final Product newProduct = new Product();
+        final Product newProduct = new ProductImpl();
         newProduct.setName("Test Product");
 
         final Product createdProduct = ProductService.create(context, newProduct);
@@ -212,10 +213,10 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testUpdate() throws Exception {
-        final Product product = new Product();
+        final Product product = new ProductImpl();
         product.setName("Test Product");
         product.setNumber("P002-TEST");
-        product.getProductProperties().put(PRODUCT_CUSTOM_PROPERTY, "Test Value");
+        product.addProperty(PRODUCT_CUSTOM_PROPERTY, "Test Value");
 
         final Product updatedProduct = ProductService.update(context, "P001", product);
 

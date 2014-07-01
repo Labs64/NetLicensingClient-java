@@ -19,6 +19,7 @@ import javax.xml.bind.DatatypeConverter;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductDiscount;
+import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Money;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
@@ -69,8 +70,8 @@ public class ItemToProductConverter extends ItemToEntityBaseConverter<Product> {
 
         // Custom properties
         for (final Property property : source.getProperty()) {
-            if (!Product.getReservedProps().contains(property.getName())) {
-                target.getProductProperties().put(property.getName(), property.getValue());
+            if (!ProductImpl.getReservedProps().contains(property.getName())) {
+                target.addProperty(property.getName(), property.getValue());
             }
         }
 
@@ -79,7 +80,7 @@ public class ItemToProductConverter extends ItemToEntityBaseConverter<Product> {
 
     @Override
     public Product newTarget() {
-        return new Product();
+        return new ProductImpl();
     }
 
 }

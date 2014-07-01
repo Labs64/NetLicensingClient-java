@@ -16,8 +16,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
-import com.labs64.netlicensing.domain.entity.LicenseTemplate;
-import com.labs64.netlicensing.domain.entity.Licensee;
+import com.labs64.netlicensing.domain.entity.LicenseImpl;
+import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
+import com.labs64.netlicensing.domain.entity.LicenseeImpl;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -42,18 +43,18 @@ public class ItemToLicenseConverter extends ItemToEntityBaseConverter<License> {
 
         // Custom properties
         for (final Property property : source.getProperty()) {
-            if (!License.getReservedProps().contains(property.getName())) {
+            if (!LicenseImpl.getReservedProps().contains(property.getName())) {
                 target.getLicenseProperties().put(property.getName(), property.getValue());
             }
         }
 
-        target.setLicensee(new Licensee());
+        target.setLicensee(new LicenseeImpl());
         target.getLicensee()
                 .setNumber(
                         SchemaFunction.propertyByName(source.getProperty(), Constants.Licensee.LICENSEE_NUMBER)
                                 .getValue());
 
-        target.setLicenseTemplate(new LicenseTemplate());
+        target.setLicenseTemplate(new LicenseTemplateImpl());
         target.getLicenseTemplate()
                 .setNumber(
                         SchemaFunction.propertyByName(source.getProperty(),
@@ -65,7 +66,7 @@ public class ItemToLicenseConverter extends ItemToEntityBaseConverter<License> {
 
     @Override
     public License newTarget() {
-        return new License();
+        return new LicenseImpl();
     }
 
 }

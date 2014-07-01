@@ -13,13 +13,8 @@
 package com.labs64.netlicensing.domain.entity;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.labs64.netlicensing.domain.Constants;
 
 /**
  * License template entity used internally by NetLicensing.
@@ -51,154 +46,50 @@ import com.labs64.netlicensing.domain.Constants;
  * participate in validation.
  * <p/>
  */
-public class LicenseTemplate extends BaseEntity {
+public interface LicenseTemplate extends BaseEntity {
 
-    private ProductModule productModule;
+    // Methods for working with properties
 
-    private String name;
+    String getName();
 
-    private String licenseType;
+    void setName(String name);
 
-    private BigDecimal price;
+    String getLicenseType();
 
-    private String currency;
+    void setLicenseType(String licenseType);
 
-    private Boolean automatic = Boolean.FALSE;
+    BigDecimal getPrice();
 
-    private Boolean hidden = Boolean.FALSE;
+    void setPrice(BigDecimal price);
 
-    private Boolean hideLicenses = Boolean.FALSE;
+    String getCurrency();
 
-    private Collection<License> licenses;
+    void setCurrency(String currency);
 
-    private Map<String, String> licenseTemplateProperties;
+    Boolean getAutomatic();
 
-    public ProductModule getProductModule() {
-        return productModule;
-    }
+    void setAutomatic(Boolean automatic);
 
-    public void setProductModule(final ProductModule productModule) {
-        productModule.getLicenseTemplates().add(this);
-        this.productModule = productModule;
-    }
+    Boolean getHidden();
 
-    public String getName() {
-        return name;
-    }
+    void setHidden(Boolean hidden);
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+    Boolean getHideLicenses();
 
-    public String getLicenseType() {
-        return licenseType;
-    }
+    void setHideLicenses(Boolean hideLicenses);
 
-    public void setLicenseType(final String licenseType) {
-        this.licenseType = licenseType;
-    }
+    Map<String, String> getLicenseTemplateProperties();
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+    void addProperty(String property, String value);
 
-    public void setPrice(final BigDecimal price) {
-        this.price = price;
-    }
+    void removeProperty(String property);
 
-    public String getCurrency() {
-        return currency;
-    }
+    // Methods for interacting with other entities
 
-    public void setCurrency(final String currency) {
-        this.currency = currency;
-    }
+    ProductModule getProductModule();
 
-    public Boolean getAutomatic() {
-        return automatic;
-    }
+    void setProductModule(ProductModule productModule);
 
-    public void setAutomatic(final Boolean automatic) {
-        this.automatic = automatic;
-    }
-
-    public Boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(final Boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    public Boolean getHideLicenses() {
-        return hideLicenses;
-    }
-
-    public void setHideLicenses(final Boolean hideLicenses) {
-        this.hideLicenses = hideLicenses;
-    }
-
-    public Collection<License> getLicenses() {
-        if (licenses == null) {
-            licenses = new ArrayList<License>();
-        }
-        return licenses;
-    }
-
-    public void setLicenses(final Collection<License> licenses) {
-        this.licenses = licenses;
-    }
-
-    public Map<String, String> getLicenseTemplateProperties() {
-        if (licenseTemplateProperties == null) {
-            licenseTemplateProperties = new HashMap<String, String>();
-        }
-        return licenseTemplateProperties;
-    }
-
-    public void setLicenseTemplateProperties(final Map<String, String> licenseTemplateProperties) {
-        this.licenseTemplateProperties = licenseTemplateProperties;
-    }
-
-    public void addProperty(final String property, final String value) {
-        getLicenseTemplateProperties().put(property, value);
-    }
-
-    public void removeProperty(final String property) {
-        getLicenseTemplateProperties().remove(property);
-    }
-
-    /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntity#getReservedProps()
-     */
-    public static List<String> getReservedProps() {
-        final List<String> reserved = BaseEntity.getReservedProps();
-        reserved.add(Constants.ProductModule.PRODUCT_MODULE_NUMBER); // maps to 'productModule'
-        reserved.add(Constants.ProductModule.PRODUCT_MODULE_NAME); // maps to 'productModule'
-        reserved.add(Constants.NAME);
-        reserved.add(Constants.LicenseTemplate.LICENSE_TYPE);
-        reserved.add(Constants.PRICE);
-        reserved.add(Constants.CURRENCY);
-        reserved.add(Constants.IN_USE);
-        reserved.add(Constants.LicenseTemplate.AUTOMATIC);
-        reserved.add(Constants.LicenseTemplate.HIDDEN);
-        reserved.add(Constants.LicenseTemplate.HIDE_LICENSES);
-        reserved.add(Constants.Shop.PROP_SHOP_LICENSE_ID); // used by shop in licenses, therefore disallowed for user
-        reserved.add(Constants.Shop.PROP_SHOPPING_CART); // used by shop in licenses, therefore disallowed for user
-        return reserved;
-    }
-
-    @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        map.put(Constants.NAME, getName());
-        map.put(Constants.LicenseTemplate.LICENSE_TYPE, getLicenseType());
-        map.put(Constants.PRICE, getPrice());
-        map.put(Constants.CURRENCY, getCurrency());
-        map.put(Constants.LicenseTemplate.AUTOMATIC, getAutomatic());
-        map.put(Constants.LicenseTemplate.HIDDEN, getHidden());
-        map.put(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
-        return map;
-    }
+    Collection<License> getLicenses();
 
 }

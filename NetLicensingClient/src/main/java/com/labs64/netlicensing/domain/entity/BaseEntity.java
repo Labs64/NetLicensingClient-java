@@ -12,105 +12,27 @@
  */
 package com.labs64.netlicensing.domain.entity;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.ws.rs.core.Form;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.labs64.netlicensing.domain.Constants;
-
 /**
- * Defines fields common to all (or most) of other entities).
+ * Defines properties common to all (or most) of other entities.
  */
-public abstract class BaseEntity {
+public interface BaseEntity {
 
-    private String number;
+    String getNumber();
 
-    private Boolean active;
+    void setNumber(String number);
 
-    public String getNumber() {
-        return number;
-    }
+    Boolean getActive();
 
-    public void setNumber(final String number) {
-        this.number = number;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(final Boolean active) {
-        this.active = active;
-    }
+    void setActive(Boolean active);
 
     /**
-     * List of reserved properties is used for handling of custom properties. Property name that is included in the list
-     * can not be used as custom property name. The list is extended by each derived entity class until the final
-     * business entity.
+     * Converts properties of the entity to the body of POST request
      *
-     * @return the list of reserved property names
+     * @return object that represents HTML form data request encoded using the
+     *         "application/x-www-form-urlencoded" content type
      */
-    public static List<String> getReservedProps() {
-        final List<String> reserved = new ArrayList<String>();
-        reserved.add(Constants.ID);
-        reserved.add(Constants.NUMBER);
-        reserved.add(Constants.ACTIVE);
-        reserved.add(Constants.DELETED);
-        return reserved;
-    }
-
-    @Override
-    public String toString() {
-        return toString(asPropertiesMap());
-    }
-
-    public Form asRequestForm() {
-        final Form form = new Form();
-        final Map<String, Object> propMap = asPropertiesMap();
-        for (String propKey : propMap.keySet()) {
-            final Object propValue = propMap.get(propKey);
-            if (propValue != null) {
-                form.param(propKey, propValue.toString());
-            }
-        }
-        return form;
-    }
-
-    protected void updateBase(final BaseEntity source) {
-        assert source != null; // called from derived classes only, source should never be null
-        if (StringUtils.isNotBlank(source.getNumber())) {
-            setNumber(source.getNumber());
-        }
-        if (source.getActive() != null) {
-            setActive(source.getActive());
-        }
-    }
-
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put(Constants.NUMBER, getNumber());
-        map.put(Constants.ACTIVE, getActive());
-        return map;
-    }
-
-    protected String toString(final Map<String, Object> propMap) {
-        final StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-        builder.append(" [");
-        boolean firstProp = true;
-        for (String propKey : propMap.keySet()) {
-            builder.append(firstProp ? "" : ", ");
-            firstProp = false;
-
-            final String propValue = String.valueOf(propMap.get(propKey));
-            builder.append(propKey).append("=")
-                    .append(propValue.length() > 50 ? propValue.substring(0, 50) : propValue);
-        }
-        return builder.append("]").toString();
-    }
+    Form asRequestForm();
 
 }

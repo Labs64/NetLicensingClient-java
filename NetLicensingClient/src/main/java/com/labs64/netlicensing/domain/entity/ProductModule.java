@@ -12,13 +12,8 @@
  */
 package com.labs64.netlicensing.domain.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.labs64.netlicensing.domain.Constants;
 
 /**
  * Product module entity used internally by NetLicensing.
@@ -37,91 +32,30 @@ import com.labs64.netlicensing.domain.Constants;
  * <b>licensingModel</b> - Licensing model applied to this product module. Defines what license templates can be
  * configured for the product module and how licenses for this product module are processed during validation.
  */
-public class ProductModule extends BaseEntity {
+public interface ProductModule extends BaseEntity {
 
-    private Product product;
+    // Methods for working with properties
 
-    private String name;
+    String getName();
 
-    private String licensingModel;
+    void setName(String name);
 
-    private Collection<LicenseTemplate> licenseTemplates;
+    String getLicensingModel();
 
-    private Map<String, String> productModuleProperties;
+    void setLicensingModel(String licensingModel);
 
-    public Product getProduct() {
-        return product;
-    }
+    Map<String, String> getProductModuleProperties();
 
-    public void setProduct(final Product product) {
-        product.getProductModules().add(this);
-        this.product = product;
-    }
+    void addProperty(String property, String value);
 
-    public String getName() {
-        return name;
-    }
+    void removeProperty(String property);
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+    // Methods for interacting with other entities
 
-    public String getLicensingModel() {
-        return licensingModel;
-    }
+    Product getProduct();
 
-    public void setLicensingModel(final String licensingModel) {
-        this.licensingModel = licensingModel;
-    }
+    void setProduct(Product product);
 
-    public Collection<LicenseTemplate> getLicenseTemplates() {
-        if (licenseTemplates == null) {
-            licenseTemplates = new ArrayList<LicenseTemplate>();
-        }
-        return licenseTemplates;
-    }
-
-    public void setLicenseTemplates(final Collection<LicenseTemplate> licenseTemplates) {
-        this.licenseTemplates = licenseTemplates;
-    }
-
-    public Map<String, String> getProductModuleProperties() {
-        if (productModuleProperties == null) {
-            productModuleProperties = new HashMap<String, String>();
-        }
-        return productModuleProperties;
-    }
-
-    public void setProductModuleProperties(final Map<String, String> productModuleProperties) {
-        this.productModuleProperties = productModuleProperties;
-    }
-
-    public void addProperty(final String property, final String value) {
-        getProductModuleProperties().put(property, value);
-    }
-
-    public void removeProperty(final String property) {
-        getProductModuleProperties().remove(property);
-    }
-
-    /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntity#getReservedProps()
-     */
-    public static List<String> getReservedProps() {
-        final List<String> reserved = BaseEntity.getReservedProps();
-        reserved.add(Constants.NAME);
-        reserved.add(Constants.ProductModule.LICENSING_MODEL);
-        reserved.add(Constants.Product.PRODUCT_NUMBER);
-        reserved.add(Constants.IN_USE);
-        return reserved;
-    }
-
-    @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        map.put(Constants.NAME, getName());
-        map.put(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
-        return map;
-    }
+    Collection<LicenseTemplate> getLicenseTemplates();
 
 }

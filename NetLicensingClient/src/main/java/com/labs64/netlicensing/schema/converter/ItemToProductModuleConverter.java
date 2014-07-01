@@ -13,8 +13,9 @@
 package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
-import com.labs64.netlicensing.domain.entity.Product;
+import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.entity.ProductModule;
+import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -32,13 +33,13 @@ public class ItemToProductModuleConverter extends ItemToEntityBaseConverter<Prod
         target.setLicensingModel(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.ProductModule.LICENSING_MODEL).getValue());
 
-        target.setProduct(new Product());
+        target.setProduct(new ProductImpl());
         target.getProduct().setNumber(
                 SchemaFunction.propertyByName(source.getProperty(), Constants.Product.PRODUCT_NUMBER).getValue());
 
         // Custom properties
         for (final Property property : source.getProperty()) {
-            if (!ProductModule.getReservedProps().contains(property.getName())) {
+            if (!ProductModuleImpl.getReservedProps().contains(property.getName())) {
                 target.getProductModuleProperties().put(property.getName(), property.getValue());
             }
         }
@@ -48,7 +49,7 @@ public class ItemToProductModuleConverter extends ItemToEntityBaseConverter<Prod
 
     @Override
     public ProductModule newTarget() {
-        return new ProductModule();
+        return new ProductModuleImpl();
     }
 
 }

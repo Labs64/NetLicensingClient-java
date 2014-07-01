@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
+import com.labs64.netlicensing.domain.entity.PaymentMethodImpl;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
 
@@ -27,7 +28,7 @@ public class ItemToPaymentMethodConverter extends ItemToEntityBaseConverter<Paym
 
         // Custom properties
         for (final Property property : source.getProperty()) {
-            if (!PaymentMethod.getReservedProps().contains(property.getName())) {
+            if (!PaymentMethodImpl.getReservedProps().contains(property.getName())) {
                 target.getPaymentMethodProperties().put(property.getName(), property.getValue());
             }
         }
@@ -37,7 +38,7 @@ public class ItemToPaymentMethodConverter extends ItemToEntityBaseConverter<Paym
 
     @Override
     public PaymentMethod newTarget() {
-        return new PaymentMethod();
+        return new PaymentMethodImpl();
     }
 
 }

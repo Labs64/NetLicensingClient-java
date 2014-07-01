@@ -15,6 +15,7 @@ package com.labs64.netlicensing.service;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.exception.BaseCheckedException;
 
 /**
@@ -59,7 +60,7 @@ public class TransactionService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Transaction createDefault(final Context context, final Transaction.Source source) throws BaseCheckedException {
+    public static Transaction createDefault(final Context context, final TransactionSource source) throws BaseCheckedException {
         return null;  // TODO: implement me...
     }
 

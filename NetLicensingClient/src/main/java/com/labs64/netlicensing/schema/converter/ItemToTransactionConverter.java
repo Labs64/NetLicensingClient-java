@@ -16,6 +16,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
+import com.labs64.netlicensing.domain.entity.TransactionImpl;
+import com.labs64.netlicensing.domain.vo.TransactionSource;
+import com.labs64.netlicensing.domain.vo.TransactionStatus;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -30,10 +33,10 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
     public Transaction convert(final Item source) {
         final Transaction target = super.convert(source);
 
-        target.setStatus(Transaction.Status.valueOf(SchemaFunction.propertyByName(source.getProperty(),
+        target.setStatus(TransactionStatus.valueOf(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.Transaction.STATUS)
                 .getValue()));
-        target.setSource(Transaction.Source.valueOf(SchemaFunction.propertyByName(source.getProperty(),
+        target.setSource(TransactionSource.valueOf(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.Transaction.SOURCE)
                 .getValue()));
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.PRICE).getValue() != null) {
@@ -58,7 +61,7 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
 
         // Custom properties
         for (final Property property : source.getProperty()) {
-            if (!Transaction.getReservedProps().contains(property.getName())) {
+            if (!TransactionImpl.getReservedProps().contains(property.getName())) {
                 target.getTransactionProperties().put(property.getName(), property.getValue());
             }
         }
@@ -68,7 +71,7 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
 
     @Override
     public Transaction newTarget() {
-        return new Transaction();
+        return new TransactionImpl();
     }
 
 }

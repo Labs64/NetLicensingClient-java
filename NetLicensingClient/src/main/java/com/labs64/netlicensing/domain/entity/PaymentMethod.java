@@ -12,52 +12,19 @@
  */
 package com.labs64.netlicensing.domain.entity;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * PaymentMethod entity used internally by NetLicensing.
  */
-public class PaymentMethod extends BaseEntity {
+public interface PaymentMethod extends BaseEntity {
 
-    private Map<String, String> paymentMethodProperties;
+    // Methods for working with properties
 
-    public Map<String, String> getPaymentMethodProperties() {
-        if (paymentMethodProperties == null) {
-            paymentMethodProperties = new HashMap<String, String>();
-        }
-        return paymentMethodProperties;
-    }
+    Map<String, String> getPaymentMethodProperties();
 
-    public void setPaymentMethodProperties(final Map<String, String> paymentMethodProperties) {
-        this.paymentMethodProperties = paymentMethodProperties;
-    }
+    void addProperty(String property, String value);
 
-    public void addProperty(final String property, final String value) {
-        getPaymentMethodProperties().put(property, value);
-    }
-
-    public void removeProperty(final String property) {
-        getPaymentMethodProperties().remove(property);
-    }
-
-    /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntity#getReservedProps()
-     */
-    public static List<String> getReservedProps() {
-        return BaseEntity.getReservedProps();
-    }
-
-    @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        if (paymentMethodProperties != null) {
-            for (Map.Entry<String, String> property : paymentMethodProperties.entrySet()) {
-                map.put(property.getKey(), property.getValue());
-            }
-        }
-        return map;
-    }
+    void removeProperty(String property);
 
 }

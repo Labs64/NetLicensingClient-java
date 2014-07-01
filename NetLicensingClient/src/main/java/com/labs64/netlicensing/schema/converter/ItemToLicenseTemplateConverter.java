@@ -14,7 +14,8 @@ package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
-import com.labs64.netlicensing.domain.entity.ProductModule;
+import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
+import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
 import com.labs64.netlicensing.domain.vo.Money;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
@@ -49,12 +50,12 @@ public class ItemToLicenseTemplateConverter extends ItemToEntityBaseConverter<Li
 
         // Custom properties
         for (final Property property : source.getProperty()) {
-            if (!LicenseTemplate.getReservedProps().contains(property.getName())) {
+            if (!LicenseTemplateImpl.getReservedProps().contains(property.getName())) {
                 target.getLicenseTemplateProperties().put(property.getName(), property.getValue());
             }
         }
 
-        target.setProductModule(new ProductModule());
+        target.setProductModule(new ProductModuleImpl());
         target.getProductModule().setNumber(
                 SchemaFunction.propertyByName(source.getProperty(), Constants.ProductModule.PRODUCT_MODULE_NUMBER)
                         .getValue());
@@ -64,7 +65,7 @@ public class ItemToLicenseTemplateConverter extends ItemToEntityBaseConverter<Li
 
     @Override
     public LicenseTemplate newTarget() {
-        return new LicenseTemplate();
+        return new LicenseTemplateImpl();
     }
 
 }
