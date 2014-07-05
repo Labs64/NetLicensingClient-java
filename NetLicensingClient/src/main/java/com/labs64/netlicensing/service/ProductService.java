@@ -22,7 +22,6 @@ import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
-import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 
 /**
@@ -56,8 +55,8 @@ public class ProductService {
      */
     public static Product create(final Context context, final Product newProduct) throws BaseCheckedException {
 
-        final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST, "product",
-                newProduct.asRequestForm(), Netlicensing.class, null);
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.POST, "product", newProduct.asRequestForm(), null);
+        // TODO: find&use only suitable for this context item
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
 
@@ -75,9 +74,7 @@ public class ProductService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put("productNumber", number);
-        final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.GET,
-                "product/{productNumber}", null, Netlicensing.class, params);
-
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "product/{productNumber}", null, params);
         // TODO: find&use only suitable for this context item
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
@@ -110,12 +107,10 @@ public class ProductService {
      *                              response messages.
      */
     public static Product update(final Context context, final String number, final Product updateProduct) throws BaseCheckedException {
+
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put("productNumber", number);
-
-        final Netlicensing res = RestProviderJersey.getInstance().call(context, HttpMethod.POST,
-                "product/{productNumber}", updateProduct.asRequestForm(), Netlicensing.class, params);
-
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.POST, "product/{productNumber}", updateProduct.asRequestForm(), params);
         // TODO: find&use only suitable for this context item
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }

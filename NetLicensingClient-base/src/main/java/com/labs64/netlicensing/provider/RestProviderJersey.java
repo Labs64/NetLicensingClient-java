@@ -12,7 +12,6 @@
  */
 package com.labs64.netlicensing.provider;
 
-
 import java.util.Map;
 
 import javax.ws.rs.client.Client;
@@ -20,12 +19,12 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.glassfish.jersey.filter.LoggingFilter;
 
-import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.auth.Authentication;
 import com.labs64.netlicensing.provider.auth.TokenAuthentication;
@@ -36,48 +35,69 @@ import com.labs64.netlicensing.provider.auth.UsernamePasswordAuthentication;
  * <p/>
  * This will also log each request in INFO level.
  */
-public class RestProviderJersey implements RestProvider {
+public class RestProviderJersey extends AbstractRestProvider {
 
-    private static final MediaType[] DEFAULT_ACCEPT_TYPES = {MediaType.APPLICATION_XML_TYPE};
+    private static final MediaType[] DEFAULT_ACCEPT_TYPES = { MediaType.APPLICATION_XML_TYPE };
 
-    private static RestProviderJersey instance;
+    private static Client client;
 
-    private final Client client;
+    private String basePath;
 
     /**
-     * Private constructor
+     * @param basePath
      */
-    private RestProviderJersey() {
-        client = ClientBuilder.newClient(new ClientConfig());
-        client.register(new LoggingFilter());
+    public RestProviderJersey(String basePath) {
+        this.basePath = basePath;
     }
 
-    public static RestProviderJersey getInstance() {
-        if (instance == null) {
+    /*
+     * @see com.labs64.netlicensing.provider.RestProvider#call(java.lang.String, java.lang.String, java.lang.Object, java.lang.Class, java.util.Map)
+     */
+    @Override
+    public <REQ, RES> RestResponse<RES> call(final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType,
+            final Map<String, Object> namedParams) throws RestException {
+        try {
+            final WebTarget target = getTarget(this.basePath);
+            addAuthHeaders(target, getAuthentication());
+
+            final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+            final Response response;
+            if (namedParams == null) {
+                response = target.path(urlTemplate)
+                        .request(DEFAULT_ACCEPT_TYPES)
+                        .method(httpMethod, requestEntity);
+            } else {
+                response = target.path(urlTemplate)
+                        .resolveTemplates(namedParams)
+                        .request(DEFAULT_ACCEPT_TYPES)
+                        .method(httpMethod, requestEntity);
+            }
+
+            final RestResponse<RES> restResponse = new RestResponse<RES>();
+            restResponse.setStatusCode(response.getStatus());
+            restResponse.setEntity(response.readEntity(responseType));
+            return restResponse;
+        } catch (RuntimeException e) {
+            throw new RestException("Exception while calling service", e);
+        }
+    }
+
+    /**
+     * Get static instance of RESTful client
+     *
+     * @return RESTful client
+     */
+    private static Client getClient() {
+        // initialize client only once since it's expensive operation
+        if (client == null) {
             synchronized (RestProviderJersey.class) {
-                if (instance == null) {
-                    instance = new RestProviderJersey();
+                if (client == null) {
+                    client = ClientBuilder.newClient(new ClientConfig());
+                    client.register(new LoggingFilter());
                 }
             }
         }
-        return instance;
-    }
-
-    @Override
-    public <REQ, RES> RES call(final Context context, final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType, final Map<String, Object> namedParams) throws RestException {
-        try {
-            final WebTarget target = getTarget(context.getBaseUrl());
-            authenticate(context, target);
-
-            final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-            if (namedParams == null) {
-                return target.path(urlTemplate).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
-            } else {
-                return target.path(urlTemplate).resolveTemplates(namedParams).request(DEFAULT_ACCEPT_TYPES).method(httpMethod, requestEntity, responseType);
-            }
-        } catch (Throwable e) {
-            throw new RestException("Exception while calling service", e);
-        }
+        return client;
     }
 
     /**
@@ -87,42 +107,20 @@ public class RestProviderJersey implements RestProvider {
      * @return RESTful client target
      */
     private WebTarget getTarget(final String basePath) {
-        WebTarget target = client.target(basePath);
+        final WebTarget target = getClient().target(basePath);
         return target;
     }
 
     /**
-     * @param context
      * @param target
-     * @throws RestException
-     */
-    private void authenticate(final Context context, final WebTarget target) throws RestException {
-        Authentication auth;
-        if (context.getSecurityMode() == null) {
-            throw new RestException("Security mode must be specified");
-        }
-        switch (context.getSecurityMode()) {
-            case BASIC_AUTHENTICATION:
-                auth = new UsernamePasswordAuthentication(context.getUsername(), context.getPassword());
-                break;
-            case APIKEY_IDENTIFICATION:
-                auth = new TokenAuthentication(context.getApiKey());
-                break;
-            default:
-                throw new RestException("Unknown security mode");
-        }
-        addAuthHeaders(auth, target);
-    }
-
-    /**
      * @param auth
-     * @param target
      */
-    private void addAuthHeaders(final Authentication auth, final WebTarget target) {
+    private void addAuthHeaders(final WebTarget target, final Authentication auth) {
         if (auth != null) {
             if (auth instanceof UsernamePasswordAuthentication) {
                 // see also https://jersey.java.net/documentation/latest/client.html#d0e4893
-                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(((UsernamePasswordAuthentication) auth).getUsername(), ((UsernamePasswordAuthentication) auth).getPassword());
+                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(((UsernamePasswordAuthentication) auth).getUsername(),
+                        ((UsernamePasswordAuthentication) auth).getPassword());
                 target.register(feature);
             } else if (auth instanceof TokenAuthentication) {
                 HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey", ((TokenAuthentication) auth).getToken());

@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.HttpMethod;
@@ -26,36 +29,15 @@ import org.junit.Test;
 
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
-import com.labs64.netlicensing.provider.RestProviderJersey;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import com.labs64.netlicensing.schema.context.Info;
+import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.schema.context.ObjectFactory;
 
 /**
  * Tests for checking the ability to connect to services using different
  * security modes
  */
 public class SecurityTest extends BaseServiceTest {
-
-    // *** NLIC test mock resource ***
-
-    @Path(REST_API_PATH)
-    public static class NLICResource {
-
-        @Path("get-auth-header")
-        @GET
-        public Response getAuthHeader(@HeaderParam("authorization") final String authorization) {
-            return Response.ok(authorization).build();
-        }
-
-    }
-
-    @Override
-    protected Application configure() {
-        enable(TestProperties.LOG_TRAFFIC);
-        return new ResourceConfig(NLICResource.class);
-    }
 
     // *** NLIC Tests ***
 
@@ -67,10 +49,9 @@ public class SecurityTest extends BaseServiceTest {
                 .setUsername("user1")
                 .setPassword("pswrd");
 
-        final String authHeader = RestProviderJersey.getInstance().call(context, HttpMethod.GET, "get-auth-header",
-                null, String.class, null);
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "get-auth-header", null, null);
+        final String authHeader = res.getInfos().getInfo().iterator().next().getValue();
 
-        assertNotNull(authHeader);
         assertTrue(authHeader.startsWith("Basic "));
 
         final String[] userAndPassword = Base64.decodeAsString(authHeader.substring(6)).split(":");
@@ -85,14 +66,43 @@ public class SecurityTest extends BaseServiceTest {
                 .setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION)
                 .setApiKey("TEST_API_KEY");
 
-        final String authHeader = RestProviderJersey.getInstance().call(context, HttpMethod.GET, "get-auth-header",
-                null, String.class, null);
-        assertNotNull(authHeader);
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "get-auth-header", null, null);
+        final String authHeader = res.getInfos().getInfo().iterator().next().getValue();
+
         assertTrue(authHeader.startsWith("Basic "));
 
         final String[] headerArray = Base64.decodeAsString(authHeader.substring(6)).split(":");
         assertEquals("apiKey", headerArray[0]);
         assertEquals("TEST_API_KEY", headerArray[1]);
+
+    }
+
+    // *** NLIC test mock resource ***
+
+    @Override
+    protected Application configure() {
+        enable(TestProperties.LOG_TRAFFIC);
+        return new ResourceConfig(NLICResource.class);
+    }
+
+    @Path(REST_API_PATH)
+    public static class NLICResource {
+
+        private final ObjectFactory objectFactory = new ObjectFactory();
+
+        @Path("get-auth-header")
+        @GET
+        public Response getAuthHeader(@HeaderParam("authorization") final String authorization) {
+
+            final Netlicensing netlicensing = objectFactory.createNetlicensing();
+            netlicensing.setInfos(objectFactory.createNetlicensingInfos());
+
+            final Info info = objectFactory.createInfo();
+            info.setValue(authorization);
+            netlicensing.getInfos().getInfo().add(info);
+
+            return Response.ok(netlicensing).build();
+        }
 
     }
 }
