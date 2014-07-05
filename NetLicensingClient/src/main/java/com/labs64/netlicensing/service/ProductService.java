@@ -12,7 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
@@ -20,8 +22,8 @@ import javax.ws.rs.HttpMethod;
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
-import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 
 /**
@@ -90,8 +92,16 @@ public class ProductService {
      *                              exceptions will be transformed to the corresponding service
      *                              response messages.
      */
-    public static Page<Product> list(final Context context, final String filter) throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static List<Product> list(final Context context, final String filter) throws BaseCheckedException {
+
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "product", null, null);
+
+        final List<Product> products = new ArrayList<Product>();
+        for (Item item : res.getItems().getItem()) {
+            final Product product = EntityFactory.create(item, Product.class);
+            products.add(product);
+        }
+        return products;
     }
 
     /**

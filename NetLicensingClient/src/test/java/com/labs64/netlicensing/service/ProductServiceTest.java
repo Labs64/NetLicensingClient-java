@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -118,9 +119,15 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals("CustomPropertyValue", resultProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
-    @Ignore
+    @Test
     public void testList() throws Exception {
+        final List<Product> products = ProductService.list(context, null);
 
+        assertNotNull(products);
+        assertEquals(3, products.size());
+        assertEquals("P001-TEST", products.get(0).getNumber());
+        assertEquals("Test Product 2", products.get(1).getName());
+        assertEquals("v2.0", products.get(2).getVersion());
     }
 
     @Test
@@ -204,6 +211,14 @@ public class ProductServiceTest extends BaseServiceTest {
             SchemaFunction.propertyByName(netlicensing.getItems().getItem().iterator().next().getProperty(),
                     Constants.NUMBER).setValue(productNumber);
 
+            return Response.ok(netlicensing).build();
+        }
+
+        @Path("product")
+        @GET
+        public Response listProducts() {
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-list.xml",
+                    Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
 
