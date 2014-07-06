@@ -12,20 +12,14 @@
  */
 package com.labs64.netlicensing.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.HttpMethod;
-
 import com.labs64.netlicensing.domain.Constants;
-import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.BaseCheckedException;
-import com.labs64.netlicensing.schema.context.Item;
-import com.labs64.netlicensing.schema.context.Netlicensing;
 
 /**
  * Provides product handling routines.
@@ -57,10 +51,7 @@ public class ProductService {
      *                              response messages.
      */
     public static Product create(final Context context, final Product newProduct) throws BaseCheckedException {
-
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.POST, "product", newProduct.asRequestForm(), null);
-        // TODO: find&use only suitable for this context item
-        return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
+        return NetLicensingService.post(context, "product", newProduct.asRequestForm(), Product.class);
     }
 
     /**
@@ -74,10 +65,7 @@ public class ProductService {
      *                              response messages.
      */
     public static Product get(final Context context, final String number) throws BaseCheckedException {
-
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "product/" + number, null, null);
-        // TODO: find&use only suitable for this context item
-        return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
+        return NetLicensingService.get(context, "product/" + number, null, Product.class);
     }
 
     /**
@@ -92,15 +80,7 @@ public class ProductService {
      *                              response messages.
      */
     public static List<Product> list(final Context context, final String filter) throws BaseCheckedException {
-
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "product", null, null);
-
-        final List<Product> products = new ArrayList<Product>();
-        for (Item item : res.getItems().getItem()) {
-            final Product product = EntityFactory.create(item, Product.class);
-            products.add(product);
-        }
-        return products;
+        return NetLicensingService.getList(context, "product", Product.class);
     }
 
     /**
@@ -116,10 +96,7 @@ public class ProductService {
      *                              response messages.
      */
     public static Product update(final Context context, final String number, final Product updateProduct) throws BaseCheckedException {
-
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.POST, "product/" + number, updateProduct.asRequestForm(), null);
-        // TODO: find&use only suitable for this context item
-        return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
+        return NetLicensingService.post(context, "product/" + number, updateProduct.asRequestForm(), Product.class);
     }
 
     /**
@@ -134,10 +111,9 @@ public class ProductService {
      *                              response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
-
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.request(context, HttpMethod.DELETE, "product/" + number, null, params);
+        NetLicensingService.delete(context, "product/" + number, params);
     }
 
 }
