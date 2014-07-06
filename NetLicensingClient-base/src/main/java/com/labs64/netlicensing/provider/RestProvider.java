@@ -31,13 +31,12 @@ public interface RestProvider {
      * @param request      optional: The request body to be sent to the server. May be null.
      * @param responseType optional: expected response type.
      *                     In case no responseType body is expected, responseType may be null.
-     * @param namedParams  optional: The URI parameters values which are expanded into the rest urlTemplate.
-     *                     May be null.
+     * @param queryParams  optional: The REST query parameters values. May be null.
      * @param <REQ>        type of the request entity
      * @param <RES>        type of the responseType entity
      * @return the responseType entity received from the server, or null if responseType is null.
      */
-    <REQ, RES> RestResponse<RES> call(String method, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> namedParams) throws RestException;
+    <REQ, RES> RestResponse<RES> call(String method, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> queryParams) throws RestException;
 
     /**
      * @param username

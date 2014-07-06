@@ -16,8 +16,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
+import com.labs64.netlicensing.schema.context.Info;
+import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.schema.context.ObjectFactory;
 import com.labs64.netlicensing.schema.context.Property;
 
 /**
@@ -147,6 +150,27 @@ public final class SchemaFunction {
             }
         }
         return null;
+    }
+
+    /**
+     * Updates {@link Netlicensing} object with list consisted of single {@link Info} object
+     *
+     * @param netlicensing
+     * @param id
+     * @param type
+     * @param value
+     */
+    public static void setSingleInfo(final Netlicensing netlicensing, final String id, final InfoEnum type,
+            final String value) {
+
+        final ObjectFactory objectFactory = new ObjectFactory();
+        netlicensing.setInfos(objectFactory.createNetlicensingInfos());
+
+        final Info info = objectFactory.createInfo();
+        info.setId(id);
+        info.setType(type);
+        info.setValue(value);
+        netlicensing.getInfos().getInfo().add(info);
     }
 
 }

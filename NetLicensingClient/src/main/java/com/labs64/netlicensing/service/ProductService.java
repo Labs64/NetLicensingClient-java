@@ -19,6 +19,7 @@ import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
@@ -74,9 +75,7 @@ public class ProductService {
      */
     public static Product get(final Context context, final String number) throws BaseCheckedException {
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("productNumber", number);
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "product/{productNumber}", null, params);
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "product/" + number, null, null);
         // TODO: find&use only suitable for this context item
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
@@ -118,9 +117,7 @@ public class ProductService {
      */
     public static Product update(final Context context, final String number, final Product updateProduct) throws BaseCheckedException {
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put("productNumber", number);
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.POST, "product/{productNumber}", updateProduct.asRequestForm(), params);
+        final Netlicensing res = NetLicensingService.request(context, HttpMethod.POST, "product/" + number, updateProduct.asRequestForm(), null);
         // TODO: find&use only suitable for this context item
         return EntityFactory.create(res.getItems().getItem().get(0), Product.class);
     }
@@ -137,7 +134,10 @@ public class ProductService {
      *                              response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
-        // TODO: implement me...
+
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.CASCADE, forceCascade);
+        NetLicensingService.request(context, HttpMethod.DELETE, "product/" + number, null, params);
     }
 
 }

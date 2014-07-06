@@ -20,10 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -33,8 +35,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -42,13 +45,13 @@ import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
-import com.labs64.netlicensing.schema.context.Info;
 import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
 import com.labs64.netlicensing.util.JAXBUtils;
 
 /**
+ * Integration tests for {@link ProductService}.
  */
 public class ProductServiceTest extends BaseServiceTest {
 
@@ -57,6 +60,9 @@ public class ProductServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -86,8 +92,11 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals("Test Value", createdProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
-    @Test(expected = RestException.class)
+    @Test
     public void testCreateEmpty() throws Exception {
+        thrown.expect(RestException.class);
+        thrown.expectMessage("MalformedRequestException: Product name is required");
+
         final Product newProduct = new ProductImpl();
         ProductService.create(context, newProduct);
     }
@@ -148,9 +157,13 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals("Test Value", updatedProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
-    @Ignore
+    @Test
     public void testDelete() throws Exception {
+        ProductService.delete(context, "P001-TEST", true);
 
+        thrown.expect(RestException.class);
+        thrown.expectMessage("NotFoundException: requested product does not exist");
+        ProductService.delete(context, "P001-NONE", false);
     }
 
     // *** NLIC test mock resource ***
@@ -174,14 +187,8 @@ public class ProductServiceTest extends BaseServiceTest {
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
 
             if (!formParams.containsKey(Constants.NAME)) {
-                netlicensing.setInfos(objectFactory.createNetlicensingInfos());
-
-                final Info info = objectFactory.createInfo();
-                info.setId("MalformedRequestException");
-                info.setType(InfoEnum.ERROR);
-                info.setValue("Product name is required");
-                netlicensing.getInfos().getInfo().add(info);
-
+                SchemaFunction.setSingleInfo(netlicensing, "MalformedRequestException", InfoEnum.ERROR,
+                        "Product name is required");
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
 
@@ -240,6 +247,25 @@ public class ProductServiceTest extends BaseServiceTest {
             return Response.ok(netlicensing).build();
         }
 
+        @Path("product/{productNumber}")
+        @DELETE
+        public Response deleteProduct(@PathParam("productNumber") final String productNumber,
+                @QueryParam("forceCascade") final boolean forceCascade) {
+
+            final Netlicensing netlicensing = objectFactory.createNetlicensing();
+
+            if (!"P001-TEST".equals(productNumber)) {
+                SchemaFunction.setSingleInfo(netlicensing, "NotFoundException", InfoEnum.ERROR,
+                        "requested product does not exist");
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+            if (forceCascade != true) {
+                SchemaFunction.setSingleInfo(netlicensing, "UnexpectedValueException", InfoEnum.ERROR,
+                        "Unexpected value of parameter 'forceCascade'");
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
     }
 
 }

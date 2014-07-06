@@ -14,11 +14,13 @@ package com.labs64.netlicensing.provider;
 
 import java.util.Map;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
@@ -55,27 +57,29 @@ public class RestProviderJersey extends AbstractRestProvider {
      */
     @Override
     public <REQ, RES> RestResponse<RES> call(final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType,
-            final Map<String, Object> namedParams) throws RestException {
+            final Map<String, Object> queryParams) throws RestException {
         try {
-            final WebTarget target = getTarget(this.basePath);
+            WebTarget target = getTarget(this.basePath);
             addAuthHeaders(target, getAuthentication());
 
             final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
             final Response response;
-            if (namedParams == null) {
+            if (queryParams == null) {
                 response = target.path(urlTemplate)
                         .request(DEFAULT_ACCEPT_TYPES)
                         .method(httpMethod, requestEntity);
             } else {
-                response = target.path(urlTemplate)
-                        .resolveTemplates(namedParams)
-                        .request(DEFAULT_ACCEPT_TYPES)
+                target = target.path(urlTemplate);
+                for (String paramKey : queryParams.keySet()) {
+                    target = target.queryParam(paramKey, queryParams.get(paramKey));
+                }
+                response = target.request(DEFAULT_ACCEPT_TYPES)
                         .method(httpMethod, requestEntity);
             }
 
             final RestResponse<RES> restResponse = new RestResponse<RES>();
             restResponse.setStatusCode(response.getStatus());
-            restResponse.setEntity(response.readEntity(responseType));
+            restResponse.setEntity(readEntity(response, responseType));
             return restResponse;
         } catch (RuntimeException e) {
             throw new RestException("Exception while calling service", e);
@@ -125,6 +129,25 @@ public class RestProviderJersey extends AbstractRestProvider {
             } else if (auth instanceof TokenAuthentication) {
                 HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey", ((TokenAuthentication) auth).getToken());
                 target.register(feature);
+            }
+        }
+    }
+
+    /**
+     * Reads entity of given type from response. Returns null when the response has a zero-length content.
+     *
+     * @param response
+     * @param responseType
+     * @return
+     */
+    private <RES> RES readEntity(final Response response, final Class<RES> responseType) {
+        try {
+            return response.readEntity(responseType);
+        } catch (ProcessingException ex) {
+            if (ex.getCause() instanceof NoContentException) {
+                return null;
+            } else {
+                throw ex;
             }
         }
     }
