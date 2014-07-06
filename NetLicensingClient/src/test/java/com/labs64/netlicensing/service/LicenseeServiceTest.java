@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -24,12 +26,15 @@ import org.junit.rules.ExpectedException;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.LicenseeImpl;
+import com.labs64.netlicensing.domain.entity.ValidationResult;
+import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
+import com.labs64.netlicensing.util.JAXBUtils;
 
 /**
  * Integration tests for {@link LicenseeService}.
@@ -81,6 +86,20 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals("P001-TEST", createdLicensee.getProduct().getNumber());
     }
 
+    @Test
+    public void testValidate() throws Exception {
+        final ValidationResult result = LicenseeService.validate(context, "L001-TEST", null);
+
+        assertNotNull(result);
+
+        final Composition validation = result.getProductModuleValidation("M001-TEST");
+        assertNotNull(validation);
+        assertEquals("TimeLimitedEvaluation", validation.getProperties().get(Constants.ProductModule.LICENSING_MODEL)
+                .getValue());
+        assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME)
+                .getValue());
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -122,5 +141,12 @@ public class LicenseeServiceTest extends BaseServiceTest {
             return Response.ok(netlicensing).build();
         }
 
+        @Path("licensee/{licenseeNumber}/validate")
+        @GET
+        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber) {
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
+                    + "netlicensing-licensee-validate.xml", Netlicensing.class);
+            return Response.ok(netlicensing).build();
+        }
     }
 }

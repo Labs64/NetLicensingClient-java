@@ -1,0 +1,11 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="ProductModuleValidation">
+            <property name="productModuleNumber">M001-TEST</property>
+            <property name="valid">true</property>
+            <property name="licensingModel">TimeLimitedEvaluation</property>
+            <property name="productModuleName">Test module</property>
+            <property name="evaluation">false</property>
+        </item>
+    </items>
+</netlicensing>

@@ -24,6 +24,7 @@ import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.Transaction;
+import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
@@ -33,6 +34,7 @@ import com.labs64.netlicensing.schema.converter.ItemToProductConverter;
 import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTokenConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
+import com.labs64.netlicensing.schema.converter.ItemToValidationResultConverter;
 
 /**
  * Factory that contains static methods for creating entities
@@ -51,6 +53,8 @@ public class EntityFactory {
         entityToConverterMap.put(ProductModule.class, ItemToProductModuleConverter.class);
         entityToConverterMap.put(Token.class, ItemToTokenConverter.class);
         entityToConverterMap.put(Transaction.class, ItemToTransactionConverter.class);
+
+        entityToConverterMap.put(ValidationResult.class, ItemToValidationResultConverter.class);
     }
 
     /**

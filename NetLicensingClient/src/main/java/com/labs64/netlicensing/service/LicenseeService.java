@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.core.Form;
 
 import com.labs64.netlicensing.domain.Constants;
@@ -116,7 +119,9 @@ public class LicenseeService {
      *                              corresponding service response messages.
      */
     public static ValidationResult validate(final Context context, final String number, final String productNumber) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.Product.PRODUCT_NUMBER, productNumber);
+        return NetLicensingService.get(context, "licensee/" + number + "/validate", params, ValidationResult.class);
     }
 
 }
