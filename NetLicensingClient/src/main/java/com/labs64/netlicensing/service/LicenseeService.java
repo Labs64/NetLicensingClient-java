@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import javax.ws.rs.core.Form;
+
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
@@ -45,7 +48,9 @@ public class LicenseeService {
      *                              corresponding service response messages.
      */
     public static Licensee create(final Context context, final String productNumber, final Licensee newLicensee) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        final Form form = newLicensee.asRequestForm();
+        form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
+        return NetLicensingService.post(context, "licensee", form, Licensee.class);
     }
 
     /**
