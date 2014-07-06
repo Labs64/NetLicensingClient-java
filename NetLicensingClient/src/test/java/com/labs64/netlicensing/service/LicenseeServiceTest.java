@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -100,6 +101,17 @@ public class LicenseeServiceTest extends BaseServiceTest {
     }
 
     @Test
+    public void testList() throws Exception {
+        final List<Licensee> licensees = LicenseeService.list(context, null);
+
+        assertNotNull(licensees);
+        assertEquals(3, licensees.size());
+        assertEquals("L001-TEST", licensees.get(0).getNumber());
+        assertEquals(true, licensees.get(1).getActive());
+        assertEquals("P001-TEST", licensees.get(2).getProduct().getNumber());
+    }
+
+    @Test
     public void testValidate() throws Exception {
         final ValidationResult result = LicenseeService.validate(context, "L001-TEST", null);
 
@@ -159,6 +171,14 @@ public class LicenseeServiceTest extends BaseServiceTest {
         public Response getLicensee(@PathParam("licenseeNumber") final String licenseeNumber) {
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
                     + "netlicensing-licensee-get.xml", Netlicensing.class);
+            return Response.ok(netlicensing).build();
+        }
+
+        @Path("licensee")
+        @GET
+        public Response listLicensees() {
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-licensee-list.xml",
+                    Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
 

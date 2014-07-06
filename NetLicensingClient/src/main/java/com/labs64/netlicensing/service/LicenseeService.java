@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Form;
@@ -21,7 +22,6 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
-import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
 
 /**
@@ -78,8 +78,8 @@ public class LicenseeService {
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Page<Licensee> list(final Context context, final String filter) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+    public static List<Licensee> list(final Context context, final String filter) throws BaseCheckedException {
+        return NetLicensingService.getList(context, "licensee", Licensee.class);
     }
 
     /**
