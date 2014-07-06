@@ -66,7 +66,7 @@ public class LicenseeService {
      *                              corresponding service response messages.
      */
     public static Licensee get(final Context context, final String number) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return NetLicensingService.get(context, "licensee/" + number, null, Licensee.class);
     }
 
     /**

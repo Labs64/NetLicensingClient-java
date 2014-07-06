@@ -41,6 +41,8 @@ import com.labs64.netlicensing.util.JAXBUtils;
  */
 public class LicenseeServiceTest extends BaseServiceTest {
 
+    private static final String LICENSEE_CUSTOM_PROPERTY = "CustomProperty";
+
     // *** NLIC Tests ***
 
     private static Context context;
@@ -84,6 +86,17 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertNotNull(createdLicensee);
         assertEquals(true, createdLicensee.getActive());
         assertEquals("P001-TEST", createdLicensee.getProduct().getNumber());
+    }
+
+    @Test
+    public void testGet() throws Exception {
+        final Licensee licensee = LicenseeService.get(context, "L001-TEST");
+
+        assertNotNull(licensee);
+        assertEquals("L001-TEST", licensee.getNumber());
+        assertEquals(true, licensee.getActive());
+        assertEquals("P001-TEST", licensee.getProduct().getNumber());
+        assertEquals("Custom property value", licensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -138,6 +151,14 @@ public class LicenseeServiceTest extends BaseServiceTest {
             }
             SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
 
+            return Response.ok(netlicensing).build();
+        }
+
+        @Path("licensee/{licenseeNumber}")
+        @GET
+        public Response getLicensee(@PathParam("licenseeNumber") final String licenseeNumber) {
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
+                    + "netlicensing-licensee-get.xml", Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
 
