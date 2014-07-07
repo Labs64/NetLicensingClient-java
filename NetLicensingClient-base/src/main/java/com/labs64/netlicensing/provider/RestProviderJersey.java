@@ -19,6 +19,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
@@ -39,16 +40,16 @@ import com.labs64.netlicensing.provider.auth.UsernamePasswordAuthentication;
  */
 public class RestProviderJersey extends AbstractRestProvider {
 
-    private static final MediaType[] DEFAULT_ACCEPT_TYPES = { MediaType.APPLICATION_XML_TYPE };
+    private static final MediaType[] DEFAULT_ACCEPT_TYPES = {MediaType.APPLICATION_XML_TYPE};
 
     private static Client client;
 
-    private String basePath;
+    private final String basePath;
 
     /**
      * @param basePath
      */
-    public RestProviderJersey(String basePath) {
+    public RestProviderJersey(final String basePath) {
         this.basePath = basePath;
     }
 
@@ -57,7 +58,7 @@ public class RestProviderJersey extends AbstractRestProvider {
      */
     @Override
     public <REQ, RES> RestResponse<RES> call(final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType,
-            final Map<String, Object> queryParams) throws RestException {
+                                             final Map<String, Object> queryParams) throws RestException {
         try {
             WebTarget target = getTarget(this.basePath);
             addAuthHeaders(target, getAuthentication());
@@ -67,13 +68,15 @@ public class RestProviderJersey extends AbstractRestProvider {
             if (queryParams == null) {
                 response = target.path(urlTemplate)
                         .request(DEFAULT_ACCEPT_TYPES)
+                        .header(HttpHeaders.USER_AGENT, getUserAgent())
                         .method(httpMethod, requestEntity);
             } else {
                 target = target.path(urlTemplate);
-                for (String paramKey : queryParams.keySet()) {
+                for (final String paramKey : queryParams.keySet()) {
                     target = target.queryParam(paramKey, queryParams.get(paramKey));
                 }
                 response = target.request(DEFAULT_ACCEPT_TYPES)
+                        .header(HttpHeaders.USER_AGENT, getUserAgent())
                         .method(httpMethod, requestEntity);
             }
 
@@ -84,6 +87,10 @@ public class RestProviderJersey extends AbstractRestProvider {
         } catch (RuntimeException e) {
             throw new RestException("Exception while calling service", e);
         }
+    }
+
+    private static String getUserAgent() {
+        return "NetLicensing/Java " + System.getProperty("java.version") + " (http://netlicensing.labs64.com)";
     }
 
     /**
