@@ -106,7 +106,9 @@ public class LicenseeService {
      *                              corresponding service response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
-        // TODO: implement me...
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.CASCADE, forceCascade);
+        NetLicensingService.delete(context, "licensee/" + number, params);
     }
 
     /**

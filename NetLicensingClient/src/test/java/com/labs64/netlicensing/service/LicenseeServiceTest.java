@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -128,6 +130,15 @@ public class LicenseeServiceTest extends BaseServiceTest {
     }
 
     @Test
+    public void testDelete() throws Exception {
+        LicenseeService.delete(context, "L001-TEST", true);
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("NotFoundException: requested licensee does not exist");
+        LicenseeService.delete(context, "L001-NONE", false);
+    }
+
+    @Test
     public void testValidate() throws Exception {
         final ValidationResult result = LicenseeService.validate(context, "L001-TEST", null);
 
@@ -214,6 +225,26 @@ public class LicenseeServiceTest extends BaseServiceTest {
             SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
 
             return Response.ok(netlicensing).build();
+        }
+
+        @Path("licensee/{licenseeNumber}")
+        @DELETE
+        public Response deleteLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
+                @QueryParam("forceCascade") final boolean forceCascade) {
+
+            final Netlicensing netlicensing = objectFactory.createNetlicensing();
+
+            if (!"L001-TEST".equals(licenseeNumber)) {
+                SchemaFunction.setSingleInfo(netlicensing, "NotFoundException", InfoEnum.ERROR,
+                        "requested licensee does not exist");
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+            if (forceCascade != true) {
+                SchemaFunction.setSingleInfo(netlicensing, "UnexpectedValueException", InfoEnum.ERROR,
+                        "Unexpected value of parameter 'forceCascade'");
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+            return Response.status(Response.Status.NO_CONTENT).build();
         }
 
         @Path("licensee/{licenseeNumber}/validate")
