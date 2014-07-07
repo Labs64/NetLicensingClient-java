@@ -93,7 +93,7 @@ public class LicenseeService {
      *                              corresponding service response messages.
      */
     public static Licensee update(final Context context, final String number, final Licensee updateLicensee) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return NetLicensingService.post(context, "licensee/" + number, updateLicensee.asRequestForm(), Licensee.class);
     }
 
     /**

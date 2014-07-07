@@ -112,6 +112,22 @@ public class LicenseeServiceTest extends BaseServiceTest {
     }
 
     @Test
+    public void testUpdate() throws Exception {
+        final Licensee licensee = new LicenseeImpl();
+        licensee.setNumber("L002-TEST");
+        licensee.setActive(true);
+        licensee.addProperty(LICENSEE_CUSTOM_PROPERTY, "New property value");
+
+        final Licensee updatedLicensee = LicenseeService.update(context, "L001-TEST", licensee);
+
+        assertNotNull(updatedLicensee);
+        assertEquals("L002-TEST", updatedLicensee.getNumber());
+        assertEquals(true, updatedLicensee.getActive());
+        assertEquals("P001-TEST", updatedLicensee.getProduct().getNumber());
+        assertEquals("New property value", updatedLicensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
+    }
+
+    @Test
     public void testValidate() throws Exception {
         final ValidationResult result = LicenseeService.validate(context, "L001-TEST", null);
 
@@ -179,6 +195,24 @@ public class LicenseeServiceTest extends BaseServiceTest {
         public Response listLicensees() {
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-licensee-list.xml",
                     Netlicensing.class);
+            return Response.ok(netlicensing).build();
+        }
+
+        @Path("licensee/{licenseeNumber}")
+        @POST
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        public Response updateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
+                final MultivaluedMap<String, String> formParams) {
+
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-licensee-update.xml",
+                    Netlicensing.class);
+
+            final Map<String, String> propertyValues = new HashMap<String, String>();
+            for (final String paramKey : formParams.keySet()) {
+                propertyValues.put(paramKey, formParams.getFirst(paramKey));
+            }
+            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
+
             return Response.ok(netlicensing).build();
         }
 

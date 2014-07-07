@@ -1,0 +1,11 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="Licensee">
+            <property name="number">L001-TEST</property>
+            <property name="active">false</property>
+            <property name="productNumber">P001-TEST</property>
+            <property name="CustomProperty">Custom property value</property>
+            <property name="inUse">true</property>
+        </item>
+    </items>
+</netlicensing>
