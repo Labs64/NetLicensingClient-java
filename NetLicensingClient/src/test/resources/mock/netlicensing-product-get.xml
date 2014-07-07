@@ -1,7 +1,7 @@
 <netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
     <items>
         <item type="Product">
-            <property name="number">P014</property>
+            <property name="number">P014-TEST</property>
             <property name="active">true</property>
             <property name="name">Product Numero Uno</property>
             <property name="version">v1.0</property>

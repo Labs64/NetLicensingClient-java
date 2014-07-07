@@ -15,11 +15,8 @@ package com.labs64.netlicensing.service;
 import javax.ws.rs.GET;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.TestProperties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -28,6 +25,7 @@ import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
 
 /**
+ * Common integration tests for {@link NetLicensingService}.
  */
 public class NetLicensingServiceTest extends BaseServiceTest {
 
@@ -53,10 +51,9 @@ public class NetLicensingServiceTest extends BaseServiceTest {
     // *** NLIC test mock resource ***
 
     @Override
-    protected Application configure() {
-        enable(TestProperties.LOG_TRAFFIC);
-        return new ResourceConfig(NLICResource.class);
-    }
+    protected java.lang.Class<?> getResourceClass() {
+        return NLICResource.class;
+    };
 
     @Path(REST_API_PATH)
     public static class NLICResource {

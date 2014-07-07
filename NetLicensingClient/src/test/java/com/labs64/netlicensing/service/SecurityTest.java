@@ -19,12 +19,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.internal.util.Base64;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 
 import com.labs64.netlicensing.domain.vo.Context;
@@ -80,10 +77,9 @@ public class SecurityTest extends BaseServiceTest {
     // *** NLIC test mock resource ***
 
     @Override
-    protected Application configure() {
-        enable(TestProperties.LOG_TRAFFIC);
-        return new ResourceConfig(NLICResource.class);
-    }
+    protected java.lang.Class<?> getResourceClass() {
+        return NLICResource.class;
+    };
 
     @Path(REST_API_PATH)
     public static class NLICResource {

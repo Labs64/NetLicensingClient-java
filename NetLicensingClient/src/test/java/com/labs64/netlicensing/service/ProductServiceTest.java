@@ -26,14 +26,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.TestProperties;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,8 +43,6 @@ import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Netlicensing;
-import com.labs64.netlicensing.schema.context.ObjectFactory;
-import com.labs64.netlicensing.util.JAXBUtils;
 
 /**
  * Integration tests for {@link ProductService}.
@@ -117,12 +111,10 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testGet() throws Exception {
-        final String number = RandomStringUtils.randomAlphanumeric(8);
-
-        final Product resultProduct = ProductService.get(context, number);
+        final Product resultProduct = ProductService.get(context, "P014-TEST");
 
         assertNotNull(resultProduct);
-        assertEquals(number, resultProduct.getNumber());
+        assertEquals("P014-TEST", resultProduct.getNumber());
         assertEquals("Product Numero Uno", resultProduct.getName());
         assertEquals("Licensed to Licensee", resultProduct.getLicensingInfo());
         assertEquals("CustomPropertyValue", resultProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
@@ -169,64 +161,46 @@ public class ProductServiceTest extends BaseServiceTest {
     // *** NLIC test mock resource ***
 
     @Override
-    protected Application configure() {
-        enable(TestProperties.LOG_TRAFFIC);
-        return new ResourceConfig(NLICResource.class);
-    }
+    protected java.lang.Class<?> getResourceClass() {
+        return NLICResource.class;
+    };
 
     @Path(REST_API_PATH)
-    public static class NLICResource {
+    public static class NLICResource extends AbstractNLICServiceResource {
 
-        private final ObjectFactory objectFactory = new ObjectFactory();
+        public NLICResource() {
+            super("product");
+        }
 
         @Path("product")
         @POST
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
         public Response createProduct(final MultivaluedMap<String, String> formParams) {
 
-            final Netlicensing netlicensing = objectFactory.createNetlicensing();
-
             if (!formParams.containsKey(Constants.NAME)) {
+                final Netlicensing netlicensing = objectFactory.createNetlicensing();
                 SchemaFunction.setSingleInfo(netlicensing, "MalformedRequestException", InfoEnum.ERROR,
                         "Product name is required");
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
 
-            netlicensing.setItems(objectFactory.createNetlicensingItems());
-            netlicensing.getItems().getItem().add(objectFactory.createItem());
-
-            final Map<String, String> propertyValues = new HashMap<String, String>();
-            // default values
-            propertyValues.put(Constants.VERSION, "");
-            propertyValues.put(Constants.ACTIVE, "true");
-            propertyValues.put(Constants.Product.LICENSEE_AUTO_CREATE, "false");
-            // values from request
-            for (final String paramKey : formParams.keySet()) {
-                propertyValues.put(paramKey, formParams.getFirst(paramKey));
-            }
-            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
-
-            return Response.ok(netlicensing).build();
+            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            defaultPropertyValues.put(Constants.VERSION, "");
+            defaultPropertyValues.put(Constants.ACTIVE, "true");
+            defaultPropertyValues.put(Constants.Product.LICENSEE_AUTO_CREATE, "false");
+            return create(formParams, defaultPropertyValues);
         }
 
         @Path("product/{productNumber}")
         @GET
         public Response getProduct(@PathParam("productNumber") final String productNumber) {
-            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-get.xml",
-                    Netlicensing.class);
-
-            SchemaFunction.propertyByName(netlicensing.getItems().getItem().iterator().next().getProperty(),
-                    Constants.NUMBER).setValue(productNumber);
-
-            return Response.ok(netlicensing).build();
+            return get();
         }
 
         @Path("product")
         @GET
         public Response listProducts() {
-            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-list.xml",
-                    Netlicensing.class);
-            return Response.ok(netlicensing).build();
+            return list();
         }
 
         @Path("product/{productNumber}")
@@ -234,37 +208,14 @@ public class ProductServiceTest extends BaseServiceTest {
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
         public Response updateProduct(@PathParam("productNumber") final String productNumber,
                 final MultivaluedMap<String, String> formParams) {
-
-            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-product-update.xml",
-                    Netlicensing.class);
-
-            final Map<String, String> propertyValues = new HashMap<String, String>();
-            for (final String paramKey : formParams.keySet()) {
-                propertyValues.put(paramKey, formParams.getFirst(paramKey));
-            }
-            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
-
-            return Response.ok(netlicensing).build();
+            return update(formParams);
         }
 
         @Path("product/{productNumber}")
         @DELETE
         public Response deleteProduct(@PathParam("productNumber") final String productNumber,
                 @QueryParam("forceCascade") final boolean forceCascade) {
-
-            final Netlicensing netlicensing = objectFactory.createNetlicensing();
-
-            if (!"P001-TEST".equals(productNumber)) {
-                SchemaFunction.setSingleInfo(netlicensing, "NotFoundException", InfoEnum.ERROR,
-                        "requested product does not exist");
-                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
-            }
-            if (forceCascade != true) {
-                SchemaFunction.setSingleInfo(netlicensing, "UnexpectedValueException", InfoEnum.ERROR,
-                        "Unexpected value of parameter 'forceCascade'");
-                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
-            }
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return delete(productNumber, "P001-TEST", forceCascade);
         }
     }
 
