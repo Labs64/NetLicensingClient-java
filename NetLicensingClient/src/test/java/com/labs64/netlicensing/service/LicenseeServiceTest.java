@@ -2,6 +2,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,6 +100,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         final Page<Licensee> licensees = LicenseeService.list(context);
 
         assertNotNull(licensees);
+        assertTrue(licensees.hasContent());
         assertEquals(3, licensees.getContent().size());
         assertEquals("L001-TEST", licensees.getContent().get(0).getNumber());
         assertEquals(true, licensees.getContent().get(1).getActive());

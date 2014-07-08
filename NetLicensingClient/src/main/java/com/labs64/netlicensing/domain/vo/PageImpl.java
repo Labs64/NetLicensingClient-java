@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Basic {@code Page} implementation.
- * 
+ *
  * @param <Entity>
  *            the type of which the page consists.
  */
@@ -37,7 +37,7 @@ public class PageImpl<Entity> implements Page<Entity>, Serializable {
 
     /**
      * Constructor of {@code PageImpl}.
-     * 
+     *
      * @param content
      *            the content of this page, must not be {@literal null}.
      * @param pageNumber
@@ -66,7 +66,7 @@ public class PageImpl<Entity> implements Page<Entity>, Serializable {
 
     /**
      * Safe create instance of {@code Page}.
-     * 
+     *
      * @param content
      *            the content of this page, must not be {@literal null}.
      * @param pageNumber
@@ -79,19 +79,20 @@ public class PageImpl<Entity> implements Page<Entity>, Serializable {
      *            the total amount of elements
      * @param hasNext
      *            is there a next page exists
+     * @param <E> type of page entity
      */
-    public static PageImpl createInstance(final List content,
+    public static <E> PageImpl<E> createInstance(final List<E> content,
             final String pageNumber, final String itemsNumber,
             final String totalPages, final String totalItems, final String hasNext) {
         try {
-            return new PageImpl(content,
+            return new PageImpl<E>(content,
                     Integer.valueOf(pageNumber),
                     Integer.valueOf(itemsNumber),
                     Integer.valueOf(totalPages),
                     Long.valueOf(totalItems),
                     Boolean.valueOf(hasNext));
         } catch (Exception e) {
-            return new PageImpl(content, 0, 0, 0, 0, false);
+            return new PageImpl<E>(content, 0, 0, 0, 0, false);
         }
     }
 

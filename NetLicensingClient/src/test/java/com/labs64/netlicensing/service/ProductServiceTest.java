@@ -12,6 +12,10 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,9 +41,6 @@ import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Integration tests for {@link ProductService}.
@@ -122,6 +123,7 @@ public class ProductServiceTest extends BaseServiceTest {
         final Page<Product> products = ProductService.list(context);
 
         assertNotNull(products);
+        assertTrue(products.hasContent());
         assertEquals(3, products.getContent().size());
         assertEquals("P001-TEST", products.getContent().get(0).getNumber());
         assertEquals("Test Product 2", products.getContent().get(1).getName());

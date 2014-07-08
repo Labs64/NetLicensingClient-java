@@ -79,7 +79,7 @@ public class ProductService {
      *             corresponding service response messages.
      */
     public static Page<Product> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getList(context, "product", Product.class);
+        return NetLicensingService.getPage(context, "product", Product.class);
     }
 
     /**

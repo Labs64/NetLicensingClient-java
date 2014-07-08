@@ -39,7 +39,7 @@ class NetLicensingService {
     /**
      * Helper method for performing GET request to NetLicensing API services. Finds and returns first suitable item with
      * type resultType from the response.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -60,29 +60,29 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing GET request to NetLicensing API service that returns list of items with type
+     * Helper method for performing GET request to NetLicensing API service that returns page of items with type
      * resultType.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
      *            the REST URL template
      * @param resultType
-     *            the type of the item of the result list
-     * @return list of items with type resultType from the response
+     *            the type of the item of the result page
+     * @return page of items with type resultType from the response
      * @throws RestException
      */
-    static <RES> Page<RES> getList(final Context context, final String urlTemplate, final Class<RES> resultType)
+    static <RES> Page<RES> getPage(final Context context, final String urlTemplate, final Class<RES> resultType)
             throws RestException {
 
         final Netlicensing netlicensing = NetLicensingService.request(context, HttpMethod.GET, urlTemplate, null, null);
-        return extractListOfType(netlicensing, resultType);
+        return extractPageOfItems(netlicensing, resultType);
     }
 
     /**
      * Helper method for performing POST request to NetLicensing API services. Finds and returns first suitable item
      * with type resultType from the response.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -104,7 +104,7 @@ class NetLicensingService {
 
     /**
      * Helper method for performing DELETE request to NetLicensing API services.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -122,7 +122,7 @@ class NetLicensingService {
     /**
      * Helper method for performing request to NetLicensing API services. Knows about context for the NetLicensing API
      * calls, does authentication, provides error handling based on status of the response.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param method
@@ -171,7 +171,7 @@ class NetLicensingService {
 
     /**
      * Passes the authentication data specified in the context of the call to the RESTful provider.
-     * 
+     *
      * @param restProvider
      * @param context
      * @throws RestException
@@ -194,7 +194,7 @@ class NetLicensingService {
 
     /**
      * Finds and returns from {@link Netlicensing} object suitable item of specified type
-     * 
+     *
      * @param netlicensing
      * @param resultType
      * @return
@@ -204,19 +204,18 @@ class NetLicensingService {
     }
 
     /**
-     * Extracts list of items of specified type from {@link Netlicensing} object
-     * 
+     * Returns page of items of specified type from {@link Netlicensing} object
+     *
      * @param netlicensing
      * @param resultType
      * @return
      */
-    private static <RES> Page<RES> extractListOfType(final Netlicensing netlicensing, final Class<RES> resultType) {
+    private static <RES> Page<RES> extractPageOfItems(final Netlicensing netlicensing, final Class<RES> resultType) {
         final List<RES> products = new ArrayList<RES>();
         for (final Item item : netlicensing.getItems().getItem()) {
             final RES product = EntityFactory.create(item, resultType);
             products.add(product);
         }
-
         return PageImpl.createInstance(products,
                 netlicensing.getItems().getPagenumber(),
                 netlicensing.getItems().getItemsnumber(),
