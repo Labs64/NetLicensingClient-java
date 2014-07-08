@@ -21,6 +21,8 @@ import javax.ws.rs.core.Response;
 
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.RestProvider;
 import com.labs64.netlicensing.provider.RestProviderJersey;
@@ -30,23 +32,20 @@ import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 
 /**
- * Provides generic requests to NetLicensing services. This class is supposed to
- * be used by other **Service classes.
+ * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service classes.
  */
 class NetLicensingService {
 
     /**
-     * Helper method for performing GET request to NetLicensing API services.
-     * Finds and returns first suitable item with type resultType from the
-     * response.
-     *
+     * Helper method for performing GET request to NetLicensing API services. Finds and returns first suitable item with
+     * type resultType from the response.
+     * 
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
      *            the REST URL template
      * @param queryParams
-     *            The REST query parameters values. May be null if there are no
-     *            parameters.
+     *            The REST query parameters values. May be null if there are no parameters.
      * @param resultType
      *            the type of the result
      * @return first suitable item with type resultType from the response
@@ -61,9 +60,9 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing GET request to NetLicensing API service that
-     * returns list of items with type resultType.
-     *
+     * Helper method for performing GET request to NetLicensing API service that returns list of items with type
+     * resultType.
+     * 
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -73,7 +72,7 @@ class NetLicensingService {
      * @return list of items with type resultType from the response
      * @throws RestException
      */
-    static <RES> List<RES> getList(final Context context, final String urlTemplate, final Class<RES> resultType)
+    static <RES> Page<RES> getList(final Context context, final String urlTemplate, final Class<RES> resultType)
             throws RestException {
 
         final Netlicensing netlicensing = NetLicensingService.request(context, HttpMethod.GET, urlTemplate, null, null);
@@ -81,10 +80,9 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing POST request to NetLicensing API services.
-     * Finds and returns first suitable item with type resultType from the
-     * response.
-     *
+     * Helper method for performing POST request to NetLicensing API services. Finds and returns first suitable item
+     * with type resultType from the response.
+     * 
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -106,14 +104,13 @@ class NetLicensingService {
 
     /**
      * Helper method for performing DELETE request to NetLicensing API services.
-     *
+     * 
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
      *            the REST URL template
      * @param queryParams
-     *            The REST query parameters values. May be null if there are no
-     *            parameters.
+     *            The REST query parameters values. May be null if there are no parameters.
      * @throws RestException
      */
     static void delete(final Context context, final String urlTemplate, final Map<String, Object> queryParams)
@@ -123,10 +120,9 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing request to NetLicensing API services. Knows
-     * about context for the NetLicensing API calls, does authentication,
-     * provides error handling based on status of the response.
-     *
+     * Helper method for performing request to NetLicensing API services. Knows about context for the NetLicensing API
+     * calls, does authentication, provides error handling based on status of the response.
+     * 
      * @param context
      *            context for the NetLicensing API call
      * @param method
@@ -136,8 +132,7 @@ class NetLicensingService {
      * @param request
      *            The request body to be sent to the server. May be null.
      * @param queryParams
-     *            The REST query parameters values. May be null if there are no
-     *            parameters.
+     *            The REST query parameters values. May be null if there are no parameters.
      * @param <REQ>
      *            type of the request entity
      * @return
@@ -155,13 +150,13 @@ class NetLicensingService {
         final Response.Status status = Response.Status.fromStatusCode(response.getStatusCode());
         if (!isErrorStatus(status)) {
             switch (status) {
-                case OK:
-                    return response.getEntity();
-                case NO_CONTENT:
-                    return null;
-                default:
-                    throw new RestException(String.format("Unsupported response status code %s: %s",
-                            status.getStatusCode(), status.getReasonPhrase()));
+            case OK:
+                return response.getEntity();
+            case NO_CONTENT:
+                return null;
+            default:
+                throw new RestException(String.format("Unsupported response status code %s: %s",
+                        status.getStatusCode(), status.getReasonPhrase()));
             }
         } else {
             if (hasErrorInfos(response.getEntity())) {
@@ -175,9 +170,8 @@ class NetLicensingService {
     }
 
     /**
-     * Passes the authentication data specified in the context of the call to
-     * the RESTful provider.
-     *
+     * Passes the authentication data specified in the context of the call to the RESTful provider.
+     * 
      * @param restProvider
      * @param context
      * @throws RestException
@@ -187,21 +181,20 @@ class NetLicensingService {
             throw new RestException("Security mode must be specified");
         }
         switch (context.getSecurityMode()) {
-            case BASIC_AUTHENTICATION:
-                restProvider.authenticate(context.getUsername(), context.getPassword());
-                break;
-            case APIKEY_IDENTIFICATION:
-                restProvider.authenticate(context.getApiKey());
-                break;
-            default:
-                throw new RestException("Unknown security mode");
+        case BASIC_AUTHENTICATION:
+            restProvider.authenticate(context.getUsername(), context.getPassword());
+            break;
+        case APIKEY_IDENTIFICATION:
+            restProvider.authenticate(context.getApiKey());
+            break;
+        default:
+            throw new RestException("Unknown security mode");
         }
     }
 
     /**
-     * Finds and returns from {@link Netlicensing} object suitable item of
-     * specified type
-     *
+     * Finds and returns from {@link Netlicensing} object suitable item of specified type
+     * 
      * @param netlicensing
      * @param resultType
      * @return
@@ -212,25 +205,30 @@ class NetLicensingService {
 
     /**
      * Extracts list of items of specified type from {@link Netlicensing} object
-     *
+     * 
      * @param netlicensing
      * @param resultType
      * @return
      */
-    private static <RES> List<RES> extractListOfType(final Netlicensing netlicensing, final Class<RES> resultType) {
+    private static <RES> Page<RES> extractListOfType(final Netlicensing netlicensing, final Class<RES> resultType) {
         final List<RES> products = new ArrayList<RES>();
-        for (Item item : netlicensing.getItems().getItem()) {
+        for (final Item item : netlicensing.getItems().getItem()) {
             final RES product = EntityFactory.create(item, resultType);
             products.add(product);
         }
-        return products;
+
+        return PageImpl.createInstance(products,
+                netlicensing.getItems().getPagenumber(),
+                netlicensing.getItems().getItemsnumber(),
+                netlicensing.getItems().getTotalpages(),
+                netlicensing.getItems().getTotalitems(),
+                netlicensing.getItems().getHasnext());
     }
 
     /**
      * @param status
      *            info about status
-     * @return true if HTTP status represents client error or server error,
-     *         false otherwise
+     * @return true if HTTP status represents client error or server error, false otherwise
      */
     private static boolean isErrorStatus(final Response.Status status) {
         return status.getFamily() == Response.Status.Family.CLIENT_ERROR
@@ -251,7 +249,7 @@ class NetLicensingService {
      */
     private static String asExceptionMessage(final List<Info> infos) {
         final StringBuilder errorMessages = new StringBuilder();
-        for (Info info : infos) {
+        for (final Info info : infos) {
             if (errorMessages.length() > 0) {
                 errorMessages.append(", ");
             }

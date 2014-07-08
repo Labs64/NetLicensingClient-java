@@ -1,5 +1,5 @@
 <netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
-    <items>
+    <items pagenumber="0" itemsnumber="3" totalpages="1" totalitems="3" hasnext="false">
         <item type="Product">
             <property name="number">P001-TEST</property>
             <property name="active">true</property>

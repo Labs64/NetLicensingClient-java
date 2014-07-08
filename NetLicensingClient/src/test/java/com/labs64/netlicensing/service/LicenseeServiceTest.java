@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -29,6 +28,7 @@ import com.labs64.netlicensing.domain.entity.LicenseeImpl;
 import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.InfoEnum;
@@ -98,13 +98,13 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final List<Licensee> licensees = LicenseeService.list(context, null);
+        final Page<Licensee> licensees = LicenseeService.list(context);
 
         assertNotNull(licensees);
-        assertEquals(3, licensees.size());
-        assertEquals("L001-TEST", licensees.get(0).getNumber());
-        assertEquals(true, licensees.get(1).getActive());
-        assertEquals("P001-TEST", licensees.get(2).getProduct().getNumber());
+        assertEquals(3, licensees.getContent().size());
+        assertEquals("L001-TEST", licensees.getContent().get(0).getNumber());
+        assertEquals(true, licensees.getContent().get(1).getActive());
+        assertEquals("P001-TEST", licensees.getContent().get(2).getProduct().getNumber());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
     @Override
     protected Class<?> getResourceClass() {
         return NLICResource.class;
-    };
+    }
 
     @Path(REST_API_PATH)
     public static class NLICResource extends AbstractNLICServiceResource {

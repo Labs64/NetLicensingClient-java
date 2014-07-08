@@ -78,13 +78,13 @@ abstract class BaseServiceTest extends JerseyTest {
         /**
          * @param serviceId
          */
-        public AbstractNLICServiceResource(String serviceId) {
+        public AbstractNLICServiceResource(final String serviceId) {
             this.serviceId = serviceId;
         }
 
         /**
          * Defines common functionality for a "create" service
-         *
+         * 
          * @param formParams
          * @param defaultPropertyValues
          * @return
@@ -107,7 +107,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "get" service
-         *
+         * 
          * @return
          */
         protected Response get() {
@@ -118,7 +118,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "list" service
-         *
+         * 
          * @return
          */
         protected Response list() {
@@ -129,7 +129,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for an "update" service
-         *
+         * 
          * @param formParams
          * @return
          */
@@ -148,7 +148,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "delete" service
-         *
+         * 
          * @param number
          * @param expectedNumber
          * @param forceCascade
@@ -162,7 +162,7 @@ abstract class BaseServiceTest extends JerseyTest {
                         String.format("requested %s does not exist", serviceId));
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
-            if (forceCascade != true) {
+            if (!forceCascade) {
                 SchemaFunction.setSingleInfo(netlicensing, "UnexpectedValueException", InfoEnum.ERROR,
                         "Unexpected value of parameter 'forceCascade'");
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();

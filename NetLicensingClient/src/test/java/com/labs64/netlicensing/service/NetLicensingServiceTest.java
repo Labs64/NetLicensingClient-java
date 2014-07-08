@@ -53,7 +53,7 @@ public class NetLicensingServiceTest extends BaseServiceTest {
     @Override
     protected java.lang.Class<?> getResourceClass() {
         return NLICResource.class;
-    };
+    }
 
     @Path(REST_API_PATH)
     public static class NLICResource {

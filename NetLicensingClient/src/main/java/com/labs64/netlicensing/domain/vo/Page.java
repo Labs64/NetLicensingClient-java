@@ -12,6 +12,63 @@
  */
 package com.labs64.netlicensing.domain.vo;
 
-public class Page<Entity> {
+import java.util.List;
+
+/**
+ * A page is a sub-list of a list of objects. It allows gain information about the position of it in the containing
+ * entire list.
+ * 
+ * @param <Entity>
+ */
+public interface Page<Entity> extends Iterable<Entity> {
+
+    /**
+     * Returns the number of the current page. Is always non-negative.
+     * 
+     * @return the number of the current page.
+     */
+    int getPageNumber();
+
+    /**
+     * Returns the number of elements on the page.
+     * 
+     * @return the number of elements on the page.
+     */
+    int getItemsNumber();
+
+    /**
+     * Returns the number of total pages.
+     * 
+     * @return the number of total pages
+     */
+    int getTotalPages();
+
+    /**
+     * Returns the total amount of elements.
+     * 
+     * @return the total amount of elements
+     */
+    long getTotalItems();
+
+    /**
+     * Returns if there is a next page exists.
+     * 
+     * @return true if there is a next page exists, otherwise false.
+     */
+    boolean hasNext();
+
+    /**
+     * Return container content.
+     * 
+     * @return container content
+     */
+    List<Entity> getContent();
+
+    /**
+     * Returns if there is a content exists.
+     * 
+     * @return true if there is a content exists, otherwise false
+     */
+    boolean hasContent();
 
 }

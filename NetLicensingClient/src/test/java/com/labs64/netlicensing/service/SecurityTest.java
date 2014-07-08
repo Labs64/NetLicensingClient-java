@@ -12,9 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.HttpMethod;
@@ -30,9 +27,11 @@ import com.labs64.netlicensing.schema.context.Info;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
- * Tests for checking the ability to connect to services using different
- * security modes
+ * Tests for checking the ability to connect to services using different security modes
  */
 public class SecurityTest extends BaseServiceTest {
 
@@ -79,7 +78,7 @@ public class SecurityTest extends BaseServiceTest {
     @Override
     protected java.lang.Class<?> getResourceClass() {
         return NLICResource.class;
-    };
+    }
 
     @Path(REST_API_PATH)
     public static class NLICResource {

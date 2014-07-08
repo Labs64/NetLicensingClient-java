@@ -12,11 +12,7 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -39,10 +35,14 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Netlicensing;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Integration tests for {@link ProductService}.
@@ -122,13 +122,13 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final List<Product> products = ProductService.list(context, null);
+        final Page<Product> products = ProductService.list(context);
 
         assertNotNull(products);
-        assertEquals(3, products.size());
-        assertEquals("P001-TEST", products.get(0).getNumber());
-        assertEquals("Test Product 2", products.get(1).getName());
-        assertEquals("v2.0", products.get(2).getVersion());
+        assertEquals(3, products.getContent().size());
+        assertEquals("P001-TEST", products.getContent().get(0).getNumber());
+        assertEquals("Test Product 2", products.getContent().get(1).getName());
+        assertEquals("v2.0", products.getContent().get(2).getVersion());
     }
 
     @Test
@@ -163,7 +163,7 @@ public class ProductServiceTest extends BaseServiceTest {
     @Override
     protected java.lang.Class<?> getResourceClass() {
         return NLICResource.class;
-    };
+    }
 
     @Path(REST_API_PATH)
     public static class NLICResource extends AbstractNLICServiceResource {
