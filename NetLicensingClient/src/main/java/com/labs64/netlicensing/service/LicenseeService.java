@@ -17,6 +17,8 @@ import java.util.Map;
 
 import javax.ws.rs.core.Form;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.ValidationResult;
@@ -41,7 +43,7 @@ public class LicenseeService {
 
     /**
      * Creates new licensee object with given properties.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param productNumber
@@ -63,7 +65,7 @@ public class LicenseeService {
 
     /**
      * Gets licensee by its number.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -79,7 +81,7 @@ public class LicenseeService {
 
     /**
      * Returns all licensees of a vendor.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of licensees (of all products) or null/empty list if nothing found.
@@ -93,7 +95,7 @@ public class LicenseeService {
 
     /**
      * Updates licensee properties.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -112,7 +114,7 @@ public class LicenseeService {
 
     /**
      * Deletes licensee.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -132,21 +134,29 @@ public class LicenseeService {
 
     /**
      * Validates active licenses of the licensee.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            licensee number
      * @param productNumber
-     *            optional productNumber, must be provided in case licensee auto-create is enabled.
+     *            optional productNumber, must be provided in case licensee auto-create is enabled
+     * @param licenseeName
+     *            optional human-readable licensee name in case licensee will be auto-created
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static ValidationResult validate(final Context context, final String number, final String productNumber)
-            throws BaseCheckedException {
+    public static ValidationResult validate(final Context context, final String number, final String productNumber,
+            final String licenseeName) throws BaseCheckedException {
+
         final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.Product.PRODUCT_NUMBER, productNumber);
+        if (!StringUtils.isEmpty(productNumber)) {
+            params.put(Constants.Product.PRODUCT_NUMBER, productNumber);
+        }
+        if (!StringUtils.isEmpty(licenseeName)) {
+            params.put(Constants.Licensee.PROP_NAME, licenseeName);
+        }
         return NetLicensingService.get(context, "licensee/" + number + "/validate", params, ValidationResult.class);
     }
 

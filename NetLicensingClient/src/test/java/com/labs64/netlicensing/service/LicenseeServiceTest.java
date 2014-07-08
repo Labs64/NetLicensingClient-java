@@ -132,7 +132,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testValidate() throws Exception {
-        final ValidationResult result = LicenseeService.validate(context, "L001-TEST", null);
+        final ValidationResult result = LicenseeService.validate(context, "L001-TEST", "P001-TEST", "Test Licensee");
 
         assertNotNull(result);
 
@@ -201,7 +201,17 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         @Path("licensee/{licenseeNumber}/validate")
         @GET
-        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber) {
+        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
+                @QueryParam("productNumber") final String productNumber,
+                @QueryParam("name") final String licenseeName) {
+
+            if (!"P001-TEST".equals(productNumber)) {
+                return unexpectedValueErrorResponse("productNumber");
+            }
+            if (!"Test Licensee".equals(licenseeName)) {
+                return unexpectedValueErrorResponse("licenseeName");
+            }
+
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
                     + "netlicensing-licensee-validate.xml", Netlicensing.class);
             return Response.ok(netlicensing).build();
