@@ -30,8 +30,6 @@ import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
-import com.labs64.netlicensing.schema.SchemaFunction;
-import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
 
@@ -166,10 +164,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         public Response createLicensee(final MultivaluedMap<String, String> formParams) {
 
             if (!formParams.containsKey(Constants.Product.PRODUCT_NUMBER)) {
-                final Netlicensing netlicensing = objectFactory.createNetlicensing();
-                SchemaFunction.setSingleInfo(netlicensing, "MalformedRequestException", InfoEnum.ERROR,
-                        "Product number is not provided");
-                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+                return errorResponse("MalformedRequestException", "Product number is not provided");
             }
 
             final Map<String, String> defaultPropertyValues = new HashMap<String, String>();

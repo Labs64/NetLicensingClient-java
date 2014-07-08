@@ -84,7 +84,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "create" service
-         * 
+         *
          * @param formParams
          * @param defaultPropertyValues
          * @return
@@ -107,7 +107,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "get" service
-         * 
+         *
          * @return
          */
         protected Response get() {
@@ -118,7 +118,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "list" service
-         * 
+         *
          * @return
          */
         protected Response list() {
@@ -129,7 +129,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for an "update" service
-         * 
+         *
          * @param formParams
          * @return
          */
@@ -148,27 +148,46 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "delete" service
-         * 
+         *
          * @param number
          * @param expectedNumber
          * @param forceCascade
          * @return
          */
         protected Response delete(final String number, final String expectedNumber, final boolean forceCascade) {
-            final Netlicensing netlicensing = objectFactory.createNetlicensing();
-
             if (!expectedNumber.equals(number)) {
-                SchemaFunction.setSingleInfo(netlicensing, "NotFoundException", InfoEnum.ERROR,
-                        String.format("requested %s does not exist", serviceId));
-                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+                return errorResponse("NotFoundException", String.format("requested %s does not exist", serviceId));
             }
-            if (!forceCascade) {
-                SchemaFunction.setSingleInfo(netlicensing, "UnexpectedValueException", InfoEnum.ERROR,
-                        "Unexpected value of parameter 'forceCascade'");
-                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            if (forceCascade != true) {
+                return unexpectedValueErrorResponse("forceCascade");
             }
             return Response.status(Response.Status.NO_CONTENT).build();
         }
+
+        /**
+         * Generates error response for the service mock
+         *
+         * @param exceptionId
+         * @param message
+         * @return
+         */
+        protected final Response errorResponse(final String exceptionId, final String message) {
+            final Netlicensing netlicensing = objectFactory.createNetlicensing();
+            SchemaFunction.setSingleInfo(netlicensing, exceptionId, InfoEnum.ERROR, message);
+            return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+        }
+
+        /**
+         * Generates UnexpectedValueException response for the service mock
+         *
+         * @param parameterName
+         * @return
+         */
+        protected final Response unexpectedValueErrorResponse(final String parameterName) {
+            return errorResponse("UnexpectedValueException",
+                    String.format("Unexpected value of parameter '%s'", parameterName));
+        }
+
     }
 
 }

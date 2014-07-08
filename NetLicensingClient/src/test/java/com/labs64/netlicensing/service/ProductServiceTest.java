@@ -37,9 +37,6 @@ import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
-import com.labs64.netlicensing.schema.SchemaFunction;
-import com.labs64.netlicensing.schema.context.InfoEnum;
-import com.labs64.netlicensing.schema.context.Netlicensing;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -178,10 +175,7 @@ public class ProductServiceTest extends BaseServiceTest {
         public Response createProduct(final MultivaluedMap<String, String> formParams) {
 
             if (!formParams.containsKey(Constants.NAME)) {
-                final Netlicensing netlicensing = objectFactory.createNetlicensing();
-                SchemaFunction.setSingleInfo(netlicensing, "MalformedRequestException", InfoEnum.ERROR,
-                        "Product name is required");
-                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+                return errorResponse("MalformedRequestException", "Product name is required");
             }
 
             final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
