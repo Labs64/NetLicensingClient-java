@@ -48,6 +48,10 @@ public class Composition {
         getProperties().put(key, new Composition(value));
     }
 
+    public void put(final String key, final Composition value) {
+        getProperties().put(key, value);
+    }
+
     @Override
     public String toString() {
         return "<Composition.toString() not implemented yet>";

@@ -6,6 +6,7 @@ import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.context.Item;
+import com.labs64.netlicensing.schema.context.List;
 import com.labs64.netlicensing.schema.context.Property;
 
 /**
@@ -21,12 +22,21 @@ public class ItemToValidationResultConverter implements Converter<Item, Validati
         }
 
         final Composition composition = new Composition();
+
+        // convert properties
         String productModuleNumber = null;
         for (Property property : source.getProperty()) {
             if (Constants.ProductModule.PRODUCT_MODULE_NUMBER.equals(property.getName())) {
                 productModuleNumber = property.getValue();
             } else {
                 composition.put(property.getName(), property.getValue());
+            }
+        }
+
+        // convert lists
+        if (source.getList() != null) {
+            for (List list : source.getList()) {
+                composition.put(list.getName(), convertFromList(list));
             }
         }
 
@@ -37,6 +47,27 @@ public class ItemToValidationResultConverter implements Converter<Item, Validati
         final ValidationResult target = new ValidationResult();
         target.setProductModuleValidation(productModuleNumber, composition);
         return target;
+    }
+
+    /**
+     * @param list
+     * @return
+     */
+    private Composition convertFromList(final List list) {
+        final Composition composition = new Composition();
+        // convert properties
+        if (list.getProperty() != null) {
+            for (Property property : list.getProperty()) {
+                composition.put(property.getName(), property.getValue());
+            }
+        }
+        // convert lists
+        if (list.getList() != null) {
+            for (List sublist : list.getList()) {
+                composition.put(list.getName(), convertFromList(sublist));
+            }
+        }
+        return composition;
     }
 
 }

@@ -140,10 +140,10 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         final Composition validation = result.getProductModuleValidation("M001-TEST");
         assertNotNull(validation);
-        assertEquals("TimeLimitedEvaluation", validation.getProperties().get(Constants.ProductModule.LICENSING_MODEL)
-                .getValue());
-        assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME)
-                .getValue());
+        assertEquals("FeatureWithTimeVolume", validation.getProperties().get(Constants.ProductModule.LICENSING_MODEL).getValue());
+        assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME).getValue());
+        assertEquals("true", validation.getProperties().get("LIST1").getProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
+        assertEquals("green", validation.getProperties().get("LIST2").getProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
     // *** NLIC test mock resource ***
