@@ -196,5 +196,9 @@ public final class Constants {
         public static final String SHOP_URL = "shopURL";
     }
 
+    public static final class ValidationResult {
+        public static final String VALIDATION_RESULT_TYPE = "ProductModuleValidation";
+    }
+
     // CHECKSTYLE:ON
 }

@@ -19,6 +19,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -27,6 +28,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.InfoEnum;
+import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
 import com.labs64.netlicensing.util.JAXBUtils;
@@ -94,7 +96,10 @@ abstract class BaseServiceTest extends JerseyTest {
 
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
             netlicensing.setItems(objectFactory.createNetlicensingItems());
-            netlicensing.getItems().getItem().add(objectFactory.createItem());
+
+            final Item item = objectFactory.createItem();
+            item.setType(WordUtils.capitalize(serviceId));
+            netlicensing.getItems().getItem().add(item);
 
             final Map<String, String> propertyValues = new HashMap<String, String>(defaultPropertyValues);
             for (final String paramKey : formParams.keySet()) {

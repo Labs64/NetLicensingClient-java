@@ -14,6 +14,7 @@ package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.PaymentMethodImpl;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
 
@@ -23,7 +24,7 @@ import com.labs64.netlicensing.schema.context.Property;
 public class ItemToPaymentMethodConverter extends ItemToEntityBaseConverter<PaymentMethod> {
 
     @Override
-    public PaymentMethod convert(final Item source) {
+    public PaymentMethod convert(final Item source) throws ConversionException {
         final PaymentMethod target = super.convert(source);
 
         // Custom properties

@@ -16,6 +16,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.LicenseeImpl;
 import com.labs64.netlicensing.domain.entity.ProductImpl;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -26,7 +27,7 @@ import com.labs64.netlicensing.schema.context.Property;
 public class ItemToLicenseeConverter extends ItemToEntityBaseConverter<Licensee> {
 
     @Override
-    public Licensee convert(final Item source) {
+    public Licensee convert(final Item source) throws ConversionException {
         final Licensee target = super.convert(source);
 
         // Custom properties

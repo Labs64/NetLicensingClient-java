@@ -55,7 +55,7 @@ public class ValidationResult {
             builder.append("ProductModule<");
             builder.append(validationEntry.getKey());
             builder.append(">");
-            builder.append(validationEntry.getValue().toString()); // TODO
+            builder.append(validationEntry.getValue().toString());
         }
         builder.append("]");
         return builder.toString();

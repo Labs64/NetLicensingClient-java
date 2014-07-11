@@ -19,6 +19,7 @@ import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseImpl;
 import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.entity.LicenseeImpl;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -29,7 +30,7 @@ import com.labs64.netlicensing.schema.context.Property;
 public class ItemToLicenseConverter extends ItemToEntityBaseConverter<License> {
 
     @Override
-    public License convert(final Item source) {
+    public License convert(final Item source) throws ConversionException {
         final License target = super.convert(source);
 
         target.setName(SchemaFunction.propertyByName(source.getProperty(), Constants.NAME).getValue());

@@ -16,6 +16,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.TokenImpl;
 import com.labs64.netlicensing.domain.vo.TokenType;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -27,7 +28,7 @@ import com.labs64.netlicensing.util.DateUtils;
 public class ItemToTokenConverter extends ItemToEntityBaseConverter<Token> {
 
     @Override
-    public Token convert(final Item source) {
+    public Token convert(final Item source) throws ConversionException {
         final Token target = super.convert(source);
 
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.Token.EXPIRATION_TIME).getValue() != null) {

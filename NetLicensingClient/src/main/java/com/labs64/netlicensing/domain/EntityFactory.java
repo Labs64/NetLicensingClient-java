@@ -25,6 +25,7 @@ import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.entity.ValidationResult;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
@@ -61,27 +62,27 @@ public class EntityFactory {
      * Creates entity of specific class from Item element
      *
      * @param item
+     *            XML representation of the entity
      * @param entityClass
-     * @return
+     *            entity class
+     * @return entity class instance created from XML representation
+     * @throws ConversionException
+     *             when entity can't be converted from XML representation
      */
     @SuppressWarnings("unchecked")
-    public static <T> T create(final Item item, final Class<?> entityClass) {
+    public static <T> T create(final Item item, final Class<?> entityClass) throws ConversionException {
         final Class<?> converterClass = entityToConverterMap.get(entityClass);
         if (converterClass == null) {
-            throw new IllegalArgumentException(
-                    "No converter is found for entity of class "
-                            + entityClass.getCanonicalName());
+            throw new IllegalArgumentException("No converter is found for entity of class " + entityClass.getCanonicalName());
         }
 
         Converter<Item, T> converter;
         try {
             converter = (Converter<Item, T>) converterClass.newInstance();
         } catch (InstantiationException e) {
-            throw new RuntimeException("Can not instantiate converter of class "
-                    + converterClass.getCanonicalName());
+            throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Can not instantiate converter of class "
-                    + converterClass.getCanonicalName());
+            throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
         }
 
         return converter.convert(item);

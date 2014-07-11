@@ -19,6 +19,7 @@ import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.entity.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -30,7 +31,7 @@ import com.labs64.netlicensing.util.DateUtils;
 public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transaction> {
 
     @Override
-    public Transaction convert(final Item source) {
+    public Transaction convert(final Item source) throws ConversionException {
         final Transaction target = super.convert(source);
 
         target.setStatus(TransactionStatus.valueOf(SchemaFunction.propertyByName(source.getProperty(),

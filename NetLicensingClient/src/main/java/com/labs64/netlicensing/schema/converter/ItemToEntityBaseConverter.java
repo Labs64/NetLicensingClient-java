@@ -18,6 +18,7 @@ import com.labs64.netlicensing.converter.Converter;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.BaseEntity;
 import com.labs64.netlicensing.domain.vo.Money;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -30,8 +31,14 @@ abstract class ItemToEntityBaseConverter<T extends BaseEntity> implements Conver
     protected abstract T newTarget();
 
     @Override
-    public T convert(final Item source) {
+    public T convert(final Item source) throws ConversionException {
         final T target = newTarget();
+
+        final String entityClass = target.getClass().getInterfaces()[0].getSimpleName();
+        if (!entityClass.equals(source.getType())) {
+            final String sourceType = (source.getType() != null) ? source.getType() : "<null>";
+            throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType, entityClass));
+        }
 
         target.setActive(Boolean.parseBoolean(
                 SchemaFunction.propertyByName(source.getProperty(), Constants.ACTIVE, Boolean.FALSE.toString())

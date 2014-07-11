@@ -16,6 +16,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductImpl;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
@@ -26,7 +27,7 @@ import com.labs64.netlicensing.schema.context.Property;
 public class ItemToProductModuleConverter extends ItemToEntityBaseConverter<ProductModule> {
 
     @Override
-    public ProductModule convert(final Item source) {
+    public ProductModule convert(final Item source) throws ConversionException {
         final ProductModule target = super.convert(source);
 
         target.setName(SchemaFunction.propertyByName(source.getProperty(), Constants.NAME).getValue());
