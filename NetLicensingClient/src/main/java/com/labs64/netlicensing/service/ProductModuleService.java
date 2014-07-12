@@ -70,7 +70,7 @@ public class ProductModuleService {
      *                              corresponding service response messages.
      */
     public static Page<ProductModule> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getPage(context, "productmodule", ProductModule.class);
+        return NetLicensingService.list(context, "productmodule", ProductModule.class);
     }
 
     /**

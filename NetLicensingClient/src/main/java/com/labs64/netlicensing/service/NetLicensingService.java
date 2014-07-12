@@ -74,7 +74,7 @@ class NetLicensingService {
      * @return page of items with type resultType from the response
      * @throws BaseCheckedException
      */
-    static <RES> Page<RES> getPage(final Context context, final String urlTemplate, final Class<RES> resultType) throws BaseCheckedException {
+    static <RES> Page<RES> list(final Context context, final String urlTemplate, final Class<RES> resultType) throws BaseCheckedException {
         final Netlicensing netlicensing = NetLicensingService.request(context, HttpMethod.GET, urlTemplate, null, null);
         return extractPageOfItems(netlicensing, resultType);
     }

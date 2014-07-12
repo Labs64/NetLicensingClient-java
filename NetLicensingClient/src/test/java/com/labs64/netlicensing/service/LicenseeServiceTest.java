@@ -101,7 +101,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         assertNotNull(licensees);
         assertTrue(licensees.hasContent());
-        assertEquals(3, licensees.getContent().size());
+        assertEquals(3, licensees.getItemsNumber());
         assertEquals("L001-TEST", licensees.getContent().get(0).getNumber());
         assertEquals(true, licensees.getContent().get(1).getActive());
         assertEquals("P001-TEST", licensees.getContent().get(2).getProduct().getNumber());

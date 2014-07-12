@@ -124,7 +124,7 @@ public class ProductServiceTest extends BaseServiceTest {
 
         assertNotNull(products);
         assertTrue(products.hasContent());
-        assertEquals(3, products.getContent().size());
+        assertEquals(3, products.getItemsNumber());
         assertEquals("P001-TEST", products.getContent().get(0).getNumber());
         assertEquals("Test Product 2", products.getContent().get(1).getName());
         assertEquals("v2.0", products.getContent().get(2).getVersion());
