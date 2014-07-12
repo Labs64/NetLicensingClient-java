@@ -127,7 +127,7 @@ abstract class BaseServiceTest extends JerseyTest {
          * @return
          */
         protected Response list() {
-            final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE, serviceId);
+            final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE, serviceId.toLowerCase());
             final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
             return Response.ok(netlicensing).build();
         }

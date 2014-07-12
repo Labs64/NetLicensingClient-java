@@ -65,13 +65,12 @@ public class ProductModuleService {
      * Returns all product modules of a vendor.
      *
      * @param context determines the vendor on whose behalf the call is performed
-     * @param filter  reserved for the future use, must be omitted / set to NULL
      * @return list of product modules (of all products) or null/empty list if nothing found.
      * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *                              corresponding service response messages.
      */
-    public static Page<ProductModule> list(final Context context, final String filter) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+    public static Page<ProductModule> list(final Context context) throws BaseCheckedException {
+        return NetLicensingService.getPage(context, "productmodule", ProductModule.class);
     }
 
     /**

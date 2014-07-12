@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
 
 /**
@@ -112,6 +114,18 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("P001-TEST", productModule.getProduct().getNumber());
     }
 
+    @Test
+    public void testList() throws Exception {
+        final Page<ProductModule> productModules = ProductModuleService.list(context);
+
+        assertNotNull(productModules);
+        assertTrue(productModules.hasContent());
+        assertEquals(3, productModules.getItemsNumber());
+        assertEquals("PM001-TEST", productModules.getContent().get(0).getNumber());
+        assertEquals("Test module 2", productModules.getContent().get(1).getName());
+        assertEquals(Constants.LicensingModel.TimeVolume.NAME, productModules.getContent().get(2).getLicensingModel());
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -147,6 +161,12 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         @GET
         public Response getProductModule(@PathParam("productModuleNumber") final String productModuleNumber) {
             return get();
+        }
+
+        @Path("productmodule")
+        @GET
+        public Response listProductModules() {
+            return list();
         }
 
     }
