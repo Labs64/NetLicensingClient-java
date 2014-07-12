@@ -19,13 +19,15 @@ import java.util.Map;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Response;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.EntityFactory;
+import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.exception.BaseCheckedException;
-import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.provider.RestProvider;
 import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.provider.RestResponse;
@@ -187,10 +189,17 @@ class NetLicensingService {
      * @param netlicensing
      * @param resultType
      * @return
-     * @throws ConversionException
+     * @throws BaseCheckedException
      */
-    private static <RES> RES extractSuitableItemOfType(final Netlicensing netlicensing, final Class<RES> resultType) throws ConversionException {
-        return EntityFactory.create(netlicensing.getItems().getItem().get(0), resultType);
+    private static <RES> RES extractSuitableItemOfType(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
+        if (netlicensing.getItems() != null) {
+            for (Item item : netlicensing.getItems().getItem()) {
+                if ((resultType.getSimpleName().equals(item.getType())) || (resultType == ValidationResult.class && Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType()))) {
+                    return EntityFactory.create(item, resultType);
+                }
+            }
+        }
+        throw new WrongResponseFormatException("Service response doesn't contain item of type " + resultType.getCanonicalName());
     }
 
     /**
@@ -199,20 +208,26 @@ class NetLicensingService {
      * @param netlicensing
      * @param resultType
      * @return
-     * @throws ConversionException
+     * @throws BaseCheckedException
      */
-    private static <RES> Page<RES> extractPageOfItems(final Netlicensing netlicensing, final Class<RES> resultType) throws ConversionException {
-        final List<RES> products = new ArrayList<RES>();
-        for (final Item item : netlicensing.getItems().getItem()) {
-            final RES product = EntityFactory.create(item, resultType);
-            products.add(product);
+    private static <RES> Page<RES> extractPageOfItems(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
+        if (netlicensing.getItems() != null) {
+            final List<RES> products = new ArrayList<RES>();
+            for (final Item item : netlicensing.getItems().getItem()) {
+                if (resultType.getSimpleName().equals(item.getType())) {
+                    final RES product = EntityFactory.create(item, resultType);
+                    products.add(product);
+                }
+            }
+            return PageImpl.createInstance(products,
+                    netlicensing.getItems().getPagenumber(),
+                    netlicensing.getItems().getItemsnumber(),
+                    netlicensing.getItems().getTotalpages(),
+                    netlicensing.getItems().getTotalitems(),
+                    netlicensing.getItems().getHasnext());
+        } else {
+            throw new WrongResponseFormatException("Service response is not a page response");
         }
-        return PageImpl.createInstance(products,
-                netlicensing.getItems().getPagenumber(),
-                netlicensing.getItems().getItemsnumber(),
-                netlicensing.getItems().getTotalpages(),
-                netlicensing.getItems().getTotalitems(),
-                netlicensing.getItems().getHasnext());
     }
 
     /**
