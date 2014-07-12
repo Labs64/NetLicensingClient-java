@@ -19,8 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -99,6 +101,17 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals(true, createdModule.getActive());
     }
 
+    @Test
+    public void testGet() throws Exception {
+        final ProductModule productModule = ProductModuleService.get(context, "PM001-TEST");
+
+        assertNotNull(productModule);
+        assertEquals("PM001-TEST", productModule.getNumber());
+        assertEquals(true, productModule.getActive());
+        assertEquals("Test Product Module", productModule.getName());
+        assertEquals("P001-TEST", productModule.getProduct().getNumber());
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -129,6 +142,13 @@ public class ProductModuleServiceTest extends BaseServiceTest {
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             return create(formParams, defaultPropertyValues);
         }
+
+        @Path("productmodule/{productModuleNumber}")
+        @GET
+        public Response getProductModule(@PathParam("productModuleNumber") final String productModuleNumber) {
+            return get();
+        }
+
     }
 
 }

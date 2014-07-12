@@ -58,7 +58,7 @@ public class ProductModuleService {
      *                              corresponding service response messages.
      */
     public static ProductModule get(final Context context, final String number) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return NetLicensingService.get(context, "productmodule/" + number, null, ProductModule.class);
     }
 
     /**
