@@ -85,7 +85,7 @@ public class ProductModuleService {
      */
     public static ProductModule update(final Context context, final String number, final ProductModule updateProductModule)
             throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return NetLicensingService.post(context, "productmodule/" + number, updateProductModule.asRequestForm(), ProductModule.class);
     }
 
     /**

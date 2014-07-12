@@ -139,7 +139,7 @@ abstract class BaseServiceTest extends JerseyTest {
          * @return
          */
         protected Response update(final MultivaluedMap<String, String> formParams) {
-            final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE, serviceId);
+            final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE, serviceId.toLowerCase());
             final Netlicensing netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
 
             final Map<String, String> propertyValues = new HashMap<String, String>();

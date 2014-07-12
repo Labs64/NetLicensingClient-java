@@ -126,6 +126,22 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals(Constants.LicensingModel.TimeVolume.NAME, productModules.getContent().get(2).getLicensingModel());
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        final ProductModule productModule = new ProductModuleImpl();
+        productModule.setNumber("PM002-TEST");
+        productModule.setName("Demo Product Module");
+
+        final ProductModule updatedModule = ProductModuleService.update(context, "PM001-TEST", productModule);
+
+        assertNotNull(updatedModule);
+        assertEquals("PM002-TEST", updatedModule.getNumber());
+        assertEquals(true, updatedModule.getActive());
+        assertEquals("Demo Product Module", updatedModule.getName());
+        assertEquals(Constants.LicensingModel.TimeLimitedEvaluation.NAME, updatedModule.getLicensingModel());
+        assertEquals("P001-TEST", updatedModule.getProduct().getNumber());
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -167,6 +183,13 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         @GET
         public Response listProductModules() {
             return list();
+        }
+
+        @Path("productmodule/{productModuleNumber}")
+        @POST
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        public Response updateProductModule(@PathParam("productModuleNumber") final String productModuleNumber, final MultivaluedMap<String, String> formParams) {
+            return update(formParams);
         }
 
     }
