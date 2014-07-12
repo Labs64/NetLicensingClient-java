@@ -19,14 +19,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -161,21 +154,18 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Override
     protected java.lang.Class<?> getResourceClass() {
-        return NLICResource.class;
+        return ProductServiceResource.class;
     }
 
-    @Path(REST_API_PATH)
-    public static class NLICResource extends AbstractNLICServiceResource {
+    @Path(REST_API_PATH + "/product")
+    public static class ProductServiceResource extends AbstractNLICServiceResource {
 
-        public NLICResource() {
+        public ProductServiceResource() {
             super("product");
         }
 
-        @Path("product")
-        @POST
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response createProduct(final MultivaluedMap<String, String> formParams) {
-
+        @Override
+        public Response create(final MultivaluedMap<String, String> formParams) {
             if (!formParams.containsKey(Constants.NAME)) {
                 return errorResponse("MalformedRequestException", "Product name is required");
             }
@@ -187,30 +177,8 @@ public class ProductServiceTest extends BaseServiceTest {
             return create(formParams, defaultPropertyValues);
         }
 
-        @Path("product/{productNumber}")
-        @GET
-        public Response getProduct(@PathParam("productNumber") final String productNumber) {
-            return get();
-        }
-
-        @Path("product")
-        @GET
-        public Response listProducts() {
-            return list();
-        }
-
-        @Path("product/{productNumber}")
-        @POST
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response updateProduct(@PathParam("productNumber") final String productNumber,
-                final MultivaluedMap<String, String> formParams) {
-            return update(formParams);
-        }
-
-        @Path("product/{productNumber}")
-        @DELETE
-        public Response deleteProduct(@PathParam("productNumber") final String productNumber,
-                @QueryParam("forceCascade") final boolean forceCascade) {
+        @Override
+        public Response delete(final String productNumber, final boolean forceCascade) {
             return delete(productNumber, "P001-TEST", forceCascade);
         }
     }

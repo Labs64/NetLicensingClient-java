@@ -19,14 +19,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -160,18 +153,15 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         return ProductModuleServiceResource.class;
     }
 
-    @Path(REST_API_PATH)
+    @Path(REST_API_PATH + "/productmodule")
     public static class ProductModuleServiceResource extends AbstractNLICServiceResource {
 
         public ProductModuleServiceResource() {
             super("productModule");
         }
 
-        @Path("productmodule")
-        @POST
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response createProductModule(final MultivaluedMap<String, String> formParams) {
-
+        @Override
+        public Response create(final MultivaluedMap<String, String> formParams) {
             if (!formParams.containsKey(Constants.Product.PRODUCT_NUMBER)) {
                 return errorResponse("MalformedRequestException", "Product number is not provided");
             }
@@ -184,29 +174,8 @@ public class ProductModuleServiceTest extends BaseServiceTest {
             return create(formParams, defaultPropertyValues);
         }
 
-        @Path("productmodule/{productModuleNumber}")
-        @GET
-        public Response getProductModule(@PathParam("productModuleNumber") final String productModuleNumber) {
-            return get();
-        }
-
-        @Path("productmodule")
-        @GET
-        public Response listProductModules() {
-            return list();
-        }
-
-        @Path("productmodule/{productModuleNumber}")
-        @POST
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response updateProductModule(@PathParam("productModuleNumber") final String productModuleNumber, final MultivaluedMap<String, String> formParams) {
-            return update(formParams);
-        }
-
-        @Path("productmodule/{productModuleNumber}")
-        @DELETE
-        public Response deleteProductModule(@PathParam("productModuleNumber") final String productModuleNumber,
-                @QueryParam("forceCascade") final boolean forceCascade) {
+        @Override
+        public Response delete(final String productModuleNumber, final boolean forceCascade) {
             return delete(productModuleNumber, "PM001-TEST", forceCascade);
         }
 

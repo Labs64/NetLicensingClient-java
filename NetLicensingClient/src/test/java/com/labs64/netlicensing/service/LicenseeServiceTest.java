@@ -7,14 +7,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -150,21 +146,18 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Override
     protected Class<?> getResourceClass() {
-        return NLICResource.class;
+        return LicenseeServiceResource.class;
     }
 
-    @Path(REST_API_PATH)
-    public static class NLICResource extends AbstractNLICServiceResource {
+    @Path(REST_API_PATH + "/licensee")
+    public static class LicenseeServiceResource extends AbstractNLICServiceResource {
 
-        public NLICResource() {
+        public LicenseeServiceResource() {
             super("licensee");
         }
 
-        @Path("licensee")
-        @POST
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response createLicensee(final MultivaluedMap<String, String> formParams) {
-
+        @Override
+        public Response create(final MultivaluedMap<String, String> formParams) {
             if (!formParams.containsKey(Constants.Product.PRODUCT_NUMBER)) {
                 return errorResponse("MalformedRequestException", "Product number is not provided");
             }
@@ -174,37 +167,25 @@ public class LicenseeServiceTest extends BaseServiceTest {
             return create(formParams, defaultPropertyValues);
         }
 
-        @Path("licensee/{licenseeNumber}")
-        @GET
-        public Response getLicensee(@PathParam("licenseeNumber") final String licenseeNumber) {
-            return get();
-        }
-
-        @Path("licensee")
-        @GET
-        public Response listLicensees() {
-            return list();
-        }
-
-        @Path("licensee/{licenseeNumber}")
-        @POST
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        public Response updateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
-                final MultivaluedMap<String, String> formParams) {
-            return update(formParams);
-        }
-
-        @Path("licensee/{licenseeNumber}")
-        @DELETE
-        public Response deleteLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
-                @QueryParam("forceCascade") final boolean forceCascade) {
+        @Override
+        public Response delete(final String licenseeNumber, final boolean forceCascade) {
             return delete(licenseeNumber, "L001-TEST", forceCascade);
         }
 
-        @Path("licensee/{licenseeNumber}/validate")
+        /**
+         * Mock for "validate licensee" service.
+         *
+         * @param licenseeNumber
+         *            licensee number
+         * @param productNumber
+         *            product number
+         * @param licenseeName
+         *            licensee name
+         * @return response with XML representation of validation result
+         */
         @GET
-        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
-                @QueryParam("productNumber") final String productNumber,
+        @Path("{licenseeNumber}/validate")
+        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber, @QueryParam("productNumber") final String productNumber,
                 @QueryParam("name") final String licenseeName) {
 
             if (!"P001-TEST".equals(productNumber)) {

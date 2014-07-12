@@ -15,7 +15,15 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -71,7 +79,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
     // *** Abstract NLIC service test mock resource ***
 
-    static abstract class AbstractNLICServiceResource {
+    public static abstract class AbstractNLICServiceResource {
 
         /** ID of the service, i.e. "product", "licensee", etc */
         private final String serviceId;
@@ -86,15 +94,91 @@ abstract class BaseServiceTest extends JerseyTest {
         }
 
         /**
-         * Defines common functionality for a "create" service
+         * Mock for "create entity" service.
          *
          * @param formParams
-         * @param defaultPropertyValues
-         * @return
+         *            POST request body parameters
+         * @return response with XML representation of the created entity
          */
-        protected Response create(final MultivaluedMap<String, String> formParams,
-                final Map<String, String> defaultPropertyValues) {
+        @POST
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        public Response create(final MultivaluedMap<String, String> formParams) {
+            return create(formParams, new HashMap<String, String>());
+        }
 
+        /**
+         * Mock for "get entity" service.
+         *
+         * @return response with XML representation of the entity
+         */
+        @GET
+        @Path("{number}")
+        public Response get(@PathParam("number") final String number) {
+            final String xmlResourcePath = String.format("%snetlicensing-%s-get.xml", TEST_CASE_BASE, serviceId.toLowerCase());
+            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
+            return Response.ok(netlicensing).build();
+        }
+
+        /**
+         * Mock for "list entities" service.
+         *
+         * @return response with XML representation of the entities page
+         */
+        @GET
+        public Response list() {
+            final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE, serviceId.toLowerCase());
+            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
+            return Response.ok(netlicensing).build();
+        }
+
+        /**
+         * Mock for "update entity" service.
+         *
+         * @param formParams
+         *            POST request body parameters
+         * @return response with XML representation of the updated entity
+         */
+        @POST
+        @Path("{number}")
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        public Response update(@PathParam("number") final String number, final MultivaluedMap<String, String> formParams) {
+            final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE, serviceId.toLowerCase());
+            final Netlicensing netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
+
+            final Map<String, String> propertyValues = new HashMap<String, String>();
+            for (final String paramKey : formParams.keySet()) {
+                propertyValues.put(paramKey, formParams.getFirst(paramKey));
+            }
+            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
+
+            return Response.ok(netlicensing).build();
+        }
+
+        /**
+         * Mock for "delete entity" service.
+         *
+         * @param number
+         *            entity number
+         * @param forceCascade
+         *            parameter for forcing deletion of all entity descendants
+         * @return response with "No Content" status
+         */
+        @DELETE
+        @Path("{number}")
+        public Response delete(@PathParam("number") final String number, @QueryParam("forceCascade") final boolean forceCascade) {
+            return delete(number, "EXPECTED", forceCascade);
+        }
+
+        /**
+         * Defines common functionality for a "create entity" service.
+         *
+         * @param formParams
+         *            POST request body parameters
+         * @param defaultPropertyValues
+         *            default values for the entity properties
+         * @return response with XML representation of the created entity
+         */
+        protected Response create(final MultivaluedMap<String, String> formParams, final Map<String, String> defaultPropertyValues) {
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
             netlicensing.setItems(objectFactory.createNetlicensingItems());
 
@@ -112,55 +196,17 @@ abstract class BaseServiceTest extends JerseyTest {
         }
 
         /**
-         * Defines common functionality for a "get" service
-         *
-         * @return
-         */
-        protected Response get() {
-            final String xmlResourcePath = String.format("%snetlicensing-%s-get.xml", TEST_CASE_BASE, serviceId.toLowerCase());
-            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
-            return Response.ok(netlicensing).build();
-        }
-
-        /**
-         * Defines common functionality for a "list" service
-         *
-         * @return
-         */
-        protected Response list() {
-            final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE, serviceId.toLowerCase());
-            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
-            return Response.ok(netlicensing).build();
-        }
-
-        /**
-         * Defines common functionality for an "update" service
-         *
-         * @param formParams
-         * @return
-         */
-        protected Response update(final MultivaluedMap<String, String> formParams) {
-            final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE, serviceId.toLowerCase());
-            final Netlicensing netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
-
-            final Map<String, String> propertyValues = new HashMap<String, String>();
-            for (final String paramKey : formParams.keySet()) {
-                propertyValues.put(paramKey, formParams.getFirst(paramKey));
-            }
-            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
-
-            return Response.ok(netlicensing).build();
-        }
-
-        /**
-         * Defines common functionality for a "delete" service
+         * Defines common functionality for a "delete entity" service.
          *
          * @param number
+         *            entity number
          * @param expectedNumber
+         *            expected entity number
          * @param forceCascade
-         * @return
+         *            parameter for forcing deletion of all entity descendants
+         * @return response with "No Content" status
          */
-        protected Response delete(final String number, final String expectedNumber, final boolean forceCascade) {
+        protected Response delete(@PathParam("number") final String number, final String expectedNumber, @QueryParam("forceCascade") final boolean forceCascade) {
             if (!expectedNumber.equals(number)) {
                 final String entityStr = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(serviceId), ' ').toLowerCase();
                 return errorResponse("NotFoundException", String.format("requested %s does not exist", entityStr));
