@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import javax.ws.rs.core.Form;
+
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -40,7 +43,9 @@ public class ProductModuleService {
      */
     public static ProductModule create(final Context context, final String productNumber, final ProductModule newProductModule)
             throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        final Form form = newProductModule.asRequestForm();
+        form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
+        return NetLicensingService.post(context, "productmodule", form, ProductModule.class);
     }
 
     /**
