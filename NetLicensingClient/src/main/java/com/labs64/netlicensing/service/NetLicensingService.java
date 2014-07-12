@@ -257,7 +257,9 @@ class NetLicensingService {
             if (errorMessages.length() > 0) {
                 errorMessages.append(", ");
             }
-            errorMessages.append(info.getId()).append(": ").append(info.getValue());
+            errorMessages.append(info.getId()).append(": ")
+                    .append(info.getValue().substring(0, 1).toUpperCase())
+                    .append(info.getValue().substring(1));
         }
         return errorMessages.toString();
     }

@@ -153,7 +153,7 @@ public class ProductServiceTest extends BaseServiceTest {
         ProductService.delete(context, "P001-TEST", true);
 
         thrown.expect(RestException.class);
-        thrown.expectMessage("NotFoundException: requested product does not exist");
+        thrown.expectMessage("NotFoundException: Requested product does not exist");
         ProductService.delete(context, "P001-NONE", false);
     }
 

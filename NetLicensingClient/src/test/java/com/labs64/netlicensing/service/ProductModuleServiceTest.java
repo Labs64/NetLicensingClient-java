@@ -20,10 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -142,6 +144,15 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("P001-TEST", updatedModule.getProduct().getNumber());
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        ProductModuleService.delete(context, "PM001-TEST", true);
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("NotFoundException: Requested product module does not exist");
+        ProductModuleService.delete(context, "PM001-NONE", false);
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -190,6 +201,13 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
         public Response updateProductModule(@PathParam("productModuleNumber") final String productModuleNumber, final MultivaluedMap<String, String> formParams) {
             return update(formParams);
+        }
+
+        @Path("productmodule/{productModuleNumber}")
+        @DELETE
+        public Response deleteProductModule(@PathParam("productModuleNumber") final String productModuleNumber,
+                @QueryParam("forceCascade") final boolean forceCascade) {
+            return delete(productModuleNumber, "PM001-TEST", forceCascade);
         }
 
     }

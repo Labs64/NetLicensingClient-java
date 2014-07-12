@@ -128,7 +128,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         LicenseeService.delete(context, "L001-TEST", true);
 
         thrown.expect(RestException.class);
-        thrown.expectMessage("NotFoundException: requested licensee does not exist");
+        thrown.expectMessage("NotFoundException: Requested licensee does not exist");
         LicenseeService.delete(context, "L001-NONE", false);
     }
 

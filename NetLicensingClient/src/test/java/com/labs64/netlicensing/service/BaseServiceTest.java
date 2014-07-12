@@ -19,6 +19,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -161,7 +162,8 @@ abstract class BaseServiceTest extends JerseyTest {
          */
         protected Response delete(final String number, final String expectedNumber, final boolean forceCascade) {
             if (!expectedNumber.equals(number)) {
-                return errorResponse("NotFoundException", String.format("requested %s does not exist", serviceId));
+                final String entityStr = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(serviceId), ' ').toLowerCase();
+                return errorResponse("NotFoundException", String.format("requested %s does not exist", entityStr));
             }
             if (forceCascade != true) {
                 return unexpectedValueErrorResponse("forceCascade");
