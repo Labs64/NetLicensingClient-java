@@ -60,7 +60,7 @@ public class LicenseTemplateService {
     }
 
     /**
-     * gets license template by its number.
+     * Gets license template by its number.
      *
      * @param context
      *            determines the vendor on whose behalf the call is performed
@@ -72,7 +72,9 @@ public class LicenseTemplateService {
      *             corresponding service response messages.
      */
     public static LicenseTemplate get(final Context context, final String number) throws BaseCheckedException {
-        return null; // TODO: implement me...
+        CheckUtils.paramNotEmpty(number, "number");
+
+        return NetLicensingService.get(context, "licensetemplate/" + number, null, LicenseTemplate.class);
     }
 
     /**

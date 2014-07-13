@@ -1,0 +1,19 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="LicenseTemplate">
+            <property name="number">LT001-TEST</property>
+            <property name="active">false</property>
+            <property name="name">Test License Template</property>
+            <property name="licenseType">FEATURE</property>
+            <property name="price">10.00</property>
+            <property name="currency">EUR</property>
+            <property name="automatic">true</property>
+            <property name="hidden">true</property>
+            <property name="hideLicenses">true</property>
+            <property name="productModuleNumber">PM001-TEST</property>
+            <property name="productModuleName">Test Product Module</property>
+            <property name="inUse">false</property>
+            <property name="timeVolume">30</property>
+        </item>
+    </items>
+</netlicensing>
