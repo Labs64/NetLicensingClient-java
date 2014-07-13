@@ -98,15 +98,18 @@ public class LicenseTemplateService {
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            license template number
-     * @param updateLicenseTemplate
+     * @param licenseTemplate
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated license template.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static LicenseTemplate update(final Context context, final String number, final LicenseTemplate updateLicenseTemplate) throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static LicenseTemplate update(final Context context, final String number, final LicenseTemplate licenseTemplate) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+        CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
+
+        return NetLicensingService.post(context, "licensetemplate/" + number, licenseTemplate.asRequestForm(), LicenseTemplate.class);
     }
 
     /**

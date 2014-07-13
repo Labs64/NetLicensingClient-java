@@ -175,6 +175,38 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals("30", template2.getLicenseTemplateProperties().get("timeVolume"));
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
+        licenseTemplate.setNumber("LT002-TEST");
+        licenseTemplate.setPrice(new BigDecimal(15));
+        licenseTemplate.setCurrency("EUR");
+
+        final LicenseTemplate updatedTemplate = LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
+
+        assertNotNull(updatedTemplate);
+        assertEquals("LT002-TEST", updatedTemplate.getNumber());
+        assertEquals("Test License Template", updatedTemplate.getName());
+        assertEquals(LicenseType.FEATURE.value(), updatedTemplate.getLicenseType());
+        assertEquals(true, updatedTemplate.getActive());
+        assertEquals("EUR", updatedTemplate.getCurrency());
+        assertEquals(new BigDecimal("15.00"), updatedTemplate.getPrice());
+        assertEquals(false, updatedTemplate.getAutomatic());
+        assertEquals(false, updatedTemplate.getHidden());
+        assertEquals(false, updatedTemplate.getHideLicenses());
+        assertEquals("PM001-TEST", updatedTemplate.getProductModule().getNumber());
+    }
+
+    @Test
+    public void testUpdateLicenseTypeToTimeVolume() throws Exception {
+        final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
+        licenseTemplate.setLicenseType(LicenseType.TIMEVOLUME.value());
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("IllegalOperationException: License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
+        LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -204,12 +236,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
                 return errorResponse("MalformedRequestException", "'currency' field can not be used without the 'price' field");
             }
 
-            if (formParams.containsKey(Constants.PRICE)) {
-                // round price value to 2 decimal places
-                final String priceStr = formParams.getFirst(Constants.PRICE);
-                final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, BigDecimal.ROUND_HALF_UP);
-                formParams.putSingle(Constants.PRICE, roundedPrice.toString());
-            }
+            roundPriceParamValueToTwoDecimalPlaces(formParams);
 
             final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
@@ -217,6 +244,28 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
             defaultPropertyValues.put(Constants.LicenseTemplate.HIDDEN, "false");
             defaultPropertyValues.put(Constants.LicenseTemplate.HIDE_LICENSES, "false");
             return create(formParams, defaultPropertyValues);
+        }
+
+        @Override
+        public Response update(String number, MultivaluedMap<String, String> formParams) {
+            final boolean isTimeVolume = LicenseType.TIMEVOLUME.value().equals(formParams.getFirst(Constants.LicenseTemplate.LICENSE_TYPE));
+            if (isTimeVolume && !formParams.containsKey("timeVolume")) {
+                return errorResponse("IllegalOperationException", "License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
+            }
+
+            roundPriceParamValueToTwoDecimalPlaces(formParams);
+            return super.update(number, formParams);
+        }
+
+        /**
+         * @param formParams
+         */
+        private void roundPriceParamValueToTwoDecimalPlaces(final MultivaluedMap<String, String> formParams) {
+            if (formParams.containsKey(Constants.PRICE)) {
+                final String priceStr = formParams.getFirst(Constants.PRICE);
+                final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, BigDecimal.ROUND_HALF_UP);
+                formParams.putSingle(Constants.PRICE, roundedPrice.toString());
+            }
         }
     }
 
