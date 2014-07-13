@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.LicenseType;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
 
 /**
@@ -153,6 +155,24 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(true, licenseTemplate.getHideLicenses());
         assertEquals("PM001-TEST", licenseTemplate.getProductModule().getNumber());
         assertEquals("30", licenseTemplate.getLicenseTemplateProperties().get("timeVolume"));
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final Page<LicenseTemplate> licenseTemplates = LicenseTemplateService.list(context);
+
+        assertNotNull(licenseTemplates);
+        assertTrue(licenseTemplates.hasContent());
+        assertEquals(2, licenseTemplates.getItemsNumber());
+
+        final LicenseTemplate template1 = licenseTemplates.getContent().get(0);
+        assertEquals("LT001-TEST", template1.getNumber());
+        assertEquals(LicenseType.FEATURE.value(), template1.getLicenseType());
+
+        final LicenseTemplate template2 = licenseTemplates.getContent().get(1);
+        assertEquals("Time Volume License Template", template2.getName());
+        assertEquals(LicenseType.TIMEVOLUME.value(), template2.getLicenseType());
+        assertEquals("30", template2.getLicenseTemplateProperties().get("timeVolume"));
     }
 
     // *** NLIC test mock resource ***
