@@ -191,6 +191,11 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
         map.put(Constants.LicenseTemplate.AUTOMATIC, getAutomatic());
         map.put(Constants.LicenseTemplate.HIDDEN, getHidden());
         map.put(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
+        if (licenseTemplateProperties != null) {
+            for (Map.Entry<String, String> ltp : licenseTemplateProperties.entrySet()) {
+                map.put(ltp.getKey(), ltp.getValue());
+            }
+        }
         return map;
     }
 

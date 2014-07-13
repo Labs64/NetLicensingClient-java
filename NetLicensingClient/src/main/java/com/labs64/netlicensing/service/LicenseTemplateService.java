@@ -12,10 +12,16 @@
  */
 package com.labs64.netlicensing.service;
 
+import javax.ws.rs.core.Form;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides license template handling routines.
@@ -31,68 +37,90 @@ public class LicenseTemplateService {
     /**
      * Creates new license template object with given properties.
      *
-     * @param context             determines the vendor on whose behalf the call is performed
-     * @param productModuleNumber parent product module to which the new license template is to be added
-     * @param newLicenseTemplate  non-null properties will be taken for the new object, null properties will either stay null, or will
-     *                            be set to a default value, depending on property.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param productModuleNumber
+     *            parent product module to which the new license template is to be added
+     * @param licenseTemplate
+     *            non-null properties will be taken for the new object, null properties will either stay null, or will
+     *            be set to a default value, depending on property.
      * @return the newly created license template object
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
-    public static LicenseTemplate create(final Context context, final String productModuleNumber, final LicenseTemplate newLicenseTemplate)
-            throws BaseCheckedException {
-        return null;  // TODO: implement me...
+    public static LicenseTemplate create(final Context context, final String productModuleNumber, final LicenseTemplate licenseTemplate) throws BaseCheckedException {
+        CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
+
+        final Form form = licenseTemplate.asRequestForm();
+        if (!StringUtils.isEmpty(productModuleNumber)) {
+            form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER, productModuleNumber);
+        }
+        return NetLicensingService.post(context, "licensetemplate", form, LicenseTemplate.class);
     }
 
     /**
      * gets license template by its number.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param number  the license template number
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            the license template number
      * @return the license template
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static LicenseTemplate get(final Context context, final String number) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
     /**
      * Returns all license templates of a vendor.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param filter  reserved for the future use, must be omitted / set to NULL
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return list of license templates (of all products/modules) or null/empty list if nothing found.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static Page<LicenseTemplate> list(final Context context, final String filter) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
     /**
      * Updates license template properties.
      *
-     * @param context               determines the vendor on whose behalf the call is performed
-     * @param number                license template number
-     * @param updateLicenseTemplate non-null properties will be updated to the provided values, null properties will stay unchanged.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            license template number
+     * @param updateLicenseTemplate
+     *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated license template.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
-    public static LicenseTemplate update(final Context context, final String number, final LicenseTemplate updateLicenseTemplate)
-            throws BaseCheckedException {
-        return null;  // TODO: implement me...
+    public static LicenseTemplate update(final Context context, final String number, final LicenseTemplate updateLicenseTemplate) throws BaseCheckedException {
+        return null; // TODO: implement me...
     }
 
     /**
      * Deletes license template.
      *
-     * @param context      determines the vendor on whose behalf the call is performed
-     * @param number       license template number
-     * @param forceCascade if true, any entities that depend on the one being deleted will be deleted too
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            license template number
+     * @param forceCascade
+     *            if true, any entities that depend on the one being deleted will be deleted too
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
         // TODO: implement me...
