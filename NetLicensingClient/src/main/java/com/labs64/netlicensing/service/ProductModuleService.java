@@ -17,11 +17,14 @@ import java.util.Map;
 
 import javax.ws.rs.core.Form;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides product module handling routines.
@@ -36,41 +39,55 @@ public class ProductModuleService {
     /**
      * Creates new product module object with given properties.
      *
-     * @param context          determines the vendor on whose behalf the call is performed
-     * @param productNumber    parent product to which the new product module is to be added
-     * @param newProductModule non-null properties will be taken for the new object, null properties will either stay null, or will
-     *                         be set to a default value, depending on property.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param productNumber
+     *            parent product to which the new product module is to be added
+     * @param productModule
+     *            non-null properties will be taken for the new object, null properties will either stay null, or will
+     *            be set to a default value, depending on property.
      * @return the newly created product module object
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
-    public static ProductModule create(final Context context, final String productNumber, final ProductModule newProductModule)
-            throws BaseCheckedException {
-        final Form form = newProductModule.asRequestForm();
-        form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
+    public static ProductModule create(final Context context, final String productNumber, final ProductModule productModule) throws BaseCheckedException {
+        CheckUtils.paramNotNull(productModule, "productNumber");
+
+        final Form form = productModule.asRequestForm();
+        if (!StringUtils.isEmpty(productNumber)) {
+            form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
+        }
         return NetLicensingService.post(context, "productmodule", form, ProductModule.class);
     }
 
     /**
      * Gets product module by its number.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param number  the product module number
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            the product module number
      * @return the product module
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static ProductModule get(final Context context, final String number) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+
         return NetLicensingService.get(context, "productmodule/" + number, null, ProductModule.class);
     }
 
     /**
      * Returns all product modules of a vendor.
      *
-     * @param context determines the vendor on whose behalf the call is performed
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
      * @return list of product modules (of all products) or null/empty list if nothing found.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static Page<ProductModule> list(final Context context) throws BaseCheckedException {
         return NetLicensingService.list(context, "productmodule", ProductModule.class);
@@ -79,28 +96,40 @@ public class ProductModuleService {
     /**
      * Updates product module properties.
      *
-     * @param context             determines the vendor on whose behalf the call is performed
-     * @param number              product module number
-     * @param updateProductModule non-null properties will be updated to the provided values, null properties will stay unchanged.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            product module number
+     * @param productModule
+     *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated product module.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
-    public static ProductModule update(final Context context, final String number, final ProductModule updateProductModule)
-            throws BaseCheckedException {
-        return NetLicensingService.post(context, "productmodule/" + number, updateProductModule.asRequestForm(), ProductModule.class);
+    public static ProductModule update(final Context context, final String number, final ProductModule productModule) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+        CheckUtils.paramNotNull(productModule, "productModule");
+
+        return NetLicensingService.post(context, "productmodule/" + number, productModule.asRequestForm(), ProductModule.class);
     }
 
     /**
      * Deletes product module.
      *
-     * @param context      determines the vendor on whose behalf the call is performed
-     * @param number       product module number
-     * @param forceCascade if true, any entities that depend on the one being deleted will be deleted too
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            product module number
+     * @param forceCascade
+     *            if true, any entities that depend on the one being deleted will be deleted too
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
         NetLicensingService.delete(context, "productmodule/" + number, params);

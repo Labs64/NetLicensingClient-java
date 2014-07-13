@@ -34,16 +34,16 @@ import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.context.Info;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
- * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service
- * classes.
+ * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service classes.
  */
 class NetLicensingService {
 
     /**
-     * Helper method for performing GET request to NetLicensing API services. Finds and returns first suitable
-     * item with type resultType from the response.
+     * Helper method for performing GET request to NetLicensing API services. Finds and returns first suitable item
+     * with type resultType from the response.
      *
      * @param context
      *            context for the NetLicensing API call
@@ -62,8 +62,8 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing GET request to NetLicensing API service that returns page of items with
-     * type resultType.
+     * Helper method for performing GET request to NetLicensing API service that returns page of items with type
+     * resultType.
      *
      * @param context
      *            context for the NetLicensing API call
@@ -80,8 +80,8 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing POST request to NetLicensing API services. Finds and returns first
-     * suitable item with type resultType from the response.
+     * Helper method for performing POST request to NetLicensing API services. Finds and returns first suitable item
+     * with type resultType from the response.
      *
      * @param context
      *            context for the NetLicensing API call
@@ -115,8 +115,8 @@ class NetLicensingService {
     }
 
     /**
-     * Helper method for performing request to NetLicensing API services. Knows about context for the
-     * NetLicensing API calls, does authentication, provides error handling based on status of the response.
+     * Helper method for performing request to NetLicensing API services. Knows about context for the NetLicensing API
+     * calls, does authentication, provides error handling based on status of the response.
      *
      * @param context
      *            context for the NetLicensing API call
@@ -134,6 +134,7 @@ class NetLicensingService {
      * @throws RestException
      */
     static <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request, final Map<String, Object> queryParams) throws RestException {
+        CheckUtils.paramNotNull(context, "context");
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
         authenticate(restProvider, context);

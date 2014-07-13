@@ -25,6 +25,7 @@ import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides licensee handling routines.
@@ -48,7 +49,7 @@ public class LicenseeService {
      *            determines the vendor on whose behalf the call is performed
      * @param productNumber
      *            parent product to which the new licensee is to be added
-     * @param newLicensee
+     * @param licensee
      *            non-null properties will be taken for the new object, null properties will either stay null, or will
      *            be set to a default value, depending on property.
      * @return the newly created licensee object
@@ -56,10 +57,13 @@ public class LicenseeService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Licensee create(final Context context, final String productNumber, final Licensee newLicensee)
-            throws BaseCheckedException {
-        final Form form = newLicensee.asRequestForm();
-        form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
+    public static Licensee create(final Context context, final String productNumber, final Licensee licensee) throws BaseCheckedException {
+        CheckUtils.paramNotNull(licensee, "licensee");
+
+        final Form form = licensee.asRequestForm();
+        if (!StringUtils.isEmpty(productNumber)) {
+            form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
+        }
         return NetLicensingService.post(context, "licensee", form, Licensee.class);
     }
 
@@ -76,6 +80,8 @@ public class LicenseeService {
      *             corresponding service response messages.
      */
     public static Licensee get(final Context context, final String number) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+
         return NetLicensingService.get(context, "licensee/" + number, null, Licensee.class);
     }
 
@@ -100,16 +106,18 @@ public class LicenseeService {
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            licensee number
-     * @param updateLicensee
+     * @param licensee
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated licensee.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Licensee update(final Context context, final String number, final Licensee updateLicensee)
-            throws BaseCheckedException {
-        return NetLicensingService.post(context, "licensee/" + number, updateLicensee.asRequestForm(), Licensee.class);
+    public static Licensee update(final Context context, final String number, final Licensee licensee) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+        CheckUtils.paramNotNull(licensee, "licensee");
+
+        return NetLicensingService.post(context, "licensee/" + number, licensee.asRequestForm(), Licensee.class);
     }
 
     /**
@@ -125,8 +133,9 @@ public class LicenseeService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void delete(final Context context, final String number, final boolean forceCascade)
-            throws BaseCheckedException {
+    public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
         NetLicensingService.delete(context, "licensee/" + number, params);
@@ -147,8 +156,8 @@ public class LicenseeService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static ValidationResult validate(final Context context, final String number, final String productNumber,
-            final String licenseeName) throws BaseCheckedException {
+    public static ValidationResult validate(final Context context, final String number, final String productNumber, final String licenseeName) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();
         if (!StringUtils.isEmpty(productNumber)) {
