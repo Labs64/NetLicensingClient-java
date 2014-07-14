@@ -105,7 +105,7 @@ public final class SchemaFunction {
      * @param propertyValues  values of properties mapped by names
      */
     public static void updateProperties(final List<Property> properties, final Map<String, String> propertyValues) {
-        for (String name : propertyValues.keySet()) {
+        for (final String name : propertyValues.keySet()) {
             final Property property = propertyByName(properties, name);
             if (!properties.contains(property)) {
                 properties.add(property);

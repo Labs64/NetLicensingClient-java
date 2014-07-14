@@ -194,7 +194,7 @@ class NetLicensingService {
      */
     private static <RES> RES extractSuitableItemOfType(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
         if (netlicensing.getItems() != null) {
-            for (Item item : netlicensing.getItems().getItem()) {
+            for (final Item item : netlicensing.getItems().getItem()) {
                 if ((resultType.getSimpleName().equals(item.getType())) || (resultType == ValidationResult.class && Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType()))) {
                     return EntityFactory.create(item, resultType);
                 }

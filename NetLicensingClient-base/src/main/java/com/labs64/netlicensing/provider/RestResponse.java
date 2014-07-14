@@ -28,7 +28,7 @@ public class RestResponse<T> {
         return this.statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
+    public void setStatusCode(final int statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -36,7 +36,7 @@ public class RestResponse<T> {
         return this.entity;
     }
 
-    public void setEntity(T entity) {
+    public void setEntity(final T entity) {
         this.entity = entity;
     }
 

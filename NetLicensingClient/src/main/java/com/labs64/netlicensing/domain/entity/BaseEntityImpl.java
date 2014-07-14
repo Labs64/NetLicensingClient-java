@@ -75,7 +75,7 @@ public abstract class BaseEntityImpl implements BaseEntity {
     public Form asRequestForm() {
         final Form form = new Form();
         final Map<String, Object> propMap = asPropertiesMap();
-        for (String propKey : propMap.keySet()) {
+        for (final String propKey : propMap.keySet()) {
             final Object propValue = propMap.get(propKey);
             if (propValue != null) {
                 form.param(propKey, propValue.toString());
@@ -95,7 +95,7 @@ public abstract class BaseEntityImpl implements BaseEntity {
         final StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
         builder.append(" [");
         boolean firstProp = true;
-        for (String propKey : propMap.keySet()) {
+        for (final String propKey : propMap.keySet()) {
             builder.append(firstProp ? "" : ", ");
             firstProp = false;
 

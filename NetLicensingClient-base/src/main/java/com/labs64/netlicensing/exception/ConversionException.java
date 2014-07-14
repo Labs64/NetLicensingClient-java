@@ -26,7 +26,7 @@ public class ConversionException extends BaseCheckedException {
      * @param msg
      *            the detail message
      */
-    public ConversionException(String msg) {
+    public ConversionException(final String msg) {
         super(msg);
     }
 
@@ -38,7 +38,7 @@ public class ConversionException extends BaseCheckedException {
      * @param cause
      *            the cause exception
      */
-    public ConversionException(String msg, Throwable cause) {
+    public ConversionException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 

@@ -172,7 +172,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         final Map<String, Object> map = super.asPropertiesMap();
         map.put(Constants.Transaction.STATUS, getStatus());
         if (transactionProperties != null) {
-            for (Map.Entry<String, String> property : transactionProperties.entrySet()) {
+            for (final Map.Entry<String, String> property : transactionProperties.entrySet()) {
                 map.put(property.getKey(), property.getValue());
             }
         }

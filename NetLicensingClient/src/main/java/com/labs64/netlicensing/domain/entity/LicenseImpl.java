@@ -148,7 +148,7 @@ public class LicenseImpl extends BaseEntityImpl implements License {
         map.put(Constants.CURRENCY, getCurrency());
         map.put(Constants.License.HIDDEN, getHidden());
         if (licenseProperties != null) {
-            for (Map.Entry<String, String> lp : licenseProperties.entrySet()) {
+            for (final Map.Entry<String, String> lp : licenseProperties.entrySet()) {
                 map.put(lp.getKey(), lp.getValue());
             }
         }

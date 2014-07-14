@@ -109,7 +109,7 @@ public class TokenImpl extends BaseEntityImpl implements Token {
         map.put(Constants.Token.EXPIRATION_TIME, getExpirationTime());
         map.put(Constants.Token.TOKEN_TYPE, getTokenType());
         if (tokenProperties != null) {
-            for (Map.Entry<String, String> property : tokenProperties.entrySet()) {
+            for (final Map.Entry<String, String> property : tokenProperties.entrySet()) {
                 map.put(property.getKey(), property.getValue());
             }
         }

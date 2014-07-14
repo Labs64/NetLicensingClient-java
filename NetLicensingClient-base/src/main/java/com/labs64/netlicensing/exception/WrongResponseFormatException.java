@@ -25,7 +25,7 @@ public class WrongResponseFormatException extends BaseCheckedException {
      *
      * @param msg
      */
-    public WrongResponseFormatException(String msg) {
+    public WrongResponseFormatException(final String msg) {
         super(msg);
     }
 

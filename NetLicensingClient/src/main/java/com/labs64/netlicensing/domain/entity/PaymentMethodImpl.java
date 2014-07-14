@@ -56,7 +56,7 @@ public class PaymentMethodImpl extends BaseEntityImpl implements PaymentMethod {
     protected Map<String, Object> asPropertiesMap() {
         final Map<String, Object> map = super.asPropertiesMap();
         if (paymentMethodProperties != null) {
-            for (Map.Entry<String, String> property : paymentMethodProperties.entrySet()) {
+            for (final Map.Entry<String, String> property : paymentMethodProperties.entrySet()) {
                 map.put(property.getKey(), property.getValue());
             }
         }

@@ -211,7 +211,7 @@ abstract class BaseServiceTest extends JerseyTest {
                 final String entityStr = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(serviceId), ' ').toLowerCase();
                 return errorResponse("NotFoundException", String.format("requested %s does not exist", entityStr));
             }
-            if (forceCascade != true) {
+            if (!forceCascade) {
                 return unexpectedValueErrorResponse("forceCascade");
             }
             return Response.status(Response.Status.NO_CONTENT).build();

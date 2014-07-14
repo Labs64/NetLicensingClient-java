@@ -187,7 +187,7 @@ public class ProductImpl extends BaseEntityImpl implements Product {
         map.put(Constants.Product.DESCRIPTION, getDescription());
         map.put(Constants.Product.LICENSING_INFO, getLicensingInfo());
         if (productProperties != null) {
-            for (Map.Entry<String, String> property : productProperties.entrySet()) {
+            for (final Map.Entry<String, String> property : productProperties.entrySet()) {
                 map.put(property.getKey(), property.getValue());
             }
         }

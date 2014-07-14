@@ -15,7 +15,7 @@ import com.labs64.netlicensing.schema.context.Property;
 public class ItemToValidationResultConverter implements Converter<Item, ValidationResult> {
 
     @Override
-    public ValidationResult convert(Item source) throws ConversionException {
+    public ValidationResult convert(final Item source) throws ConversionException {
         if (!Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(source.getType())) {
             final String sourceType = (source.getType() != null) ? source.getType() : "<null>";
             throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType, Constants.ValidationResult.VALIDATION_RESULT_TYPE));
@@ -25,7 +25,7 @@ public class ItemToValidationResultConverter implements Converter<Item, Validati
 
         // convert properties
         String productModuleNumber = null;
-        for (Property property : source.getProperty()) {
+        for (final Property property : source.getProperty()) {
             if (Constants.ProductModule.PRODUCT_MODULE_NUMBER.equals(property.getName())) {
                 productModuleNumber = property.getValue();
             } else {
@@ -35,7 +35,7 @@ public class ItemToValidationResultConverter implements Converter<Item, Validati
 
         // convert lists
         if (source.getList() != null) {
-            for (List list : source.getList()) {
+            for (final List list : source.getList()) {
                 composition.put(list.getName(), convertFromList(list));
             }
         }
@@ -57,13 +57,13 @@ public class ItemToValidationResultConverter implements Converter<Item, Validati
         final Composition composition = new Composition();
         // convert properties
         if (list.getProperty() != null) {
-            for (Property property : list.getProperty()) {
+            for (final Property property : list.getProperty()) {
                 composition.put(property.getName(), property.getValue());
             }
         }
         // convert lists
         if (list.getList() != null) {
-            for (List sublist : list.getList()) {
+            for (final List sublist : list.getList()) {
                 composition.put(list.getName(), convertFromList(sublist));
             }
         }

@@ -12,10 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +32,10 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseTemplateService}.
@@ -256,7 +256,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         }
 
         @Override
-        public Response update(String number, MultivaluedMap<String, String> formParams) {
+        public Response update(final String number, final MultivaluedMap<String, String> formParams) {
             final boolean isTimeVolume = LicenseType.TIMEVOLUME.value().equals(formParams.getFirst(Constants.LicenseTemplate.LICENSE_TYPE));
             if (isTimeVolume && !formParams.containsKey("timeVolume")) {
                 return errorResponse("IllegalOperationException", "License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
@@ -267,7 +267,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         }
 
         @Override
-        public Response delete(String number, boolean forceCascade) {
+        public Response delete(final String number, final boolean forceCascade) {
             return delete(number, "LT001-TEST", forceCascade);
         }
 

@@ -91,7 +91,7 @@ public class LicenseeImpl extends BaseEntityImpl implements Licensee {
     protected Map<String, Object> asPropertiesMap() {
         final Map<String, Object> map = super.asPropertiesMap();
         if (licenseeProperties != null) {
-            for (Map.Entry<String, String> lp : licenseeProperties.entrySet()) {
+            for (final Map.Entry<String, String> lp : licenseeProperties.entrySet()) {
                 map.put(lp.getKey(), lp.getValue());
             }
         }
