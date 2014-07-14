@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
@@ -126,7 +129,11 @@ public class LicenseTemplateService {
      *             corresponding service response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
-        // TODO: implement me...
+        CheckUtils.paramNotEmpty(number, "number");
+
+        final Map<String, Object> params = new HashMap<String, Object>();
+        params.put(Constants.CASCADE, forceCascade);
+        NetLicensingService.delete(context, "licensetemplate/" + number, params);
     }
 
 }

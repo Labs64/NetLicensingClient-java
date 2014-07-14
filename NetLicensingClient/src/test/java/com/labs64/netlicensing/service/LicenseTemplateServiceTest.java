@@ -207,6 +207,15 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        LicenseTemplateService.delete(context, "LT001-TEST", true);
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("NotFoundException: Requested license template does not exist");
+        LicenseTemplateService.delete(context, "PM001-NONE", false);
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -255,6 +264,11 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
             roundPriceParamValueToTwoDecimalPlaces(formParams);
             return super.update(number, formParams);
+        }
+
+        @Override
+        public Response delete(String number, boolean forceCascade) {
+            return delete(number, "LT001-TEST", forceCascade);
         }
 
         /**
