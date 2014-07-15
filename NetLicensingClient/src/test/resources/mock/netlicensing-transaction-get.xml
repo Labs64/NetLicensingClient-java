@@ -1,0 +1,17 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="Transaction">
+            <property name="number">TR001TEST</property>
+            <property name="active">true</property>
+            <property name="status">CLOSED</property>
+            <property name="source">SHOP</property>
+            <property name="price">21.00</property>
+            <property name="discount">9.00</property>
+            <property name="currency">EUR</property>
+            <property name="datecreated">2014-07-07T21:30:46.658Z</property>
+            <property name="dateclosed">2014-07-07T21:30:46.658Z</property>
+            <property name="inUse">true</property>
+            <property name="vendorNumber">VTEST</property>
+        </item>
+    </items>
+</netlicensing>

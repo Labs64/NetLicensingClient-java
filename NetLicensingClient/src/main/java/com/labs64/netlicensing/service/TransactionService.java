@@ -17,6 +17,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides transaction handling routines.
@@ -77,7 +78,9 @@ public class TransactionService {
      *                              corresponding service response messages.
      */
     public static Transaction get(final Context context, final String number) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        CheckUtils.paramNotEmpty(number, "number");
+
+        return NetLicensingService.get(context, "transaction/" + number, null, Transaction.class);
     }
 
     /**
