@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
@@ -25,6 +26,7 @@ import org.junit.Test;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 import com.labs64.netlicensing.util.DateUtils;
@@ -58,6 +60,18 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateCreated());
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateClosed());
         assertEquals("VTEST", transaction.getTransactionProperties().get("vendorNumber"));
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final Page<Transaction> transactions = TransactionService.list(context);
+
+        assertNotNull(transactions);
+        assertTrue(transactions.hasContent());
+        assertEquals(3, transactions.getItemsNumber());
+        assertEquals(TransactionSource.AUTO_LICENSE_UPDATE, transactions.getContent().get(0).getSource());
+        assertEquals(TransactionStatus.PENDING, transactions.getContent().get(1).getStatus());
+        assertEquals("TR003TEST", transactions.getContent().get(2).getNumber());
     }
 
     // *** NLIC test mock resource ***

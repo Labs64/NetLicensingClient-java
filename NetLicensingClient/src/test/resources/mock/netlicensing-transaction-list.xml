@@ -1,0 +1,31 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items pagenumber="0" itemsnumber="3" totalpages="1" totalitems="3" hasnext="false">
+        <item type="Transaction">
+            <property name="number">TR001TEST</property>
+            <property name="active">true</property>
+            <property name="status">CLOSED</property>
+            <property name="source">AUTO_LICENSE_UPDATE</property>
+            <property name="datecreated">2014-07-08T13:24:02.843Z</property>
+            <property name="dateclosed">2014-07-08T13:24:02.843Z</property>
+            <property name="inUse">true</property>
+        </item>
+        <item type="Transaction">
+            <property name="number">TR002TEST</property>
+            <property name="active">true</property>
+            <property name="status">PENDING</property>
+            <property name="source">AUTO_LICENSEE_CREATE</property>
+            <property name="datecreated">2014-07-08T13:24:02.824Z</property>
+            <property name="dateclosed">2014-07-08T13:24:02.824Z</property>
+            <property name="inUse">true</property>
+        </item>
+        <item type="Transaction">
+            <property name="number">TR003TEST</property>
+            <property name="active">true</property>
+            <property name="status">CANCELLED</property>
+            <property name="source">AUTO_PRODUCT_DELETE</property>
+            <property name="datecreated">2014-06-20T23:28:05.571Z</property>
+            <property name="dateclosed">2014-06-20T23:28:05.571Z</property>
+            <property name="inUse">true</property>
+        </item>
+    </items>
+</netlicensing>
