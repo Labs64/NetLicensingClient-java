@@ -117,6 +117,11 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
         final Map<String, Object> map = super.asPropertiesMap();
         map.put(Constants.NAME, getName());
         map.put(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
+        if (productModuleProperties != null) {
+            for (Map.Entry<String, String> pmp : productModuleProperties.entrySet()) {
+                map.put(pmp.getKey(), pmp.getValue());
+            }
+        }
         return map;
     }
 
