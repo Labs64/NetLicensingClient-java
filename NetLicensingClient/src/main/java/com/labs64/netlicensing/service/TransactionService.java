@@ -53,25 +53,6 @@ public class TransactionService {
     }
 
     /**
-     * Creates new transaction object with default properties.
-     * <p/>
-     * This routine is for internal use by NetLicensing. Where appropriate, transactions will be created by
-     * NetLicensing automatically.
-     *
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param source
-     *            source creating transaction
-     * @return the newly created transaction object
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
-     */
-    public static Transaction createDefault(final Context context, final TransactionSource source) throws BaseCheckedException {
-        return null; // TODO: implement me...
-    }
-
-    /**
      * Gets transaction by its number.
      * <p/>
      * Use this operation for getting details about certain transaction. List of all transactions can be obtained by
@@ -99,8 +80,6 @@ public class TransactionService {
      *
      * @param context
      *            determines the vendor on whose behalf the call is performed
-     * @param filter
-     *            reserved for the future use, must be omitted / set to NULL
      * @return list of transactions (of all products/licensees) or null/empty list if nothing found.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
