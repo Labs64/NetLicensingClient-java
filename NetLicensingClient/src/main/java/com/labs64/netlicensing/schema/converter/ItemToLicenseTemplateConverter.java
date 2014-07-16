@@ -16,6 +16,8 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
+import com.labs64.netlicensing.domain.vo.Currency;
+import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Money;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
@@ -32,12 +34,12 @@ public class ItemToLicenseTemplateConverter extends ItemToEntityBaseConverter<Li
         final LicenseTemplate target = super.convert(source);
 
         target.setName(SchemaFunction.propertyByName(source.getProperty(), Constants.NAME).getValue());
-        target.setLicenseType(SchemaFunction.propertyByName(source.getProperty(),
-                Constants.LicenseTemplate.LICENSE_TYPE).getValue());
+        target.setLicenseType(LicenseType.valueOf(SchemaFunction.propertyByName(source.getProperty(),
+                Constants.LicenseTemplate.LICENSE_TYPE).getValue()));
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.PRICE).getValue() != null) {
             final Money price = convertPrice(source.getProperty(), Constants.PRICE);
             target.setPrice(price.getAmount());
-            target.setCurrency(price.getCurrencyCode());
+            target.setCurrency(Currency.valueOf(price.getCurrencyCode()));
         }
         target.setAutomatic(Boolean.parseBoolean(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.LicenseTemplate.AUTOMATIC,

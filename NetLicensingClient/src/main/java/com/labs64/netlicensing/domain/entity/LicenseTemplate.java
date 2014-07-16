@@ -16,6 +16,9 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 
+import com.labs64.netlicensing.domain.vo.Currency;
+import com.labs64.netlicensing.domain.vo.LicenseType;
+
 /**
  * License template entity used internally by NetLicensing.
  * <p/>
@@ -54,17 +57,17 @@ public interface LicenseTemplate extends BaseEntity {
 
     void setName(String name);
 
-    String getLicenseType();
+    LicenseType getLicenseType();
 
-    void setLicenseType(String licenseType);
+    void setLicenseType(LicenseType licenseType);
 
     BigDecimal getPrice();
 
     void setPrice(BigDecimal price);
 
-    String getCurrency();
+    Currency getCurrency();
 
-    void setCurrency(String currency);
+    void setCurrency(Currency currency);
 
     Boolean getAutomatic();
 

@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.vo.Currency;
+import com.labs64.netlicensing.domain.vo.LicenseType;
 
 /**
  * Default implementation of {@link LicenseTemplate}.
@@ -30,11 +32,11 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
 
     private String name;
 
-    private String licenseType;
+    private LicenseType licenseType;
 
     private BigDecimal price;
 
-    private String currency;
+    private Currency currency;
 
     private Boolean automatic = Boolean.FALSE;
 
@@ -88,12 +90,12 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
     }
 
     @Override
-    public String getLicenseType() {
+    public LicenseType getLicenseType() {
         return licenseType;
     }
 
     @Override
-    public void setLicenseType(final String licenseType) {
+    public void setLicenseType(final LicenseType licenseType) {
         this.licenseType = licenseType;
     }
 
@@ -108,12 +110,12 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
     }
 
     @Override
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
     @Override
-    public void setCurrency(final String currency) {
+    public void setCurrency(final Currency currency) {
         this.currency = currency;
     }
 

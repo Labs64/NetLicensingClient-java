@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 
@@ -35,7 +36,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     private BigDecimal discount;
 
-    private String currency;
+    private Currency currency;
 
     private Date dateCreated;
 
@@ -100,12 +101,12 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
     @Override
-    public void setCurrency(final String currency) {
+    public void setCurrency(final Currency currency) {
         this.currency = currency;
     }
 

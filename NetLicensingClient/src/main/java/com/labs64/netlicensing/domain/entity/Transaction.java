@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
+import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 
@@ -60,9 +61,9 @@ public interface Transaction extends BaseEntity {
 
     void setDiscount(BigDecimal discount);
 
-    String getCurrency();
+    Currency getCurrency();
 
-    void setCurrency(String currency);
+    void setCurrency(Currency currency);
 
     Date getDateCreated();
 

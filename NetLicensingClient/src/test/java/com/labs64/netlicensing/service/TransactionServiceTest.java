@@ -56,7 +56,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(TransactionSource.SHOP, transaction.getSource());
         assertEquals(new BigDecimal("21.00"), transaction.getPrice());
         assertEquals(new BigDecimal("9.00"), transaction.getDiscount());
-        assertEquals(Currency.EUR.value(), transaction.getCurrency());
+        assertEquals(Currency.EUR, transaction.getCurrency());
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateCreated());
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateClosed());
         assertEquals("VTEST", transaction.getTransactionProperties().get("vendorNumber"));

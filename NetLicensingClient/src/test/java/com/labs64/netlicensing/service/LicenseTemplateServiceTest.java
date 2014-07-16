@@ -12,6 +12,10 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,13 +33,10 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseTemplateService}.
@@ -59,9 +60,9 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setNumber("LT001-TEST");
         licenseTemplate.setName("Test License Template");
-        licenseTemplate.setLicenseType(LicenseType.TIMEVOLUME.value());
+        licenseTemplate.setLicenseType(LicenseType.TIMEVOLUME);
         licenseTemplate.setActive(false);
-        licenseTemplate.setCurrency("EUR");
+        licenseTemplate.setCurrency(Currency.EUR);
         licenseTemplate.setPrice(new BigDecimal("10.5"));
         licenseTemplate.setAutomatic(true);
         licenseTemplate.setHidden(true);
@@ -73,9 +74,9 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertNotNull(createdTemplate);
         assertEquals("LT001-TEST", createdTemplate.getNumber());
         assertEquals("Test License Template", createdTemplate.getName());
-        assertEquals(LicenseType.TIMEVOLUME.value(), createdTemplate.getLicenseType());
+        assertEquals(LicenseType.TIMEVOLUME, createdTemplate.getLicenseType());
         assertEquals(false, createdTemplate.getActive());
-        assertEquals("EUR", createdTemplate.getCurrency());
+        assertEquals(Currency.EUR, createdTemplate.getCurrency());
         assertEquals(new BigDecimal("10.50"), createdTemplate.getPrice());
         assertEquals(true, createdTemplate.getAutomatic());
         assertEquals(true, createdTemplate.getHidden());
@@ -104,7 +105,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
     public void testCreateWithRequiredPropertiesOnly() throws Exception {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setName("Test License Template");
-        licenseTemplate.setLicenseType(LicenseType.FEATURE.value());
+        licenseTemplate.setLicenseType(LicenseType.FEATURE);
 
         final LicenseTemplate createdTemplate = LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
 
@@ -119,7 +120,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
     public void testCreateWithPriceAndWithoutCurrency() throws Exception {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setName("Test License Template");
-        licenseTemplate.setLicenseType(LicenseType.FEATURE.value());
+        licenseTemplate.setLicenseType(LicenseType.FEATURE);
         licenseTemplate.setPrice(new BigDecimal("10"));
 
         thrown.expect(RestException.class);
@@ -131,8 +132,8 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
     public void testCreateWithCurrencyAndWithoutPrice() throws Exception {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setName("Test License Template");
-        licenseTemplate.setLicenseType(LicenseType.FEATURE.value());
-        licenseTemplate.setCurrency("EUR");
+        licenseTemplate.setLicenseType(LicenseType.FEATURE);
+        licenseTemplate.setCurrency(Currency.EUR);
 
         thrown.expect(RestException.class);
         thrown.expectMessage("MalformedRequestException: 'currency' field can not be used without the 'price' field");
@@ -146,9 +147,9 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertNotNull(licenseTemplate);
         assertEquals("LT001-TEST", licenseTemplate.getNumber());
         assertEquals("Test License Template", licenseTemplate.getName());
-        assertEquals(LicenseType.FEATURE.value(), licenseTemplate.getLicenseType());
+        assertEquals(LicenseType.FEATURE, licenseTemplate.getLicenseType());
         assertEquals(false, licenseTemplate.getActive());
-        assertEquals("EUR", licenseTemplate.getCurrency());
+        assertEquals(Currency.EUR, licenseTemplate.getCurrency());
         assertEquals(new BigDecimal("10.00"), licenseTemplate.getPrice());
         assertEquals(true, licenseTemplate.getAutomatic());
         assertEquals(true, licenseTemplate.getHidden());
@@ -167,11 +168,11 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
         final LicenseTemplate template1 = licenseTemplates.getContent().get(0);
         assertEquals("LT001-TEST", template1.getNumber());
-        assertEquals(LicenseType.FEATURE.value(), template1.getLicenseType());
+        assertEquals(LicenseType.FEATURE, template1.getLicenseType());
 
         final LicenseTemplate template2 = licenseTemplates.getContent().get(1);
         assertEquals("Time Volume License Template", template2.getName());
-        assertEquals(LicenseType.TIMEVOLUME.value(), template2.getLicenseType());
+        assertEquals(LicenseType.TIMEVOLUME, template2.getLicenseType());
         assertEquals("30", template2.getLicenseTemplateProperties().get("timeVolume"));
     }
 
@@ -180,16 +181,16 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setNumber("LT002-TEST");
         licenseTemplate.setPrice(new BigDecimal(15));
-        licenseTemplate.setCurrency("EUR");
+        licenseTemplate.setCurrency(Currency.EUR);
 
         final LicenseTemplate updatedTemplate = LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
 
         assertNotNull(updatedTemplate);
         assertEquals("LT002-TEST", updatedTemplate.getNumber());
         assertEquals("Test License Template", updatedTemplate.getName());
-        assertEquals(LicenseType.FEATURE.value(), updatedTemplate.getLicenseType());
+        assertEquals(LicenseType.FEATURE, updatedTemplate.getLicenseType());
         assertEquals(true, updatedTemplate.getActive());
-        assertEquals("EUR", updatedTemplate.getCurrency());
+        assertEquals(Currency.EUR, updatedTemplate.getCurrency());
         assertEquals(new BigDecimal("15.00"), updatedTemplate.getPrice());
         assertEquals(false, updatedTemplate.getAutomatic());
         assertEquals(false, updatedTemplate.getHidden());
@@ -200,7 +201,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
     @Test
     public void testUpdateLicenseTypeToTimeVolume() throws Exception {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
-        licenseTemplate.setLicenseType(LicenseType.TIMEVOLUME.value());
+        licenseTemplate.setLicenseType(LicenseType.TIMEVOLUME);
 
         thrown.expect(RestException.class);
         thrown.expectMessage("IllegalOperationException: License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
