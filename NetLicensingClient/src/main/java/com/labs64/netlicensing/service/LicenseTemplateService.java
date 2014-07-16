@@ -37,6 +37,8 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class LicenseTemplateService {
 
+    static final String CONTEXT_PATH = "licensetemplate";
+
     /**
      * Creates new license template object with given properties.
      *
@@ -59,7 +61,7 @@ public class LicenseTemplateService {
         if (!StringUtils.isEmpty(productModuleNumber)) {
             form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER, productModuleNumber);
         }
-        return NetLicensingService.post(context, "licensetemplate", form, LicenseTemplate.class);
+        return NetLicensingService.post(context, CONTEXT_PATH, form, LicenseTemplate.class);
     }
 
     /**
@@ -77,7 +79,7 @@ public class LicenseTemplateService {
     public static LicenseTemplate get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, "licensetemplate/" + number, null, LicenseTemplate.class);
+        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, LicenseTemplate.class);
     }
 
     /**
@@ -91,7 +93,7 @@ public class LicenseTemplateService {
      *             corresponding service response messages.
      */
     public static Page<LicenseTemplate> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, "licensetemplate", LicenseTemplate.class);
+        return NetLicensingService.list(context, CONTEXT_PATH, LicenseTemplate.class);
     }
 
     /**
@@ -112,7 +114,7 @@ public class LicenseTemplateService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
-        return NetLicensingService.post(context, "licensetemplate/" + number, licenseTemplate.asRequestForm(), LicenseTemplate.class);
+        return NetLicensingService.post(context, CONTEXT_PATH + "/" + number, licenseTemplate.asRequestForm(), LicenseTemplate.class);
     }
 
     /**
@@ -133,7 +135,7 @@ public class LicenseTemplateService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.delete(context, "licensetemplate/" + number, params);
+        NetLicensingService.delete(context, CONTEXT_PATH + "/" + number, params);
     }
 
 }

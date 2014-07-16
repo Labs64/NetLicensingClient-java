@@ -36,6 +36,8 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class ProductModuleService {
 
+    static final String CONTEXT_PATH = "productmodule";
+
     /**
      * Creates new product module object with given properties.
      *
@@ -58,7 +60,7 @@ public class ProductModuleService {
         if (!StringUtils.isEmpty(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
-        return NetLicensingService.post(context, "productmodule", form, ProductModule.class);
+        return NetLicensingService.post(context, CONTEXT_PATH, form, ProductModule.class);
     }
 
     /**
@@ -76,7 +78,7 @@ public class ProductModuleService {
     public static ProductModule get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, "productmodule/" + number, null, ProductModule.class);
+        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, ProductModule.class);
     }
 
     /**
@@ -90,7 +92,7 @@ public class ProductModuleService {
      *             corresponding service response messages.
      */
     public static Page<ProductModule> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, "productmodule", ProductModule.class);
+        return NetLicensingService.list(context, CONTEXT_PATH, ProductModule.class);
     }
 
     /**
@@ -111,7 +113,7 @@ public class ProductModuleService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(productModule, "productModule");
 
-        return NetLicensingService.post(context, "productmodule/" + number, productModule.asRequestForm(), ProductModule.class);
+        return NetLicensingService.post(context, CONTEXT_PATH + "/" + number, productModule.asRequestForm(), ProductModule.class);
     }
 
     /**
@@ -132,7 +134,7 @@ public class ProductModuleService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.delete(context, "productmodule/" + number, params);
+        NetLicensingService.delete(context, CONTEXT_PATH + "/" + number, params);
     }
 
 }

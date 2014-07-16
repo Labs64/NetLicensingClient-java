@@ -42,6 +42,8 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class LicenseeService {
 
+    static final String CONTEXT_PATH = "licensee";
+
     /**
      * Creates new licensee object with given properties.
      *
@@ -64,7 +66,7 @@ public class LicenseeService {
         if (!StringUtils.isEmpty(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
-        return NetLicensingService.post(context, "licensee", form, Licensee.class);
+        return NetLicensingService.post(context, CONTEXT_PATH, form, Licensee.class);
     }
 
     /**
@@ -82,7 +84,7 @@ public class LicenseeService {
     public static Licensee get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, "licensee/" + number, null, Licensee.class);
+        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, Licensee.class);
     }
 
     /**
@@ -96,7 +98,7 @@ public class LicenseeService {
      *             corresponding service response messages.
      */
     public static Page<Licensee> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, "licensee", Licensee.class);
+        return NetLicensingService.list(context, CONTEXT_PATH, Licensee.class);
     }
 
     /**
@@ -117,7 +119,7 @@ public class LicenseeService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licensee, "licensee");
 
-        return NetLicensingService.post(context, "licensee/" + number, licensee.asRequestForm(), Licensee.class);
+        return NetLicensingService.post(context, CONTEXT_PATH + "/" + number, licensee.asRequestForm(), Licensee.class);
     }
 
     /**
@@ -138,7 +140,7 @@ public class LicenseeService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.delete(context, "licensee/" + number, params);
+        NetLicensingService.delete(context, CONTEXT_PATH + "/" + number, params);
     }
 
     /**
@@ -166,7 +168,7 @@ public class LicenseeService {
         if (!StringUtils.isEmpty(licenseeName)) {
             params.put(Constants.Licensee.PROP_NAME, licenseeName);
         }
-        return NetLicensingService.get(context, "licensee/" + number + "/validate", params, ValidationResult.class);
+        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number + "/validate", params, ValidationResult.class);
     }
 
 }

@@ -35,6 +35,8 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class ProductService {
 
+    static final String CONTEXT_PATH = "product";
+
     /**
      * Creates new product with given properties.
      *
@@ -51,7 +53,7 @@ public class ProductService {
     public static Product create(final Context context, final Product product) throws BaseCheckedException {
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.post(context, "product", product.asRequestForm(), Product.class);
+        return NetLicensingService.post(context, CONTEXT_PATH, product.asRequestForm(), Product.class);
     }
 
     /**
@@ -69,7 +71,7 @@ public class ProductService {
     public static Product get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, "product/" + number, null, Product.class);
+        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, Product.class);
     }
 
     /**
@@ -84,7 +86,7 @@ public class ProductService {
      *             corresponding service response messages.
      */
     public static Page<Product> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, "product", Product.class);
+        return NetLicensingService.list(context, CONTEXT_PATH, Product.class);
     }
 
     /**
@@ -105,7 +107,7 @@ public class ProductService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.post(context, "product/" + number, product.asRequestForm(), Product.class);
+        return NetLicensingService.post(context, CONTEXT_PATH + "/" + number, product.asRequestForm(), Product.class);
     }
 
     /**
@@ -126,7 +128,7 @@ public class ProductService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.delete(context, "product/" + number, params);
+        NetLicensingService.delete(context, CONTEXT_PATH + "/" + number, params);
     }
 
 }

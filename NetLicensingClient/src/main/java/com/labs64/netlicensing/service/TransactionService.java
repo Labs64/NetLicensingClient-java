@@ -15,7 +15,6 @@ package com.labs64.netlicensing.service;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.exception.BaseCheckedException;
 import com.labs64.netlicensing.util.CheckUtils;
 
@@ -31,6 +30,8 @@ import com.labs64.netlicensing.util.CheckUtils;
  * to the public API, as transactions are only allowed to be created and modified by NetLicensing internally.
  */
 public class TransactionService {
+
+    static final String CONTEXT_PATH = "transaction";
 
     /**
      * Creates new transaction object with given properties.
@@ -70,7 +71,7 @@ public class TransactionService {
     public static Transaction get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, "transaction/" + number, null, Transaction.class);
+        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, Transaction.class);
     }
 
     /**
@@ -86,7 +87,7 @@ public class TransactionService {
      *             corresponding service response messages.
      */
     public static Page<Transaction> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, "transaction", Transaction.class);
+        return NetLicensingService.list(context, CONTEXT_PATH, Transaction.class);
     }
 
     /**
