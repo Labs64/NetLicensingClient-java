@@ -5,6 +5,7 @@
             <property name="active">false</property>
             <property name="productNumber">P001-TEST</property>
             <property name="CustomProperty">Custom property value</property>
+            <property name="toBeDeleted">To be or not to be</property>
             <property name="inUse">true</property>
         </item>
     </items>

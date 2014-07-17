@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -43,6 +44,8 @@ import com.labs64.netlicensing.exception.RestException;
  */
 public class LicenseTemplateServiceTest extends BaseServiceTest {
 
+    private static final String TIME_VOLUME_PROPERTY = "timeVolume";
+
     // *** NLIC Tests ***
 
     private static Context context;
@@ -67,7 +70,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         licenseTemplate.setAutomatic(true);
         licenseTemplate.setHidden(true);
         licenseTemplate.setHideLicenses(true);
-        licenseTemplate.addProperty("timeVolume", "30");
+        licenseTemplate.addProperty(TIME_VOLUME_PROPERTY, "30");
 
         final LicenseTemplate createdTemplate = LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
 
@@ -82,7 +85,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(true, createdTemplate.getHidden());
         assertEquals(true, createdTemplate.getHideLicenses());
         assertEquals("PM001-TEST", createdTemplate.getProductModule().getNumber());
-        assertEquals("30", createdTemplate.getLicenseTemplateProperties().get("timeVolume"));
+        assertEquals("30", createdTemplate.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
@@ -155,7 +158,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(true, licenseTemplate.getHidden());
         assertEquals(true, licenseTemplate.getHideLicenses());
         assertEquals("PM001-TEST", licenseTemplate.getProductModule().getNumber());
-        assertEquals("30", licenseTemplate.getLicenseTemplateProperties().get("timeVolume"));
+        assertEquals("30", licenseTemplate.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
@@ -173,15 +176,17 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         final LicenseTemplate template2 = licenseTemplates.getContent().get(1);
         assertEquals("Time Volume License Template", template2.getName());
         assertEquals(LicenseType.TIMEVOLUME, template2.getLicenseType());
-        assertEquals("30", template2.getLicenseTemplateProperties().get("timeVolume"));
+        assertEquals("30", template2.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
     public void testUpdate() throws Exception {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setNumber("LT002-TEST");
+        licenseTemplate.setLicenseType(LicenseType.FEATURE);
         licenseTemplate.setPrice(new BigDecimal(15));
         licenseTemplate.setCurrency(Currency.EUR);
+        licenseTemplate.addProperty(TIME_VOLUME_PROPERTY, "");
 
         final LicenseTemplate updatedTemplate = LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
 
@@ -196,6 +201,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(false, updatedTemplate.getHidden());
         assertEquals(false, updatedTemplate.getHideLicenses());
         assertEquals("PM001-TEST", updatedTemplate.getProductModule().getNumber());
+        assertNull(updatedTemplate.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
@@ -259,7 +265,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         @Override
         public Response update(final String number, final MultivaluedMap<String, String> formParams) {
             final boolean isTimeVolume = LicenseType.TIMEVOLUME.value().equals(formParams.getFirst(Constants.LicenseTemplate.LICENSE_TYPE));
-            if (isTimeVolume && !formParams.containsKey("timeVolume")) {
+            if (isTimeVolume && !formParams.containsKey(TIME_VOLUME_PROPERTY)) {
                 return errorResponse("IllegalOperationException", "License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
             }
 

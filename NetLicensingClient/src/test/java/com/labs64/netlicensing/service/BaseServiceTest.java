@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -40,6 +41,7 @@ import com.labs64.netlicensing.schema.context.InfoEnum;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
+import com.labs64.netlicensing.schema.context.Property;
 import com.labs64.netlicensing.util.JAXBUtils;
 
 /**
@@ -145,11 +147,19 @@ abstract class BaseServiceTest extends JerseyTest {
             final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE, serviceId.toLowerCase());
             final Netlicensing netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
 
-            final Map<String, String> propertyValues = new HashMap<String, String>();
+            final List<Property> properties = netlicensing.getItems().getItem().get(0).getProperty();
             for (final String paramKey : formParams.keySet()) {
-                propertyValues.put(paramKey, formParams.getFirst(paramKey));
+                final Property property = SchemaFunction.propertyByName(properties, paramKey);
+                final String paramValue = formParams.getFirst(paramKey);
+                if (paramValue != null && paramValue.trim().equals("")) {
+                    properties.remove(property);
+                } else {
+                    if (!properties.contains(property)) {
+                        properties.add(property);
+                    }
+                    property.setValue(paramValue);
+                }
             }
-            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
 
             return Response.ok(netlicensing).build();
         }
@@ -190,7 +200,15 @@ abstract class BaseServiceTest extends JerseyTest {
             for (final String paramKey : formParams.keySet()) {
                 propertyValues.put(paramKey, formParams.getFirst(paramKey));
             }
-            SchemaFunction.updateProperties(netlicensing.getItems().getItem().get(0).getProperty(), propertyValues);
+
+            final List<Property> properties = netlicensing.getItems().getItem().get(0).getProperty();
+            for (final String propertyName : propertyValues.keySet()) {
+                final Property property = SchemaFunction.propertyByName(properties, propertyName);
+                if (!properties.contains(property)) {
+                    properties.add(property);
+                }
+                property.setValue(propertyValues.get(propertyName));
+            }
 
             return Response.ok(netlicensing).build();
         }

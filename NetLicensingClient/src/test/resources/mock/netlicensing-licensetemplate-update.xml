@@ -4,7 +4,7 @@
             <property name="number">LT001-TEST</property>
             <property name="active">true</property>
             <property name="name">Test License Template</property>
-            <property name="licenseType">FEATURE</property>
+            <property name="licenseType">TIMEVOLUME</property>
             <property name="price">10.00</property>
             <property name="currency">EUR</property>
             <property name="automatic">false</property>
@@ -13,6 +13,7 @@
             <property name="productModuleNumber">PM001-TEST</property>
             <property name="productModuleName">Test Product Module</property>
             <property name="inUse">false</property>
+            <property name="timeVolume">30</property>
         </item>
     </items>
 </netlicensing>

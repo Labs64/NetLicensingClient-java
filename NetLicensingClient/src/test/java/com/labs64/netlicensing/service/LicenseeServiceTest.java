@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
@@ -48,6 +49,7 @@ import com.labs64.netlicensing.util.JAXBUtils;
 public class LicenseeServiceTest extends BaseServiceTest {
 
     private static final String LICENSEE_CUSTOM_PROPERTY = "CustomProperty";
+    private static final String LICENSEE_DELETING_PROPERTY = "toBeDeleted";
 
     // *** NLIC Tests ***
 
@@ -121,6 +123,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         licensee.setNumber("L002-TEST");
         licensee.setActive(true);
         licensee.addProperty(LICENSEE_CUSTOM_PROPERTY, "New property value");
+        licensee.addProperty(LICENSEE_DELETING_PROPERTY, "");
 
         final Licensee updatedLicensee = LicenseeService.update(context, "L001-TEST", licensee);
 
@@ -129,6 +132,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(true, updatedLicensee.getActive());
         assertEquals("P001-TEST", updatedLicensee.getProduct().getNumber());
         assertEquals("New property value", updatedLicensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
+        assertNull(updatedLicensee.getLicenseeProperties().get(LICENSEE_DELETING_PROPERTY));
     }
 
     @Test

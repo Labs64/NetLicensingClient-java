@@ -98,23 +98,6 @@ public final class SchemaFunction {
     }
 
     /**
-     * Update list of {@link Property} objects with values from propertyValues map that use properties names as keys.
-     * Properties names are not case-sensitive!
-     *
-     * @param properties      properties collection
-     * @param propertyValues  values of properties mapped by names
-     */
-    public static void updateProperties(final List<Property> properties, final Map<String, String> propertyValues) {
-        for (final String name : propertyValues.keySet()) {
-            final Property property = propertyByName(properties, name);
-            if (!properties.contains(property)) {
-                properties.add(property);
-            }
-            property.setValue(propertyValues.get(name));
-        }
-    }
-
-    /**
      * Get {@link Item} by existing property value. Comparison is not case-sensitive!
      *
      * @param items         items collection

@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
@@ -41,6 +42,7 @@ import com.labs64.netlicensing.exception.RestException;
 public class ProductServiceTest extends BaseServiceTest {
 
     private static final String PRODUCT_CUSTOM_PROPERTY = "CustomProperty";
+    private static final String PRODUCT_DELETING_PROPERTY = "toBeDeleted";
 
     // *** NLIC Tests ***
 
@@ -129,8 +131,9 @@ public class ProductServiceTest extends BaseServiceTest {
         product.setName("Test Product");
         product.setNumber("P002-TEST");
         product.addProperty(PRODUCT_CUSTOM_PROPERTY, "Test Value");
+        product.addProperty(PRODUCT_DELETING_PROPERTY, "");
 
-        final Product updatedProduct = ProductService.update(context, "P001", product);
+        final Product updatedProduct = ProductService.update(context, "P001-TEST", product);
 
         assertNotNull(updatedProduct);
         assertEquals("Test Product", updatedProduct.getName());
@@ -139,6 +142,7 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals("v1.0", updatedProduct.getVersion());
         assertEquals(true, updatedProduct.getLicenseeAutoCreate());
         assertEquals("Test Value", updatedProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
+        assertNull(updatedProduct.getProductProperties().get(PRODUCT_DELETING_PROPERTY));
     }
 
     @Test
