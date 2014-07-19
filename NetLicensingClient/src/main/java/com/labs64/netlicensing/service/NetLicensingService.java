@@ -12,27 +12,21 @@
  */
 package com.labs64.netlicensing.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Response;
 
-import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.EntityFactory;
-import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.exception.BaseCheckedException;
 import com.labs64.netlicensing.exception.RestException;
-import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.provider.RestProvider;
 import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.context.Info;
-import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
 
@@ -42,6 +36,8 @@ import com.labs64.netlicensing.util.CheckUtils;
 class NetLicensingService {
 
     private static NetLicensingService instance;
+
+    private EntityFactory entityFactory = new EntityFactory();
 
     /**
      * Private constructor
@@ -80,7 +76,7 @@ class NetLicensingService {
      */
     <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams, final Class<RES> resultType) throws BaseCheckedException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
-        return extractSuitableItemOfType(netlicensing, resultType);
+        return entityFactory.create(netlicensing, resultType);
     }
 
     /**
@@ -98,7 +94,7 @@ class NetLicensingService {
      */
     <RES> Page<RES> list(final Context context, final String urlTemplate, final Class<RES> resultType) throws BaseCheckedException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, null);
-        return extractPageOfItems(netlicensing, resultType);
+        return entityFactory.createPage(netlicensing, resultType);
     }
 
     /**
@@ -118,7 +114,7 @@ class NetLicensingService {
      */
     <REQ, RES> RES post(final Context context, final String urlTemplate, final REQ request, final Class<RES> resultType) throws BaseCheckedException {
         final Netlicensing netlicensing = request(context, HttpMethod.POST, urlTemplate, request, null);
-        return extractSuitableItemOfType(netlicensing, resultType);
+        return entityFactory.create(netlicensing, resultType);
     }
 
     /**
@@ -203,53 +199,6 @@ class NetLicensingService {
                 break;
             default:
                 throw new RestException("Unknown security mode");
-        }
-    }
-
-    /**
-     * Finds and returns from {@link Netlicensing} object suitable item of specified type
-     *
-     * @param netlicensing
-     * @param resultType
-     * @return
-     * @throws BaseCheckedException
-     */
-    private <RES> RES extractSuitableItemOfType(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
-        if (netlicensing.getItems() != null) {
-            for (final Item item : netlicensing.getItems().getItem()) {
-                if ((resultType.getSimpleName().equals(item.getType())) || (resultType == ValidationResult.class && Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType()))) {
-                    return EntityFactory.create(item, resultType);
-                }
-            }
-        }
-        throw new WrongResponseFormatException("Service response doesn't contain item of type " + resultType.getCanonicalName());
-    }
-
-    /**
-     * Returns page of items of specified type from {@link Netlicensing} object
-     *
-     * @param netlicensing
-     * @param resultType
-     * @return
-     * @throws BaseCheckedException
-     */
-    private <RES> Page<RES> extractPageOfItems(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
-        if (netlicensing.getItems() != null) {
-            final List<RES> products = new ArrayList<RES>();
-            for (final Item item : netlicensing.getItems().getItem()) {
-                if (resultType.getSimpleName().equals(item.getType())) {
-                    final RES product = EntityFactory.create(item, resultType);
-                    products.add(product);
-                }
-            }
-            return PageImpl.createInstance(products,
-                    netlicensing.getItems().getPagenumber(),
-                    netlicensing.getItems().getItemsnumber(),
-                    netlicensing.getItems().getTotalpages(),
-                    netlicensing.getItems().getTotalitems(),
-                    netlicensing.getItems().getHasnext());
-        } else {
-            throw new WrongResponseFormatException("Service response is not a page response");
         }
     }
 
