@@ -71,7 +71,7 @@ public class TransactionService {
     public static Transaction get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, Transaction.class);
+        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Transaction.class);
     }
 
     /**
@@ -87,7 +87,7 @@ public class TransactionService {
      *             corresponding service response messages.
      */
     public static Page<Transaction> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, CONTEXT_PATH, Transaction.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, Transaction.class);
     }
 
     /**

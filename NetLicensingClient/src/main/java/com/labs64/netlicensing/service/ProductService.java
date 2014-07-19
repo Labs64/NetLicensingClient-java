@@ -53,7 +53,7 @@ public class ProductService {
     public static Product create(final Context context, final Product product) throws BaseCheckedException {
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.post(context, CONTEXT_PATH, product.asRequestForm(), Product.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, product.asRequestForm(), Product.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ProductService {
     public static Product get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, Product.class);
+        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Product.class);
     }
 
     /**
@@ -86,7 +86,7 @@ public class ProductService {
      *             corresponding service response messages.
      */
     public static Page<Product> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, CONTEXT_PATH, Product.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, Product.class);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ProductService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.post(context, CONTEXT_PATH + "/" + number, product.asRequestForm(), Product.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, product.asRequestForm(), Product.class);
     }
 
     /**
@@ -128,7 +128,7 @@ public class ProductService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.delete(context, CONTEXT_PATH + "/" + number, params);
+        NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, params);
     }
 
 }

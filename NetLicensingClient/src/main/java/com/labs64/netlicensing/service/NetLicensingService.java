@@ -41,6 +41,28 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 class NetLicensingService {
 
+    private static NetLicensingService instance;
+
+    /**
+     * Private constructor
+     */
+    private NetLicensingService() {
+    }
+
+    /**
+     * @return instance of NetLicensingService class
+     */
+    static NetLicensingService getInstance() {
+        if (instance == null) {
+            synchronized (NetLicensingService.class) {
+                if (instance == null) {
+                    instance = new NetLicensingService();
+                }
+            }
+        }
+        return instance;
+    }
+
     /**
      * Helper method for performing GET request to NetLicensing API services. Finds and returns first suitable item
      * with type resultType from the response.
@@ -56,8 +78,8 @@ class NetLicensingService {
      * @return first suitable item with type resultType from the response
      * @throws BaseCheckedException
      */
-    static <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams, final Class<RES> resultType) throws BaseCheckedException {
-        final Netlicensing netlicensing = NetLicensingService.request(context, HttpMethod.GET, urlTemplate, null, queryParams);
+    <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams, final Class<RES> resultType) throws BaseCheckedException {
+        final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
         return extractSuitableItemOfType(netlicensing, resultType);
     }
 
@@ -74,8 +96,8 @@ class NetLicensingService {
      * @return page of items with type resultType from the response
      * @throws BaseCheckedException
      */
-    static <RES> Page<RES> list(final Context context, final String urlTemplate, final Class<RES> resultType) throws BaseCheckedException {
-        final Netlicensing netlicensing = NetLicensingService.request(context, HttpMethod.GET, urlTemplate, null, null);
+    <RES> Page<RES> list(final Context context, final String urlTemplate, final Class<RES> resultType) throws BaseCheckedException {
+        final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, null);
         return extractPageOfItems(netlicensing, resultType);
     }
 
@@ -94,8 +116,8 @@ class NetLicensingService {
      * @return first suitable item with type resultType from the response
      * @throws BaseCheckedException
      */
-    static <REQ, RES> RES post(final Context context, final String urlTemplate, final REQ request, final Class<RES> resultType) throws BaseCheckedException {
-        final Netlicensing netlicensing = NetLicensingService.request(context, HttpMethod.POST, urlTemplate, request, null);
+    <REQ, RES> RES post(final Context context, final String urlTemplate, final REQ request, final Class<RES> resultType) throws BaseCheckedException {
+        final Netlicensing netlicensing = request(context, HttpMethod.POST, urlTemplate, request, null);
         return extractSuitableItemOfType(netlicensing, resultType);
     }
 
@@ -110,8 +132,8 @@ class NetLicensingService {
      *            The REST query parameters values. May be null if there are no parameters.
      * @throws RestException
      */
-    static void delete(final Context context, final String urlTemplate, final Map<String, Object> queryParams) throws RestException {
-        NetLicensingService.request(context, HttpMethod.DELETE, urlTemplate, null, queryParams);
+    void delete(final Context context, final String urlTemplate, final Map<String, Object> queryParams) throws RestException {
+        request(context, HttpMethod.DELETE, urlTemplate, null, queryParams);
     }
 
     /**
@@ -133,7 +155,7 @@ class NetLicensingService {
      * @return
      * @throws RestException
      */
-    static <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request, final Map<String, Object> queryParams) throws RestException {
+    <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request, final Map<String, Object> queryParams) throws RestException {
         CheckUtils.paramNotNull(context, "context");
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
@@ -168,7 +190,7 @@ class NetLicensingService {
      * @param context
      * @throws RestException
      */
-    private static void authenticate(final RestProvider restProvider, final Context context) throws RestException {
+    private void authenticate(final RestProvider restProvider, final Context context) throws RestException {
         if (context.getSecurityMode() == null) {
             throw new RestException("Security mode must be specified");
         }
@@ -192,7 +214,7 @@ class NetLicensingService {
      * @return
      * @throws BaseCheckedException
      */
-    private static <RES> RES extractSuitableItemOfType(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
+    private <RES> RES extractSuitableItemOfType(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
         if (netlicensing.getItems() != null) {
             for (final Item item : netlicensing.getItems().getItem()) {
                 if ((resultType.getSimpleName().equals(item.getType())) || (resultType == ValidationResult.class && Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType()))) {
@@ -211,7 +233,7 @@ class NetLicensingService {
      * @return
      * @throws BaseCheckedException
      */
-    private static <RES> Page<RES> extractPageOfItems(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
+    private <RES> Page<RES> extractPageOfItems(final Netlicensing netlicensing, final Class<RES> resultType) throws BaseCheckedException {
         if (netlicensing.getItems() != null) {
             final List<RES> products = new ArrayList<RES>();
             for (final Item item : netlicensing.getItems().getItem()) {
@@ -236,7 +258,7 @@ class NetLicensingService {
      *            info about status
      * @return true if HTTP status represents client error or server error, false otherwise
      */
-    private static boolean isErrorStatus(final Response.Status status) {
+    private boolean isErrorStatus(final Response.Status status) {
         return status.getFamily() == Response.Status.Family.CLIENT_ERROR || status.getFamily() == Response.Status.Family.SERVER_ERROR;
     }
 
@@ -244,7 +266,7 @@ class NetLicensingService {
      * @param entity
      * @return
      */
-    private static boolean hasErrorInfos(final Netlicensing entity) {
+    private boolean hasErrorInfos(final Netlicensing entity) {
         return entity != null && entity.getInfos() != null && !entity.getInfos().getInfo().isEmpty();
     }
 
@@ -252,7 +274,7 @@ class NetLicensingService {
      * @param infos
      * @return
      */
-    private static String asExceptionMessage(final List<Info> infos) {
+    private String asExceptionMessage(final List<Info> infos) {
         final StringBuilder errorMessages = new StringBuilder();
         for (final Info info : infos) {
             if (errorMessages.length() > 0) {

@@ -45,7 +45,7 @@ public class SecurityTest extends BaseServiceTest {
                 .setUsername("user1")
                 .setPassword("pswrd");
 
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "get-auth-header", null, null);
+        final Netlicensing res = NetLicensingService.getInstance().request(context, HttpMethod.GET, "get-auth-header", null, null);
         final String authHeader = res.getInfos().getInfo().iterator().next().getValue();
 
         assertTrue(authHeader.startsWith("Basic "));
@@ -62,7 +62,7 @@ public class SecurityTest extends BaseServiceTest {
                 .setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION)
                 .setApiKey("TEST_API_KEY");
 
-        final Netlicensing res = NetLicensingService.request(context, HttpMethod.GET, "get-auth-header", null, null);
+        final Netlicensing res = NetLicensingService.getInstance().request(context, HttpMethod.GET, "get-auth-header", null, null);
         final String authHeader = res.getInfos().getInfo().iterator().next().getValue();
 
         assertTrue(authHeader.startsWith("Basic "));

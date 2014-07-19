@@ -40,12 +40,12 @@ public class NetLicensingServiceTest extends BaseServiceTest {
 
     @Test(expected = RestException.class)
     public void testNotExistingService() throws Exception {
-        NetLicensingService.request(context, HttpMethod.GET, "non-existing-service", null, null);
+        NetLicensingService.getInstance().request(context, HttpMethod.GET, "non-existing-service", null, null);
     }
 
     @Test(expected = RestException.class)
     public void testUnsupportedStatusCode() throws Exception {
-        NetLicensingService.request(context, HttpMethod.GET, "unsupported-status-code", null, null);
+        NetLicensingService.getInstance().request(context, HttpMethod.GET, "unsupported-status-code", null, null);
     }
 
     // *** NLIC test mock resource ***

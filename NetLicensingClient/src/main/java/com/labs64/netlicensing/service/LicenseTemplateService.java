@@ -61,7 +61,7 @@ public class LicenseTemplateService {
         if (!StringUtils.isEmpty(productModuleNumber)) {
             form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER, productModuleNumber);
         }
-        return NetLicensingService.post(context, CONTEXT_PATH, form, LicenseTemplate.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, form, LicenseTemplate.class);
     }
 
     /**
@@ -79,7 +79,7 @@ public class LicenseTemplateService {
     public static LicenseTemplate get(final Context context, final String number) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.get(context, CONTEXT_PATH + "/" + number, null, LicenseTemplate.class);
+        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, LicenseTemplate.class);
     }
 
     /**
@@ -93,7 +93,7 @@ public class LicenseTemplateService {
      *             corresponding service response messages.
      */
     public static Page<LicenseTemplate> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.list(context, CONTEXT_PATH, LicenseTemplate.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, LicenseTemplate.class);
     }
 
     /**
@@ -114,7 +114,7 @@ public class LicenseTemplateService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
-        return NetLicensingService.post(context, CONTEXT_PATH + "/" + number, licenseTemplate.asRequestForm(), LicenseTemplate.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, licenseTemplate.asRequestForm(), LicenseTemplate.class);
     }
 
     /**
@@ -135,7 +135,7 @@ public class LicenseTemplateService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.delete(context, CONTEXT_PATH + "/" + number, params);
+        NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, params);
     }
 
 }
