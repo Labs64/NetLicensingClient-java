@@ -1,0 +1,18 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="Transaction">
+            <property name="number">TR001TEST</property>
+            <property name="active">true</property>
+            <property name="status">PENDING</property>
+            <property name="source">AUTO_LICENSE_CREATE</property>
+            <property name="price">100.00</property>
+            <property name="discount">5.00</property>
+            <property name="currency">EUR</property>
+            <property name="datecreated">2014-07-20T00:49:02.640Z</property>
+            <property name="dateclosed">2014-07-19T23:47:38.266Z</property>
+            <property name="inUse">false</property>
+            <property name="toBeDeleted">123</property>
+            <property name="customProperty">Custom property value</property>
+        </item>
+    </items>
+</netlicensing>

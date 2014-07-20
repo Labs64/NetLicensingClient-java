@@ -102,16 +102,18 @@ public class TransactionService {
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            transaction number
-     * @param updateTransaction
+     * @param transaction
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated transaction.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Transaction update(final Context context, final String number, final Transaction updateTransaction)
-            throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static Transaction update(final Context context, final String number, final Transaction transaction) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+        CheckUtils.paramNotNull(transaction, "transaction");
+
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, transaction.asRequestForm(), Transaction.class);
     }
 
     /**

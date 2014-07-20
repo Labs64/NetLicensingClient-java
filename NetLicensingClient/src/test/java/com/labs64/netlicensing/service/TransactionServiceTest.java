@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -47,6 +48,7 @@ import com.labs64.netlicensing.util.DateUtils;
 public class TransactionServiceTest extends BaseServiceTest {
 
     private static final String TRANSACTION_CUSTOM_PROPERTY = "customProperty";
+    private static final String TRANSACTION_DELETING_PROPERTY = "toBeDeleted";
 
     // *** NLIC Tests ***
 
@@ -156,6 +158,25 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals("TR003TEST", transactions.getContent().get(2).getNumber());
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        final Transaction transaction = new TransactionImpl();
+        transaction.setNumber("TR002TEST");
+        transaction.setSource(TransactionSource.SHOP);
+        transaction.setStatus(TransactionStatus.CLOSED);
+        transaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "New property value");
+        transaction.addProperty(TRANSACTION_DELETING_PROPERTY, "");
+
+        final Transaction createdTransaction = TransactionService.update(context, "TR001TEST", transaction);
+        assertNotNull(createdTransaction);
+        assertEquals("TR002TEST", createdTransaction.getNumber());
+        assertEquals(TransactionSource.AUTO_LICENSE_CREATE, createdTransaction.getSource());
+        assertEquals(TransactionStatus.CLOSED, createdTransaction.getStatus());
+        assertEquals(true, createdTransaction.getActive());
+        assertEquals("New property value", createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
+        assertNull(createdTransaction.getTransactionProperties().get(TRANSACTION_DELETING_PROPERTY));
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -186,6 +207,13 @@ public class TransactionServiceTest extends BaseServiceTest {
             final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             return create(formParams, defaultPropertyValues);
+        }
+
+        @Override
+        public Response update(final String number, final MultivaluedMap<String, String> formParams) {
+            // property "Source" cannot be updated
+            formParams.remove(Constants.Transaction.SOURCE);
+            return super.update(number, formParams);
         }
 
     }
