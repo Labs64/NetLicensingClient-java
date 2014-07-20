@@ -12,6 +12,7 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -258,6 +259,19 @@ abstract class BaseServiceTest extends JerseyTest {
             return errorResponse("UnexpectedValueException",
                     String.format("Unexpected value of parameter '%s'", parameterName));
         }
+
+        /**
+         * @param formParams
+         * @param paramKey
+         */
+        protected void roundParamValueToTwoDecimalPlaces(final MultivaluedMap<String, String> formParams, final String paramKey) {
+            if (formParams.containsKey(paramKey)) {
+                final String priceStr = formParams.getFirst(paramKey);
+                final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, BigDecimal.ROUND_HALF_UP);
+                formParams.putSingle(paramKey, roundedPrice.toString());
+            }
+        }
+
 
     }
 

@@ -41,7 +41,7 @@ public class TransactionService {
      *
      * @param context
      *            determines the vendor on whose behalf the call is performed
-     * @param newTransaction
+     * @param transaction
      *            non-null properties will be taken for the new object, null properties will either stay null, or will
      *            be set to a default value, depending on property.
      * @return the newly created transaction object
@@ -49,8 +49,10 @@ public class TransactionService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Transaction create(final Context context, final Transaction newTransaction) throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static Transaction create(final Context context, final Transaction transaction) throws BaseCheckedException {
+        CheckUtils.paramNotNull(transaction, "transaction");
+
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, transaction.asRequestForm(), Transaction.class);
     }
 
     /**

@@ -252,7 +252,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
                 return errorResponse("MalformedRequestException", "'currency' field can not be used without the 'price' field");
             }
 
-            roundPriceParamValueToTwoDecimalPlaces(formParams);
+            roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);
 
             final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
@@ -269,24 +269,13 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
                 return errorResponse("IllegalOperationException", "License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
             }
 
-            roundPriceParamValueToTwoDecimalPlaces(formParams);
+            roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);
             return super.update(number, formParams);
         }
 
         @Override
         public Response delete(final String number, final boolean forceCascade) {
             return delete(number, "LT001-TEST", forceCascade);
-        }
-
-        /**
-         * @param formParams
-         */
-        private void roundPriceParamValueToTwoDecimalPlaces(final MultivaluedMap<String, String> formParams) {
-            if (formParams.containsKey(Constants.PRICE)) {
-                final String priceStr = formParams.getFirst(Constants.PRICE);
-                final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, BigDecimal.ROUND_HALF_UP);
-                formParams.putSingle(Constants.PRICE, roundedPrice.toString());
-            }
         }
     }
 

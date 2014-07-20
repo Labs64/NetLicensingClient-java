@@ -17,18 +17,28 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
+import com.labs64.netlicensing.domain.entity.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
+import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.DateUtils;
 
 /**
@@ -36,13 +46,85 @@ import com.labs64.netlicensing.util.DateUtils;
  */
 public class TransactionServiceTest extends BaseServiceTest {
 
+    private static final String TRANSACTION_CUSTOM_PROPERTY = "customProperty";
+
     // *** NLIC Tests ***
 
     private static Context context;
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @BeforeClass
     public static void setup() {
         context = createContext();
+    }
+
+    @Test
+    public void testCreate() throws Exception {
+        final Transaction newTransaction = new TransactionImpl();
+        newTransaction.setSource(TransactionSource.AUTO_LICENSE_CREATE);
+        newTransaction.setStatus(TransactionStatus.CLOSED);
+        newTransaction.setNumber("TR001TEST");
+        newTransaction.setActive(false);
+        newTransaction.setCurrency(Currency.EUR);
+        newTransaction.setPrice(new BigDecimal("100"));
+        newTransaction.setDiscount(new BigDecimal("5"));
+        newTransaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "Custom property value");
+
+        final Transaction createdTransaction = TransactionService.create(context, newTransaction);
+        assertNotNull(createdTransaction);
+        assertEquals(TransactionSource.AUTO_LICENSE_CREATE, createdTransaction.getSource());
+        assertEquals(TransactionStatus.CLOSED, createdTransaction.getStatus());
+        assertEquals("TR001TEST", createdTransaction.getNumber());
+        assertEquals(false, createdTransaction.getActive());
+        assertEquals(Currency.EUR, createdTransaction.getCurrency());
+        assertEquals(new BigDecimal("100.00"), createdTransaction.getPrice());
+        assertEquals(new BigDecimal("5.00"), createdTransaction.getDiscount());
+        assertEquals("Custom property value", createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
+    }
+
+    @Test
+    public void testCreateEmpty() throws Exception {
+        thrown.expect(RestException.class);
+
+        final Transaction newTransaction = new TransactionImpl();
+        TransactionService.create(context, newTransaction);
+    }
+
+    @Test
+    public void testCreateWithRequiredPropertiesOnly() throws Exception {
+        final Transaction newTransaction = new TransactionImpl();
+        newTransaction.setSource(TransactionSource.SHOP);
+        newTransaction.setStatus(TransactionStatus.PENDING);
+
+        final Transaction createdTransaction = TransactionService.create(context, newTransaction);
+        assertNotNull(createdTransaction);
+        assertEquals(true, createdTransaction.getActive());
+    }
+
+    @Test
+    public void testCreateWithPriceAndDiscountAndWithoutCurrency() throws Exception {
+        final Transaction newTransaction = new TransactionImpl();
+        newTransaction.setSource(TransactionSource.SHOP);
+        newTransaction.setStatus(TransactionStatus.PENDING);
+        newTransaction.setPrice(new BigDecimal("80"));
+        newTransaction.setDiscount(new BigDecimal("4"));
+
+        thrown.expect(RestException.class);
+        TransactionService.create(context, newTransaction);
+    }
+
+    @Test
+    public void testCreateWithPriceAndCurrencyAndWithoutDiscount() throws Exception {
+        final Transaction newTransaction = new TransactionImpl();
+        newTransaction.setSource(TransactionSource.SHOP);
+        newTransaction.setStatus(TransactionStatus.PENDING);
+        newTransaction.setPrice(new BigDecimal("80"));
+        newTransaction.setCurrency(Currency.EUR);
+
+        thrown.expect(RestException.class);
+        TransactionService.create(context, newTransaction);
     }
 
     @Test
@@ -86,6 +168,24 @@ public class TransactionServiceTest extends BaseServiceTest {
 
         public TransactionServiceResource() {
             super("transaction");
+        }
+
+        @Override
+        public Response create(final MultivaluedMap<String, String> formParams) {
+            final Netlicensing netlicensing = objectFactory.createNetlicensing();
+            if (!formParams.containsKey(Constants.Transaction.SOURCE) || !formParams.containsKey(Constants.Transaction.STATUS)) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+            if (formParams.containsKey(Constants.PRICE) && (!formParams.containsKey(Constants.DISCOUNT) || !formParams.containsKey(Constants.CURRENCY))) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
+            }
+
+            roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);
+            roundParamValueToTwoDecimalPlaces(formParams, Constants.DISCOUNT);
+
+            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            defaultPropertyValues.put(Constants.ACTIVE, "true");
+            return create(formParams, defaultPropertyValues);
         }
 
     }
