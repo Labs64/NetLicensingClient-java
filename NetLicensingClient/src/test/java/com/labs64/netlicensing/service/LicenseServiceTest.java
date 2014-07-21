@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -127,6 +129,18 @@ public class LicenseServiceTest extends BaseServiceTest {
         assertEquals("L001-TEST", license.getLicensee().getNumber());
         assertEquals("LT001-TEST", license.getLicenseTemplate().getNumber());
         assertEquals("Custom property value", license.getLicenseProperties().get(LICENSE_CUSTOM_PROPERTY));
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final Page<License> licenses = LicenseService.list(context);
+
+        assertNotNull(licenses);
+        assertTrue(licenses.hasContent());
+        assertEquals(3, licenses.getItemsNumber());
+        assertEquals("LC001-TEST", licenses.getContent().get(0).getNumber());
+        assertEquals("Test License 2", licenses.getContent().get(1).getName());
+        assertEquals("LT002-TEST", licenses.getContent().get(2).getLicenseTemplate().getNumber());
     }
 
     // *** NLIC test mock resource ***
