@@ -94,7 +94,7 @@ public class LicenseService {
      *             corresponding service response messages.
      */
     public static License get(final Context context, final String number) throws BaseCheckedException {
-        return null; // TODO: implement me...
+        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, License.class);
     }
 
     /**

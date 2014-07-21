@@ -113,6 +113,22 @@ public class LicenseServiceTest extends BaseServiceTest {
         LicenseService.create(context, "L001-TEST", null, null, new LicenseImpl());
     }
 
+    @Test
+    public void testGet() throws Exception {
+        final License license = LicenseService.get(context, "LC001-TEST");
+
+        assertNotNull(license);
+        assertEquals("LC001-TEST", license.getNumber());
+        assertEquals(true, license.getActive());
+        assertEquals("Concrete Test License", license.getName());
+        assertEquals(new BigDecimal("15.00"), license.getPrice());
+        assertEquals(Currency.EUR, license.getCurrency());
+        assertEquals(false, license.getHidden());
+        assertEquals("L001-TEST", license.getLicensee().getNumber());
+        assertEquals("LT001-TEST", license.getLicenseTemplate().getNumber());
+        assertEquals("Custom property value", license.getLicenseProperties().get(LICENSE_CUSTOM_PROPERTY));
+    }
+
     // *** NLIC test mock resource ***
 
     @Override

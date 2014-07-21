@@ -1,0 +1,15 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="License">
+            <property name="number">LC001-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Concrete Test License</property>
+            <property name="price">15.00</property>
+            <property name="currency">EUR</property>
+            <property name="hidden">false</property>
+            <property name="licenseeNumber">L001-TEST</property>
+            <property name="licenseTemplateNumber">LT001-TEST</property>
+            <property name="CustomProperty">Custom property value</property>
+        </item>
+    </items>
+</netlicensing>
