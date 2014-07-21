@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.vo.Currency;
 
 /**
  * Default implementation of {@link License}.
@@ -28,7 +29,7 @@ public class LicenseImpl extends BaseEntityImpl implements License {
 
     private BigDecimal price;
 
-    private String currency;
+    private Currency currency;
 
     private Boolean hidden = Boolean.FALSE;
 
@@ -77,12 +78,12 @@ public class LicenseImpl extends BaseEntityImpl implements License {
     }
 
     @Override
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
     @Override
-    public void setCurrency(final String currency) {
+    public void setCurrency(final Currency currency) {
         this.currency = currency;
     }
 

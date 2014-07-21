@@ -149,9 +149,9 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
         assertNotNull(licenseTemplate);
         assertEquals("LT001-TEST", licenseTemplate.getNumber());
-        assertEquals("Test License Template", licenseTemplate.getName());
+        assertEquals("Test License", licenseTemplate.getName());
         assertEquals(LicenseType.FEATURE, licenseTemplate.getLicenseType());
-        assertEquals(false, licenseTemplate.getActive());
+        assertEquals(true, licenseTemplate.getActive());
         assertEquals(Currency.EUR, licenseTemplate.getCurrency());
         assertEquals(new BigDecimal("10.00"), licenseTemplate.getPrice());
         assertEquals(true, licenseTemplate.getAutomatic());

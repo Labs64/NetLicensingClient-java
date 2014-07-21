@@ -15,6 +15,8 @@ package com.labs64.netlicensing.domain.entity;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import com.labs64.netlicensing.domain.vo.Currency;
+
 /**
  * License entity used internally by NetLicensing.
  * <p/>
@@ -61,9 +63,9 @@ public interface License extends BaseEntity {
 
     void setPrice(BigDecimal price);
 
-    String getCurrency();
+    Currency getCurrency();
 
-    void setCurrency(String currency);
+    void setCurrency(Currency currency);
 
     Boolean getHidden();
 

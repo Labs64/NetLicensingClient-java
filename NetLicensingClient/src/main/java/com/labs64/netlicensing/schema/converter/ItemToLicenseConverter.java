@@ -19,6 +19,7 @@ import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseImpl;
 import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.entity.LicenseeImpl;
+import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
@@ -38,7 +39,7 @@ public class ItemToLicenseConverter extends ItemToEntityBaseConverter<License> {
             target.setPrice(DatatypeConverter.parseDecimal(SchemaFunction.propertyByName(source.getProperty(),
                     Constants.PRICE).getValue()));
         }
-        target.setCurrency(SchemaFunction.propertyByName(source.getProperty(), Constants.CURRENCY).getValue());
+        target.setCurrency(Currency.valueOf(SchemaFunction.propertyByName(source.getProperty(), Constants.CURRENCY).getValue()));
         target.setHidden(Boolean.parseBoolean(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.License.HIDDEN, Boolean.FALSE.toString()).getValue()));
 
