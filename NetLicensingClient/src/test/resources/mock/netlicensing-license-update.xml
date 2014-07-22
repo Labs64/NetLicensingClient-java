@@ -1,0 +1,19 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="License">
+            <property name="number">LC001-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Concrete Test License</property>
+            <property name="price">15.00</property>
+            <property name="currency">EUR</property>
+            <property name="hidden">false</property>
+            <property name="licenseeNumber">L001-TEST</property>
+            <property name="licenseTemplateNumber">LT001-TEST</property>
+            <property name="CustomProperty">Custom property value</property>
+            <property name="timeVolume">30</property>
+            <property name="parentFeature">LQ2SFX4Z4</property>
+            <property name="startDate">2014-07-22T12:18:41.965Z</property>
+            <property name="toBeDeleted">A value</property>
+        </item>
+    </items>
+</netlicensing>

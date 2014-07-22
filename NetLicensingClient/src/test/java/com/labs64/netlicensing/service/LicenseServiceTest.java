@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -48,6 +49,7 @@ import com.labs64.netlicensing.util.JAXBUtils;
 public class LicenseServiceTest extends BaseServiceTest {
 
     private static final String LICENSE_CUSTOM_PROPERTY = "CustomProperty";
+    private static final String LICENSE_DELETING_PROPERTY = "toBeDeleted";
 
     // *** NLIC Tests ***
 
@@ -143,6 +145,30 @@ public class LicenseServiceTest extends BaseServiceTest {
         assertEquals("LT002-TEST", licenses.getContent().get(2).getLicenseTemplate().getNumber());
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        final License license = new LicenseImpl();
+        license.setNumber("LC002-TEST");
+        license.setActive(false);
+        license.setName("Updated Test License");
+        license.setPrice(new BigDecimal(20));
+        license.setHidden(true);
+        license.addProperty(LICENSE_CUSTOM_PROPERTY, "New property value");
+        license.addProperty(LICENSE_DELETING_PROPERTY, "");
+
+        final License updatedLicense = LicenseService.update(context, "LC001-TEST", null, license);
+
+        assertNotNull(updatedLicense);
+        assertEquals("LC002-TEST", updatedLicense.getNumber());
+        assertEquals(false, updatedLicense.getActive());
+        assertEquals("Updated Test License", updatedLicense.getName());
+        assertEquals(new BigDecimal("15.00"), updatedLicense.getPrice());
+        assertEquals(Currency.EUR, updatedLicense.getCurrency());
+        assertEquals(true, updatedLicense.getHidden());
+        assertEquals("New property value", updatedLicense.getLicenseProperties().get(LICENSE_CUSTOM_PROPERTY));
+        assertNull(updatedLicense.getLicenseProperties().get(LICENSE_DELETING_PROPERTY));
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -172,6 +198,15 @@ public class LicenseServiceTest extends BaseServiceTest {
             formParams.remove(Constants.License.HIDDEN);
 
             return create(formParams, getDefaultPropertyValuesFromLicenseTemplate());
+        }
+
+        @Override
+        public Response update(final String number, final MultivaluedMap<String, String> formParams) {
+            // remove properties that can not be changed by user
+            formParams.remove(Constants.PRICE);
+            formParams.remove(Constants.CURRENCY);
+
+            return super.update(number, formParams);
         }
 
         private Map<String, String> getDefaultPropertyValuesFromLicenseTemplate() {

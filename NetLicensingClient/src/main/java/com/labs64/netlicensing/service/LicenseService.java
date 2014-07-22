@@ -121,16 +121,22 @@ public class LicenseService {
      * @param transactionNumber
      *            transaction for the license update. Created implicitly if transactionNumber is null. In this case the
      *            operation will be in a separate transaction.
-     * @param updateLicense
+     * @param license
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated license.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static License update(final Context context, final String number, final String transactionNumber, final License updateLicense)
-            throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static License update(final Context context, final String number, final String transactionNumber, final License license) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+        CheckUtils.paramNotNull(license, "license");
+
+        final Form form = license.asRequestForm();
+        if (!StringUtils.isEmpty(transactionNumber)) {
+            form.param(Constants.Transaction.TRANSACTION_NUMBER, transactionNumber);
+        }
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, form, License.class);
     }
 
     /**
