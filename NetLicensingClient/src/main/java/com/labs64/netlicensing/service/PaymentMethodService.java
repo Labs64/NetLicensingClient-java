@@ -16,50 +16,65 @@ import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides payment method entity handling routines.
  */
 public class PaymentMethodService {
 
+    static final String CONTEXT_PATH = "paymentmethod";
+
     /**
      * Gets payment method by its number.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param number  the payment method number
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            the payment method number
      * @return the payment method
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static PaymentMethod get(final Context context, final String number) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        CheckUtils.paramNotEmpty(number, "number");
+
+        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, PaymentMethod.class);
     }
 
     /**
      * Returns payment methods of a vendor.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param filter  reserved for the future use, must be omitted / set to NULL
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return collection of payment method entities or null/empty list if nothing found.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static Page<PaymentMethod> list(final Context context, final String filter) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
     /**
      * Updates payment method properties.
      *
-     * @param context             determines the vendor on whose behalf the call is performed
-     * @param number              payment method number
-     * @param updatePaymentMethod non-null properties will be updated to the provided values, null properties will stay unchanged.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            payment method number
+     * @param updatePaymentMethod
+     *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated PaymentMethod.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static PaymentMethod update(final Context context, final String number, final PaymentMethod updatePaymentMethod) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
 }
