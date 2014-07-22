@@ -64,15 +64,18 @@ public class PaymentMethodService {
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            payment method number
-     * @param updatePaymentMethod
+     * @param paymentMethod
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated PaymentMethod.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static PaymentMethod update(final Context context, final String number, final PaymentMethod updatePaymentMethod) throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static PaymentMethod update(final Context context, final String number, final PaymentMethod paymentMethod) throws BaseCheckedException {
+        CheckUtils.paramNotEmpty(number, "number");
+        CheckUtils.paramNotNull(paymentMethod, "paymentMethod");
+
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, paymentMethod.asRequestForm(), PaymentMethod.class);
     }
 
 }

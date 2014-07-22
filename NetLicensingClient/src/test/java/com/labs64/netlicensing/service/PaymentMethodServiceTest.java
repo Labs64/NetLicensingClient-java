@@ -14,18 +14,24 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
+import com.labs64.netlicensing.domain.entity.PaymentMethodImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.exception.RestException;
 
 /**
  * Integration tests for {@link PaymentMethodService}.
@@ -33,6 +39,7 @@ import com.labs64.netlicensing.domain.vo.Page;
 public class PaymentMethodServiceTest extends BaseServiceTest {
 
     private static final String PAYMENT_METHOD_CUSTOM_PROPERTY = "paypal.subject";
+    private static final String PAYMENT_METHOD_DELETING_PROPERTY = "toBeDeleted";
 
     // *** NLIC Tests ***
 
@@ -68,6 +75,31 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         assertEquals(true, paymentMethods.getContent().get(1).getActive());
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        final PaymentMethod paymentMethod = new PaymentMethodImpl();
+        paymentMethod.setActive(false);
+        paymentMethod.addProperty(PAYMENT_METHOD_CUSTOM_PROPERTY, "new_sample_paypal_subject");
+        paymentMethod.addProperty(PAYMENT_METHOD_DELETING_PROPERTY, "");
+
+        final PaymentMethod updatedPaymentMethod = PaymentMethodService.update(context, "PAYPAL", paymentMethod);
+
+        assertNotNull(updatedPaymentMethod);
+        assertEquals(false, updatedPaymentMethod.getActive());
+        assertEquals("new_sample_paypal_subject", updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
+        assertNull(updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_DELETING_PROPERTY));
+    }
+
+    @Test
+    public void testUpdateWithNumber() throws Exception {
+        final PaymentMethod paymentMethod = new PaymentMethodImpl();
+        paymentMethod.setNumber("PAYPAL_NEW");
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("MalformedRequestException: Requested payment method is not supported");
+        PaymentMethodService.update(context, "PAYPAL", paymentMethod);
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -80,6 +112,15 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
 
         public PaymentMethodServiceResource() {
             super("paymentMethod");
+        }
+
+        @Override
+        public Response update(final String number, final MultivaluedMap<String, String> formParams) {
+            if (formParams.containsKey(Constants.NUMBER) && !number.equals(formParams.getFirst(Constants.NUMBER))) {
+                return errorResponse("MalformedRequestException", "Requested payment method is not supported");
+            }
+
+            return super.update(number, formParams);
         }
 
     }

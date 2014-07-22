@@ -1,0 +1,10 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="PaymentMethod">
+            <property name="number">PAYPAL</property>
+            <property name="active">true</property>
+            <property name="paypal.subject">sample_paypal_subject</property>
+            <property name="toBeDeleted">100</property>
+        </item>
+    </items>
+</netlicensing>
