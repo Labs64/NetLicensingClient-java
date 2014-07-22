@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import javax.ws.rs.Path;
 
@@ -24,6 +25,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Page;
 
 /**
  * Integration tests for {@link PaymentMethodService}.
@@ -52,6 +54,18 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         assertEquals("PAYPAL", paymentMethod.getNumber());
         assertEquals(true, paymentMethod.getActive());
         assertEquals("sample_paypal_subject", paymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final Page<PaymentMethod> paymentMethods = PaymentMethodService.list(context);
+
+        assertNotNull(paymentMethods);
+        assertTrue(paymentMethods.hasContent());
+        assertEquals(2, paymentMethods.getContent().size());
+        assertEquals("PAYPAL_SANDBOX", paymentMethods.getContent().get(0).getNumber());
+        assertEquals("PAYPAL", paymentMethods.getContent().get(1).getNumber());
+        assertEquals(true, paymentMethods.getContent().get(1).getActive());
     }
 
     // *** NLIC test mock resource ***

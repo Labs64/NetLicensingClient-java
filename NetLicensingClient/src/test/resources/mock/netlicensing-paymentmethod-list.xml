@@ -1,0 +1,14 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <infos/>
+    <items>
+        <item type="PaymentMethod">
+            <property name="number">PAYPAL_SANDBOX</property>
+            <property name="active">false</property>
+        </item>
+        <item type="PaymentMethod">
+            <property name="number">PAYPAL</property>
+            <property name="active">true</property>
+            <property name="paypal.subject">sample_paypal_subject</property>
+        </item>
+    </items>
+</netlicensing>
