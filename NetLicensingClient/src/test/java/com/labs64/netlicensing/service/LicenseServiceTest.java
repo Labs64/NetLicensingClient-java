@@ -169,6 +169,15 @@ public class LicenseServiceTest extends BaseServiceTest {
         assertNull(updatedLicense.getLicenseProperties().get(LICENSE_DELETING_PROPERTY));
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        LicenseService.delete(context, "LC001-TEST", true);
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("NotFoundException: Requested license does not exist");
+        LicenseService.delete(context, "LC001-NONE", false);
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -207,6 +216,11 @@ public class LicenseServiceTest extends BaseServiceTest {
             formParams.remove(Constants.CURRENCY);
 
             return super.update(number, formParams);
+        }
+
+        @Override
+        public Response delete(final String number, final boolean forceCascade) {
+            return delete(number, "LC001-TEST", forceCascade);
         }
 
         private Map<String, String> getDefaultPropertyValuesFromLicenseTemplate() {
