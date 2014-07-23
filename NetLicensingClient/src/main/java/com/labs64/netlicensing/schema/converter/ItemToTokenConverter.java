@@ -38,6 +38,8 @@ public class ItemToTokenConverter extends ItemToEntityBaseConverter<Token> {
 
         target.setTokenType(TokenType.parseString(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.Token.TOKEN_TYPE).getValue()));
+        target.setVendorNumber(SchemaFunction.propertyByName(source.getProperty(),
+                Constants.Token.TOKEN_PROP_VENDORNUMBER).getValue());
 
         // Custom properties
         for (final Property property : source.getProperty()) {

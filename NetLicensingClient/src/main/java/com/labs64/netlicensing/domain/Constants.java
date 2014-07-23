@@ -83,6 +83,7 @@ public final class Constants {
 
         public static final String TOKEN_PROP_EMAIL = "email";
         public static final String TOKEN_PROP_VENDORNUMBER = "vendorNumber";
+        public static final String TOKEN_PROP_SHOP_URL = "shopURL";
     }
 
     public static final class Vendor {

@@ -136,18 +136,21 @@ public final class SchemaFunction {
     }
 
     /**
-     * Updates {@link Netlicensing} object with list consisted of single {@link Info} object
+     * Creates and adds {@link Info} object to {@link Netlicensing} object
      *
      * @param netlicensing
      * @param id
      * @param type
      * @param value
      */
-    public static void setSingleInfo(final Netlicensing netlicensing, final String id, final InfoEnum type,
+    public static void addInfo(final Netlicensing netlicensing, final String id, final InfoEnum type,
             final String value) {
 
         final ObjectFactory objectFactory = new ObjectFactory();
-        netlicensing.setInfos(objectFactory.createNetlicensingInfos());
+
+        if (netlicensing.getInfos() == null) {
+            netlicensing.setInfos(objectFactory.createNetlicensingInfos());
+        }
 
         final Info info = objectFactory.createInfo();
         info.setId(id);

@@ -239,13 +239,22 @@ abstract class BaseServiceTest extends JerseyTest {
         /**
          * Generates error response for the service mock
          *
-         * @param exceptionId
-         * @param message
+         * @param errorIdsAndMessages
+         *            array where every string with even index is exception ID and every string with odd index is
+         *            corresponding error message
          * @return
          */
-        protected final Response errorResponse(final String exceptionId, final String message) {
+        protected final Response errorResponse(final String... errorIdsAndMessages) {
+            if (errorIdsAndMessages.length % 2 != 0) {
+                throw new IllegalArgumentException("Some exception ID doesn't have corresponding error message");
+            }
+
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
-            SchemaFunction.setSingleInfo(netlicensing, exceptionId, InfoEnum.ERROR, message);
+            for (int i = 0; i < errorIdsAndMessages.length; i += 2) {
+                final String exceptionId = errorIdsAndMessages[i];
+                final String errorMessage = errorIdsAndMessages[i + 1];
+                SchemaFunction.addInfo(netlicensing, exceptionId, InfoEnum.ERROR, errorMessage);
+            }
             return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
         }
 
@@ -271,7 +280,6 @@ abstract class BaseServiceTest extends JerseyTest {
                 formParams.putSingle(paramKey, roundedPrice.toString());
             }
         }
-
 
     }
 

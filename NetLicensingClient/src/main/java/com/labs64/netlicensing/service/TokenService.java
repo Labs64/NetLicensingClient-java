@@ -17,59 +17,77 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides token entity handling routines.
  */
 public class TokenService {
 
+    static final String CONTEXT_PATH = "token";
+
     /**
      * Gets token by its number.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param number  the token number
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            the token number
      * @return the token
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static Token get(final Context context, final String number) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
     /**
      * Returns tokens of a vendor.
      *
-     * @param context   determines the vendor on whose behalf the call is performed
-     * @param tokenType type of tokens to return, if NULL return tokens of all types
-     * @param filter    reserved for the future use, must be omitted / set to NULL
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param tokenType
+     *            type of tokens to return, if NULL return tokens of all types
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return collection of token entities or null/empty list if nothing found.
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static Page<Token> list(final Context context, final TokenType tokenType, final String filter) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
     /**
      * Creates new token.
      *
-     * @param context  determines the vendor on whose behalf the call is performed
-     * @param newToken non-null properties will be updated to the provided values, null properties will stay unchanged.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param token
+     *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return created token
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
-    public static Token create(final Context context, final Token newToken) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+    public static Token create(final Context context, final Token token) throws BaseCheckedException {
+        CheckUtils.paramNotNull(token, "token");
+
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, token.asRequestForm(), Token.class);
     }
 
     /**
      * Deactivate token by its number.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param number  the token number
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            the token number
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static void deactivate(final Context context, final String number) throws BaseCheckedException {
         // TODO: implement me...
@@ -78,13 +96,16 @@ public class TokenService {
     /**
      * Get vendor number for apikey.
      *
-     * @param context determines the vendor on whose behalf the call is performed
-     * @param apiKey  apikey token number
-     * @throws BaseCheckedException any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *                              corresponding service response messages.
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param apiKey
+     *            apikey token number
+     * @throws BaseCheckedException
+     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     *             corresponding service response messages.
      */
     public static String getVendorNumberByApiKey(final Context context, final String apiKey) throws BaseCheckedException {
-        return null;  // TODO: implement me...
+        return null; // TODO: implement me...
     }
 
 }
