@@ -1,0 +1,28 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items pagenumber="0" itemsnumber="3" totalpages="1" totalitems="3" hasnext="false">
+        <item type="Token">
+            <property name="number">08b66094-a5c4-4c93-be71-567e982d9428</property>
+            <property name="active">true</property>
+            <property name="expirationTime">2014-06-30T12:47:56.067Z</property>
+            <property name="tokenType">SHOP</property>
+            <property name="shopURL">https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=08b66094-a5c4-4c93-be71-567e982d9428</property>
+            <property name="licenseeNumber">ITEST-ABC-DEMO</property>
+            <property name="vendorNumber">VDEMO</property>
+        </item>
+        <item type="Token">
+            <property name="number">092da8ce-126e-4602-91d8-5c41903846d3</property>
+            <property name="active">true</property>
+            <property name="expirationTime">2014-07-22T23:07:46.742Z</property>
+            <property name="tokenType">DEFAULT</property>
+            <property name="vendorNumber">VDEMO</property>
+        </item>
+        <item type="Token">
+            <property name="number">0c924950-de52-4581-b2dc-5031fa04ef29</property>
+            <property name="active">true</property>
+            <property name="expirationTime">2014-08-06T13:18:05.982Z</property>
+            <property name="tokenType">REGISTRATION</property>
+            <property name="email">test@test.com</property>
+            <property name="vendorNumber">VDEMO</property>
+        </item>
+    </items>
+</netlicensing>

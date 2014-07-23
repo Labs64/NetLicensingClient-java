@@ -12,6 +12,10 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -51,15 +55,17 @@ public class TokenService {
      *            determines the vendor on whose behalf the call is performed
      * @param tokenType
      *            type of tokens to return, if NULL return tokens of all types
-     * @param filter
-     *            reserved for the future use, must be omitted / set to NULL
      * @return collection of token entities or null/empty list if nothing found.
      * @throws BaseCheckedException
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Token> list(final Context context, final TokenType tokenType, final String filter) throws BaseCheckedException {
-        return null; // TODO: implement me...
+    public static Page<Token> list(final Context context, final TokenType tokenType) throws BaseCheckedException {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (tokenType != null) {
+            params.put(Constants.Token.TOKEN_TYPE, tokenType);
+        }
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, params, Token.class);
     }
 
     /**

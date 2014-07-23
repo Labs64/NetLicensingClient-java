@@ -89,7 +89,7 @@ public class TransactionService {
      *             corresponding service response messages.
      */
     public static Page<Transaction> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, Transaction.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Transaction.class);
     }
 
     /**

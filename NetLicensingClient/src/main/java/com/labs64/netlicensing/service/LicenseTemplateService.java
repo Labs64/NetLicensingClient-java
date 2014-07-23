@@ -93,7 +93,7 @@ public class LicenseTemplateService {
      *             corresponding service response messages.
      */
     public static Page<LicenseTemplate> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, LicenseTemplate.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, LicenseTemplate.class);
     }
 
     /**

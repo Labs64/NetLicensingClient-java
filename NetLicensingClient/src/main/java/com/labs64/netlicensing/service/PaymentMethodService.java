@@ -54,7 +54,7 @@ public class PaymentMethodService {
      *             corresponding service response messages.
      */
     public static Page<PaymentMethod> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, PaymentMethod.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, PaymentMethod.class);
     }
 
     /**

@@ -98,7 +98,7 @@ public class LicenseeService {
      *             corresponding service response messages.
      */
     public static Page<Licensee> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, Licensee.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Licensee.class);
     }
 
     /**

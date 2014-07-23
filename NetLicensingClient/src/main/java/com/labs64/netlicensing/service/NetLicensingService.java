@@ -87,13 +87,15 @@ class NetLicensingService {
      *            context for the NetLicensing API call
      * @param urlTemplate
      *            the REST URL template
+     * @param queryParams
+     *            The REST query parameters values. May be null if there are no parameters.
      * @param resultType
      *            the type of the item of the result page
      * @return page of items with type resultType from the response
      * @throws BaseCheckedException
      */
-    <RES> Page<RES> list(final Context context, final String urlTemplate, final Class<RES> resultType) throws BaseCheckedException {
-        final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, null);
+    <RES> Page<RES> list(final Context context, final String urlTemplate, final Map<String, Object> queryParams, final Class<RES> resultType) throws BaseCheckedException {
+        final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
         return entityFactory.createPage(netlicensing, resultType);
     }
 

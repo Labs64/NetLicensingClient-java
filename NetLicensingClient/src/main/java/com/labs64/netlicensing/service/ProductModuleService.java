@@ -92,7 +92,7 @@ public class ProductModuleService {
      *             corresponding service response messages.
      */
     public static Page<ProductModule> list(final Context context) throws BaseCheckedException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, ProductModule.class);
+        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, ProductModule.class);
     }
 
     /**

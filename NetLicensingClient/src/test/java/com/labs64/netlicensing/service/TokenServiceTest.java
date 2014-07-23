@@ -15,6 +15,7 @@ package com.labs64.netlicensing.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.TokenImpl;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.util.DateUtils;
@@ -177,6 +179,18 @@ public class TokenServiceTest extends BaseServiceTest {
                 token.getTokenProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
         assertEquals("L001-TEST", token.getTokenProperties().get(Constants.Licensee.LICENSEE_NUMBER));
         assertEquals("VDEMO", token.getVendorNumber());
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final Page<Token> tokens = TokenService.list(context, null);
+
+        assertNotNull(tokens);
+        assertTrue(tokens.hasContent());
+        assertEquals(3, tokens.getItemsNumber());
+        assertEquals("08b66094-a5c4-4c93-be71-567e982d9428", tokens.getContent().get(0).getNumber());
+        assertEquals(DateUtils.parseDate("2014-07-22T23:07:46.742Z").getTime(), tokens.getContent().get(1).getExpirationTime());
+        assertEquals(TokenType.REGISTRATION, tokens.getContent().get(2).getTokenType());
     }
 
     // *** NLIC test mock resource ***
