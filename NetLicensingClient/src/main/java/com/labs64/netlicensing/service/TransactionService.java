@@ -116,19 +116,4 @@ public class TransactionService {
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, transaction.asRequestForm(), Transaction.class);
     }
 
-    /**
-     * Sends the confirmation email for the order associated with the passed transaction
-     *
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param number
-     *            number of transaction for which the order confirmation email to be sent
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
-     */
-    public static void sendOrderConfirmation(final Context context, final String number) throws BaseCheckedException {
-        // TODO: implement me...
-    }
-
 }
