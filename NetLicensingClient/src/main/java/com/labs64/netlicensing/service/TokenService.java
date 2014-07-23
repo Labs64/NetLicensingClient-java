@@ -39,7 +39,9 @@ public class TokenService {
      *             corresponding service response messages.
      */
     public static Token get(final Context context, final String number) throws BaseCheckedException {
-        return null; // TODO: implement me...
+        CheckUtils.paramNotEmpty(number, "number");
+
+        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Token.class);
     }
 
     /**

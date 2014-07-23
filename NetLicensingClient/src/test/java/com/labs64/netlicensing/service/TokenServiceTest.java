@@ -164,6 +164,21 @@ public class TokenServiceTest extends BaseServiceTest {
         TokenService.create(context, newToken);
     }
 
+    @Test
+    public void testGet() throws Exception {
+        final Token token = TokenService.get(context, "afeb41d9-314e-49be-8465-148c614badfa");
+
+        assertNotNull(token);
+        assertEquals("afeb41d9-314e-49be-8465-148c614badfa", token.getNumber());
+        assertEquals(true, token.getActive());
+        assertEquals(DateUtils.parseDate("2014-07-23T15:19:56.147Z").getTime(), token.getExpirationTime());
+        assertEquals(TokenType.SHOP, token.getTokenType());
+        assertEquals("https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=afeb41d9-314e-49be-8465-148c614badfa",
+                token.getTokenProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
+        assertEquals("L001-TEST", token.getTokenProperties().get(Constants.Licensee.LICENSEE_NUMBER));
+        assertEquals("VDEMO", token.getVendorNumber());
+    }
+
     // *** NLIC test mock resource ***
 
     @Override

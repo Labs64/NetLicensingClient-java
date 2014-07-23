@@ -1,0 +1,13 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="Token">
+            <property name="number">afeb41d9-314e-49be-8465-148c614badfa</property>
+            <property name="active">true</property>
+            <property name="expirationTime">2014-07-23T15:19:56.147Z</property>
+            <property name="tokenType">SHOP</property>
+            <property name="shopURL">https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=afeb41d9-314e-49be-8465-148c614badfa</property>
+            <property name="licenseeNumber">L001-TEST</property>
+            <property name="vendorNumber">VDEMO</property>
+        </item>
+    </items>
+</netlicensing>
