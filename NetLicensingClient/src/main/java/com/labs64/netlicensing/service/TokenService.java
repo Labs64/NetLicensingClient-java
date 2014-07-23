@@ -87,7 +87,7 @@ public class TokenService {
     }
 
     /**
-     * Deactivate token by its number.
+     * Delete token by its number.
      *
      * @param context
      *            determines the vendor on whose behalf the call is performed
@@ -97,23 +97,8 @@ public class TokenService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void deactivate(final Context context, final String number) throws BaseCheckedException {
+    public static void delete(final Context context, final String number) throws BaseCheckedException {
         // TODO: implement me...
-    }
-
-    /**
-     * Get vendor number for apikey.
-     *
-     * @param context
-     *            determines the vendor on whose behalf the call is performed
-     * @param apiKey
-     *            apikey token number
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
-     */
-    public static String getVendorNumberByApiKey(final Context context, final String apiKey) throws BaseCheckedException {
-        return null; // TODO: implement me...
     }
 
 }
