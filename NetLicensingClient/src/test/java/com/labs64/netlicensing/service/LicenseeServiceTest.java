@@ -26,6 +26,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -184,8 +185,8 @@ public class LicenseeServiceTest extends BaseServiceTest {
         }
 
         @Override
-        public Response delete(final String licenseeNumber, final boolean forceCascade) {
-            return delete(licenseeNumber, "L001-TEST", forceCascade);
+        public Response delete(final String licenseeNumber, final UriInfo uriInfo) {
+            return delete(licenseeNumber, "L001-TEST", uriInfo.getQueryParameters());
         }
 
         /**

@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -182,8 +183,8 @@ public class ProductServiceTest extends BaseServiceTest {
         }
 
         @Override
-        public Response delete(final String productNumber, final boolean forceCascade) {
-            return delete(productNumber, "P001-TEST", forceCascade);
+        public Response delete(final String productNumber, final UriInfo uriInfo) {
+            return delete(productNumber, "P001-TEST", uriInfo.getQueryParameters());
         }
     }
 

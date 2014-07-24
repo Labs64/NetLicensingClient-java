@@ -24,6 +24,7 @@ import java.util.UUID;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -193,6 +194,15 @@ public class TokenServiceTest extends BaseServiceTest {
         assertEquals(TokenType.REGISTRATION, tokens.getContent().get(2).getTokenType());
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        TokenService.delete(context, "0fd9ef0a-d8dc-46e7-bc84-0a8c100a25d0");
+
+        thrown.expect(RestException.class);
+        thrown.expectMessage("NotFoundException: Requested token does not exist");
+        TokenService.delete(context, "00000000-0000-0000-0000-000000000000");
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -238,6 +248,11 @@ public class TokenServiceTest extends BaseServiceTest {
             }
 
             return create(formParams, defaultPropertyValues);
+        }
+
+        @Override
+        public Response delete(final String productNumber, final UriInfo uriInfo) {
+            return delete(productNumber, "0fd9ef0a-d8dc-46e7-bc84-0a8c100a25d0", null);
         }
     }
 

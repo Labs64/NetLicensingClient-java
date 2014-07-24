@@ -98,7 +98,9 @@ public class TokenService {
      *             corresponding service response messages.
      */
     public static void delete(final Context context, final String number) throws BaseCheckedException {
-        // TODO: implement me...
+        CheckUtils.paramNotEmpty(number, "number");
+
+        NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, null);
     }
 
 }

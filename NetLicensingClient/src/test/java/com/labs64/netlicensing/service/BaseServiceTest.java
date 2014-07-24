@@ -23,11 +23,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
@@ -35,7 +36,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 
-import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.InfoEnum;
@@ -61,8 +62,8 @@ abstract class BaseServiceTest extends JerseyTest {
 
     static final String TEST_CASE_BASE = "mock/";
 
-    static Context createContext() {
-        return new Context()
+    static com.labs64.netlicensing.domain.vo.Context createContext() {
+        return new com.labs64.netlicensing.domain.vo.Context()
                 .setBaseUrl(BASE_URL)
                 .setSecurityMode(SecurityMode.BASIC_AUTHENTICATION)
                 .setUsername(USER)
@@ -170,14 +171,14 @@ abstract class BaseServiceTest extends JerseyTest {
          *
          * @param number
          *            entity number
-         * @param forceCascade
-         *            parameter for forcing deletion of all entity descendants
+         * @param uriInfo
+         *            context URI info
          * @return response with "No Content" status
          */
         @DELETE
         @Path("{number}")
-        public Response delete(@PathParam("number") final String number, @QueryParam("forceCascade") final boolean forceCascade) {
-            return delete(number, "EXPECTED", forceCascade);
+        public Response delete(@PathParam("number") final String number, @Context UriInfo uriInfo) {
+            return delete(number, "EXPECTED", uriInfo.getQueryParameters());
         }
 
         /**
@@ -221,18 +222,22 @@ abstract class BaseServiceTest extends JerseyTest {
          *            entity number
          * @param expectedNumber
          *            expected entity number
-         * @param forceCascade
-         *            parameter for forcing deletion of all entity descendants
+         * @param queryParams
+         *            query parameters
          * @return response with "No Content" status
          */
-        protected Response delete(@PathParam("number") final String number, final String expectedNumber, @QueryParam("forceCascade") final boolean forceCascade) {
+        protected Response delete(final String number, final String expectedNumber, final MultivaluedMap<String, String> queryParams) {
             if (!expectedNumber.equals(number)) {
                 final String entityStr = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(serviceId), ' ').toLowerCase();
                 return errorResponse("NotFoundException", String.format("requested %s does not exist", entityStr));
             }
-            if (!forceCascade) {
-                return unexpectedValueErrorResponse("forceCascade");
+
+            // for testing purposes parameter "forceCascade" for "existing" entities should always be true if not absent
+            final boolean hasForceCascade = queryParams != null && queryParams.containsKey(Constants.CASCADE);
+            if (hasForceCascade && !Boolean.valueOf(queryParams.getFirst(Constants.CASCADE))) {
+                return unexpectedValueErrorResponse(Constants.CASCADE);
             }
+
             return Response.status(Response.Status.NO_CONTENT).build();
         }
 
