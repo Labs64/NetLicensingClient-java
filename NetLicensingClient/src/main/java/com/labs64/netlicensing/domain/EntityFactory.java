@@ -63,7 +63,7 @@ public class EntityFactory {
 
     /**
      * Creates entity of specific class from service response
-     *
+     * 
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -83,7 +83,7 @@ public class EntityFactory {
 
     /**
      * Creates page of entities of specified class from service response
-     *
+     * 
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -91,7 +91,8 @@ public class EntityFactory {
      * @return page of entities created from service response
      * @throws BaseCheckedException
      */
-    public <T> Page<T> createPage(final Netlicensing netlicensing, final Class<T> entityClass) throws BaseCheckedException {
+    public <T> Page<T> createPage(final Netlicensing netlicensing, final Class<T> entityClass)
+            throws BaseCheckedException {
         if (netlicensing.getItems() != null) {
             final List<T> entities = new ArrayList<T>();
 
@@ -113,7 +114,7 @@ public class EntityFactory {
 
     /**
      * Returns converter that is able to convert an {@link Item} object to an entity of specified class
-     *
+     * 
      * @param entityClass
      * @return
      */
@@ -121,7 +122,8 @@ public class EntityFactory {
     private <T> Converter<Item, T> converterFor(final Class<T> entityClass) {
         final Class<?> converterClass = entityToConverterMap.get(entityClass);
         if (converterClass == null) {
-            throw new IllegalArgumentException("No converter is found for entity of class " + entityClass.getCanonicalName());
+            throw new IllegalArgumentException("No converter is found for entity of class "
+                    + entityClass.getCanonicalName());
         }
 
         try {
@@ -135,13 +137,14 @@ public class EntityFactory {
 
     /**
      * Finds and returns from {@link Netlicensing} object suitable item of specified type
-     *
+     * 
      * @param netlicensing
      * @param type
      * @return
      * @throws WrongResponseFormatException
      */
-    private Item findSuitableItemOfType(final Netlicensing netlicensing, final Class<?> type) throws WrongResponseFormatException {
+    private Item findSuitableItemOfType(final Netlicensing netlicensing, final Class<?> type)
+            throws WrongResponseFormatException {
         if (netlicensing.getItems() != null) {
             for (final Item item : netlicensing.getItems().getItem()) {
                 if (type.getSimpleName().equals(item.getType())) {
@@ -149,12 +152,13 @@ public class EntityFactory {
                 }
             }
         }
-        throw new WrongResponseFormatException("Service response doesn't contain item of type " + type.getCanonicalName());
+        throw new WrongResponseFormatException("Service response doesn't contain item of type "
+                + type.getCanonicalName());
     }
 
     /**
      * Extracts list of items of specified type from {@link Netlicensing} object
-     *
+     * 
      * @param netlicensing
      * @param type
      * @return

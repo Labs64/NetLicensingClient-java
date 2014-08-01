@@ -32,7 +32,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
-import com.labs64.netlicensing.domain.entity.ProductImpl;
+import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;

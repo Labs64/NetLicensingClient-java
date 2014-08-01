@@ -20,7 +20,7 @@ public class TokenAuthentication implements Authentication {
 
     /**
      * Constructor
-     *
+     * 
      * @param token
      */
     public TokenAuthentication(final String token) {

@@ -26,8 +26,8 @@ import com.labs64.netlicensing.util.CheckUtils;
  * source has initiated the change to licenses: it can be either a direct purchase of licenses by a licensee via
  * NetLicensing Shop, or licenses can be given to a licensee by a vendor. Licenses can also be assigned implicitly by
  * NetLicensing if it is defined so by a license model (e.g. evaluation license may be given automatically). All these
- * events are reflected in transactions. Of all the transaction handling routines only read-only routines are exposed
- * to the public API, as transactions are only allowed to be created and modified by NetLicensing internally.
+ * events are reflected in transactions. Of all the transaction handling routines only read-only routines are exposed to
+ * the public API, as transactions are only allowed to be created and modified by NetLicensing internally.
  */
 public class TransactionService {
 
@@ -36,9 +36,9 @@ public class TransactionService {
     /**
      * Creates new transaction object with given properties.
      * <p/>
-     * This routine is for internal use by NetLicensing. Where appropriate, transactions will be created by
-     * NetLicensing automatically.
-     *
+     * This routine is for internal use by NetLicensing. Where appropriate, transactions will be created by NetLicensing
+     * automatically.
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param transaction
@@ -52,15 +52,16 @@ public class TransactionService {
     public static Transaction create(final Context context, final Transaction transaction) throws BaseCheckedException {
         CheckUtils.paramNotNull(transaction, "transaction");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, transaction.asRequestForm(), Transaction.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, transaction.asRequestForm(),
+                Transaction.class);
     }
 
     /**
      * Gets transaction by its number.
      * <p/>
-     * Use this operation for getting details about certain transaction. List of all transactions can be obtained by
-     * the {@link #list(Context, String)} operation.
-     *
+     * Use this operation for getting details about certain transaction. List of all transactions can be obtained by the
+     * {@link #list(Context)} operation.
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -80,7 +81,7 @@ public class TransactionService {
      * Returns all transactions of a vendor.
      * <p/>
      * Use this operation to get the list of all transactions.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of transactions (of all products/licensees) or null/empty list if nothing found.
@@ -97,7 +98,7 @@ public class TransactionService {
      * <p/>
      * This routine is for internal use by NetLicensing. Where appropriate, transactions will be modified by
      * NetLicensing automatically.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -109,11 +110,13 @@ public class TransactionService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Transaction update(final Context context, final String number, final Transaction transaction) throws BaseCheckedException {
+    public static Transaction update(final Context context, final String number, final Transaction transaction)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(transaction, "transaction");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, transaction.asRequestForm(), Transaction.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number,
+                transaction.asRequestForm(), Transaction.class);
     }
 
 }

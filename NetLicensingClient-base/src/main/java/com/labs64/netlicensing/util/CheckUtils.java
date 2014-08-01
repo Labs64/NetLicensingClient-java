@@ -19,7 +19,7 @@ public class CheckUtils {
 
     /**
      * Ensures that an object reference is not null.
-     *
+     * 
      * @param object
      * @param msg
      *            exception message
@@ -34,7 +34,7 @@ public class CheckUtils {
 
     /**
      * Ensures that a string is not null or empty.
-     *
+     * 
      * @param string
      * @param msg
      *            exception message
@@ -49,7 +49,7 @@ public class CheckUtils {
 
     /**
      * Ensures that an object reference passed as a parameter to the calling method is not null.
-     *
+     * 
      * @param parameter
      * @param parameterName
      *            name of the parameter
@@ -62,7 +62,7 @@ public class CheckUtils {
 
     /**
      * Ensures that a string passed as a parameter to the calling method is not null or empty.
-     *
+     * 
      * @param parameter
      * @param parameterName
      *            name of the parameter

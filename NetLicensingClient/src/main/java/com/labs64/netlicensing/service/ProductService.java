@@ -39,7 +39,7 @@ public class ProductService {
 
     /**
      * Creates new product with given properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param product
@@ -58,7 +58,7 @@ public class ProductService {
 
     /**
      * Gets product by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -76,8 +76,8 @@ public class ProductService {
 
     /**
      * Returns products of a vendor.
-     *
-     *
+     * 
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of product entities or null/empty list if nothing found.
@@ -91,7 +91,7 @@ public class ProductService {
 
     /**
      * Updates product properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -103,16 +103,18 @@ public class ProductService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Product update(final Context context, final String number, final Product product) throws BaseCheckedException {
+    public static Product update(final Context context, final String number, final Product product)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, product.asRequestForm(), Product.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, product.asRequestForm(),
+                Product.class);
     }
 
     /**
      * Deletes product.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -123,7 +125,8 @@ public class ProductService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
+    public static void delete(final Context context, final String number, final boolean forceCascade)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();

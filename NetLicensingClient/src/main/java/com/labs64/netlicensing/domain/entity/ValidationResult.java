@@ -33,7 +33,7 @@ public class ValidationResult {
     }
 
     public void setProductModuleValidation(final String productModuleNumber,
-                                           final Composition productModuleValidation) {
+            final Composition productModuleValidation) {
         getValidations().put(productModuleNumber, productModuleValidation);
     }
 

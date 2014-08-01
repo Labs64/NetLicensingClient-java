@@ -40,7 +40,7 @@ public class ProductModuleService {
 
     /**
      * Creates new product module object with given properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param productNumber
@@ -53,7 +53,8 @@ public class ProductModuleService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static ProductModule create(final Context context, final String productNumber, final ProductModule productModule) throws BaseCheckedException {
+    public static ProductModule create(final Context context, final String productNumber,
+            final ProductModule productModule) throws BaseCheckedException {
         CheckUtils.paramNotNull(productModule, "productNumber");
 
         final Form form = productModule.asRequestForm();
@@ -65,7 +66,7 @@ public class ProductModuleService {
 
     /**
      * Gets product module by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -83,7 +84,7 @@ public class ProductModuleService {
 
     /**
      * Returns all product modules of a vendor.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of product modules (of all products) or null/empty list if nothing found.
@@ -97,7 +98,7 @@ public class ProductModuleService {
 
     /**
      * Updates product module properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -109,16 +110,18 @@ public class ProductModuleService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static ProductModule update(final Context context, final String number, final ProductModule productModule) throws BaseCheckedException {
+    public static ProductModule update(final Context context, final String number, final ProductModule productModule)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(productModule, "productModule");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, productModule.asRequestForm(), ProductModule.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number,
+                productModule.asRequestForm(), ProductModule.class);
     }
 
     /**
      * Deletes product module.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -129,7 +132,8 @@ public class ProductModuleService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
+    public static void delete(final Context context, final String number, final boolean forceCascade)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();

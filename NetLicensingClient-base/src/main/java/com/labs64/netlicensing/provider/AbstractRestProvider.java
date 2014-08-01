@@ -20,7 +20,7 @@ import com.labs64.netlicensing.provider.auth.UsernamePasswordAuthentication;
  */
 public abstract class AbstractRestProvider implements RestProvider {
 
-    protected Authentication authentication;
+    private Authentication authentication;
 
     public RestProvider authenticate(final Authentication authentication) {
         this.authentication = authentication;

@@ -14,8 +14,8 @@ package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
-import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
-import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
+import com.labs64.netlicensing.domain.entity.impl.LicenseTemplateImpl;
+import com.labs64.netlicensing.domain.entity.impl.ProductModuleImpl;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Money;

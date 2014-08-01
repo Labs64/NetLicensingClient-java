@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.labs64.netlicensing.domain.entity.impl.ProductDiscount;
+
 /**
  * Product entity used internally by NetLicensing.
  * <p/>

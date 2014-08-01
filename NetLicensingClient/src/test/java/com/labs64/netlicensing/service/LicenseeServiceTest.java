@@ -35,8 +35,8 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.LicenseeImpl;
 import com.labs64.netlicensing.domain.entity.ValidationResult;
+import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -153,10 +153,18 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         final Composition validation = result.getProductModuleValidation("M001-TEST");
         assertNotNull(validation);
-        assertEquals("FeatureWithTimeVolume", validation.getProperties().get(Constants.ProductModule.LICENSING_MODEL).getValue());
-        assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME).getValue());
-        assertEquals("true", validation.getProperties().get("LIST1").getProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
-        assertEquals("green", validation.getProperties().get("LIST2").getProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
+        assertEquals("FeatureWithTimeVolume", validation.getProperties().get(Constants.ProductModule.LICENSING_MODEL)
+                .getValue());
+        assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME)
+                .getValue());
+        assertEquals(
+                "true",
+                validation.getProperties().get("LIST1").getProperties()
+                        .get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
+        assertEquals(
+                "green",
+                validation.getProperties().get("LIST2").getProperties()
+                        .get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
     // *** NLIC test mock resource ***
@@ -191,7 +199,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         /**
          * Mock for "validate licensee" service.
-         *
+         * 
          * @param licenseeNumber
          *            licensee number
          * @param productNumber
@@ -202,7 +210,8 @@ public class LicenseeServiceTest extends BaseServiceTest {
          */
         @GET
         @Path("{licenseeNumber}/validate")
-        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber, @QueryParam("productNumber") final String productNumber,
+        public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
+                @QueryParam("productNumber") final String productNumber,
                 @QueryParam("name") final String licenseeName) {
 
             if (!"P001-TEST".equals(productNumber)) {

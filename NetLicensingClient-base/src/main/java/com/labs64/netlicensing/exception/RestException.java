@@ -22,8 +22,9 @@ public class RestException extends BaseCheckedException {
 
     /**
      * Construct a <code>RestException</code> with the specified detail message.
-     *
-     * @param msg the detail message
+     * 
+     * @param msg
+     *            the detail message
      */
     public RestException(final String msg) {
         super(msg);
@@ -31,9 +32,11 @@ public class RestException extends BaseCheckedException {
 
     /**
      * Construct a <code>RestException</code> with the specified detail message and cause exception.
-     *
-     * @param msg   the detail message
-     * @param cause the cause exception
+     * 
+     * @param msg
+     *            the detail message
+     * @param cause
+     *            the cause exception
      */
     public RestException(final String msg, final Throwable cause) {
         super(msg, cause);

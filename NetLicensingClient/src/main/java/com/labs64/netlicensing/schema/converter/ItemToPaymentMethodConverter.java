@@ -13,7 +13,7 @@
 package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
-import com.labs64.netlicensing.domain.entity.PaymentMethodImpl;
+import com.labs64.netlicensing.domain.entity.impl.PaymentMethodImpl;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;

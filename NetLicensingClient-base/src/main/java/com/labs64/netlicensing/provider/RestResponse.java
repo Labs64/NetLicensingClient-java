@@ -12,11 +12,11 @@
  */
 package com.labs64.netlicensing.provider;
 
-
 /**
  * Contains info about response together with response entity.
- *
- * @param <T> type of response entity
+ * 
+ * @param <T>
+ *            type of response entity
  */
 public class RestResponse<T> {
 

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,10 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.vo.TokenType;
 
 /**
- * Default implementation of {@link Token}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.Token}.
  */
 public class TokenImpl extends BaseEntityImpl implements Token {
 
@@ -34,7 +35,7 @@ public class TokenImpl extends BaseEntityImpl implements Token {
     private Map<String, String> tokenProperties;
 
     /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntityImpl#getReservedProps()
+     * @see BaseEntityImpl#getReservedProps()
      */
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();

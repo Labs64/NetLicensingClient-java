@@ -34,7 +34,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
-import com.labs64.netlicensing.domain.entity.LicenseImpl;
+import com.labs64.netlicensing.domain.entity.impl.LicenseImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -227,16 +227,19 @@ public class LicenseServiceTest extends BaseServiceTest {
         private Map<String, String> getDefaultPropertyValuesFromLicenseTemplate() {
             final Map<String, String> values = new HashMap<String, String>();
 
-            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE + "netlicensing-licensetemplate-get.xml",
+            final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
+                    + "netlicensing-licensetemplate-get.xml",
                     Netlicensing.class);
             final List<Property> properties = netlicensing.getItems().getItem().get(0).getProperty();
 
-            final String[] propertyNames = new String[] { Constants.ACTIVE, Constants.NAME, Constants.PRICE, Constants.CURRENCY };
-            for (String propertyName : propertyNames) {
+            final String[] propertyNames = new String[] { Constants.ACTIVE, Constants.NAME, Constants.PRICE,
+                    Constants.CURRENCY };
+            for (final String propertyName : propertyNames) {
                 values.put(propertyName, SchemaFunction.propertyByName(properties, propertyName).getValue());
             }
 
-            final boolean hideLicenses = "true".equals(SchemaFunction.propertyByName(properties, Constants.LicenseTemplate.HIDE_LICENSES).getValue());
+            final boolean hideLicenses = "true".equals(SchemaFunction.propertyByName(properties,
+                    Constants.LicenseTemplate.HIDE_LICENSES).getValue());
             values.put(Constants.License.HIDDEN, String.valueOf(hideLicenses));
 
             return values;

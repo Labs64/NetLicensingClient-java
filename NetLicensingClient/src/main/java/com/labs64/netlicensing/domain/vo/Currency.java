@@ -23,8 +23,9 @@ public enum Currency {
 
     /**
      * Instantiates a new currency.
-     *
-     * @param currency currency value
+     * 
+     * @param currency
+     *            currency value
      */
     Currency(final String currency) {
         value = currency;
@@ -32,7 +33,7 @@ public enum Currency {
 
     /**
      * Get enum value.
-     *
+     * 
      * @return enum value
      */
     public String value() {
@@ -51,8 +52,9 @@ public enum Currency {
 
     /**
      * Parse currency value to {@link Currency} enum.
-     *
-     * @param value currency value
+     * 
+     * @param value
+     *            currency value
      * @return {@link Currency} enum object or throws {@link IllegalArgumentException} if no corresponding
      *         {@link Currency} enum object found
      */
@@ -67,8 +69,9 @@ public enum Currency {
 
     /**
      * Gets the enum safe.
-     *
-     * @param value currency value
+     * 
+     * @param value
+     *            currency value
      * @return the enum safe
      */
     public static Currency parseValueSafe(final String value) {

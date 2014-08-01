@@ -31,7 +31,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductModule;
-import com.labs64.netlicensing.domain.entity.ProductModuleImpl;
+import com.labs64.netlicensing.domain.entity.impl.ProductModuleImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
@@ -71,8 +71,14 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("Test Product Module", createdModule.getName());
         assertEquals(Constants.LicensingModel.FeatureWithTimeVolume.NAME, createdModule.getLicensingModel());
         assertEquals("P001-TEST", createdModule.getProduct().getNumber());
-        assertEquals("10", createdModule.getProductModuleProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD));
-        assertEquals("3", createdModule.getProductModuleProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD));
+        assertEquals(
+                "10",
+                createdModule.getProductModuleProperties().get(
+                        Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD));
+        assertEquals(
+                "3",
+                createdModule.getProductModuleProperties().get(
+                        Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD));
     }
 
     @Test
@@ -141,8 +147,14 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("Demo Product Module", updatedModule.getName());
         assertEquals(Constants.LicensingModel.FeatureWithTimeVolume.NAME, updatedModule.getLicensingModel());
         assertEquals("P001-TEST", updatedModule.getProduct().getNumber());
-        assertEquals("10", updatedModule.getProductModuleProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD));
-        assertEquals("5", updatedModule.getProductModuleProperties().get(Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD));
+        assertEquals(
+                "10",
+                updatedModule.getProductModuleProperties().get(
+                        Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD));
+        assertEquals(
+                "5",
+                updatedModule.getProductModuleProperties().get(
+                        Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD));
     }
 
     @Test

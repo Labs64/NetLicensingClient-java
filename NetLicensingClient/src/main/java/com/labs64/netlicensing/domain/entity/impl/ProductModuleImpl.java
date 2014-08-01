@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.LicenseTemplate;
+import com.labs64.netlicensing.domain.entity.Product;
+import com.labs64.netlicensing.domain.entity.ProductModule;
 
 /**
- * Default implementation of {@link ProductModule}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.ProductModule}.
  */
 public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
 
@@ -36,7 +39,7 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
     private Map<String, String> productModuleProperties;
 
     /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntityImpl#getReservedProps()
+     * @see BaseEntityImpl#getReservedProps()
      */
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();
@@ -118,7 +121,7 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
         map.put(Constants.NAME, getName());
         map.put(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
         if (productModuleProperties != null) {
-            for (Map.Entry<String, String> pmp : productModuleProperties.entrySet()) {
+            for (final Map.Entry<String, String> pmp : productModuleProperties.entrySet()) {
                 map.put(pmp.getKey(), pmp.getValue());
             }
         }

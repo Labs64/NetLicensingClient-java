@@ -28,8 +28,9 @@ public enum LicenseType {
 
     /**
      * Instantiates a new license type.
-     *
-     * @param licenseTypeValue licenseType value
+     * 
+     * @param licenseTypeValue
+     *            licenseType value
      */
     LicenseType(final String licenseTypeValue) {
         value = licenseTypeValue;
@@ -37,7 +38,7 @@ public enum LicenseType {
 
     /**
      * Get enum value.
-     *
+     * 
      * @return enum value
      */
     public String value() {
@@ -56,8 +57,9 @@ public enum LicenseType {
 
     /**
      * Parse license type value to {@link LicenseType} enum.
-     *
-     * @param value licenseType value
+     * 
+     * @param value
+     *            licenseType value
      * @return {@link LicenseType} enum object or throws {@link IllegalArgumentException} if no corresponding
      *         {@link LicenseType} enum object found
      */
@@ -72,8 +74,9 @@ public enum LicenseType {
 
     /**
      * Gets the enum safe.
-     *
-     * @param val the val
+     * 
+     * @param val
+     *            the val
      * @return the enum safe
      */
     public static LicenseType parseValueSafe(final String val) {

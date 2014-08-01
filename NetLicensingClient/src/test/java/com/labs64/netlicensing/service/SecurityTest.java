@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.HttpMethod;
@@ -26,9 +29,6 @@ import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.schema.context.Info;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for checking the ability to connect to services using different security modes
@@ -45,7 +45,8 @@ public class SecurityTest extends BaseServiceTest {
                 .setUsername("user1")
                 .setPassword("pswrd");
 
-        final Netlicensing res = NetLicensingService.getInstance().request(context, HttpMethod.GET, "get-auth-header", null, null);
+        final Netlicensing res = NetLicensingService.getInstance().request(context, HttpMethod.GET, "get-auth-header",
+                null, null);
         final String authHeader = res.getInfos().getInfo().iterator().next().getValue();
 
         assertTrue(authHeader.startsWith("Basic "));
@@ -62,7 +63,8 @@ public class SecurityTest extends BaseServiceTest {
                 .setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION)
                 .setApiKey("TEST_API_KEY");
 
-        final Netlicensing res = NetLicensingService.getInstance().request(context, HttpMethod.GET, "get-auth-header", null, null);
+        final Netlicensing res = NetLicensingService.getInstance().request(context, HttpMethod.GET, "get-auth-header",
+                null, null);
         final String authHeader = res.getInfos().getInfo().iterator().next().getValue();
 
         assertTrue(authHeader.startsWith("Basic "));

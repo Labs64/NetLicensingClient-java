@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,11 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.License;
+import com.labs64.netlicensing.domain.entity.LicenseTemplate;
+import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 
 /**
- * Default implementation of {@link LicenseTemplate}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.LicenseTemplate}.
  */
 public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTemplate {
 
@@ -49,7 +52,7 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
     private Map<String, String> licenseTemplateProperties;
 
     /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntityImpl#getReservedProps()
+     * @see BaseEntityImpl#getReservedProps()
      */
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();
@@ -194,7 +197,7 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
         map.put(Constants.LicenseTemplate.HIDDEN, getHidden());
         map.put(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
         if (licenseTemplateProperties != null) {
-            for (Map.Entry<String, String> ltp : licenseTemplateProperties.entrySet()) {
+            for (final Map.Entry<String, String> ltp : licenseTemplateProperties.entrySet()) {
                 map.put(ltp.getKey(), ltp.getValue());
             }
         }

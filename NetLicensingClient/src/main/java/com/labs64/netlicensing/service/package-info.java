@@ -6,4 +6,3 @@
  * particular object service interface for details.
  */
 package com.labs64.netlicensing.service;
-

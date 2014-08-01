@@ -40,7 +40,7 @@ import com.labs64.netlicensing.provider.auth.UsernamePasswordAuthentication;
  */
 public class RestProviderJersey extends AbstractRestProvider {
 
-    private static final MediaType[] DEFAULT_ACCEPT_TYPES = {MediaType.APPLICATION_XML_TYPE};
+    private static final MediaType[] DEFAULT_ACCEPT_TYPES = { MediaType.APPLICATION_XML_TYPE };
 
     private static Client client;
 
@@ -54,11 +54,13 @@ public class RestProviderJersey extends AbstractRestProvider {
     }
 
     /*
-     * @see com.labs64.netlicensing.provider.RestProvider#call(java.lang.String, java.lang.String, java.lang.Object, java.lang.Class, java.util.Map)
+     * @see com.labs64.netlicensing.provider.RestProvider#call(java.lang.String, java.lang.String, java.lang.Object,
+     * java.lang.Class, java.util.Map)
      */
     @Override
-    public <REQ, RES> RestResponse<RES> call(final String httpMethod, final String urlTemplate, final REQ request, final Class<RES> responseType,
-                                             final Map<String, Object> queryParams) throws RestException {
+    public <REQ, RES> RestResponse<RES> call(final String httpMethod, final String urlTemplate, final REQ request,
+            final Class<RES> responseType,
+            final Map<String, Object> queryParams) throws RestException {
         try {
             WebTarget target = getTarget(this.basePath);
             addAuthHeaders(target, getAuthentication());
@@ -95,7 +97,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * Get static instance of RESTful client
-     *
+     * 
      * @return RESTful client
      */
     private static Client getClient() {
@@ -113,7 +115,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * Get the RESTful client target
-     *
+     * 
      * @param basePath
      * @return RESTful client target
      */
@@ -130,11 +132,13 @@ public class RestProviderJersey extends AbstractRestProvider {
         if (auth != null) {
             if (auth instanceof UsernamePasswordAuthentication) {
                 // see also https://jersey.java.net/documentation/latest/client.html#d0e4893
-                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(((UsernamePasswordAuthentication) auth).getUsername(),
+                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(
+                        ((UsernamePasswordAuthentication) auth).getUsername(),
                         ((UsernamePasswordAuthentication) auth).getPassword());
                 target.register(feature);
             } else if (auth instanceof TokenAuthentication) {
-                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey", ((TokenAuthentication) auth).getToken());
+                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey",
+                        ((TokenAuthentication) auth).getToken());
                 target.register(feature);
             }
         }
@@ -142,7 +146,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * Reads entity of given type from response. Returns null when the response has a zero-length content.
-     *
+     * 
      * @param response
      * @param responseType
      * @return

@@ -21,8 +21,9 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Construct a <code>BaseCheckedException</code> with the specified detail message.
-     *
-     * @param msg the detail message
+     * 
+     * @param msg
+     *            the detail message
      */
     public BaseCheckedException(final String msg) {
         super(msg);
@@ -30,9 +31,11 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Construct a <code>BaseCheckedException</code> with the specified detail message and cause exception.
-     *
-     * @param msg   the detail message
-     * @param cause the cause exception
+     * 
+     * @param msg
+     *            the detail message
+     * @param cause
+     *            the cause exception
      */
     public BaseCheckedException(final String msg, final Throwable cause) {
         super(msg, cause);
@@ -40,7 +43,7 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Return the detail message, including the message from the cause exception if there is one.
-     *
+     * 
      * @return error detail message
      */
     @Override
@@ -50,7 +53,7 @@ public abstract class BaseCheckedException extends Exception {
 
     /**
      * Retrieve the innermost cause of this exception, if any.
-     *
+     * 
      * @return the innermost exception, or <code>null</code> if none
      */
     public Throwable getRootCause() {
@@ -68,7 +71,7 @@ public abstract class BaseCheckedException extends Exception {
      * exception itself.
      * <p/>
      * Differs from {@link #getRootCause()} in that it falls back to the present exception if there is no root cause.
-     *
+     * 
      * @return the most specific cause (never <code>null</code>)
      */
     public Throwable getMostSpecificCause() {
@@ -83,8 +86,9 @@ public abstract class BaseCheckedException extends Exception {
     /**
      * Check whether this exception contains an exception of the given type: either it is of the given class itself or
      * it contains a cause cause of the given type.
-     *
-     * @param exType the exception type to look for
+     * 
+     * @param exType
+     *            the exception type to look for
      * @return whether there is a cause exception of the specified type
      */
     public boolean contains(final Class<Throwable> exType) {

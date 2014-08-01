@@ -32,7 +32,7 @@ public class TokenService {
 
     /**
      * Gets token by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -50,7 +50,7 @@ public class TokenService {
 
     /**
      * Returns tokens of a vendor.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param tokenType
@@ -70,7 +70,7 @@ public class TokenService {
 
     /**
      * Creates new token.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param token
@@ -88,7 +88,7 @@ public class TokenService {
 
     /**
      * Delete token by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number

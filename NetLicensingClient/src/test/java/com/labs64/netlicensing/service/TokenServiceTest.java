@@ -33,7 +33,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
-import com.labs64.netlicensing.domain.entity.TokenImpl;
+import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
@@ -176,7 +176,8 @@ public class TokenServiceTest extends BaseServiceTest {
         assertEquals(true, token.getActive());
         assertEquals(DateUtils.parseDate("2014-07-23T15:19:56.147Z").getTime(), token.getExpirationTime());
         assertEquals(TokenType.SHOP, token.getTokenType());
-        assertEquals("https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=afeb41d9-314e-49be-8465-148c614badfa",
+        assertEquals(
+                "https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=afeb41d9-314e-49be-8465-148c614badfa",
                 token.getTokenProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
         assertEquals("L001-TEST", token.getTokenProperties().get(Constants.Licensee.LICENSEE_NUMBER));
         assertEquals("VDEMO", token.getVendorNumber());
@@ -190,7 +191,8 @@ public class TokenServiceTest extends BaseServiceTest {
         assertTrue(tokens.hasContent());
         assertEquals(3, tokens.getItemsNumber());
         assertEquals("08b66094-a5c4-4c93-be71-567e982d9428", tokens.getContent().get(0).getNumber());
-        assertEquals(DateUtils.parseDate("2014-07-22T23:07:46.742Z").getTime(), tokens.getContent().get(1).getExpirationTime());
+        assertEquals(DateUtils.parseDate("2014-07-22T23:07:46.742Z").getTime(), tokens.getContent().get(1)
+                .getExpirationTime());
         assertEquals(TokenType.REGISTRATION, tokens.getContent().get(2).getTokenType());
     }
 
@@ -220,16 +222,20 @@ public class TokenServiceTest extends BaseServiceTest {
         @Override
         public Response create(final MultivaluedMap<String, String> formParams) {
             final String targetTokenType = formParams.getFirst(Constants.Token.TOKEN_TYPE);
-            if (TokenType.REGISTRATION.name().equals(targetTokenType) && !formParams.containsKey(Constants.Token.TOKEN_PROP_EMAIL)) {
+            if (TokenType.REGISTRATION.name().equals(targetTokenType)
+                    && !formParams.containsKey(Constants.Token.TOKEN_PROP_EMAIL)) {
                 return errorResponse("MalformedRequestException", "Malformed token request",
                         "TokenValidation", "Property 'email' not found");
             }
-            if (TokenType.PASSWORDRESET.name().equals(targetTokenType) && !formParams.containsKey(Constants.Token.TOKEN_PROP_EMAIL) && !formParams.containsKey(Constants.Token.TOKEN_PROP_VENDORNUMBER)) {
+            if (TokenType.PASSWORDRESET.name().equals(targetTokenType)
+                    && !formParams.containsKey(Constants.Token.TOKEN_PROP_EMAIL)
+                    && !formParams.containsKey(Constants.Token.TOKEN_PROP_VENDORNUMBER)) {
                 return errorResponse("MalformedRequestException", "Malformed token request",
                         "TokenValidation", "Property 'email' not found",
                         "TokenValidation", "Property 'vendorNumber' not found");
             }
-            if (TokenType.SHOP.name().equals(targetTokenType) && !formParams.containsKey(Constants.Licensee.LICENSEE_NUMBER)) {
+            if (TokenType.SHOP.name().equals(targetTokenType)
+                    && !formParams.containsKey(Constants.Licensee.LICENSEE_NUMBER)) {
                 return errorResponse("MalformedRequestException", "Malformed token request",
                         "TokenValidation", "Property 'licenseeNumber' not found");
             }
@@ -240,11 +246,13 @@ public class TokenServiceTest extends BaseServiceTest {
             defaultPropertyValues.put(Constants.Token.TOKEN_TYPE, TokenType.DEFAULT.name());
             defaultPropertyValues.put(Constants.Token.TOKEN_PROP_VENDORNUMBER, "VDEMO");
             if (!TokenType.APIKEY.name().equals(targetTokenType)) {
-                defaultPropertyValues.put(Constants.Token.EXPIRATION_TIME, DateUtils.printDate(DateUtils.getCurrentDate()));
+                defaultPropertyValues.put(Constants.Token.EXPIRATION_TIME,
+                        DateUtils.printDate(DateUtils.getCurrentDate()));
             }
             if (TokenType.SHOP.name().equals(targetTokenType)) {
-                defaultPropertyValues.put(Constants.Token.TOKEN_PROP_SHOP_URL, "https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=" +
-                        defaultPropertyValues.get(Constants.NUMBER));
+                defaultPropertyValues.put(Constants.Token.TOKEN_PROP_SHOP_URL,
+                        "https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=" +
+                                defaultPropertyValues.get(Constants.NUMBER));
             }
 
             return create(formParams, defaultPropertyValues);

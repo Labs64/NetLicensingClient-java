@@ -35,9 +35,9 @@ import com.labs64.netlicensing.util.CheckUtils;
  * modules, and the validation result is sent back for further processing to the requesting side (which is typically a
  * vendor service or a program executed by the end user).
  * <p/>
- * In simple cases there is no need to work with licenses directly via NetLicensing API, as licenses are assigned
- * either by a licensing model automatically (e.g. evaluation licenses) or actively purchased by a licensee via
- * NetLicensing Shop. However, for some complex licensing models, there may be a need to assign licenses to a licensee
+ * In simple cases there is no need to work with licenses directly via NetLicensing API, as licenses are assigned either
+ * by a licensing model automatically (e.g. evaluation licenses) or actively purchased by a licensee via NetLicensing
+ * Shop. However, for some complex licensing models, there may be a need to assign licenses to a licensee
  * programmatically from the vendor software.
  */
 public class LicenseService {
@@ -46,7 +46,7 @@ public class LicenseService {
 
     /**
      * Creates new license object with given properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param licenseeNumber
@@ -66,7 +66,8 @@ public class LicenseService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static License create(final Context context, final String licenseeNumber, final String licenseTemplateNumber,
+    public static License create(final Context context, final String licenseeNumber,
+            final String licenseTemplateNumber,
             final String transactionNumber, final License license) throws BaseCheckedException {
 
         CheckUtils.paramNotNull(license, "license");
@@ -86,7 +87,7 @@ public class LicenseService {
 
     /**
      * Gets license by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -102,7 +103,7 @@ public class LicenseService {
 
     /**
      * Returns licenses of a vendor.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of licenses (of all products) or null/empty list if nothing found.
@@ -116,7 +117,7 @@ public class LicenseService {
 
     /**
      * Updates license properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -131,7 +132,8 @@ public class LicenseService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static License update(final Context context, final String number, final String transactionNumber, final License license) throws BaseCheckedException {
+    public static License update(final Context context, final String number, final String transactionNumber,
+            final License license) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(license, "license");
 
@@ -146,7 +148,7 @@ public class LicenseService {
      * Deletes license.
      * <p/>
      * When any license is deleted, corresponding transaction is created automatically.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -157,7 +159,8 @@ public class LicenseService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
+    public static void delete(final Context context, final String number, final boolean forceCascade)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();

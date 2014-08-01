@@ -29,9 +29,9 @@ public interface BaseEntity {
 
     /**
      * Converts properties of the entity to the body of POST request
-     *
-     * @return object that represents HTML form data request encoded using the
-     *         "application/x-www-form-urlencoded" content type
+     * 
+     * @return object that represents HTML form data request encoded using the "application/x-www-form-urlencoded"
+     *         content type
      */
     Form asRequestForm();
 

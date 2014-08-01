@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,12 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 
 /**
- * Default implementation of {@link Transaction}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.Transaction}.
  */
 public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
@@ -45,7 +46,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     private Map<String, String> transactionProperties;
 
     /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntityImpl#getReservedProps()
+     * @see BaseEntityImpl#getReservedProps()
      */
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();

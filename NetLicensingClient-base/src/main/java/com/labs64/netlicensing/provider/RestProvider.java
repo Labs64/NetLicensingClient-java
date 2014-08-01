@@ -25,18 +25,25 @@ public interface RestProvider {
      * Helper method for performing REST requests with optional REST parameter map.
      * <p/>
      * This method has a long list of parameters. It is only intended for internal use.
-     *
-     * @param method       the HTTP method to be used, i.e. GET, PUT, POST.
-     * @param urlTemplate  the REST URL urlTemplate.
-     * @param request      optional: The request body to be sent to the server. May be null.
-     * @param responseType optional: expected response type.
-     *                     In case no responseType body is expected, responseType may be null.
-     * @param queryParams  optional: The REST query parameters values. May be null.
-     * @param <REQ>        type of the request entity
-     * @param <RES>        type of the responseType entity
+     * 
+     * @param method
+     *            the HTTP method to be used, i.e. GET, PUT, POST.
+     * @param urlTemplate
+     *            the REST URL urlTemplate.
+     * @param request
+     *            optional: The request body to be sent to the server. May be null.
+     * @param responseType
+     *            optional: expected response type. In case no responseType body is expected, responseType may be null.
+     * @param queryParams
+     *            optional: The REST query parameters values. May be null.
+     * @param <REQ>
+     *            type of the request entity
+     * @param <RES>
+     *            type of the responseType entity
      * @return the responseType entity received from the server, or null if responseType is null.
      */
-    <REQ, RES> RestResponse<RES> call(String method, String urlTemplate, REQ request, Class<RES> responseType, Map<String, Object> queryParams) throws RestException;
+    <REQ, RES> RestResponse<RES> call(String method, String urlTemplate, REQ request, Class<RES> responseType,
+            Map<String, Object> queryParams) throws RestException;
 
     /**
      * @param username

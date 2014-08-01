@@ -7,4 +7,3 @@
  *  - declare properties available for each NetLicensing object type.
  */
 package com.labs64.netlicensing.domain.entity;
-

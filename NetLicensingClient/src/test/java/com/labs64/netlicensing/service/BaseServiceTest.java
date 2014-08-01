@@ -99,7 +99,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "create entity" service.
-         *
+         * 
          * @param formParams
          *            POST request body parameters
          * @return response with XML representation of the created entity
@@ -112,32 +112,34 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "get entity" service.
-         *
+         * 
          * @return response with XML representation of the entity
          */
         @GET
         @Path("{number}")
         public Response get(@PathParam("number") final String number) {
-            final String xmlResourcePath = String.format("%snetlicensing-%s-get.xml", TEST_CASE_BASE, serviceId.toLowerCase());
+            final String xmlResourcePath = String.format("%snetlicensing-%s-get.xml", TEST_CASE_BASE,
+                    serviceId.toLowerCase());
             final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
 
         /**
          * Mock for "list entities" service.
-         *
+         * 
          * @return response with XML representation of the entities page
          */
         @GET
         public Response list() {
-            final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE, serviceId.toLowerCase());
+            final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE,
+                    serviceId.toLowerCase());
             final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
 
         /**
          * Mock for "update entity" service.
-         *
+         * 
          * @param formParams
          *            POST request body parameters
          * @return response with XML representation of the updated entity
@@ -146,7 +148,8 @@ abstract class BaseServiceTest extends JerseyTest {
         @Path("{number}")
         @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
         public Response update(@PathParam("number") final String number, final MultivaluedMap<String, String> formParams) {
-            final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE, serviceId.toLowerCase());
+            final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE,
+                    serviceId.toLowerCase());
             final Netlicensing netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
 
             final List<Property> properties = netlicensing.getItems().getItem().get(0).getProperty();
@@ -168,7 +171,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "delete entity" service.
-         *
+         * 
          * @param number
          *            entity number
          * @param uriInfo
@@ -177,20 +180,21 @@ abstract class BaseServiceTest extends JerseyTest {
          */
         @DELETE
         @Path("{number}")
-        public Response delete(@PathParam("number") final String number, @Context UriInfo uriInfo) {
+        public Response delete(@PathParam("number") final String number, @Context final UriInfo uriInfo) {
             return delete(number, "EXPECTED", uriInfo.getQueryParameters());
         }
 
         /**
          * Defines common functionality for a "create entity" service.
-         *
+         * 
          * @param formParams
          *            POST request body parameters
          * @param defaultPropertyValues
          *            default values for the entity properties
          * @return response with XML representation of the created entity
          */
-        protected Response create(final MultivaluedMap<String, String> formParams, final Map<String, String> defaultPropertyValues) {
+        protected Response create(final MultivaluedMap<String, String> formParams,
+                final Map<String, String> defaultPropertyValues) {
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
             netlicensing.setItems(objectFactory.createNetlicensingItems());
 
@@ -217,7 +221,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "delete entity" service.
-         *
+         * 
          * @param number
          *            entity number
          * @param expectedNumber
@@ -226,9 +230,11 @@ abstract class BaseServiceTest extends JerseyTest {
          *            query parameters
          * @return response with "No Content" status
          */
-        protected Response delete(final String number, final String expectedNumber, final MultivaluedMap<String, String> queryParams) {
+        protected Response delete(final String number, final String expectedNumber,
+                final MultivaluedMap<String, String> queryParams) {
             if (!expectedNumber.equals(number)) {
-                final String entityStr = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(serviceId), ' ').toLowerCase();
+                final String entityStr = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(serviceId), ' ')
+                        .toLowerCase();
                 return errorResponse("NotFoundException", String.format("requested %s does not exist", entityStr));
             }
 
@@ -243,7 +249,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Generates error response for the service mock
-         *
+         * 
          * @param errorIdsAndMessages
          *            array where every string with even index is exception ID and every string with odd index is
          *            corresponding error message
@@ -265,7 +271,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Generates UnexpectedValueException response for the service mock
-         *
+         * 
          * @param parameterName
          * @return
          */
@@ -278,7 +284,8 @@ abstract class BaseServiceTest extends JerseyTest {
          * @param formParams
          * @param paramKey
          */
-        protected void roundParamValueToTwoDecimalPlaces(final MultivaluedMap<String, String> formParams, final String paramKey) {
+        protected void roundParamValueToTwoDecimalPlaces(final MultivaluedMap<String, String> formParams,
+                final String paramKey) {
             if (formParams.containsKey(paramKey)) {
                 final String priceStr = formParams.getFirst(paramKey);
                 final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, BigDecimal.ROUND_HALF_UP);

@@ -16,7 +16,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
-import com.labs64.netlicensing.domain.entity.TransactionImpl;
+import com.labs64.netlicensing.domain.entity.impl.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;

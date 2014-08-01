@@ -33,7 +33,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
-import com.labs64.netlicensing.domain.entity.LicenseTemplateImpl;
+import com.labs64.netlicensing.domain.entity.impl.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
@@ -247,10 +247,12 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
                 return errorResponse("MalformedRequestException", "License template name is required");
             }
             if (formParams.containsKey(Constants.PRICE) && !formParams.containsKey(Constants.CURRENCY)) {
-                return errorResponse("MalformedRequestException", "'price' field must be accompanied with the 'currency' field");
+                return errorResponse("MalformedRequestException",
+                        "'price' field must be accompanied with the 'currency' field");
             }
             if (formParams.containsKey(Constants.CURRENCY) && !formParams.containsKey(Constants.PRICE)) {
-                return errorResponse("MalformedRequestException", "'currency' field can not be used without the 'price' field");
+                return errorResponse("MalformedRequestException",
+                        "'currency' field can not be used without the 'price' field");
             }
 
             roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);
@@ -265,9 +267,11 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
         @Override
         public Response update(final String number, final MultivaluedMap<String, String> formParams) {
-            final boolean isTimeVolume = LicenseType.TIMEVOLUME.value().equals(formParams.getFirst(Constants.LicenseTemplate.LICENSE_TYPE));
+            final boolean isTimeVolume = LicenseType.TIMEVOLUME.value().equals(
+                    formParams.getFirst(Constants.LicenseTemplate.LICENSE_TYPE));
             if (isTimeVolume && !formParams.containsKey(TIME_VOLUME_PROPERTY)) {
-                return errorResponse("IllegalOperationException", "License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
+                return errorResponse("IllegalOperationException",
+                        "License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
             }
 
             roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);

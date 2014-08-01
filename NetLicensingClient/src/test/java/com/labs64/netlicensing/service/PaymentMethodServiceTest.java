@@ -28,7 +28,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
-import com.labs64.netlicensing.domain.entity.PaymentMethodImpl;
+import com.labs64.netlicensing.domain.entity.impl.PaymentMethodImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.RestException;
@@ -60,7 +60,8 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         assertNotNull(paymentMethod);
         assertEquals("PAYPAL", paymentMethod.getNumber());
         assertEquals(true, paymentMethod.getActive());
-        assertEquals("sample_paypal_subject", paymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
+        assertEquals("sample_paypal_subject",
+                paymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -86,7 +87,8 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
 
         assertNotNull(updatedPaymentMethod);
         assertEquals(false, updatedPaymentMethod.getActive());
-        assertEquals("new_sample_paypal_subject", updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
+        assertEquals("new_sample_paypal_subject",
+                updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
         assertNull(updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_DELETING_PROPERTY));
     }
 

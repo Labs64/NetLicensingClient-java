@@ -41,7 +41,7 @@ public class LicenseTemplateService {
 
     /**
      * Creates new license template object with given properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param productModuleNumber
@@ -54,7 +54,8 @@ public class LicenseTemplateService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static LicenseTemplate create(final Context context, final String productModuleNumber, final LicenseTemplate licenseTemplate) throws BaseCheckedException {
+    public static LicenseTemplate create(final Context context, final String productModuleNumber,
+            final LicenseTemplate licenseTemplate) throws BaseCheckedException {
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
         final Form form = licenseTemplate.asRequestForm();
@@ -66,7 +67,7 @@ public class LicenseTemplateService {
 
     /**
      * Gets license template by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -84,7 +85,7 @@ public class LicenseTemplateService {
 
     /**
      * Returns all license templates of a vendor.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of license templates (of all products/modules) or null/empty list if nothing found.
@@ -98,7 +99,7 @@ public class LicenseTemplateService {
 
     /**
      * Updates license template properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -110,16 +111,18 @@ public class LicenseTemplateService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static LicenseTemplate update(final Context context, final String number, final LicenseTemplate licenseTemplate) throws BaseCheckedException {
+    public static LicenseTemplate update(final Context context, final String number,
+            final LicenseTemplate licenseTemplate) throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, licenseTemplate.asRequestForm(), LicenseTemplate.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number,
+                licenseTemplate.asRequestForm(), LicenseTemplate.class);
     }
 
     /**
      * Deletes license template.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -130,7 +133,8 @@ public class LicenseTemplateService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void delete(final Context context, final String number, final boolean forceCascade) throws BaseCheckedException {
+    public static void delete(final Context context, final String number, final boolean forceCascade)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();

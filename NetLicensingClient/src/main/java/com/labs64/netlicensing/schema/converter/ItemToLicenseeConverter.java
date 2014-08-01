@@ -14,8 +14,8 @@ package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.LicenseeImpl;
-import com.labs64.netlicensing.domain.entity.ProductImpl;
+import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
+import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;

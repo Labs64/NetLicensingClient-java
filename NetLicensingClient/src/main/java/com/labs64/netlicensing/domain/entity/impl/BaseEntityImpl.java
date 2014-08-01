@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,9 +20,10 @@ import java.util.Map;
 import javax.ws.rs.core.Form;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.BaseEntity;
 
 /**
- * Default implementation of {@link BaseEntity}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.BaseEntity}.
  */
 public abstract class BaseEntityImpl implements BaseEntity {
 
@@ -34,7 +35,7 @@ public abstract class BaseEntityImpl implements BaseEntity {
      * List of reserved properties is used for handling of custom properties. Property name that is included in the list
      * can not be used as custom property name. The list is extended by each derived entity class until the final
      * business entity.
-     *
+     * 
      * @return the list of reserved property names
      */
     public static List<String> getReservedProps() {

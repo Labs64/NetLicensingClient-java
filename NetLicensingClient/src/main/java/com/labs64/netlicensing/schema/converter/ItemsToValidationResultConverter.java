@@ -25,7 +25,8 @@ public class ItemsToValidationResultConverter implements Converter<Items, Valida
         for (final Item item : source.getItem()) {
             if (!Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType())) {
                 final String sourceType = (item.getType() != null) ? item.getType() : "<null>";
-                throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType, Constants.ValidationResult.VALIDATION_RESULT_TYPE));
+                throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType,
+                        Constants.ValidationResult.VALIDATION_RESULT_TYPE));
             }
 
             final Composition composition = new Composition();
@@ -48,7 +49,8 @@ public class ItemsToValidationResultConverter implements Converter<Items, Valida
             }
 
             if (productModuleNumber == null) {
-                throw new ConversionException(String.format("Validation item does not contain property '%s'", Constants.ProductModule.PRODUCT_MODULE_NUMBER));
+                throw new ConversionException(String.format("Validation item does not contain property '%s'",
+                        Constants.ProductModule.PRODUCT_MODULE_NUMBER));
             }
 
             target.setProductModuleValidation(productModuleNumber, composition);

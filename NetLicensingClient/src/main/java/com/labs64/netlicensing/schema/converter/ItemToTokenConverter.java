@@ -14,7 +14,7 @@ package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
-import com.labs64.netlicensing.domain.entity.TokenImpl;
+import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;

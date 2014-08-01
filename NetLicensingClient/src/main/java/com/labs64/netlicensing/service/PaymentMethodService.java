@@ -27,7 +27,7 @@ public class PaymentMethodService {
 
     /**
      * Gets payment method by its number.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -45,7 +45,7 @@ public class PaymentMethodService {
 
     /**
      * Returns payment methods of a vendor.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of payment method entities or null/empty list if nothing found.
@@ -59,7 +59,7 @@ public class PaymentMethodService {
 
     /**
      * Updates payment method properties.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -71,11 +71,13 @@ public class PaymentMethodService {
      *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static PaymentMethod update(final Context context, final String number, final PaymentMethod paymentMethod) throws BaseCheckedException {
+    public static PaymentMethod update(final Context context, final String number, final PaymentMethod paymentMethod)
+            throws BaseCheckedException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(paymentMethod, "paymentMethod");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, paymentMethod.asRequestForm(), PaymentMethod.class);
+        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number,
+                paymentMethod.asRequestForm(), PaymentMethod.class);
     }
 
 }

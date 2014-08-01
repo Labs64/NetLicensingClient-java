@@ -23,7 +23,7 @@ public interface LicensingModelProperties {
 
     /**
      * Gets the licensing model name.
-     *
+     * 
      * @return the licensing model name
      */
     String getName();

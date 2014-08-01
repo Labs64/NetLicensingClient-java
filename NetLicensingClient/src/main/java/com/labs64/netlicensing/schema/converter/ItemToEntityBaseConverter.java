@@ -50,9 +50,11 @@ abstract class ItemToEntityBaseConverter<T extends BaseEntity> implements Conver
 
     /**
      * Converts price with currency from NetLicensing XML representation to the internal Money value.
-     *
-     * @param source        - collection of properties from NetLicensing XML
-     * @param priceProperty - the property name holding price value, currency always assumed in Constants.CURRENCY
+     * 
+     * @param source
+     *            - collection of properties from NetLicensing XML
+     * @param priceProperty
+     *            - the property name holding price value, currency always assumed in Constants.CURRENCY
      * @return converted money object
      */
     static Money convertPrice(final List<Property> source, final String priceProperty) {

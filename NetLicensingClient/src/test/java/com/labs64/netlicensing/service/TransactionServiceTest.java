@@ -32,7 +32,7 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
-import com.labs64.netlicensing.domain.entity.TransactionImpl;
+import com.labs64.netlicensing.domain.entity.impl.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -83,7 +83,8 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(Currency.EUR, createdTransaction.getCurrency());
         assertEquals(new BigDecimal("100.00"), createdTransaction.getPrice());
         assertEquals(new BigDecimal("5.00"), createdTransaction.getDiscount());
-        assertEquals("Custom property value", createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
+        assertEquals("Custom property value",
+                createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -173,7 +174,8 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(TransactionSource.AUTO_LICENSE_CREATE, createdTransaction.getSource());
         assertEquals(TransactionStatus.CLOSED, createdTransaction.getStatus());
         assertEquals(true, createdTransaction.getActive());
-        assertEquals("New property value", createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
+        assertEquals("New property value",
+                createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
         assertNull(createdTransaction.getTransactionProperties().get(TRANSACTION_DELETING_PROPERTY));
     }
 
@@ -194,10 +196,12 @@ public class TransactionServiceTest extends BaseServiceTest {
         @Override
         public Response create(final MultivaluedMap<String, String> formParams) {
             final Netlicensing netlicensing = objectFactory.createNetlicensing();
-            if (!formParams.containsKey(Constants.Transaction.SOURCE) || !formParams.containsKey(Constants.Transaction.STATUS)) {
+            if (!formParams.containsKey(Constants.Transaction.SOURCE)
+                    || !formParams.containsKey(Constants.Transaction.STATUS)) {
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
-            if (formParams.containsKey(Constants.PRICE) && (!formParams.containsKey(Constants.DISCOUNT) || !formParams.containsKey(Constants.CURRENCY))) {
+            if (formParams.containsKey(Constants.PRICE)
+                    && (!formParams.containsKey(Constants.DISCOUNT) || !formParams.containsKey(Constants.CURRENCY))) {
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
 

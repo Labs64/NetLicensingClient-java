@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -18,10 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.License;
+import com.labs64.netlicensing.domain.entity.LicenseTemplate;
+import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.vo.Currency;
 
 /**
- * Default implementation of {@link License}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.License}.
  */
 public class LicenseImpl extends BaseEntityImpl implements License {
 
@@ -40,7 +43,7 @@ public class LicenseImpl extends BaseEntityImpl implements License {
     private Map<String, String> licenseProperties;
 
     /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntityImpl#getReservedProps()
+     * @see BaseEntityImpl#getReservedProps()
      */
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();

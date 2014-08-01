@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.License;
+import com.labs64.netlicensing.domain.entity.Licensee;
+import com.labs64.netlicensing.domain.entity.Product;
 
 /**
- * Default implementation of {@link Licensee}.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.Licensee}.
  */
 public class LicenseeImpl extends BaseEntityImpl implements Licensee {
 
@@ -32,7 +35,7 @@ public class LicenseeImpl extends BaseEntityImpl implements Licensee {
     private Map<String, String> licenseeProperties;
 
     /**
-     * @see com.labs64.netlicensing.domain.entity.BaseEntityImpl#getReservedProps()
+     * @see BaseEntityImpl#getReservedProps()
      */
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();

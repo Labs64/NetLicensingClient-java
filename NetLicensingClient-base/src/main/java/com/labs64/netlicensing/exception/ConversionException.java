@@ -13,8 +13,8 @@
 package com.labs64.netlicensing.exception;
 
 /**
- * This exception class should be used when there's a problem during the conversion from one representation of
- * object to another (for example, during the transformation of an XML item to an entity).
+ * This exception class should be used when there's a problem during the conversion from one representation of object to
+ * another (for example, during the transformation of an XML item to an entity).
  */
 public class ConversionException extends BaseCheckedException {
 
@@ -22,7 +22,7 @@ public class ConversionException extends BaseCheckedException {
 
     /**
      * Construct a <code>ConversionException</code> with the specified detail message.
-     *
+     * 
      * @param msg
      *            the detail message
      */
@@ -32,7 +32,7 @@ public class ConversionException extends BaseCheckedException {
 
     /**
      * Construct a <code>ConversionException</code> with the specified detail message and cause exception.
-     *
+     * 
      * @param msg
      *            the detail message
      * @param cause

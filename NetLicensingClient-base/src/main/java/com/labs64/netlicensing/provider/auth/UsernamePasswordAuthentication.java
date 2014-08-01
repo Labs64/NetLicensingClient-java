@@ -21,9 +21,11 @@ public class UsernamePasswordAuthentication implements Authentication {
 
     /**
      * Constructor
-     *
-     * @param username for basic HTTP authentication
-     * @param password for basic HTTP authentication
+     * 
+     * @param username
+     *            for basic HTTP authentication
+     * @param password
+     *            for basic HTTP authentication
      */
     public UsernamePasswordAuthentication(final String username, final String password) {
         this.username = username;
