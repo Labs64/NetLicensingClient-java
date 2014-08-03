@@ -15,6 +15,7 @@ package com.labs64.netlicensing.domain.vo;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Composition implements Serializable {
 
@@ -57,7 +58,27 @@ public class Composition implements Serializable {
 
     @Override
     public String toString() {
-        return "<Composition.toString() not implemented yet>";
+        final StringBuilder sb = new StringBuilder();
+        if (value == null)  {
+            sb.append("{");
+            if (properties == null) {
+                sb.append("<null>");
+            } else {
+                boolean first = true;
+                for (Entry<String, Composition> prop : properties.entrySet()) {
+                    if (first) {
+                        first = false;
+                    } else {
+                        sb.append(", ");
+                    }
+                    sb.append(prop.getKey()).append("=").append(prop.getValue());
+                }
+            }
+            sb.append("}");
+        } else {
+            sb.append(value);
+        }
+        return sb.toString();
     }
 
 }
