@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,12 +100,19 @@ public abstract class BaseEntityImpl implements BaseEntity {
         builder.append(" [");
         boolean firstProp = true;
         for (final String propKey : propMap.keySet()) {
-            builder.append(firstProp ? "" : ", ");
-            firstProp = false;
+            final Object propValue = propMap.get(propKey);
+            if (propValue != null && (!(propValue instanceof Collection<?>) || ((Collection<?>) propValue).size() > 0)) {
+                builder.append(firstProp ? "" : ", ");
+                firstProp = false;
 
-            final String propValue = String.valueOf(propMap.get(propKey));
-            builder.append(propKey).append("=")
-                    .append(propValue.length() > 50 ? propValue.substring(0, 50) : propValue);
+                builder.append(propKey).append("=");
+                if (propValue instanceof Collection<?>) {
+                    builder.append(propValue.toString());
+                } else {
+                    final String propValueStr = String.valueOf(propValue);
+                    builder.append(propValueStr.length() > 50 ? propValueStr.substring(0, 50) : propValue);
+                }
+            }
         }
         return builder.append("]").toString();
     }
