@@ -28,6 +28,8 @@ import com.labs64.netlicensing.domain.entity.ProductModule;
  */
 public class ProductImpl extends BaseEntityImpl implements Product {
 
+    private static final long serialVersionUID = 7030811820855516068L;
+
     private String name;
 
     private String version;

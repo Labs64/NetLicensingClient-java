@@ -26,6 +26,8 @@ import com.labs64.netlicensing.domain.vo.TokenType;
  */
 public class TokenImpl extends BaseEntityImpl implements Token {
 
+    private static final long serialVersionUID = 6688976030475491351L;
+
     private String vendorNumber;
 
     private Date expirationTime;

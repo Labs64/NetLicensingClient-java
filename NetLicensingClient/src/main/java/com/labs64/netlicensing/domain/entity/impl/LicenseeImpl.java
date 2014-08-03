@@ -28,6 +28,8 @@ import com.labs64.netlicensing.domain.entity.Product;
  */
 public class LicenseeImpl extends BaseEntityImpl implements Licensee {
 
+    private static final long serialVersionUID = 2704374141788131247L;
+
     private Product product;
 
     private Collection<License> licenses;

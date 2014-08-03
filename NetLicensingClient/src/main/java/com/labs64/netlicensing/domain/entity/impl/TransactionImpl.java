@@ -29,6 +29,8 @@ import com.labs64.netlicensing.domain.vo.TransactionStatus;
  */
 public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
+    private static final long serialVersionUID = 7675242025748195251L;
+
     private TransactionStatus status;
 
     private TransactionSource source;

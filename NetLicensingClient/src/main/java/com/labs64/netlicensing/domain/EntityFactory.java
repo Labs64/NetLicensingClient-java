@@ -26,7 +26,7 @@ import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.Transaction;
-import com.labs64.netlicensing.domain.entity.ValidationResult;
+import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.exception.BaseCheckedException;

@@ -35,8 +35,8 @@ import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.ValidationResult;
 import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
+import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;

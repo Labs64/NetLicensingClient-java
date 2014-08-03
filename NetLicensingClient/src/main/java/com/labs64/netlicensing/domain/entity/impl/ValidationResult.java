@@ -10,14 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity;
+package com.labs64.netlicensing.domain.entity.impl;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.vo.Composition;
 
-public class ValidationResult {
+public class ValidationResult implements Serializable {
+
+    private static final long serialVersionUID = -4160421171524379008L;
 
     private Map<String, Composition> validations;
 

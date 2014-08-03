@@ -28,6 +28,8 @@ import com.labs64.netlicensing.domain.vo.Currency;
  */
 public class LicenseImpl extends BaseEntityImpl implements License {
 
+    private static final long serialVersionUID = -1255007603439878867L;
+
     private String name;
 
     private BigDecimal price;

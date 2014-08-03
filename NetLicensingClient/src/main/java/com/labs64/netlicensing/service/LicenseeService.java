@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.ValidationResult;
+import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.BaseCheckedException;

@@ -12,12 +12,14 @@
  */
 package com.labs64.netlicensing.domain.entity;
 
+import java.io.Serializable;
+
 import javax.ws.rs.core.Form;
 
 /**
  * Defines properties common to all (or most) of other entities.
  */
-public interface BaseEntity {
+public interface BaseEntity extends Serializable {
 
     String getNumber();
 
@@ -29,7 +31,7 @@ public interface BaseEntity {
 
     /**
      * Converts properties of the entity to the body of POST request
-     * 
+     *
      * @return object that represents HTML form data request encoded using the "application/x-www-form-urlencoded"
      *         content type
      */

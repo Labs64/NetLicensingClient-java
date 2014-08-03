@@ -23,6 +23,8 @@ import com.labs64.netlicensing.domain.entity.PaymentMethod;
  */
 public class PaymentMethodImpl extends BaseEntityImpl implements PaymentMethod {
 
+    private static final long serialVersionUID = -529417516632266683L;
+
     private Map<String, String> paymentMethodProperties;
 
     /**

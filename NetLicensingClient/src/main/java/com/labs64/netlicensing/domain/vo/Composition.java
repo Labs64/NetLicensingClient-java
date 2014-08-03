@@ -12,10 +12,13 @@
  */
 package com.labs64.netlicensing.domain.vo;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Composition {
+public class Composition implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Map<String, Composition> properties;
 

@@ -12,6 +12,7 @@
  */
 package com.labs64.netlicensing.domain.entity.impl;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.xml.bind.DatatypeConverter;
@@ -24,7 +25,9 @@ import com.labs64.netlicensing.domain.vo.Money;
 /**
  * Represents discount step as a discount amount (absolute or percentage) after total price reaches the given threshold.
  */
-public class ProductDiscount implements Comparable<ProductDiscount> {
+public class ProductDiscount implements Comparable<ProductDiscount>, Serializable {
+
+    private static final long serialVersionUID = -8665112497261365879L;
 
     private Product product;
 
@@ -80,7 +83,7 @@ public class ProductDiscount implements Comparable<ProductDiscount> {
 
     /**
      * Gets the discount amount as string, with '%' sign at the end indicating discount is given in percent.
-     * 
+     *
      * @return the string amount
      */
     public String getStringAmount() {
@@ -95,7 +98,7 @@ public class ProductDiscount implements Comparable<ProductDiscount> {
 
     /**
      * Sets the discount amount from string, '%' sign at the end indicates discount is provided in percent.
-     * 
+     *
      * @param amount
      *            discount amount as string
      */

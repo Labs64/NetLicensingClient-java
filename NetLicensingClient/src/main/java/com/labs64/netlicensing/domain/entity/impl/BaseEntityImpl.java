@@ -27,6 +27,8 @@ import com.labs64.netlicensing.domain.entity.BaseEntity;
  */
 public abstract class BaseEntityImpl implements BaseEntity {
 
+    private static final long serialVersionUID = -3912283193861706866L;
+
     private String number;
 
     private Boolean active;
@@ -35,7 +37,7 @@ public abstract class BaseEntityImpl implements BaseEntity {
      * List of reserved properties is used for handling of custom properties. Property name that is included in the list
      * can not be used as custom property name. The list is extended by each derived entity class until the final
      * business entity.
-     * 
+     *
      * @return the list of reserved property names
      */
     public static List<String> getReservedProps() {

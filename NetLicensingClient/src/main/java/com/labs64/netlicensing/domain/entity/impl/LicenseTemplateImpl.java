@@ -31,6 +31,8 @@ import com.labs64.netlicensing.domain.vo.LicenseType;
  */
 public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTemplate {
 
+    private static final long serialVersionUID = -6957717868558780419L;
+
     private ProductModule productModule;
 
     private String name;
