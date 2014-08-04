@@ -1,11 +1,14 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
- * applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
- * OF ANY KIND, either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+/* Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.labs64.netlicensing.demo;
 
@@ -68,7 +71,7 @@ public class NetLicensingClientDemo {
 
         try {
 
-            //region ********* Product
+            // region ********* Product
 
             final Product newProduct = new ProductImpl();
             newProduct.setNumber(DEMO_PRODUCT_NUMBER);
@@ -99,9 +102,9 @@ public class NetLicensingClientDemo {
             products = ProductService.list(context);
             out.writePage("Got the following Products:", products);
 
-            //endregion
+            // endregion
 
-            //region ********* ProductModule
+            // region ********* ProductModule
 
             final ProductModule newProductModule = new ProductModuleImpl();
             newProductModule.setNumber(DEMO_PRODUCT_MODULE_NUMBER);
@@ -133,9 +136,9 @@ public class NetLicensingClientDemo {
             productModules = ProductModuleService.list(context);
             out.writePage("Got the following ProductModules:", productModules);
 
-            //endregion
+            // endregion
 
-            //region ********* LicenseTemplate
+            // region ********* LicenseTemplate
 
             final LicenseTemplate newLicenseTemplate = new LicenseTemplateImpl();
             newLicenseTemplate.setNumber(DEMO_LICENSE_TEMPLATE_NUMBER);
@@ -146,7 +149,8 @@ public class NetLicensingClientDemo {
             newLicenseTemplate.setAutomatic(false);
             newLicenseTemplate.setHidden(false);
             out.writeObject("Adding license template:", newLicenseTemplate);
-            LicenseTemplate licenseTemplate = LicenseTemplateService.create(context, DEMO_PRODUCT_MODULE_NUMBER, newLicenseTemplate);
+            LicenseTemplate licenseTemplate = LicenseTemplateService.create(context, DEMO_PRODUCT_MODULE_NUMBER,
+                    newLicenseTemplate);
             out.writeObject("Added license template:", licenseTemplate);
 
             licenseTemplate = LicenseTemplateService.get(context, DEMO_LICENSE_TEMPLATE_NUMBER);
@@ -157,7 +161,8 @@ public class NetLicensingClientDemo {
 
             final LicenseTemplate updateLicenseTemplate = new LicenseTemplateImpl();
             updateLicenseTemplate.addProperty("Updated property name", "Updated value");
-            licenseTemplate = LicenseTemplateService.update(context, DEMO_LICENSE_TEMPLATE_NUMBER, updateLicenseTemplate);
+            licenseTemplate = LicenseTemplateService.update(context, DEMO_LICENSE_TEMPLATE_NUMBER,
+                    updateLicenseTemplate);
             out.writeObject("Updated license template:", licenseTemplate);
 
             LicenseTemplateService.delete(context, DEMO_LICENSE_TEMPLATE_NUMBER, true);
@@ -172,9 +177,9 @@ public class NetLicensingClientDemo {
             licenseTemplates = LicenseTemplateService.list(context);
             out.writePage("Got the following license templates:", licenseTemplates);
 
-            //endregion
+            // endregion
 
-            //region ********* Licensee
+            // region ********* Licensee
 
             final Licensee newLicensee = new LicenseeImpl();
             newLicensee.setNumber(DEMO_LICENSEE_NUMBER);
@@ -204,13 +209,14 @@ public class NetLicensingClientDemo {
             licensees = LicenseeService.list(context);
             out.writePage("Got the following licensees:", licensees);
 
-            //endregion
+            // endregion
 
-            //region ********* License
+            // region ********* License
 
             final License newLicense = new LicenseImpl();
             newLicense.setNumber(DEMO_LICENSE_NUMBER);
-            License license = LicenseService.create(context, DEMO_LICENSEE_NUMBER, DEMO_LICENSE_TEMPLATE_NUMBER, null, newLicense);
+            License license = LicenseService.create(context, DEMO_LICENSEE_NUMBER, DEMO_LICENSE_TEMPLATE_NUMBER, null,
+                    newLicense);
             out.writeObject("Added license:", license);
 
             Page<License> licenses = LicenseService.list(context);
@@ -222,7 +228,8 @@ public class NetLicensingClientDemo {
             licenses = LicenseService.list(context);
             out.writePage("Got the following license templates:", licenses);
 
-            license = LicenseService.create(context, DEMO_LICENSEE_NUMBER, DEMO_LICENSE_TEMPLATE_NUMBER, null, newLicense);
+            license = LicenseService.create(context, DEMO_LICENSEE_NUMBER, DEMO_LICENSE_TEMPLATE_NUMBER, null,
+                    newLicense);
             out.writeObject("Added license again:", license);
 
             license = LicenseService.get(context, DEMO_LICENSE_NUMBER);
@@ -233,16 +240,16 @@ public class NetLicensingClientDemo {
             license = LicenseService.update(context, DEMO_LICENSE_NUMBER, null, updateLicense);
             out.writeObject("Updated license:", license);
 
-            //endregion
+            // endregion
 
-            //region ********* PaymentMethod
+            // region ********* PaymentMethod
 
             final Page<PaymentMethod> paymentMethods = PaymentMethodService.list(context);
             out.writePage("Got the following payment methods:", paymentMethods);
 
-            //endregion
+            // endregion
 
-            //region ********* Token
+            // region ********* Token
 
             final Token newToken = new TokenImpl();
             newToken.setTokenType(TokenType.APIKEY);
@@ -266,11 +273,12 @@ public class NetLicensingClientDemo {
             tokens = TokenService.list(context, TokenType.SHOP);
             out.writePage("Got the following shop tokens after delete:", tokens);
 
-            //endregion
+            // endregion
 
-            //region ********* Validate
+            // region ********* Validate
 
-            ValidationResult validationResult = LicenseeService.validate(context, DEMO_LICENSEE_NUMBER, DEMO_PRODUCT_NUMBER, null);
+            ValidationResult validationResult = LicenseeService.validate(context, DEMO_LICENSEE_NUMBER,
+                    DEMO_PRODUCT_NUMBER, null);
             out.writeObject("Validation result for created licensee:", validationResult);
 
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
@@ -278,7 +286,7 @@ public class NetLicensingClientDemo {
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
             out.writeObject("Validation repeated with API Key:", validationResult);
 
-            //endregion
+            // endregion
 
             out.writeMessage("All done.");
 
