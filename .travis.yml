@@ -6,4 +6,3 @@ jdk:
   - oraclejdk8
 script:
   - mvn clean verify
-  - java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
