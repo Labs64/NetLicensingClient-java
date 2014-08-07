@@ -12,10 +12,9 @@
  */
 package com.labs64.netlicensing.demo;
 
-import com.labs64.netlicensing.domain.entity.BaseEntity;
-import com.labs64.netlicensing.domain.vo.Page;
-
 import static java.lang.System.out;
+
+import com.labs64.netlicensing.domain.vo.Page;
 
 /**
  * Utility class for writing to console
@@ -39,11 +38,11 @@ public class ConsoleWriter {
         out.println();
     }
 
-    public void writePage(final String msg, final Page<? extends BaseEntity> page) {
+    public void writePage(final String msg, final Page<?> page) {
         out.println(msg);
         if (page != null && page.hasContent()) {
-            for (final BaseEntity entity : page.getContent()) {
-                out.println(entity);
+            for (final Object object : page.getContent()) {
+                out.println(object);
             }
         }
         out.println();

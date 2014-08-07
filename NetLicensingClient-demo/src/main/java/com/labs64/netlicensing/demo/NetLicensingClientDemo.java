@@ -46,6 +46,7 @@ import com.labs64.netlicensing.service.PaymentMethodService;
 import com.labs64.netlicensing.service.ProductModuleService;
 import com.labs64.netlicensing.service.ProductService;
 import com.labs64.netlicensing.service.TokenService;
+import com.labs64.netlicensing.service.UtilityService;
 
 public class NetLicensingClientDemo {
 
@@ -70,6 +71,16 @@ public class NetLicensingClientDemo {
         final ConsoleWriter out = new ConsoleWriter();
 
         try {
+
+            // region ********* Lists
+
+            final Page<String> licenseTypes = UtilityService.listLicenseTypes(context);
+            out.writePage("License Types:", licenseTypes);
+
+            final Page<String> licensingModels = UtilityService.listLicensingModels(context);
+            out.writePage("Licensing Models:", licensingModels);
+
+            // endregion
 
             // region ********* Product
 
