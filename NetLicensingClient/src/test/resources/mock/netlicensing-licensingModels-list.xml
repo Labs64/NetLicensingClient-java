@@ -1,0 +1,13 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="LicensingModelProperties">
+            <property name="name">TimeLimitedEvaluation</property>
+        </item>
+        <item type="LicensingModelProperties">
+            <property name="name">TimeVolume</property>
+        </item>
+        <item type="LicensingModelProperties">
+            <property name="name">FeatureWithTimeVolume</property>
+        </item>
+    </items>
+</netlicensing>

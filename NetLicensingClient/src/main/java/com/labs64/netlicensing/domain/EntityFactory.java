@@ -27,6 +27,7 @@ import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
+import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.exception.BaseCheckedException;
@@ -36,6 +37,7 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseeConverter;
+import com.labs64.netlicensing.schema.converter.ItemToLicensingModelPropertiesConverter;
 import com.labs64.netlicensing.schema.converter.ItemToPaymentMethodConverter;
 import com.labs64.netlicensing.schema.converter.ItemToProductConverter;
 import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
@@ -59,11 +61,12 @@ public class EntityFactory {
         entityToConverterMap.put(ProductModule.class, ItemToProductModuleConverter.class);
         entityToConverterMap.put(Token.class, ItemToTokenConverter.class);
         entityToConverterMap.put(Transaction.class, ItemToTransactionConverter.class);
+        entityToConverterMap.put(LicensingModelProperties.class, ItemToLicensingModelPropertiesConverter.class);
     }
 
     /**
      * Creates entity of specific class from service response
-     * 
+     *
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -83,7 +86,7 @@ public class EntityFactory {
 
     /**
      * Creates page of entities of specified class from service response
-     * 
+     *
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -114,7 +117,7 @@ public class EntityFactory {
 
     /**
      * Returns converter that is able to convert an {@link Item} object to an entity of specified class
-     * 
+     *
      * @param entityClass
      * @return
      */
@@ -137,7 +140,7 @@ public class EntityFactory {
 
     /**
      * Finds and returns from {@link Netlicensing} object suitable item of specified type
-     * 
+     *
      * @param netlicensing
      * @param type
      * @return
@@ -158,7 +161,7 @@ public class EntityFactory {
 
     /**
      * Extracts list of items of specified type from {@link Netlicensing} object
-     * 
+     *
      * @param netlicensing
      * @param type
      * @return

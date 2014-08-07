@@ -13,11 +13,16 @@
 package com.labs64.netlicensing.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Transformer;
+
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.domain.vo.TokenType;
+import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.exception.BaseCheckedException;
 
 /**
@@ -29,7 +34,7 @@ public class UtilityService {
 
     /**
      * Returns all license types.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of available license types or null/empty list if nothing found.
@@ -37,8 +42,7 @@ public class UtilityService {
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.BaseCheckedException}. These exceptions
      *             will be transformed to the corresponding service response messages.
      */
-    public static Page<String> listLicenseTypes(final Context context, final TokenType tokenType)
-            throws BaseCheckedException {
+    public static Page<String> listLicenseTypes(final Context context) throws BaseCheckedException {
         final Map<String, Object> params = new HashMap<String, Object>();
 
         // TODO: ...
@@ -48,7 +52,7 @@ public class UtilityService {
 
     /**
      * Returns all licensing models.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of available license models or null/empty list if nothing found.
@@ -56,13 +60,23 @@ public class UtilityService {
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.BaseCheckedException}. These exceptions
      *             will be transformed to the corresponding service response messages.
      */
-    public static Page<String> listLicensingModels(final Context context, final TokenType tokenType)
-            throws BaseCheckedException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+    public static Page<String> listLicensingModels(final Context context) throws BaseCheckedException {
 
-        // TODO: ...
+        final Page<LicensingModelProperties> licensingModels = NetLicensingService.getInstance().list(context, CONTEXT_PATH + "/licensingModels", null, LicensingModelProperties.class);
+        return new PageImpl<String>(
+            (List<String>) CollectionUtils.collect(licensingModels.getContent(), new Transformer<LicensingModelProperties, String>() {
 
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, params, String.class);
+                @Override
+                public String transform(LicensingModelProperties licensingModel) {
+                    return licensingModel.getName();
+                }
+            }),
+            licensingModels.getPageNumber(),
+            licensingModels.getItemsNumber(),
+            licensingModels.getTotalPages(),
+            licensingModels.getTotalItems(),
+            licensingModels.hasNext()
+        );
     }
 
 }
