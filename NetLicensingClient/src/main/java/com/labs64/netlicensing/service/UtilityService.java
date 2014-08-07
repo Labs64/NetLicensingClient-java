@@ -12,14 +12,13 @@
  */
 package com.labs64.netlicensing.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Transformer;
 
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
@@ -43,11 +42,21 @@ public class UtilityService {
      *             will be transformed to the corresponding service response messages.
      */
     public static Page<String> listLicenseTypes(final Context context) throws BaseCheckedException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Page<LicenseTypeProperties> licenseTypes = NetLicensingService.getInstance().list(context, CONTEXT_PATH + "/licenseTypes", null, LicenseTypeProperties.class);
+        return new PageImpl<String>(
+            (List<String>) CollectionUtils.collect(licenseTypes.getContent(), new Transformer<LicenseTypeProperties, String>() {
 
-        // TODO: ...
-
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, params, String.class);
+                @Override
+                public String transform(LicenseTypeProperties licenseType) {
+                    return licenseType.getName();
+                }
+            }),
+            licenseTypes.getPageNumber(),
+            licenseTypes.getItemsNumber(),
+            licenseTypes.getTotalPages(),
+            licenseTypes.getTotalItems(),
+            licenseTypes.hasNext()
+        );
     }
 
     /**

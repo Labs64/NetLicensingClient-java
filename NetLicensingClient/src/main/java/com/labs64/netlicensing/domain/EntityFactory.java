@@ -27,6 +27,7 @@ import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
+import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
@@ -36,6 +37,7 @@ import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
+import com.labs64.netlicensing.schema.converter.ItemToLicenseTypePropertiesConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseeConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicensingModelPropertiesConverter;
 import com.labs64.netlicensing.schema.converter.ItemToPaymentMethodConverter;
@@ -62,6 +64,7 @@ public class EntityFactory {
         entityToConverterMap.put(Token.class, ItemToTokenConverter.class);
         entityToConverterMap.put(Transaction.class, ItemToTransactionConverter.class);
         entityToConverterMap.put(LicensingModelProperties.class, ItemToLicensingModelPropertiesConverter.class);
+        entityToConverterMap.put(LicenseTypeProperties.class, ItemToLicenseTypePropertiesConverter.class);
     }
 
     /**
@@ -150,7 +153,7 @@ public class EntityFactory {
             throws WrongResponseFormatException {
         if (netlicensing.getItems() != null) {
             for (final Item item : netlicensing.getItems().getItem()) {
-                if (type.getSimpleName().equals(item.getType())) {
+                if (isItemOfType(item, type)) {
                     return item;
                 }
             }
@@ -169,11 +172,20 @@ public class EntityFactory {
     private List<Item> extractListOfType(final Netlicensing netlicensing, final Class<?> type) {
         final List<Item> items = new ArrayList<Item>();
         for (final Item item : netlicensing.getItems().getItem()) {
-            if (type.getSimpleName().equals(item.getType())) {
+            if (isItemOfType(item, type)) {
                 items.add(item);
             }
         }
         return items;
+    }
+
+    /**
+     * @param item
+     * @param type
+     * @return true if item is the XML item of class "type"
+     */
+    private boolean isItemOfType(final Item item, final Class<?> type) {
+        return type.getSimpleName().equals(item.getType()) || type.getSimpleName().equals(item.getType() + "Properties");
     }
 
 }

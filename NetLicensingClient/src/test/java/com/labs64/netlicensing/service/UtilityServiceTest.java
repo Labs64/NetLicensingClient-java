@@ -45,6 +45,17 @@ public class UtilityServiceTest extends BaseServiceTest {
         assertEquals("FeatureWithTimeVolume", licensingModels.getContent().get(2));
     }
 
+    @Test
+    public void testListLicenseTypes() throws Exception {
+        final Page<String> licenseTypes = UtilityService.listLicenseTypes(context);
+
+        assertNotNull(licenseTypes);
+        assertTrue(licenseTypes.hasContent());
+        assertEquals(2, licenseTypes.getContent().size());
+        assertEquals("FEATURE", licenseTypes.getContent().get(0));
+        assertEquals("TIMEVOLUME", licenseTypes.getContent().get(1));
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -57,8 +68,18 @@ public class UtilityServiceTest extends BaseServiceTest {
 
         @GET
         @Path("licensingModels")
-        public Response list() {
-            final String xmlResourcePath = String.format("%snetlicensing-licensingModels-list.xml", TEST_CASE_BASE);
+        public Response listLicensingModels() {
+            return listFromResource("netlicensing-licensingModels-list.xml");
+        }
+
+        @GET
+        @Path("licenseTypes")
+        public Response listLicenseTypes() {
+            return listFromResource("netlicensing-licenseTypes-list.xml");
+        }
+
+        private Response listFromResource(final String resourceFileName) {
+            final String xmlResourcePath = TEST_CASE_BASE + resourceFileName;
             final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
             return Response.ok(netlicensing).build();
         }

@@ -57,6 +57,7 @@ public final class Constants {
         public static final String LICENSING_MODELS = "licensingModels";
         public static final String LICENSE_TYPES = "licenseTypes";
         public static final String LICENSING_MODEL_PROPERTIES = "LicensingModelProperties";
+        public static final String LICENSE_TYPE = "LicenseType";
     }
 
     public static final class Validation {

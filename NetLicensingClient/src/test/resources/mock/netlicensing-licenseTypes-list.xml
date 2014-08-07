@@ -1,0 +1,10 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+    <items>
+        <item type="LicenseType">
+            <property name="name">FEATURE</property>
+        </item>
+        <item type="LicenseType">
+            <property name="name">TIMEVOLUME</property>
+        </item>
+    </items>
+</netlicensing>
