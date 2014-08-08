@@ -24,6 +24,7 @@ public class WrongResponseFormatException extends BaseCheckedException {
      * Construct a <code>ConversionException</code> with the specified detail message.
      * 
      * @param msg
+     *            the detail message
      */
     public WrongResponseFormatException(final String msg) {
         super(msg);

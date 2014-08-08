@@ -33,7 +33,7 @@ public class UtilityService {
 
     /**
      * Returns all license types.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of available license types or null/empty list if nothing found.
@@ -42,26 +42,27 @@ public class UtilityService {
      *             will be transformed to the corresponding service response messages.
      */
     public static Page<String> listLicenseTypes(final Context context) throws BaseCheckedException {
-        final Page<LicenseTypeProperties> licenseTypes = NetLicensingService.getInstance().list(context, CONTEXT_PATH + "/licenseTypes", null, LicenseTypeProperties.class);
+        final Page<LicenseTypeProperties> licenseTypes = NetLicensingService.getInstance().list(context,
+                CONTEXT_PATH + "/licenseTypes", null, LicenseTypeProperties.class);
         return new PageImpl<String>(
-            (List<String>) CollectionUtils.collect(licenseTypes.getContent(), new Transformer<LicenseTypeProperties, String>() {
+                (List<String>) CollectionUtils.collect(licenseTypes.getContent(),
+                        new Transformer<LicenseTypeProperties, String>() {
 
-                @Override
-                public String transform(LicenseTypeProperties licenseType) {
-                    return licenseType.getName();
-                }
-            }),
-            licenseTypes.getPageNumber(),
-            licenseTypes.getItemsNumber(),
-            licenseTypes.getTotalPages(),
-            licenseTypes.getTotalItems(),
-            licenseTypes.hasNext()
-        );
+                            @Override
+                            public String transform(final LicenseTypeProperties licenseType) {
+                                return licenseType.getName();
+                            }
+                        }),
+                licenseTypes.getPageNumber(),
+                licenseTypes.getItemsNumber(),
+                licenseTypes.getTotalPages(),
+                licenseTypes.getTotalItems(),
+                licenseTypes.hasNext());
     }
 
     /**
      * Returns all licensing models.
-     *
+     * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of available license models or null/empty list if nothing found.
@@ -71,21 +72,22 @@ public class UtilityService {
      */
     public static Page<String> listLicensingModels(final Context context) throws BaseCheckedException {
 
-        final Page<LicensingModelProperties> licensingModels = NetLicensingService.getInstance().list(context, CONTEXT_PATH + "/licensingModels", null, LicensingModelProperties.class);
+        final Page<LicensingModelProperties> licensingModels = NetLicensingService.getInstance().list(context,
+                CONTEXT_PATH + "/licensingModels", null, LicensingModelProperties.class);
         return new PageImpl<String>(
-            (List<String>) CollectionUtils.collect(licensingModels.getContent(), new Transformer<LicensingModelProperties, String>() {
+                (List<String>) CollectionUtils.collect(licensingModels.getContent(),
+                        new Transformer<LicensingModelProperties, String>() {
 
-                @Override
-                public String transform(LicensingModelProperties licensingModel) {
-                    return licensingModel.getName();
-                }
-            }),
-            licensingModels.getPageNumber(),
-            licensingModels.getItemsNumber(),
-            licensingModels.getTotalPages(),
-            licensingModels.getTotalItems(),
-            licensingModels.hasNext()
-        );
+                            @Override
+                            public String transform(final LicensingModelProperties licensingModel) {
+                                return licensingModel.getName();
+                            }
+                        }),
+                licensingModels.getPageNumber(),
+                licensingModels.getItemsNumber(),
+                licensingModels.getTotalPages(),
+                licensingModels.getTotalItems(),
+                licensingModels.hasNext());
     }
 
 }

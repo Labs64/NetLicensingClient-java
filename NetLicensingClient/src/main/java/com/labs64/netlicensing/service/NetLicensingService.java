@@ -37,7 +37,7 @@ class NetLicensingService {
 
     private static NetLicensingService instance;
 
-    private EntityFactory entityFactory = new EntityFactory();
+    private final EntityFactory entityFactory = new EntityFactory();
 
     /**
      * Private constructor
