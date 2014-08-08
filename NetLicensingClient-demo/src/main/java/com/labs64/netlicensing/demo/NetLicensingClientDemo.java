@@ -50,6 +50,10 @@ import com.labs64.netlicensing.service.UtilityService;
 
 public class NetLicensingClientDemo {
 
+    /** Exit codes */
+    private final static int CODE_OK = 0;
+    private final static int CODE_ERROR = 1;
+
     private final static String DEMO_PRODUCT_NUMBER = "P001-DEMO";
     private final static String DEMO_PRODUCT_MODULE_NUMBER = "PM001-DEMO";
     private final static String DEMO_LICENSE_TEMPLATE_NUMBER = "LT001-DEMO";
@@ -70,6 +74,7 @@ public class NetLicensingClientDemo {
 
         final ConsoleWriter out = new ConsoleWriter();
 
+        int exitCode = CODE_OK;
         try {
 
             // region ********* Lists
@@ -303,8 +308,10 @@ public class NetLicensingClientDemo {
 
         } catch (BaseCheckedException e) {
             out.writeException("Got NetLicensing exception:", e);
+            exitCode = CODE_ERROR;
         } catch (Exception e) {
             out.writeException("Got exception:", e);
+            exitCode = CODE_ERROR;
         } finally {
             try {
                 // Cleanup:
@@ -320,8 +327,12 @@ public class NetLicensingClientDemo {
 
             } catch (BaseCheckedException e) {
                 out.writeException("Got NetLicensing exception during cleanup:", e);
+                exitCode = CODE_ERROR;
             } catch (Exception e) {
                 out.writeException("Got exception during cleanup:", e);
+                exitCode = CODE_ERROR;
+            } finally {
+                System.exit(exitCode);
             }
         }
     }
