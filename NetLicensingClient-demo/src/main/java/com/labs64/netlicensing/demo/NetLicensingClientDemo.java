@@ -39,7 +39,7 @@ import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.domain.vo.TokenType;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.service.LicenseService;
 import com.labs64.netlicensing.service.LicenseTemplateService;
 import com.labs64.netlicensing.service.LicenseeService;
@@ -310,7 +310,7 @@ public class NetLicensingClientDemo {
 
             out.writeMessage("All done.");
 
-        } catch (BaseCheckedException e) {
+        } catch (NetLicensingException e) {
             out.writeException("Got NetLicensing exception:", e);
             exitCode = CODE_ERROR;
         } catch (Exception e) {
@@ -329,7 +329,7 @@ public class NetLicensingClientDemo {
                 // delete test product with all its related items
                 ProductService.delete(context, productNumber, true);
 
-            } catch (BaseCheckedException e) {
+            } catch (NetLicensingException e) {
                 out.writeException("Got NetLicensing exception during cleanup:", e);
                 exitCode = CODE_ERROR;
             } catch (Exception e) {

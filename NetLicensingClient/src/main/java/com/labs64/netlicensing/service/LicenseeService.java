@@ -24,7 +24,7 @@ import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -55,12 +55,12 @@ public class LicenseeService {
      *            non-null properties will be taken for the new object, null properties will either stay null, or will
      *            be set to a default value, depending on property.
      * @return the newly created licensee object
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static Licensee create(final Context context, final String productNumber, final Licensee licensee)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotNull(licensee, "licensee");
 
         final Form form = licensee.asRequestForm();
@@ -78,11 +78,11 @@ public class LicenseeService {
      * @param number
      *            the licensee number
      * @return the licensee
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Licensee get(final Context context, final String number) throws BaseCheckedException {
+    public static Licensee get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Licensee.class);
@@ -94,11 +94,11 @@ public class LicenseeService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of licensees (of all products) or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Licensee> list(final Context context) throws BaseCheckedException {
+    public static Page<Licensee> list(final Context context) throws NetLicensingException {
         return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Licensee.class);
     }
 
@@ -112,12 +112,12 @@ public class LicenseeService {
      * @param licensee
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated licensee.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static Licensee update(final Context context, final String number, final Licensee licensee)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licensee, "licensee");
 
@@ -134,12 +134,12 @@ public class LicenseeService {
      *            licensee number
      * @param forceCascade
      *            if true, any entities that depend on the one being deleted will be deleted too
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();
@@ -158,12 +158,12 @@ public class LicenseeService {
      *            optional productNumber, must be provided in case licensee auto-create is enabled
      * @param licenseeName
      *            optional human-readable licensee name in case licensee will be auto-created
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static ValidationResult validate(final Context context, final String number, final String productNumber,
-            final String licenseeName) throws BaseCheckedException {
+            final String licenseeName) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();

@@ -31,7 +31,7 @@ import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -75,10 +75,10 @@ public class EntityFactory {
      * @param entityClass
      *            entity class
      * @return entity class instance created from service response
-     * @throws BaseCheckedException
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     @SuppressWarnings("unchecked")
-    public <T> T create(final Netlicensing netlicensing, final Class<T> entityClass) throws BaseCheckedException {
+    public <T> T create(final Netlicensing netlicensing, final Class<T> entityClass) throws NetLicensingException {
         if (entityClass == ValidationResult.class) {
             return (T) new ItemsToValidationResultConverter().convert(netlicensing.getItems());
         } else {
@@ -95,10 +95,10 @@ public class EntityFactory {
      * @param entityClass
      *            entity class
      * @return page of entities created from service response
-     * @throws BaseCheckedException
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     public <T> Page<T> createPage(final Netlicensing netlicensing, final Class<T> entityClass)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         if (netlicensing.getItems() != null) {
             final List<T> entities = new ArrayList<T>();
 

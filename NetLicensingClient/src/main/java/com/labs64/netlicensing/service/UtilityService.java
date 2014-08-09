@@ -22,7 +22,7 @@ import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 
 /**
  * Provides utility routines.
@@ -37,11 +37,11 @@ public class UtilityService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of available license types or null/empty list if nothing found.
-     * @throws com.labs64.netlicensing.exception.BaseCheckedException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.BaseCheckedException}. These exceptions
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions
      *             will be transformed to the corresponding service response messages.
      */
-    public static Page<String> listLicenseTypes(final Context context) throws BaseCheckedException {
+    public static Page<String> listLicenseTypes(final Context context) throws NetLicensingException {
         final Page<LicenseTypeProperties> licenseTypes = NetLicensingService.getInstance().list(context,
                 CONTEXT_PATH + "/licenseTypes", null, LicenseTypeProperties.class);
         return new PageImpl<String>(
@@ -66,11 +66,11 @@ public class UtilityService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of available license models or null/empty list if nothing found.
-     * @throws com.labs64.netlicensing.exception.BaseCheckedException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.BaseCheckedException}. These exceptions
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions
      *             will be transformed to the corresponding service response messages.
      */
-    public static Page<String> listLicensingModels(final Context context) throws BaseCheckedException {
+    public static Page<String> listLicensingModels(final Context context) throws NetLicensingException {
 
         final Page<LicensingModelProperties> licensingModels = NetLicensingService.getInstance().list(context,
                 CONTEXT_PATH + "/licensingModels", null, LicensingModelProperties.class);

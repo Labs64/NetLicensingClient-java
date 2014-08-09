@@ -20,7 +20,7 @@ import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -38,11 +38,11 @@ public class TokenService {
      * @param number
      *            the token number
      * @return the token
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Token get(final Context context, final String number) throws BaseCheckedException {
+    public static Token get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Token.class);
@@ -56,11 +56,11 @@ public class TokenService {
      * @param tokenType
      *            type of tokens to return, if NULL return tokens of all types
      * @return collection of token entities or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Token> list(final Context context, final TokenType tokenType) throws BaseCheckedException {
+    public static Page<Token> list(final Context context, final TokenType tokenType) throws NetLicensingException {
         final Map<String, Object> params = new HashMap<String, Object>();
         if (tokenType != null) {
             params.put(Constants.Token.TOKEN_TYPE, tokenType);
@@ -76,11 +76,11 @@ public class TokenService {
      * @param token
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return created token
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Token create(final Context context, final Token token) throws BaseCheckedException {
+    public static Token create(final Context context, final Token token) throws NetLicensingException {
         CheckUtils.paramNotNull(token, "token");
 
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH, token.asRequestForm(), Token.class);
@@ -93,11 +93,11 @@ public class TokenService {
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            the token number
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static void delete(final Context context, final String number) throws BaseCheckedException {
+    public static void delete(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, null);

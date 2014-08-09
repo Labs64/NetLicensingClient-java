@@ -16,7 +16,7 @@ package com.labs64.netlicensing.exception;
  * This exception class should be used when there's a problem during the conversion from one representation of object to
  * another (for example, during the transformation of an XML item to an entity).
  */
-public class ConversionException extends BaseCheckedException {
+public class ConversionException extends NetLicensingException {
 
     private static final long serialVersionUID = -3798344733724547819L;
 

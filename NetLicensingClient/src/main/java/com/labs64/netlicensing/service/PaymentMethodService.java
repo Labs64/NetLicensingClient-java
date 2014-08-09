@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -33,11 +33,11 @@ public class PaymentMethodService {
      * @param number
      *            the payment method number
      * @return the payment method
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static PaymentMethod get(final Context context, final String number) throws BaseCheckedException {
+    public static PaymentMethod get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, PaymentMethod.class);
@@ -49,11 +49,11 @@ public class PaymentMethodService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return collection of payment method entities or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<PaymentMethod> list(final Context context) throws BaseCheckedException {
+    public static Page<PaymentMethod> list(final Context context) throws NetLicensingException {
         return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, PaymentMethod.class);
     }
 
@@ -67,12 +67,12 @@ public class PaymentMethodService {
      * @param paymentMethod
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated PaymentMethod.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static PaymentMethod update(final Context context, final String number, final PaymentMethod paymentMethod)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(paymentMethod, "paymentMethod");
 

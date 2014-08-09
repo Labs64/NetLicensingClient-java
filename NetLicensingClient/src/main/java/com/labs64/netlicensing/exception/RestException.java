@@ -16,7 +16,7 @@ package com.labs64.netlicensing.exception;
  * The Class RestException can be used in cases where no checked exception can be thrown (e.g. 3pp interfaces
  * implementation).
  */
-public class RestException extends BaseCheckedException {
+public class RestException extends NetLicensingException {
 
     private static final long serialVersionUID = -3863879794574523844L;
 

@@ -16,7 +16,7 @@ package com.labs64.netlicensing.exception;
  * The exception class that should be used when the content of the response of NetLicensing service doesn't meet
  * expectations that we impose on it.
  */
-public class WrongResponseFormatException extends BaseCheckedException {
+public class WrongResponseFormatException extends NetLicensingException {
 
     private static final long serialVersionUID = -2548284543777416222L;
 

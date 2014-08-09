@@ -23,7 +23,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -49,12 +49,12 @@ public class ProductModuleService {
      *            non-null properties will be taken for the new object, null properties will either stay null, or will
      *            be set to a default value, depending on property.
      * @return the newly created product module object
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static ProductModule create(final Context context, final String productNumber,
-            final ProductModule productModule) throws BaseCheckedException {
+            final ProductModule productModule) throws NetLicensingException {
         CheckUtils.paramNotNull(productModule, "productNumber");
 
         final Form form = productModule.asRequestForm();
@@ -72,11 +72,11 @@ public class ProductModuleService {
      * @param number
      *            the product module number
      * @return the product module
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static ProductModule get(final Context context, final String number) throws BaseCheckedException {
+    public static ProductModule get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, ProductModule.class);
@@ -88,11 +88,11 @@ public class ProductModuleService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of product modules (of all products) or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<ProductModule> list(final Context context) throws BaseCheckedException {
+    public static Page<ProductModule> list(final Context context) throws NetLicensingException {
         return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, ProductModule.class);
     }
 
@@ -106,12 +106,12 @@ public class ProductModuleService {
      * @param productModule
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated product module.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static ProductModule update(final Context context, final String number, final ProductModule productModule)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(productModule, "productModule");
 
@@ -128,12 +128,12 @@ public class ProductModuleService {
      *            product module number
      * @param forceCascade
      *            if true, any entities that depend on the one being deleted will be deleted too
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();

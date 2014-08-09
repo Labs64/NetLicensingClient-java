@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.RestProvider;
 import com.labs64.netlicensing.provider.RestProviderJersey;
@@ -72,10 +72,10 @@ class NetLicensingService {
      * @param resultType
      *            the type of the result
      * @return first suitable item with type resultType from the response
-     * @throws BaseCheckedException
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams,
-            final Class<RES> resultType) throws BaseCheckedException {
+            final Class<RES> resultType) throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
         return entityFactory.create(netlicensing, resultType);
     }
@@ -93,10 +93,10 @@ class NetLicensingService {
      * @param resultType
      *            the type of the item of the result page
      * @return page of items with type resultType from the response
-     * @throws BaseCheckedException
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     <RES> Page<RES> list(final Context context, final String urlTemplate, final Map<String, Object> queryParams,
-            final Class<RES> resultType) throws BaseCheckedException {
+            final Class<RES> resultType) throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
         return entityFactory.createPage(netlicensing, resultType);
     }
@@ -114,10 +114,10 @@ class NetLicensingService {
      * @param resultType
      *            the type of the result
      * @return first suitable item with type resultType from the response
-     * @throws BaseCheckedException
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     <REQ, RES> RES post(final Context context, final String urlTemplate, final REQ request, final Class<RES> resultType)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.POST, urlTemplate, request, null);
         return entityFactory.create(netlicensing, resultType);
     }

@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.BaseCheckedException;
+import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -45,11 +45,11 @@ public class TransactionService {
      *            non-null properties will be taken for the new object, null properties will either stay null, or will
      *            be set to a default value, depending on property.
      * @return the newly created transaction object
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Transaction create(final Context context, final Transaction transaction) throws BaseCheckedException {
+    public static Transaction create(final Context context, final Transaction transaction) throws NetLicensingException {
         CheckUtils.paramNotNull(transaction, "transaction");
 
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH, transaction.asRequestForm(),
@@ -67,11 +67,11 @@ public class TransactionService {
      * @param number
      *            the transaction number
      * @return the transaction
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Transaction get(final Context context, final String number) throws BaseCheckedException {
+    public static Transaction get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Transaction.class);
@@ -85,11 +85,11 @@ public class TransactionService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @return list of transactions (of all products/licensees) or null/empty list if nothing found.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Transaction> list(final Context context) throws BaseCheckedException {
+    public static Page<Transaction> list(final Context context) throws NetLicensingException {
         return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Transaction.class);
     }
 
@@ -106,12 +106,12 @@ public class TransactionService {
      * @param transaction
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated transaction.
-     * @throws BaseCheckedException
-     *             any subclass of {@linkplain BaseCheckedException}. These exceptions will be transformed to the
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static Transaction update(final Context context, final String number, final Transaction transaction)
-            throws BaseCheckedException {
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(transaction, "transaction");
 

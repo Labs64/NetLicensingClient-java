@@ -15,29 +15,29 @@ package com.labs64.netlicensing.exception;
 /**
  * Base class for checked exceptions with a root cause.
  */
-public abstract class BaseCheckedException extends Exception {
+public abstract class NetLicensingException extends Exception {
 
     private static final long serialVersionUID = -1101213597571076128L;
 
     /**
-     * Construct a <code>BaseCheckedException</code> with the specified detail message.
+     * Construct a <code>NetLicensingException</code> with the specified detail message.
      * 
      * @param msg
      *            the detail message
      */
-    public BaseCheckedException(final String msg) {
+    public NetLicensingException(final String msg) {
         super(msg);
     }
 
     /**
-     * Construct a <code>BaseCheckedException</code> with the specified detail message and cause exception.
+     * Construct a <code>NetLicensingException</code> with the specified detail message and cause exception.
      * 
      * @param msg
      *            the detail message
      * @param cause
      *            the cause exception
      */
-    public BaseCheckedException(final String msg, final Throwable cause) {
+    public NetLicensingException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 
@@ -102,8 +102,8 @@ public abstract class BaseCheckedException extends Exception {
         if (cause == this) {
             return false;
         }
-        if (cause instanceof BaseCheckedException) {
-            return ((BaseCheckedException) cause).contains(exType);
+        if (cause instanceof NetLicensingException) {
+            return ((NetLicensingException) cause).contains(exType);
         } else {
             while (cause != null) {
                 if (exType.isInstance(cause)) {
