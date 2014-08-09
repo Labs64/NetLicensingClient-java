@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.labs64.netlicensing.schema.converter.Converter;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Licensee;
@@ -35,6 +34,7 @@ import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.schema.converter.Converter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTypePropertiesConverter;
@@ -122,7 +122,8 @@ public class EntityFactory {
      * Returns converter that is able to convert an {@link Item} object to an entity of specified class
      * 
      * @param entityClass
-     * @return
+     *            entity class
+     * @return {@link Converter} suitable for the given entity class
      */
     @SuppressWarnings("unchecked")
     private <T> Converter<Item, T> converterFor(final Class<T> entityClass) {
@@ -145,8 +146,10 @@ public class EntityFactory {
      * Finds and returns from {@link Netlicensing} object suitable item of specified type
      * 
      * @param netlicensing
+     *            {@link Netlicensing} response object
      * @param type
-     * @return
+     *            class type to be matched
+     * @return suitable item of specified type
      * @throws WrongResponseFormatException
      */
     private Item findSuitableItemOfType(final Netlicensing netlicensing, final Class<?> type)
@@ -166,8 +169,10 @@ public class EntityFactory {
      * Extracts list of items of specified type from {@link Netlicensing} object
      * 
      * @param netlicensing
+     *            {@link Netlicensing} response object
      * @param type
-     * @return
+     *            class type to be matched
+     * @return extracted list of items
      */
     private List<Item> extractListOfType(final Netlicensing netlicensing, final Class<?> type) {
         final List<Item> items = new ArrayList<Item>();
@@ -180,8 +185,12 @@ public class EntityFactory {
     }
 
     /**
+     * Check whether the {@link Item} object is of provided type.
+     * 
      * @param item
+     *            {@link Item} object
      * @param type
+     *            class type to be matched
      * @return true if item is the XML item of class "type"
      */
     private boolean isItemOfType(final Item item, final Class<?> type) {

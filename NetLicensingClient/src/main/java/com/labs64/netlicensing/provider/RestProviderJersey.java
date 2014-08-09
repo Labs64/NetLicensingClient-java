@@ -151,8 +151,10 @@ public class RestProviderJersey extends AbstractRestProvider {
      * Reads entity of given type from response. Returns null when the response has a zero-length content.
      * 
      * @param response
+     *            service response
      * @param responseType
-     * @return
+     *            expected response type
+     * @return the response entity
      */
     private <RES> RES readEntity(final Response response, final Class<RES> responseType) {
         try {

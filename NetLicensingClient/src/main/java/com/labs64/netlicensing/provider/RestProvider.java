@@ -47,20 +47,24 @@ public interface RestProvider {
 
     /**
      * @param username
+     *            username used for authentication
      * @param password
-     * @return
+     *            password used for authentication
+     * @return authenticated RESTful provider
      */
     RestProvider authenticate(String username, String password);
 
     /**
      * @param token
-     * @return
+     *            token used for authentication
+     * @return authenticated RESTful provider
      */
     RestProvider authenticate(String token);
 
     /**
      * @param authentication
-     * @return
+     *            {@link Authentication} object
+     * @return authenticated RESTful provider
      */
     RestProvider authenticate(Authentication authentication);
 

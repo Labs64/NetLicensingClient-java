@@ -92,6 +92,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * @param serviceId
+         *            service identifier
          */
         public AbstractNLICServiceResource(final String serviceId) {
             this.serviceId = serviceId;
@@ -253,7 +254,7 @@ abstract class BaseServiceTest extends JerseyTest {
          * @param errorIdsAndMessages
          *            array where every string with even index is exception ID and every string with odd index is
          *            corresponding error message
-         * @return
+         * @return response object
          */
         protected final Response errorResponse(final String... errorIdsAndMessages) {
             if (errorIdsAndMessages.length % 2 != 0) {
@@ -273,7 +274,8 @@ abstract class BaseServiceTest extends JerseyTest {
          * Generates UnexpectedValueException response for the service mock
          * 
          * @param parameterName
-         * @return
+         *            parameter name
+         * @return response object
          */
         protected final Response unexpectedValueErrorResponse(final String parameterName) {
             return errorResponse("UnexpectedValueException",
@@ -282,7 +284,9 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * @param formParams
+         *            form params map
          * @param paramKey
+         *            parameter key
          */
         protected void roundParamValueToTwoDecimalPlaces(final MultivaluedMap<String, String> formParams,
                 final String paramKey) {

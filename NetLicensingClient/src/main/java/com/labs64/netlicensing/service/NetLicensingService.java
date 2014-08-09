@@ -154,7 +154,7 @@ class NetLicensingService {
      *            The REST query parameters values. May be null if there are no parameters.
      * @param <REQ>
      *            type of the request entity
-     * @return
+     * @return {@link Netlicensing} response object
      * @throws RestException
      */
     <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request,
@@ -193,7 +193,9 @@ class NetLicensingService {
      * Passes the authentication data specified in the context of the call to the RESTful provider.
      * 
      * @param restProvider
+     *            RESTful provider to be authenticated
      * @param context
+     *            additional context
      * @throws RestException
      */
     private void authenticate(final RestProvider restProvider, final Context context) throws RestException {
@@ -223,16 +225,22 @@ class NetLicensingService {
     }
 
     /**
+     * Check if {@link Netlicensing} object contains service errors.
+     * 
      * @param entity
-     * @return
+     *            {@link Netlicensing} object to be checked
+     * @return true if any error have been found, otherwise false
      */
     private boolean hasErrorInfos(final Netlicensing entity) {
         return entity != null && entity.getInfos() != null && !entity.getInfos().getInfo().isEmpty();
     }
 
     /**
+     * Transform service errors as exception message.
+     * 
      * @param infos
-     * @return
+     *            service errors list
+     * @return error string
      */
     private String asExceptionMessage(final List<Info> infos) {
         final StringBuilder errorMessages = new StringBuilder();
