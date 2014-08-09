@@ -83,7 +83,7 @@ public class ProductDiscount implements Comparable<ProductDiscount>, Serializabl
 
     /**
      * Gets the discount amount as string, with '%' sign at the end indicating discount is given in percent.
-     *
+     * 
      * @return the string amount
      */
     public String getStringAmount() {
@@ -98,7 +98,7 @@ public class ProductDiscount implements Comparable<ProductDiscount>, Serializabl
 
     /**
      * Sets the discount amount from string, '%' sign at the end indicates discount is provided in percent.
-     *
+     * 
      * @param amount
      *            discount amount as string
      */

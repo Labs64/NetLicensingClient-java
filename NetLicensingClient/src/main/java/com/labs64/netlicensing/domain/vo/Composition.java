@@ -59,7 +59,7 @@ public class Composition implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        if (value == null)  {
+        if (value == null) {
             sb.append("{");
             if (properties == null) {
                 sb.append("<null>");

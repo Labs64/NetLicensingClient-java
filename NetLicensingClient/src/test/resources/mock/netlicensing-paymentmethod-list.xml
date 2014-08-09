@@ -1,5 +1,5 @@
 <netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
-    <infos/>
+    <infos />
     <items>
         <item type="PaymentMethod">
             <property name="number">PAYPAL_SANDBOX</property>

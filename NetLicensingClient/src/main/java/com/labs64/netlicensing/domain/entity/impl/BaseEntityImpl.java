@@ -38,7 +38,7 @@ public abstract class BaseEntityImpl implements BaseEntity {
      * List of reserved properties is used for handling of custom properties. Property name that is included in the list
      * can not be used as custom property name. The list is extended by each derived entity class until the final
      * business entity.
-     *
+     * 
      * @return the list of reserved property names
      */
     public static List<String> getReservedProps() {

@@ -70,7 +70,6 @@
     </developers>
 
     <modules>
-        <module>NetLicensingClient-base</module>
         <module>NetLicensingClient</module>
         <module>NetLicensingClient-demo</module>
     </modules>

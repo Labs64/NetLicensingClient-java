@@ -341,7 +341,7 @@ public class NetLicensingClientDemo {
         }
     }
 
-    private static String numberWithPrefix(final String prefix, String number) {
+    private static String numberWithPrefix(final String prefix, final String number) {
         return String.format("%s%s%s", DEMO_NUMBER_PREFIX, prefix, number);
     }
 

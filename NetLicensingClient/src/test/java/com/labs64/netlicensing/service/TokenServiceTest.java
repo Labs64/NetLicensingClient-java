@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -39,6 +34,11 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.util.DateUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link TokenService}.

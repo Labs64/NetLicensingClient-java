@@ -12,6 +12,10 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -23,10 +27,6 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link UtilityService}.

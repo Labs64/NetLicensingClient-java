@@ -69,7 +69,7 @@ public class EntityFactory {
 
     /**
      * Creates entity of specific class from service response
-     *
+     * 
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -89,7 +89,7 @@ public class EntityFactory {
 
     /**
      * Creates page of entities of specified class from service response
-     *
+     * 
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -120,7 +120,7 @@ public class EntityFactory {
 
     /**
      * Returns converter that is able to convert an {@link Item} object to an entity of specified class
-     *
+     * 
      * @param entityClass
      * @return
      */
@@ -143,7 +143,7 @@ public class EntityFactory {
 
     /**
      * Finds and returns from {@link Netlicensing} object suitable item of specified type
-     *
+     * 
      * @param netlicensing
      * @param type
      * @return
@@ -164,7 +164,7 @@ public class EntityFactory {
 
     /**
      * Extracts list of items of specified type from {@link Netlicensing} object
-     *
+     * 
      * @param netlicensing
      * @param type
      * @return
@@ -185,7 +185,8 @@ public class EntityFactory {
      * @return true if item is the XML item of class "type"
      */
     private boolean isItemOfType(final Item item, final Class<?> type) {
-        return type.getSimpleName().equals(item.getType()) || type.getSimpleName().equals(item.getType() + "Properties");
+        return type.getSimpleName().equals(item.getType())
+                || type.getSimpleName().equals(item.getType() + "Properties");
     }
 
 }

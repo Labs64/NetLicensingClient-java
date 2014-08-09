@@ -19,7 +19,7 @@ public interface LicenseTypeProperties {
 
     /**
      * Gets the license type name.
-     *
+     * 
      * @return the license type name
      */
     String getName();

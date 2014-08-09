@@ -5,7 +5,9 @@
             <property name="active">true</property>
             <property name="expirationTime">2014-06-30T12:47:56.067Z</property>
             <property name="tokenType">SHOP</property>
-            <property name="shopURL">https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=08b66094-a5c4-4c93-be71-567e982d9428</property>
+            <property name="shopURL">
+                https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=08b66094-a5c4-4c93-be71-567e982d9428
+            </property>
             <property name="licenseeNumber">ITEST-ABC-DEMO</property>
             <property name="vendorNumber">VDEMO</property>
         </item>
