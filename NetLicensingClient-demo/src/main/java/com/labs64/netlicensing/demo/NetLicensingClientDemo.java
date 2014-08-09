@@ -57,7 +57,7 @@ public class NetLicensingClientDemo {
 
     private final static String DEMO_NUMBER_PREFIX = "DEMO-";
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         // configure J.U.L. to Slf4j bridge for Jersey
         SLF4JBridgeHandler.removeHandlersForRootLogger();

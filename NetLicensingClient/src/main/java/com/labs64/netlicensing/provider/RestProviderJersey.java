@@ -120,8 +120,7 @@ public class RestProviderJersey extends AbstractRestProvider {
      * @return RESTful client target
      */
     private WebTarget getTarget(final String basePath) {
-        final WebTarget target = getClient().target(basePath);
-        return target;
+        return getClient().target(basePath);
     }
 
     /**

@@ -65,7 +65,7 @@ public class Composition implements Serializable {
                 sb.append("<null>");
             } else {
                 boolean first = true;
-                for (Entry<String, Composition> prop : properties.entrySet()) {
+                for (final Entry<String, Composition> prop : properties.entrySet()) {
                     if (first) {
                         first = false;
                     } else {

@@ -72,4 +72,5 @@ public class CheckUtils {
     public static void paramNotEmpty(final String parameter, final String parameterName) {
         notEmpty(parameter, String.format("Parameter '%s' cannot be null or empty string", parameterName));
     }
+
 }
