@@ -48,6 +48,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * @param basePath
+     *            base provider path
      */
     public RestProviderJersey(final String basePath) {
         this.basePath = basePath;
@@ -117,6 +118,7 @@ public class RestProviderJersey extends AbstractRestProvider {
      * Get the RESTful client target
      * 
      * @param basePath
+     *            base provider path
      * @return RESTful client target
      */
     private WebTarget getTarget(final String basePath) {
@@ -125,7 +127,9 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * @param target
+     *            add headers to the object
      * @param auth
+     *            authentication object to be added
      */
     private void addAuthHeaders(final WebTarget target, final Authentication auth) {
         if (auth != null) {

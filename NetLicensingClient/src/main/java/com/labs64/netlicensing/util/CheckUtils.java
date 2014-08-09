@@ -21,6 +21,7 @@ public class CheckUtils {
      * Ensures that an object reference is not null.
      * 
      * @param object
+     *            object to check
      * @param msg
      *            exception message
      * @throws IllegalArgumentException
@@ -36,6 +37,7 @@ public class CheckUtils {
      * Ensures that a string is not null or empty.
      * 
      * @param string
+     *            string to check
      * @param msg
      *            exception message
      * @throws IllegalArgumentException
@@ -51,6 +53,7 @@ public class CheckUtils {
      * Ensures that an object reference passed as a parameter to the calling method is not null.
      * 
      * @param parameter
+     *            param to check
      * @param parameterName
      *            name of the parameter
      * @throws IllegalArgumentException
@@ -64,6 +67,7 @@ public class CheckUtils {
      * Ensures that a string passed as a parameter to the calling method is not null or empty.
      * 
      * @param parameter
+     *            param to check
      * @param parameterName
      *            name of the parameter
      * @throws IllegalArgumentException

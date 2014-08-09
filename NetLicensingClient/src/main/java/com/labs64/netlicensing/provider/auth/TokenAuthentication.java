@@ -19,9 +19,10 @@ public class TokenAuthentication implements Authentication {
     private final String token;
 
     /**
-     * Constructor
+     * Token auth constructor.
      * 
      * @param token
+     *            authentication token
      */
     public TokenAuthentication(final String token) {
         this.token = token;

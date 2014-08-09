@@ -1,6 +1,5 @@
 package com.labs64.netlicensing.schema.converter;
 
-import com.labs64.netlicensing.converter.Converter;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
@@ -60,7 +59,8 @@ public class ItemsToValidationResultConverter implements Converter<Items, Valida
 
     /**
      * @param list
-     * @return
+     *            list to be converted
+     * @return converted {@link Composition} object
      */
     private Composition convertFromList(final List list) {
         final Composition composition = new Composition();

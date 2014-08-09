@@ -42,7 +42,7 @@ import com.labs64.netlicensing.domain.vo.Currency;
  * <p/>
  * Arbitrary additional user properties of string type may be associated with each license. The name of user property
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted, licenseeNumber,
- * licenseTemplateNumber</b>. See {@link PropertyBase} for details.
+ * licenseTemplateNumber</b>. See {@link com.labs64.netlicensing.schema.context.Property} for details.
  */
 public interface License extends BaseEntity {
 

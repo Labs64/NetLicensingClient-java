@@ -14,7 +14,6 @@ package com.labs64.netlicensing.schema.converter;
 
 import java.util.List;
 
-import com.labs64.netlicensing.converter.Converter;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.BaseEntity;
 import com.labs64.netlicensing.domain.vo.Money;

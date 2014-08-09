@@ -88,8 +88,8 @@ public final class SchemaFunction {
     }
 
     /**
-     * Get {@link PropertyBase} derivative by name, converting it to {@link Property}. Property name is not
-     * case-sensitive! If property with the given name is not found, a property with empty value is returned.
+     * Get {@link Property} derivative by name, converting it to {@link Property}. Property name is not case-sensitive!
+     * If property with the given name is not found, a property with empty value is returned.
      * 
      * @param properties
      *            properties collection
@@ -153,9 +153,13 @@ public final class SchemaFunction {
      * Creates and adds {@link Info} object to {@link Netlicensing} object
      * 
      * @param netlicensing
+     *            {@link Netlicensing} object
      * @param id
+     *            {@link Info} object identifier
      * @param type
+     *            {@link Info} object type
      * @param value
+     *            {@link Info} object value
      */
     public static void addInfo(final Netlicensing netlicensing, final String id, final InfoEnum type,
             final String value) {

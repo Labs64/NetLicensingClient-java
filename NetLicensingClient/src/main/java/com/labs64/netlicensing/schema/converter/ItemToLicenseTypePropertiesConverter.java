@@ -12,7 +12,6 @@
  */
 package com.labs64.netlicensing.schema.converter;
 
-import com.labs64.netlicensing.converter.Converter;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.exception.ConversionException;
