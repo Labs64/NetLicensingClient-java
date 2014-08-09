@@ -317,9 +317,8 @@ public class NetLicensingClientDemo {
             out.writeException("Got exception:", e);
             exitCode = CODE_ERROR;
         } finally {
+            // Cleanup
             try {
-                // Cleanup:
-
                 // delete API key in case it was used (exists)
                 if (!StringUtils.isEmpty(context.getApiKey())) {
                     TokenService.delete(context, context.getApiKey());
@@ -335,9 +334,11 @@ public class NetLicensingClientDemo {
             } catch (Exception e) {
                 out.writeException("Got exception during cleanup:", e);
                 exitCode = CODE_ERROR;
-            } finally {
-                System.exit(exitCode);
             }
+        }
+
+        if (exitCode == CODE_ERROR) {
+            System.exit(exitCode);
         }
     }
 
