@@ -23,6 +23,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
@@ -163,7 +164,7 @@ public class LicenseeService {
      *             corresponding service response messages.
      */
     public static ValidationResult validate(final Context context, final String number, final String productNumber,
-            final String licenseeName) throws NetLicensingException {
+            final String licenseeName, final MetaInfo... meta) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();
@@ -174,7 +175,7 @@ public class LicenseeService {
             params.put(Constants.Licensee.PROP_NAME, licenseeName);
         }
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number + "/validate", params,
-                ValidationResult.class);
+                ValidationResult.class, meta);
     }
 
 }

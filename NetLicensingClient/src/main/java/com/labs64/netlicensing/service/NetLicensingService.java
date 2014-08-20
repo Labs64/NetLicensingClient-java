@@ -12,14 +12,17 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Response;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
@@ -29,6 +32,7 @@ import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.context.Info;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.DateUtils;
 
 /**
  * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service classes.
@@ -75,8 +79,18 @@ class NetLicensingService {
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams,
-            final Class<RES> resultType) throws NetLicensingException {
+            final Class<RES> resultType, final MetaInfo... meta) throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
+        if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
+            if (netlicensing.getId() != null) {
+                meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
+            }
+            if (netlicensing.getTtl() != null) {
+                final Calendar dummyTTL = DateUtils.getCurrentDate();
+                dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
+                meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl().toXMLFormat());
+            }
+        }
         return entityFactory.create(netlicensing, resultType);
     }
 
@@ -220,8 +234,8 @@ class NetLicensingService {
      * @return true if HTTP status represents client error or server error, false otherwise
      */
     private boolean isErrorStatus(final Response.Status status) {
-        return status.getFamily() == Response.Status.Family.CLIENT_ERROR
-                || status.getFamily() == Response.Status.Family.SERVER_ERROR;
+        return (status.getFamily() == Response.Status.Family.CLIENT_ERROR)
+                || (status.getFamily() == Response.Status.Family.SERVER_ERROR);
     }
 
     /**
@@ -232,7 +246,7 @@ class NetLicensingService {
      * @return true if any error have been found, otherwise false
      */
     private boolean hasErrorInfos(final Netlicensing entity) {
-        return entity != null && entity.getInfos() != null && !entity.getInfos().getInfo().isEmpty();
+        return (entity != null) && (entity.getInfos() != null) && !entity.getInfos().getInfo().isEmpty();
     }
 
     /**
@@ -249,8 +263,8 @@ class NetLicensingService {
                 errorMessages.append(", ");
             }
             errorMessages.append(info.getId()).append(": ")
-                    .append(info.getValue().substring(0, 1).toUpperCase())
-                    .append(info.getValue().substring(1));
+            .append(info.getValue().substring(0, 1).toUpperCase())
+            .append(info.getValue().substring(1));
         }
         return errorMessages.toString();
     }

@@ -51,6 +51,8 @@ public final class Constants {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String SECURITY_MODE = "securityMode";
+    public static final String PROP_ID = "ID";
+    public static final String PROP_TTL = "TTL";
 
     public static final class Utility {
         public static final String ENDPOINT_PATH = "utility";
