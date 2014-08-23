@@ -38,7 +38,7 @@ import com.labs64.netlicensing.domain.entity.impl.LicenseImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.Property;
@@ -106,14 +106,14 @@ public class LicenseServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutLicenseeNumber() throws Exception {
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Licensee number is not provided");
         LicenseService.create(context, null, null, null, new LicenseImpl());
     }
 
     @Test
     public void testCreateWithoutLicenseTemplateNumber() throws Exception {
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: License template number is not provided");
         LicenseService.create(context, "L001-TEST", null, null, new LicenseImpl());
     }
@@ -174,7 +174,7 @@ public class LicenseServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         LicenseService.delete(context, "LC001-TEST", true);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("NotFoundException: Requested license does not exist");
         LicenseService.delete(context, "LC001-NONE", false);
     }

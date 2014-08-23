@@ -31,7 +31,7 @@ import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.impl.PaymentMethodImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 
 /**
  * Integration tests for {@link PaymentMethodService}.
@@ -97,7 +97,7 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         final PaymentMethod paymentMethod = new PaymentMethodImpl();
         paymentMethod.setNumber("PAYPAL_NEW");
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Requested payment method is not supported");
         PaymentMethodService.update(context, "PAYPAL", paymentMethod);
     }

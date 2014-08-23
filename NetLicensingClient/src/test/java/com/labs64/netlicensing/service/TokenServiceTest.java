@@ -12,6 +12,11 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -32,13 +37,8 @@ import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
-import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.util.DateUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link TokenService}.
@@ -142,7 +142,7 @@ public class TokenServiceTest extends BaseServiceTest {
         final TokenImpl newToken = new TokenImpl();
         newToken.setTokenType(TokenType.REGISTRATION);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'email' not found");
         TokenService.create(context, newToken);
     }
@@ -152,7 +152,7 @@ public class TokenServiceTest extends BaseServiceTest {
         final TokenImpl newToken = new TokenImpl();
         newToken.setTokenType(TokenType.PASSWORDRESET);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'email' not found, TokenValidation: Property 'vendorNumber' not found");
         TokenService.create(context, newToken);
     }
@@ -162,7 +162,7 @@ public class TokenServiceTest extends BaseServiceTest {
         final TokenImpl newToken = new TokenImpl();
         newToken.setTokenType(TokenType.SHOP);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'licenseeNumber' not found");
         TokenService.create(context, newToken);
     }
@@ -200,7 +200,7 @@ public class TokenServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         TokenService.delete(context, "0fd9ef0a-d8dc-46e7-bc84-0a8c100a25d0");
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("NotFoundException: Requested token does not exist");
         TokenService.delete(context, "00000000-0000-0000-0000-000000000000");
     }

@@ -34,7 +34,7 @@ import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.impl.ProductModuleImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 
 /**
  * Integration tests for {@link ProductModuleService}.
@@ -83,14 +83,14 @@ public class ProductModuleServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutProductNumber() throws Exception {
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Product number is not provided");
         ProductModuleService.create(context, null, new ProductModuleImpl());
     }
 
     @Test
     public void testCreateEmpty() throws Exception {
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Product module name is required");
 
         final ProductModule newModule = new ProductModuleImpl();
@@ -161,7 +161,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         ProductModuleService.delete(context, "PM001-TEST", true);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("NotFoundException: Requested product module does not exist");
         ProductModuleService.delete(context, "PM001-NONE", false);
     }

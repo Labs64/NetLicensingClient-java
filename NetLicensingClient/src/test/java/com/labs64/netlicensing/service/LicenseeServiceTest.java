@@ -40,7 +40,7 @@ import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
 
@@ -90,7 +90,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutProductNumber() throws Exception {
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Product number is not provided");
         LicenseeService.create(context, null, new LicenseeImpl());
     }
@@ -140,7 +140,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         LicenseeService.delete(context, "L001-TEST", true);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("NotFoundException: Requested licensee does not exist");
         LicenseeService.delete(context, "L001-NONE", false);
     }
@@ -160,11 +160,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(
                 "true",
                 validation.getProperties().get("LIST1").getProperties()
-                        .get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
+                .get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
         assertEquals(
                 "green",
                 validation.getProperties().get("LIST2").getProperties()
-                        .get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
+                .get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
     // *** NLIC test mock resource ***

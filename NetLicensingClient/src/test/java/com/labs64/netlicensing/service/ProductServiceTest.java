@@ -35,7 +35,7 @@ import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 
 /**
  * Integration tests for {@link ProductService}.
@@ -82,7 +82,7 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateEmpty() throws Exception {
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("MalformedRequestException: Product name is required");
 
         final Product newProduct = new ProductImpl();
@@ -150,7 +150,7 @@ public class ProductServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         ProductService.delete(context, "P001-TEST", true);
 
-        thrown.expect(RestException.class);
+        thrown.expect(ServiceException.class);
         thrown.expectMessage("NotFoundException: Requested product does not exist");
         ProductService.delete(context, "P001-NONE", false);
     }

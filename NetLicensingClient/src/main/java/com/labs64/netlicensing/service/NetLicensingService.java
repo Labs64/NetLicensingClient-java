@@ -13,7 +13,6 @@
 package com.labs64.netlicensing.service;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
@@ -26,10 +25,11 @@ import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
+import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.provider.RestProvider;
 import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.provider.RestResponse;
-import com.labs64.netlicensing.schema.context.Info;
+import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
 import com.labs64.netlicensing.util.DateUtils;
@@ -145,10 +145,10 @@ class NetLicensingService {
      *            the REST URL template
      * @param queryParams
      *            The REST query parameters values. May be null if there are no parameters.
-     * @throws RestException
+     * @throws NetLicensingException
      */
     void delete(final Context context, final String urlTemplate, final Map<String, Object> queryParams)
-            throws RestException {
+            throws NetLicensingException {
         request(context, HttpMethod.DELETE, urlTemplate, null, queryParams);
     }
 
@@ -169,10 +169,10 @@ class NetLicensingService {
      * @param <REQ>
      *            type of the request entity
      * @return {@link Netlicensing} response object
-     * @throws RestException
+     * @throws NetLicensingException
      */
     <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request,
-            final Map<String, Object> queryParams) throws RestException {
+            final Map<String, Object> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
@@ -193,11 +193,10 @@ class NetLicensingService {
                         status.getStatusCode(), status.getReasonPhrase()));
             }
         } else {
-            if (hasErrorInfos(response.getEntity())) {
-                final List<Info> infos = response.getEntity().getInfos().getInfo();
-                throw new RestException(asExceptionMessage(infos));
+            if (SchemaFunction.hasErrorInfos(response.getEntity())) {
+                throw new ServiceException(status, response.getEntity());
             } else {
-                throw new RestException(String.format("Service error %s: %s", status.getStatusCode(),
+                throw new RestException(String.format("Unknown service error %s: %s", status.getStatusCode(),
                         status.getReasonPhrase()));
             }
         }
@@ -236,37 +235,6 @@ class NetLicensingService {
     private boolean isErrorStatus(final Response.Status status) {
         return (status.getFamily() == Response.Status.Family.CLIENT_ERROR)
                 || (status.getFamily() == Response.Status.Family.SERVER_ERROR);
-    }
-
-    /**
-     * Check if {@link Netlicensing} object contains service errors.
-     * 
-     * @param entity
-     *            {@link Netlicensing} object to be checked
-     * @return true if any error have been found, otherwise false
-     */
-    private boolean hasErrorInfos(final Netlicensing entity) {
-        return (entity != null) && (entity.getInfos() != null) && !entity.getInfos().getInfo().isEmpty();
-    }
-
-    /**
-     * Transform service errors as exception message.
-     * 
-     * @param infos
-     *            service errors list
-     * @return error string
-     */
-    private String asExceptionMessage(final List<Info> infos) {
-        final StringBuilder errorMessages = new StringBuilder();
-        for (final Info info : infos) {
-            if (errorMessages.length() > 0) {
-                errorMessages.append(", ");
-            }
-            errorMessages.append(info.getId()).append(": ")
-            .append(info.getValue().substring(0, 1).toUpperCase())
-            .append(info.getValue().substring(1));
-        }
-        return errorMessages.toString();
     }
 
 }

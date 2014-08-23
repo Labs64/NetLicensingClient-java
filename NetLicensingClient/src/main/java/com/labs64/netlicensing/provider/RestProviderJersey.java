@@ -68,7 +68,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
             final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
             final Response response;
-            if (queryParams != null && queryParams.size() > 0) {
+            if ((queryParams != null) && (queryParams.size() > 0)) {
                 target = target.path(urlTemplate);
                 for (final String paramKey : queryParams.keySet()) {
                     target = target.queryParam(paramKey, queryParams.get(paramKey));
@@ -87,7 +87,7 @@ public class RestProviderJersey extends AbstractRestProvider {
             restResponse.setStatusCode(response.getStatus());
             restResponse.setEntity(readEntity(response, responseType));
             return restResponse;
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
             throw new RestException("Exception while calling service", e);
         }
     }
@@ -135,12 +135,12 @@ public class RestProviderJersey extends AbstractRestProvider {
         if (auth != null) {
             if (auth instanceof UsernamePasswordAuthentication) {
                 // see also https://jersey.java.net/documentation/latest/client.html#d0e4893
-                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(
+                final HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(
                         ((UsernamePasswordAuthentication) auth).getUsername(),
                         ((UsernamePasswordAuthentication) auth).getPassword());
                 target.register(feature);
             } else if (auth instanceof TokenAuthentication) {
-                HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey",
+                final HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey",
                         ((TokenAuthentication) auth).getToken());
                 target.register(feature);
             }
@@ -155,15 +155,24 @@ public class RestProviderJersey extends AbstractRestProvider {
      * @param responseType
      *            expected response type
      * @return the response entity
+     * @throws RestException
      */
-    private <RES> RES readEntity(final Response response, final Class<RES> responseType) {
+    private <RES> RES readEntity(final Response response, final Class<RES> responseType) throws RestException {
+        boolean buffered = false;
         try {
+            buffered = response.bufferEntity();
             return response.readEntity(responseType);
-        } catch (ProcessingException ex) {
+        } catch (final ProcessingException ex) {
             if (ex.getCause() instanceof NoContentException) {
                 return null;
             } else {
-                throw ex;
+                if ((response.getStatusInfo().getFamily() == Response.Status.Family.CLIENT_ERROR)
+                        || (response.getStatusInfo().getFamily() == Response.Status.Family.SERVER_ERROR)) {
+                    return null; // Ignore content interpretation errors if status is an error already
+                }
+                final String body = buffered ? " '" + response.readEntity(String.class) + "' of type '"
+                        + response.getMediaType() + "'" : "";
+                throw new RestException("Could not interpret the response body" + body, ex);
             }
         }
     }

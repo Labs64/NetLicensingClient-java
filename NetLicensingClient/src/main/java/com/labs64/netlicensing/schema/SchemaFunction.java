@@ -177,4 +177,38 @@ public final class SchemaFunction {
         netlicensing.getInfos().getInfo().add(info);
     }
 
+    /**
+     * Check if {@link Netlicensing} object contains service errors.
+     * 
+     * @param entity
+     *            {@link Netlicensing} object to be checked
+     * @return true if any error have been found, otherwise false
+     */
+    public static boolean hasErrorInfos(final Netlicensing entity) {
+        return (entity != null) && (entity.getInfos() != null) && !entity.getInfos().getInfo().isEmpty();
+    }
+
+    /**
+     * Transform service infos to a string message.
+     * 
+     * @param response
+     *            service response (containing the infos)
+     * @return message string
+     */
+    public static String infosToMessage(final Netlicensing response) {
+        final StringBuilder errorMessages = new StringBuilder();
+        if (hasErrorInfos(response)) {
+            for (final Info info : response.getInfos().getInfo()) {
+                if (errorMessages.length() > 0) {
+                    errorMessages.append(", ");
+                }
+                errorMessages.append(info.getId()).append(": ").append(info.getValue().substring(0, 1).toUpperCase())
+                .append(info.getValue().substring(1));
+            }
+        } else {
+            errorMessages.append("Infos not provided with the service response.");
+        }
+        return errorMessages.toString();
+    }
+
 }
