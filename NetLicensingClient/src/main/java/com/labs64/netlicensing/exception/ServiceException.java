@@ -48,4 +48,5 @@ public class ServiceException extends NetLicensingException {
     public Netlicensing getErrorResponse() {
         return errorResponse;
     }
+
 }
