@@ -30,7 +30,6 @@ public final class Constants {
     public static final String VERSION = "version";
     public static final String DELETED = "deleted";
     public static final String CASCADE = "forceCascade";
-    public static final String FILTER = "filter";
     public static final String PRICE = "price";
     public static final String GRANDTOTAL = "grandtotal";
     public static final String DISCOUNT = "discount";
@@ -42,6 +41,7 @@ public final class Constants {
     public static final String SORT_DIRECTION = "sortdirection";
     public static final String TABLE_ITEMS_ROWS = "table.items.rows";
     public static final String PATH = "path";
+    public static final String FILTER = "filter";
     public static final String FILTER_KEY = "filterkey";
     public static final String FILTER_VALUE = "filtervalue";
     public static final String RELOAD_FILTER_PARAMS = "reloadfilterparams";

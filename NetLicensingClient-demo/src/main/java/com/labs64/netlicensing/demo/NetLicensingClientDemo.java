@@ -284,13 +284,14 @@ public class NetLicensingClientDemo {
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
             out.writeObject("Got the following shop token:", shopToken);
 
-            Page<Token> tokens = TokenService.list(context, TokenType.SHOP);
+            final String filter = Constants.Token.TOKEN_TYPE + "=" + TokenType.SHOP.name();
+            Page<Token> tokens = TokenService.list(context, filter);
             out.writePage("Got the following shop tokens:", tokens);
 
             TokenService.delete(context, shopToken.getNumber());
             out.writeMessage("Deleted shop token!");
 
-            tokens = TokenService.list(context, TokenType.SHOP);
+            tokens = TokenService.list(context, filter);
             out.writePage("Got the following shop tokens after delete:", tokens);
 
             // endregion
