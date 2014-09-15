@@ -59,7 +59,7 @@ public class LicenseTemplateService {
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
         final Form form = licenseTemplate.asRequestForm();
-        if (!StringUtils.isEmpty(productModuleNumber)) {
+        if (StringUtils.isNotBlank(productModuleNumber)) {
             form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER, productModuleNumber);
         }
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH, form, LicenseTemplate.class);

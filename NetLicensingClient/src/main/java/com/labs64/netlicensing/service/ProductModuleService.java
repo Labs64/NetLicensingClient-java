@@ -58,7 +58,7 @@ public class ProductModuleService {
         CheckUtils.paramNotNull(productModule, "productNumber");
 
         final Form form = productModule.asRequestForm();
-        if (!StringUtils.isEmpty(productNumber)) {
+        if (StringUtils.isNotBlank(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH, form, ProductModule.class);

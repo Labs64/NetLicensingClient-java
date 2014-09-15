@@ -73,13 +73,13 @@ public class LicenseService {
         CheckUtils.paramNotNull(license, "license");
 
         final Form form = license.asRequestForm();
-        if (!StringUtils.isEmpty(licenseeNumber)) {
+        if (StringUtils.isNotBlank(licenseeNumber)) {
             form.param(Constants.Licensee.LICENSEE_NUMBER, licenseeNumber);
         }
-        if (!StringUtils.isEmpty(licenseTemplateNumber)) {
+        if (StringUtils.isNotBlank(licenseTemplateNumber)) {
             form.param(Constants.LicenseTemplate.LICENSE_TEMPLATE_NUMBER, licenseTemplateNumber);
         }
-        if (!StringUtils.isEmpty(transactionNumber)) {
+        if (StringUtils.isNotBlank(transactionNumber)) {
             form.param(Constants.Transaction.TRANSACTION_NUMBER, transactionNumber);
         }
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH, form, License.class);
@@ -138,7 +138,7 @@ public class LicenseService {
         CheckUtils.paramNotNull(license, "license");
 
         final Form form = license.asRequestForm();
-        if (!StringUtils.isEmpty(transactionNumber)) {
+        if (StringUtils.isNotBlank(transactionNumber)) {
             form.param(Constants.Transaction.TRANSACTION_NUMBER, transactionNumber);
         }
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, form, License.class);

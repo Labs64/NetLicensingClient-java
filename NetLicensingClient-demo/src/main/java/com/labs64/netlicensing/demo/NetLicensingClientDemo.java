@@ -320,7 +320,7 @@ public class NetLicensingClientDemo {
             // Cleanup
             try {
                 // delete API key in case it was used (exists)
-                if (!StringUtils.isEmpty(context.getApiKey())) {
+                if (StringUtils.isNotBlank(context.getApiKey())) {
                     TokenService.delete(context, context.getApiKey());
                     context.setApiKey(null);
                 }

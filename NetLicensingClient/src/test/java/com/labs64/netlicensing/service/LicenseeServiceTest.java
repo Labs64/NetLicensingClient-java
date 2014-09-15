@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +38,11 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseeService}.
@@ -160,11 +160,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(
                 "true",
                 validation.getProperties().get("LIST1").getProperties()
-                .get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
+                        .get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
         assertEquals(
                 "green",
                 validation.getProperties().get("LIST2").getProperties()
-                .get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
+                        .get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
     // *** NLIC test mock resource ***
@@ -212,7 +212,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         @Path("{licenseeNumber}/validate")
         public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
                 @QueryParam("productNumber") final String productNumber,
-                @QueryParam("name") final String licenseeName) {
+                @QueryParam("licenseeName") final String licenseeName) {
 
             if (!"P001-TEST".equals(productNumber)) {
                 return unexpectedValueErrorResponse("productNumber");
@@ -226,4 +226,5 @@ public class LicenseeServiceTest extends BaseServiceTest {
             return Response.ok(netlicensing).build();
         }
     }
+
 }

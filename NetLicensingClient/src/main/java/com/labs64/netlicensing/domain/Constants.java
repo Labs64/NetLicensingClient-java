@@ -134,7 +134,7 @@ public final class Constants {
         public static final String ENDPOINT_PATH_VALIDATE = "validate";
         public static final String ENTITY_NAME = "licensee";
         public static final String LICENSEE_NUMBER = "licenseeNumber";
-        public static final String PROP_NAME = "name";
+        public static final String PROP_LICENSEE_NAME = "licenseeName";
         public static final String PROP_EMAIL = "eMail";
     }
 

@@ -65,7 +65,7 @@ public class LicenseeService {
         CheckUtils.paramNotNull(licensee, "licensee");
 
         final Form form = licensee.asRequestForm();
-        if (!StringUtils.isEmpty(productNumber)) {
+        if (StringUtils.isNotBlank(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
         return NetLicensingService.getInstance().post(context, CONTEXT_PATH, form, Licensee.class);
@@ -168,11 +168,11 @@ public class LicenseeService {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();
-        if (!StringUtils.isEmpty(productNumber)) {
+        if (StringUtils.isNotBlank(productNumber)) {
             params.put(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
-        if (!StringUtils.isEmpty(licenseeName)) {
-            params.put(Constants.Licensee.PROP_NAME, licenseeName);
+        if (StringUtils.isNotBlank(licenseeName)) {
+            params.put(Constants.Licensee.PROP_LICENSEE_NAME, licenseeName);
         }
         return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number + "/validate", params,
                 ValidationResult.class, meta);
