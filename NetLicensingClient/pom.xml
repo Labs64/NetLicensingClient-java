@@ -74,7 +74,7 @@
                 </executions>
                 <configuration>
                     <schemaDirectory>${project.build.directory}/classes/schema</schemaDirectory>
-                    <specVersion>2.2</specVersion>
+                    <specVersion>2.1</specVersion>
                     <extension>true</extension>
                     <args>
                         <arg>-Xvalue-constructor</arg>
