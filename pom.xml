@@ -28,19 +28,19 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/r-brown/NetLicensingClient-java</url>
-        <connection>scm:git:git://ithub.com/r-brown/NetLicensingClient-java.git</connection>
-        <developerConnection>scm:git:git@ithub.com/r-brown/NetLicensingClient-java.git</developerConnection>
+        <url>https://github.com/Labs64/NetLicensingClient-java</url>
+        <connection>scm:git:git://github.com/Labs64/NetLicensingClient-java.git</connection>
+        <developerConnection>scm:git:git@github.com/Labs64/NetLicensingClient-java.git</developerConnection>
     </scm>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/r-brown/NetLicensingClient-java/issues</url>
+        <url>https://github.com/Labs64/NetLicensingClient-java/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/r-brown/NetLicensingClient-java</url>
+        <url>https://travis-ci.org/Labs64/NetLicensingClient-java</url>
     </ciManagement>
 
     <developers>
