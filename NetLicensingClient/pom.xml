@@ -74,6 +74,7 @@
                 </executions>
                 <configuration>
                     <schemaDirectory>${project.build.directory}/classes/schema</schemaDirectory>
+                    <!-- see also https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-89 -->
                     <specVersion>2.1</specVersion>
                     <extension>true</extension>
                     <args>
