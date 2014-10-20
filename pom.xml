@@ -29,8 +29,8 @@
 
     <scm>
         <url>https://github.com/Labs64/NetLicensingClient-java</url>
-        <connection>scm:git:git://github.com/Labs64/NetLicensingClient-java.git</connection>
-        <developerConnection>scm:git:git@github.com/Labs64/NetLicensingClient-java.git</developerConnection>
+        <connection>scm:git:git@github.com:Labs64/NetLicensingClient-java.git</connection>
+        <developerConnection>scm:git:git@github.com:Labs64/NetLicensingClient-java.git</developerConnection>
     </scm>
 
     <issueManagement>
