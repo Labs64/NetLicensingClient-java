@@ -18,6 +18,8 @@ import java.util.Map;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
@@ -174,6 +176,10 @@ class NetLicensingService {
     <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request,
             final Map<String, Object> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
+
+    	if (StringUtils.isNotBlank(context.getVendorNumber())) {
+    		queryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
+    	}
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
         authenticate(restProvider, context);
