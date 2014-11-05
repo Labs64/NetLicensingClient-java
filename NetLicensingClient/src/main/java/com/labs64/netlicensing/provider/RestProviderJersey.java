@@ -30,8 +30,6 @@ import org.glassfish.jersey.filter.LoggingFilter;
 
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.auth.Authentication;
-import com.labs64.netlicensing.provider.auth.TokenAuthentication;
-import com.labs64.netlicensing.provider.auth.UsernamePasswordAuthentication;
 
 /**
  * Low level REST client implementation.
@@ -127,23 +125,14 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * @param target
-     *            add headers to the object
+     *            target object, to which the authentication headers will be added
      * @param auth
-     *            authentication object to be added
+     *            an object providing the authentication info
      */
     private void addAuthHeaders(final WebTarget target, final Authentication auth) {
         if (auth != null) {
-            if (auth instanceof UsernamePasswordAuthentication) {
-                // see also https://jersey.java.net/documentation/latest/client.html#d0e4893
-                final HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(
-                        ((UsernamePasswordAuthentication) auth).getUsername(),
-                        ((UsernamePasswordAuthentication) auth).getPassword());
-                target.register(feature);
-            } else if (auth instanceof TokenAuthentication) {
-                final HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic("apiKey",
-                        ((TokenAuthentication) auth).getToken());
-                target.register(feature);
-            }
+            // see also https://jersey.java.net/documentation/latest/client.html, chapter "Securing a Client"
+        	target.register(HttpAuthenticationFeature.basic(auth.getUsername(), auth.getPassword()));
         }
     }
 

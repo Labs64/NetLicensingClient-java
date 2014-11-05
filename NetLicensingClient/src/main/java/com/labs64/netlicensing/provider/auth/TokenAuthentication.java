@@ -28,8 +28,14 @@ public class TokenAuthentication implements Authentication {
         this.token = token;
     }
 
-    public String getToken() {
-        return token;
-    }
+	@Override
+	public String getUsername() {
+		return "apiKey";
+	}
+
+	@Override
+	public String getPassword() {
+		return token;
+	}
 
 }
