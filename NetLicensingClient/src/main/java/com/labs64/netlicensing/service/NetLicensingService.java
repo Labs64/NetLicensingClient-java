@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.service;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
@@ -177,15 +178,19 @@ class NetLicensingService {
             final Map<String, Object> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
 
+        Map<String, Object> combinedQueryParams = queryParams;
     	if (StringUtils.isNotBlank(context.getVendorNumber())) {
-    		queryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
+    		if (combinedQueryParams == null) {
+    			combinedQueryParams = new HashMap<String, Object>();
+    		}
+    		combinedQueryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
     	}
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
         authenticate(restProvider, context);
 
         final RestResponse<Netlicensing> response = restProvider.call(method, urlTemplate, request, Netlicensing.class,
-                queryParams);
+        		combinedQueryParams);
 
         final Response.Status status = Response.Status.fromStatusCode(response.getStatusCode());
         if (!isErrorStatus(status)) {
