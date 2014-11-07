@@ -136,7 +136,7 @@ public class LicenseServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final Page<License> licenses = LicenseService.list(context);
+        final Page<License> licenses = LicenseService.list(context, null);
 
         assertNotNull(licenses);
         assertTrue(licenses.hasContent());
@@ -186,7 +186,7 @@ public class LicenseServiceTest extends BaseServiceTest {
         return LicenseServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + LicenseService.CONTEXT_PATH)
+    @Path(REST_API_PATH + "/" + Constants.License.ENDPOINT_PATH)
     public static class LicenseServiceResource extends AbstractNLICServiceResource {
 
         public LicenseServiceResource() {

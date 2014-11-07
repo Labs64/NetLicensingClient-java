@@ -12,6 +12,12 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -22,8 +28,6 @@ import com.labs64.netlicensing.util.CheckUtils;
  * Provides payment method entity handling routines.
  */
 public class PaymentMethodService {
-
-    static final String CONTEXT_PATH = "paymentmethod";
 
     /**
      * Gets payment method by its number.
@@ -40,7 +44,7 @@ public class PaymentMethodService {
     public static PaymentMethod get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, PaymentMethod.class);
+        return NetLicensingService.getInstance().get(context, Constants.PaymentMethod.ENDPOINT_PATH + "/" + number, null, PaymentMethod.class);
     }
 
     /**
@@ -48,13 +52,19 @@ public class PaymentMethodService {
      * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return collection of payment method entities or null/empty list if nothing found.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<PaymentMethod> list(final Context context) throws NetLicensingException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, PaymentMethod.class);
+    public static Page<PaymentMethod> list(final Context context, final String filter) throws NetLicensingException {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(filter)) {
+            params.put(Constants.FILTER, filter);
+        }
+        return NetLicensingService.getInstance().list(context, Constants.PaymentMethod.ENDPOINT_PATH, params, PaymentMethod.class);
     }
 
     /**
@@ -76,7 +86,7 @@ public class PaymentMethodService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(paymentMethod, "paymentMethod");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number,
+        return NetLicensingService.getInstance().post(context, Constants.PaymentMethod.ENDPOINT_PATH + "/" + number,
                 paymentMethod.asRequestForm(), PaymentMethod.class);
     }
 

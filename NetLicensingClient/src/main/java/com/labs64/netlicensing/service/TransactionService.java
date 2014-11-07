@@ -12,6 +12,12 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -30,8 +36,6 @@ import com.labs64.netlicensing.util.CheckUtils;
  * the public API, as transactions are only allowed to be created and modified by NetLicensing internally.
  */
 public class TransactionService {
-
-    static final String CONTEXT_PATH = "transaction";
 
     /**
      * Creates new transaction object with given properties.
@@ -52,7 +56,7 @@ public class TransactionService {
     public static Transaction create(final Context context, final Transaction transaction) throws NetLicensingException {
         CheckUtils.paramNotNull(transaction, "transaction");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, transaction.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Transaction.ENDPOINT_PATH, transaction.asRequestForm(),
                 Transaction.class);
     }
 
@@ -74,7 +78,7 @@ public class TransactionService {
     public static Transaction get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Transaction.class);
+        return NetLicensingService.getInstance().get(context, Constants.Transaction.ENDPOINT_PATH + "/" + number, null, Transaction.class);
     }
 
     /**
@@ -84,13 +88,19 @@ public class TransactionService {
      * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return list of transactions (of all products/licensees) or null/empty list if nothing found.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Transaction> list(final Context context) throws NetLicensingException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Transaction.class);
+    public static Page<Transaction> list(final Context context, final String filter) throws NetLicensingException {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(filter)) {
+            params.put(Constants.FILTER, filter);
+        }
+        return NetLicensingService.getInstance().list(context, Constants.Transaction.ENDPOINT_PATH, null, Transaction.class);
     }
 
     /**
@@ -115,7 +125,7 @@ public class TransactionService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(transaction, "transaction");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number,
+        return NetLicensingService.getInstance().post(context, Constants.Transaction.ENDPOINT_PATH + "/" + number,
                 transaction.asRequestForm(), Transaction.class);
     }
 

@@ -29,8 +29,6 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class TokenService {
 
-    static final String CONTEXT_PATH = "token";
-
     /**
      * Gets token by its number.
      * 
@@ -46,7 +44,7 @@ public class TokenService {
     public static Token get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Token.class);
+        return NetLicensingService.getInstance().get(context, Constants.Token.ENDPOINT_PATH + "/" + number, null, Token.class);
     }
 
     /**
@@ -66,7 +64,7 @@ public class TokenService {
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, params, Token.class);
+        return NetLicensingService.getInstance().list(context, Constants.Token.ENDPOINT_PATH, params, Token.class);
     }
 
     /**
@@ -84,7 +82,7 @@ public class TokenService {
     public static Token create(final Context context, final Token token) throws NetLicensingException {
         CheckUtils.paramNotNull(token, "token");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, token.asRequestForm(), Token.class);
+        return NetLicensingService.getInstance().post(context, Constants.Token.ENDPOINT_PATH, token.asRequestForm(), Token.class);
     }
 
     /**
@@ -101,7 +99,7 @@ public class TokenService {
     public static void delete(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, null);
+        NetLicensingService.getInstance().delete(context, Constants.Token.ENDPOINT_PATH + "/" + number, null);
     }
 
 }

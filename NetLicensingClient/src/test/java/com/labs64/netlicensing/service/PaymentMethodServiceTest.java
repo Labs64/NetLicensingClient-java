@@ -66,7 +66,7 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final Page<PaymentMethod> paymentMethods = PaymentMethodService.list(context);
+        final Page<PaymentMethod> paymentMethods = PaymentMethodService.list(context, null);
 
         assertNotNull(paymentMethods);
         assertTrue(paymentMethods.hasContent());
@@ -109,7 +109,7 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         return PaymentMethodServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + PaymentMethodService.CONTEXT_PATH)
+    @Path(REST_API_PATH + "/" + Constants.PaymentMethod.ENDPOINT_PATH)
     public static class PaymentMethodServiceResource extends AbstractNLICServiceResource {
 
         public PaymentMethodServiceResource() {

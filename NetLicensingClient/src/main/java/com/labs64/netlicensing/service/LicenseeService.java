@@ -43,8 +43,6 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class LicenseeService {
 
-    static final String CONTEXT_PATH = "licensee";
-
     /**
      * Creates new licensee object with given properties.
      * 
@@ -68,7 +66,7 @@ public class LicenseeService {
         if (StringUtils.isNotBlank(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, form, Licensee.class);
+        return NetLicensingService.getInstance().post(context, Constants.Licensee.ENDPOINT_PATH, form, Licensee.class);
     }
 
     /**
@@ -86,7 +84,7 @@ public class LicenseeService {
     public static Licensee get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Licensee.class);
+        return NetLicensingService.getInstance().get(context, Constants.Licensee.ENDPOINT_PATH + "/" + number, null, Licensee.class);
     }
 
     /**
@@ -94,13 +92,19 @@ public class LicenseeService {
      * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return list of licensees (of all products) or null/empty list if nothing found.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Licensee> list(final Context context) throws NetLicensingException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Licensee.class);
+    public static Page<Licensee> list(final Context context, final String filter) throws NetLicensingException {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(filter)) {
+            params.put(Constants.FILTER, filter);
+        }
+        return NetLicensingService.getInstance().list(context, Constants.Licensee.ENDPOINT_PATH, params, Licensee.class);
     }
 
     /**
@@ -122,7 +126,7 @@ public class LicenseeService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licensee, "licensee");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, licensee.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Licensee.ENDPOINT_PATH + "/" + number, licensee.asRequestForm(),
                 Licensee.class);
     }
 
@@ -145,7 +149,7 @@ public class LicenseeService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, params);
+        NetLicensingService.getInstance().delete(context, Constants.Licensee.ENDPOINT_PATH + "/" + number, params);
     }
 
     /**
@@ -174,7 +178,7 @@ public class LicenseeService {
         if (StringUtils.isNotBlank(licenseeName)) {
             params.put(Constants.Licensee.PROP_LICENSEE_NAME, licenseeName);
         }
-        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number + "/validate", params,
+        return NetLicensingService.getInstance().get(context, Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, params,
                 ValidationResult.class, meta);
     }
 

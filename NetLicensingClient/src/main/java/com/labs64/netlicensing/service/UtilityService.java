@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Transformer;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
@@ -28,8 +29,6 @@ import com.labs64.netlicensing.exception.NetLicensingException;
  * Provides utility routines.
  */
 public class UtilityService {
-
-    static final String CONTEXT_PATH = "utility";
 
     /**
      * Returns all license types.
@@ -43,7 +42,7 @@ public class UtilityService {
      */
     public static Page<String> listLicenseTypes(final Context context) throws NetLicensingException {
         final Page<LicenseTypeProperties> licenseTypes = NetLicensingService.getInstance().list(context,
-                CONTEXT_PATH + "/licenseTypes", null, LicenseTypeProperties.class);
+        		Constants.Utility.ENDPOINT_PATH + "/licenseTypes", null, LicenseTypeProperties.class);
         return new PageImpl<String>(
                 (List<String>) CollectionUtils.collect(licenseTypes.getContent(),
                         new Transformer<LicenseTypeProperties, String>() {
@@ -73,7 +72,7 @@ public class UtilityService {
     public static Page<String> listLicensingModels(final Context context) throws NetLicensingException {
 
         final Page<LicensingModelProperties> licensingModels = NetLicensingService.getInstance().list(context,
-                CONTEXT_PATH + "/licensingModels", null, LicensingModelProperties.class);
+        		Constants.Utility.ENDPOINT_PATH + "/licensingModels", null, LicensingModelProperties.class);
         return new PageImpl<String>(
                 (List<String>) CollectionUtils.collect(licensingModels.getContent(),
                         new Transformer<LicensingModelProperties, String>() {

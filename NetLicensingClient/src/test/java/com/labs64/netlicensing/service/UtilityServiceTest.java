@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -72,7 +73,7 @@ public class UtilityServiceTest extends BaseServiceTest {
         return UtilityServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + UtilityService.CONTEXT_PATH)
+    @Path(REST_API_PATH + "/" + Constants.Utility.ENDPOINT_PATH)
     public static class UtilityServiceResource {
 
         @GET

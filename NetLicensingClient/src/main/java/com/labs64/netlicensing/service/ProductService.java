@@ -15,6 +15,8 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.vo.Context;
@@ -35,8 +37,6 @@ import com.labs64.netlicensing.util.CheckUtils;
  */
 public class ProductService {
 
-    static final String CONTEXT_PATH = "product";
-
     /**
      * Creates new product with given properties.
      * 
@@ -53,7 +53,7 @@ public class ProductService {
     public static Product create(final Context context, final Product product) throws NetLicensingException {
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH, product.asRequestForm(), Product.class);
+        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH, product.asRequestForm(), Product.class);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ProductService {
     public static Product get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.getInstance().get(context, CONTEXT_PATH + "/" + number, null, Product.class);
+        return NetLicensingService.getInstance().get(context, Constants.Product.ENDPOINT_PATH + "/" + number, null, Product.class);
     }
 
     /**
@@ -80,13 +80,19 @@ public class ProductService {
      * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
+     * @param filter
+     *            reserved for the future use, must be omitted / set to NULL
      * @return collection of product entities or null/empty list if nothing found.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
-    public static Page<Product> list(final Context context) throws NetLicensingException {
-        return NetLicensingService.getInstance().list(context, CONTEXT_PATH, null, Product.class);
+    public static Page<Product> list(final Context context, final String filter) throws NetLicensingException {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(filter)) {
+            params.put(Constants.FILTER, filter);
+        }
+        return NetLicensingService.getInstance().list(context, Constants.Product.ENDPOINT_PATH, params, Product.class);
     }
 
     /**
@@ -108,7 +114,7 @@ public class ProductService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, CONTEXT_PATH + "/" + number, product.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH + "/" + number, product.asRequestForm(),
                 Product.class);
     }
 
@@ -131,7 +137,7 @@ public class ProductService {
 
         final Map<String, Object> params = new HashMap<String, Object>();
         params.put(Constants.CASCADE, forceCascade);
-        NetLicensingService.getInstance().delete(context, CONTEXT_PATH + "/" + number, params);
+        NetLicensingService.getInstance().delete(context, Constants.Product.ENDPOINT_PATH + "/" + number, params);
     }
 
 }

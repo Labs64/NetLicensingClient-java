@@ -149,7 +149,7 @@ public class TransactionServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final Page<Transaction> transactions = TransactionService.list(context);
+        final Page<Transaction> transactions = TransactionService.list(context, null);
 
         assertNotNull(transactions);
         assertTrue(transactions.hasContent());
@@ -186,7 +186,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         return TransactionServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + TransactionService.CONTEXT_PATH)
+    @Path(REST_API_PATH + "/" + Constants.Transaction.ENDPOINT_PATH)
     public static class TransactionServiceResource extends AbstractNLICServiceResource {
 
         public TransactionServiceResource() {

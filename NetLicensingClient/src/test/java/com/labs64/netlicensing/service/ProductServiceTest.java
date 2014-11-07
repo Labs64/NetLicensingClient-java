@@ -116,7 +116,7 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final Page<Product> products = ProductService.list(context);
+        final Page<Product> products = ProductService.list(context, null);
 
         assertNotNull(products);
         assertTrue(products.hasContent());
@@ -162,7 +162,7 @@ public class ProductServiceTest extends BaseServiceTest {
         return ProductServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + ProductService.CONTEXT_PATH)
+    @Path(REST_API_PATH + "/" + Constants.Product.ENDPOINT_PATH)
     public static class ProductServiceResource extends AbstractNLICServiceResource {
 
         public ProductServiceResource() {

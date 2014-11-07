@@ -122,7 +122,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
 
     @Test
     public void testList() throws Exception {
-        final Page<ProductModule> productModules = ProductModuleService.list(context);
+        final Page<ProductModule> productModules = ProductModuleService.list(context, null);
 
         assertNotNull(productModules);
         assertTrue(productModules.hasContent());
@@ -173,7 +173,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         return ProductModuleServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + ProductModuleService.CONTEXT_PATH)
+    @Path(REST_API_PATH + "/" + Constants.ProductModule.ENDPOINT_PATH)
     public static class ProductModuleServiceResource extends AbstractNLICServiceResource {
 
         public ProductModuleServiceResource() {

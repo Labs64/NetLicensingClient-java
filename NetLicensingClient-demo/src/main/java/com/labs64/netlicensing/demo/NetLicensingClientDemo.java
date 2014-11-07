@@ -102,7 +102,7 @@ public class NetLicensingClientDemo {
             product = ProductService.get(context, productNumber);
             out.writeObject("Got product:", product);
 
-            Page<Product> products = ProductService.list(context);
+            Page<Product> products = ProductService.list(context, null);
             out.writePage("Got the following products:", products);
 
             final Product updateProduct = new ProductImpl();
@@ -113,13 +113,13 @@ public class NetLicensingClientDemo {
             ProductService.delete(context, productNumber, true);
             out.writeMessage("Deleted Product!");
 
-            products = ProductService.list(context);
+            products = ProductService.list(context, null);
             out.writePage("Got the following Products:", products);
 
             product = ProductService.create(context, newProduct);
             out.writeObject("Added product again:", product);
 
-            products = ProductService.list(context);
+            products = ProductService.list(context, null);
             out.writePage("Got the following Products:", products);
 
             // endregion
@@ -136,7 +136,7 @@ public class NetLicensingClientDemo {
             productModule = ProductModuleService.get(context, productModuleNumber);
             out.writeObject("Got product module:", productModule);
 
-            Page<ProductModule> productModules = ProductModuleService.list(context);
+            Page<ProductModule> productModules = ProductModuleService.list(context, null);
             out.writePage("Got the following ProductModules:", productModules);
 
             final ProductModule updateProductModule = new ProductModuleImpl();
@@ -147,13 +147,13 @@ public class NetLicensingClientDemo {
             ProductModuleService.delete(context, productModuleNumber, true);
             out.writeMessage("Deleted ProductModule!");
 
-            productModules = ProductModuleService.list(context);
+            productModules = ProductModuleService.list(context, null);
             out.writePage("Got the following ProductModules:", productModules);
 
             productModule = ProductModuleService.create(context, productNumber, newProductModule);
             out.writeObject("Added product module again:", productModule);
 
-            productModules = ProductModuleService.list(context);
+            productModules = ProductModuleService.list(context, null);
             out.writePage("Got the following ProductModules:", productModules);
 
             // endregion
@@ -176,7 +176,7 @@ public class NetLicensingClientDemo {
             licenseTemplate = LicenseTemplateService.get(context, licenseTemplateNumber);
             out.writeObject("Got licenseTemplate:", licenseTemplate);
 
-            Page<LicenseTemplate> licenseTemplates = LicenseTemplateService.list(context);
+            Page<LicenseTemplate> licenseTemplates = LicenseTemplateService.list(context, null);
             out.writePage("Got the following license templates:", licenseTemplates);
 
             final LicenseTemplate updateLicenseTemplate = new LicenseTemplateImpl();
@@ -188,13 +188,13 @@ public class NetLicensingClientDemo {
             LicenseTemplateService.delete(context, licenseTemplateNumber, true);
             out.writeMessage("Deleted LicenseTemplate!");
 
-            licenseTemplates = LicenseTemplateService.list(context);
+            licenseTemplates = LicenseTemplateService.list(context, null);
             out.writePage("Got the following license templates:", licenseTemplates);
 
             licenseTemplate = LicenseTemplateService.create(context, productModuleNumber, newLicenseTemplate);
             out.writeObject("Added license template again:", licenseTemplate);
 
-            licenseTemplates = LicenseTemplateService.list(context);
+            licenseTemplates = LicenseTemplateService.list(context, null);
             out.writePage("Got the following license templates:", licenseTemplates);
 
             // endregion
@@ -206,13 +206,13 @@ public class NetLicensingClientDemo {
             Licensee licensee = LicenseeService.create(context, productNumber, newLicensee);
             out.writeObject("Added licensee:", licensee);
 
-            Page<Licensee> licensees = LicenseeService.list(context);
+            Page<Licensee> licensees = LicenseeService.list(context, null);
             out.writePage("Got the following licensees:", licensees);
 
             LicenseeService.delete(context, licenseeNumber, true);
             out.writeMessage("Deleted licensee!");
 
-            licensees = LicenseeService.list(context);
+            licensees = LicenseeService.list(context, null);
             out.writePage("Got the following licensees after delete:", licensees);
 
             licensee = LicenseeService.create(context, productNumber, newLicensee);
@@ -226,7 +226,7 @@ public class NetLicensingClientDemo {
             licensee = LicenseeService.update(context, licenseeNumber, updateLicensee);
             out.writeObject("Updated licensee:", licensee);
 
-            licensees = LicenseeService.list(context);
+            licensees = LicenseeService.list(context, null);
             out.writePage("Got the following licensees:", licensees);
 
             // endregion
@@ -239,13 +239,13 @@ public class NetLicensingClientDemo {
                     newLicense);
             out.writeObject("Added license:", license);
 
-            Page<License> licenses = LicenseService.list(context);
+            Page<License> licenses = LicenseService.list(context, null);
             out.writePage("Got the following license templates:", licenses);
 
             LicenseService.delete(context, licenseNumber, true);
             out.writeMessage("Deleted license!");
 
-            licenses = LicenseService.list(context);
+            licenses = LicenseService.list(context, null);
             out.writePage("Got the following license templates:", licenses);
 
             license = LicenseService.create(context, licenseeNumber, licenseTemplateNumber, null,
@@ -264,7 +264,7 @@ public class NetLicensingClientDemo {
 
             // region ********* PaymentMethod
 
-            final Page<PaymentMethod> paymentMethods = PaymentMethodService.list(context);
+            final Page<PaymentMethod> paymentMethods = PaymentMethodService.list(context, null);
             out.writePage("Got the following payment methods:", paymentMethods);
 
             // endregion
