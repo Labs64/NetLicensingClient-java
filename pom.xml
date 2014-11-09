@@ -332,7 +332,7 @@
 
     <profiles>
         <profile>
-            <id>release-sonatype</id>
+            <id>release</id>
             <build>
                 <plugins>
                     <plugin>
