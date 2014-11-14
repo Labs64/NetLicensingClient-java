@@ -66,20 +66,15 @@ public class RestProviderJersey extends AbstractRestProvider {
 
             final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
             final Response response;
+            target = target.path(urlTemplate);
             if ((queryParams != null) && (queryParams.size() > 0)) {
-                target = target.path(urlTemplate);
                 for (final String paramKey : queryParams.keySet()) {
                     target = target.queryParam(paramKey, queryParams.get(paramKey));
                 }
-                response = target.request(DEFAULT_ACCEPT_TYPES)
-                        .header(HttpHeaders.USER_AGENT, getUserAgent())
-                        .method(httpMethod, requestEntity);
-            } else {
-                response = target.path(urlTemplate)
-                        .request(DEFAULT_ACCEPT_TYPES)
-                        .header(HttpHeaders.USER_AGENT, getUserAgent())
-                        .method(httpMethod, requestEntity);
             }
+            response = target.request(DEFAULT_ACCEPT_TYPES)
+                    .header(HttpHeaders.USER_AGENT, getUserAgent())
+                    .method(httpMethod, requestEntity);
 
             final RestResponse<RES> restResponse = new RestResponse<RES>();
             restResponse.setStatusCode(response.getStatus());

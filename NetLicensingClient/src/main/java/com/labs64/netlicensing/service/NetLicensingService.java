@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
@@ -133,7 +134,7 @@ class NetLicensingService {
      * @return first suitable item with type resultType from the response
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
-    <REQ, RES> RES post(final Context context, final String urlTemplate, final REQ request, final Class<RES> resultType)
+    <RES> RES post(final Context context, final String urlTemplate, final Form request, final Class<RES> resultType)
             throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.POST, urlTemplate, request, null);
         return entityFactory.create(netlicensing, resultType);
@@ -169,27 +170,33 @@ class NetLicensingService {
      *            The request body to be sent to the server. May be null.
      * @param queryParams
      *            The REST query parameters values. May be null if there are no parameters.
-     * @param <REQ>
-     *            type of the request entity
      * @return {@link Netlicensing} response object
      * @throws NetLicensingException
      */
-    <REQ> Netlicensing request(final Context context, final String method, final String urlTemplate, final REQ request,
+	Netlicensing request(final Context context, final String method, final String urlTemplate, final Form request,
             final Map<String, Object> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
 
+        Form combinedRequest = request; 
         Map<String, Object> combinedQueryParams = queryParams;
     	if (StringUtils.isNotBlank(context.getVendorNumber())) {
-    		if (combinedQueryParams == null) {
-    			combinedQueryParams = new HashMap<String, Object>();
-    		}
-    		combinedQueryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
+            if (HttpMethod.POST.equals(method)) {
+        	    if (combinedRequest == null) {
+        	    	combinedRequest = new Form();
+        	    }
+            	combinedRequest.param(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
+            } else {
+    		    if (combinedQueryParams == null) {
+    			    combinedQueryParams = new HashMap<String, Object>();
+    		    }
+    		    combinedQueryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());	
+            }
     	}
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
         authenticate(restProvider, context);
 
-        final RestResponse<Netlicensing> response = restProvider.call(method, urlTemplate, request, Netlicensing.class,
+        final RestResponse<Netlicensing> response = restProvider.call(method, urlTemplate, combinedRequest, Netlicensing.class,
         		combinedQueryParams);
 
         final Response.Status status = Response.Status.fromStatusCode(response.getStatusCode());
