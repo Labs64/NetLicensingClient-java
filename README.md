@@ -9,7 +9,7 @@ Visit Labs64 NetLicensing at http://www.labs64.com/netlicensing/
 
 ### Quick Start
 
-The recommended way to get started using `netlicensing-client` in your project is with a dependency management system – the Maven snippet below can be copied and pasted into your build.
+The recommended way to get started using [`netlicensing-client`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.labs64.netlicensing%22) in your project is with a dependency management system – the Maven snippet below can be copied and pasted into your build.
 
 ```
 <dependencies>
