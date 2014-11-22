@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -39,6 +34,11 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.util.DateUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link TokenService}.
@@ -232,7 +232,7 @@ public class TokenServiceTest extends BaseServiceTest {
                     && !formParams.containsKey(Constants.Token.TOKEN_PROP_VENDORNUMBER)) {
                 return errorResponse("MalformedRequestException", "Malformed token request",
                         "TokenValidation", "Property 'email' not found",
-                        "TokenValidation", "Property 'vendorNumber' not found");
+                        "TokenValidation", "Property 'targetVendorNumber' not found");
             }
             if (TokenType.SHOP.name().equals(targetTokenType)
                     && !formParams.containsKey(Constants.Licensee.LICENSEE_NUMBER)) {

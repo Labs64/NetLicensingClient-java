@@ -50,13 +50,14 @@ public class TransactionService {
      *            be set to a default value, depending on property.
      * @return the newly created transaction object
      * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Transaction create(final Context context, final Transaction transaction) throws NetLicensingException {
         CheckUtils.paramNotNull(transaction, "transaction");
 
-        return NetLicensingService.getInstance().post(context, Constants.Transaction.ENDPOINT_PATH, transaction.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Transaction.ENDPOINT_PATH,
+                transaction.asRequestForm(),
                 Transaction.class);
     }
 
@@ -64,7 +65,7 @@ public class TransactionService {
      * Gets transaction by its number.
      * <p/>
      * Use this operation for getting details about certain transaction. List of all transactions can be obtained by the
-     * {@link #list(Context)} operation.
+     * {@link #list(Context, String)} operation.
      * 
      * @param context
      *            determines the vendor on whose behalf the call is performed
@@ -72,13 +73,14 @@ public class TransactionService {
      *            the transaction number
      * @return the transaction
      * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Transaction get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        return NetLicensingService.getInstance().get(context, Constants.Transaction.ENDPOINT_PATH + "/" + number, null, Transaction.class);
+        return NetLicensingService.getInstance().get(context, Constants.Transaction.ENDPOINT_PATH + "/" + number, null,
+                Transaction.class);
     }
 
     /**
@@ -92,15 +94,16 @@ public class TransactionService {
      *            reserved for the future use, must be omitted / set to NULL
      * @return list of transactions (of all products/licensees) or null/empty list if nothing found.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Page<Transaction> list(final Context context, final String filter) throws NetLicensingException {
         final Map<String, Object> params = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
-        return NetLicensingService.getInstance().list(context, Constants.Transaction.ENDPOINT_PATH, null, Transaction.class);
+        return NetLicensingService.getInstance().list(context, Constants.Transaction.ENDPOINT_PATH, params,
+                Transaction.class);
     }
 
     /**
@@ -117,8 +120,8 @@ public class TransactionService {
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated transaction.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Transaction update(final Context context, final String number, final Transaction transaction)
             throws NetLicensingException {
