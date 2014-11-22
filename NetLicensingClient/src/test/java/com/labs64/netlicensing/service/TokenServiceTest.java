@@ -153,7 +153,7 @@ public class TokenServiceTest extends BaseServiceTest {
         newToken.setTokenType(TokenType.PASSWORDRESET);
 
         thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'email' not found, TokenValidation: Property 'vendorNumber' not found");
+        thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'email' not found, TokenValidation: Property 'targetVendorNumber' not found");
         TokenService.create(context, newToken);
     }
 
