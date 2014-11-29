@@ -107,20 +107,20 @@ public final class Constants {
     }
 
     public static final class LicensingModel {
-        public static final class TimeLimitedEvaluation {
-            public static final String NAME = "TimeLimitedEvaluation";
+        public static final class TryAndBuy {
+            public static final String NAME = "TryAndBuy";
         }
 
-        public static final class FeatureWithTimeVolume {
-            public static final String NAME = "FeatureWithTimeVolume";
+        public static final class Rental {
+            public static final String NAME = "Rental";
             public static final String VALID = "valid";
             public static final String RED_THRESHOLD = "redThreshold";
             public static final String YELLOW_THRESHOLD = "yellowThreshold";
             public static final String EXPIRATION_WARNING_LEVEL = "expirationWarningLevel";
         }
 
-        public static final class TimeVolume {
-            public static final String NAME = "TimeVolume";
+        public static final class Subscription {
+            public static final String NAME = "Subscription";
         }
     }
 

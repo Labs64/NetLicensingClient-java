@@ -59,9 +59,9 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         newModule.setNumber("PM001-TEST");
         newModule.setActive(true);
         newModule.setName("Test Product Module");
-        newModule.setLicensingModel(Constants.LicensingModel.FeatureWithTimeVolume.NAME);
-        newModule.addProperty(Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD, "10");
-        newModule.addProperty(Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD, "3");
+        newModule.setLicensingModel(Constants.LicensingModel.Rental.NAME);
+        newModule.addProperty(Constants.LicensingModel.Rental.YELLOW_THRESHOLD, "10");
+        newModule.addProperty(Constants.LicensingModel.Rental.RED_THRESHOLD, "3");
 
         final ProductModule createdModule = ProductModuleService.create(context, "P001-TEST", newModule);
 
@@ -69,16 +69,16 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("PM001-TEST", createdModule.getNumber());
         assertEquals(true, createdModule.getActive());
         assertEquals("Test Product Module", createdModule.getName());
-        assertEquals(Constants.LicensingModel.FeatureWithTimeVolume.NAME, createdModule.getLicensingModel());
+        assertEquals(Constants.LicensingModel.Rental.NAME, createdModule.getLicensingModel());
         assertEquals("P001-TEST", createdModule.getProduct().getNumber());
         assertEquals(
                 "10",
                 createdModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD));
+                        Constants.LicensingModel.Rental.YELLOW_THRESHOLD));
         assertEquals(
                 "3",
                 createdModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD));
+                        Constants.LicensingModel.Rental.RED_THRESHOLD));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
     public void testCreateWithRequiredPropertiesOnly() throws Exception {
         final ProductModule newModule = new ProductModuleImpl();
         newModule.setName("Test Product Module");
-        newModule.setLicensingModel(Constants.LicensingModel.TimeLimitedEvaluation.NAME);
+        newModule.setLicensingModel(Constants.LicensingModel.TryAndBuy.NAME);
 
         final ProductModule createdModule = ProductModuleService.create(context, "P001-TEST", newModule);
 
@@ -129,7 +129,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals(3, productModules.getItemsNumber());
         assertEquals("PM001-TEST", productModules.getContent().get(0).getNumber());
         assertEquals("Test module 2", productModules.getContent().get(1).getName());
-        assertEquals(Constants.LicensingModel.TimeVolume.NAME, productModules.getContent().get(2).getLicensingModel());
+        assertEquals(Constants.LicensingModel.Subscription.NAME, productModules.getContent().get(2).getLicensingModel());
     }
 
     @Test
@@ -137,7 +137,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         final ProductModule productModule = new ProductModuleImpl();
         productModule.setNumber("PM002-TEST");
         productModule.setName("Demo Product Module");
-        productModule.addProperty(Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD, "5");
+        productModule.addProperty(Constants.LicensingModel.Rental.RED_THRESHOLD, "5");
 
         final ProductModule updatedModule = ProductModuleService.update(context, "PM001-TEST", productModule);
 
@@ -145,16 +145,16 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("PM002-TEST", updatedModule.getNumber());
         assertEquals(true, updatedModule.getActive());
         assertEquals("Demo Product Module", updatedModule.getName());
-        assertEquals(Constants.LicensingModel.FeatureWithTimeVolume.NAME, updatedModule.getLicensingModel());
+        assertEquals(Constants.LicensingModel.Rental.NAME, updatedModule.getLicensingModel());
         assertEquals("P001-TEST", updatedModule.getProduct().getNumber());
         assertEquals(
                 "10",
                 updatedModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.FeatureWithTimeVolume.YELLOW_THRESHOLD));
+                        Constants.LicensingModel.Rental.YELLOW_THRESHOLD));
         assertEquals(
                 "5",
                 updatedModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.FeatureWithTimeVolume.RED_THRESHOLD));
+                        Constants.LicensingModel.Rental.RED_THRESHOLD));
     }
 
     @Test

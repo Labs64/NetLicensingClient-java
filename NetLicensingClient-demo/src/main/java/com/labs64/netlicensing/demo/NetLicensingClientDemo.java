@@ -129,7 +129,7 @@ public class NetLicensingClientDemo {
             final ProductModule newProductModule = new ProductModuleImpl();
             newProductModule.setNumber(productModuleNumber);
             newProductModule.setName("Demo product module");
-            newProductModule.setLicensingModel(Constants.LicensingModel.TimeLimitedEvaluation.NAME);
+            newProductModule.setLicensingModel(Constants.LicensingModel.TryAndBuy.NAME);
             ProductModule productModule = ProductModuleService.create(context, productNumber, newProductModule);
             out.writeObject("Added product module:", productModule);
 

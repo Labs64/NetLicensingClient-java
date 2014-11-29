@@ -5,7 +5,7 @@
             <property name="active">true</property>
             <property name="name">Test module 1</property>
             <property name="productNumber">P001-TEST</property>
-            <property name="licensingModel">TimeLimitedEvaluation</property>
+            <property name="licensingModel">TryAndBuy</property>
             <property name="inUse">true</property>
         </item>
         <item type="ProductModule">
@@ -13,7 +13,7 @@
             <property name="active">true</property>
             <property name="name">Test module 2</property>
             <property name="productNumber">P001-TEST</property>
-            <property name="licensingModel">TimeLimitedEvaluation</property>
+            <property name="licensingModel">TryAndBuy</property>
             <property name="inUse">true</property>
         </item>
         <item type="ProductModule">
@@ -21,7 +21,7 @@
             <property name="active">true</property>
             <property name="name">Test module 3</property>
             <property name="productNumber">P002-TEST</property>
-            <property name="licensingModel">TimeVolume</property>
+            <property name="licensingModel">Subscription</property>
             <property name="inUse">true</property>
         </item>
     </items>

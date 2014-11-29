@@ -160,11 +160,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(
                 "true",
                 validation.getProperties().get("LIST1").getProperties()
-                        .get(Constants.LicensingModel.FeatureWithTimeVolume.VALID).getValue());
+                        .get(Constants.LicensingModel.Rental.VALID).getValue());
         assertEquals(
                 "green",
                 validation.getProperties().get("LIST2").getProperties()
-                        .get(Constants.LicensingModel.FeatureWithTimeVolume.EXPIRATION_WARNING_LEVEL).getValue());
+                        .get(Constants.LicensingModel.Rental.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
     // *** NLIC test mock resource ***
