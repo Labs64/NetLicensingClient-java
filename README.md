@@ -12,7 +12,8 @@ Visit Labs64 NetLicensing at http://www.labs64.com/netlicensing/
 
 The recommended way to get started using [`netlicensing-client`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.labs64.netlicensing%22) in your project is with a dependency management system – the Maven snippet below can be copied and pasted into your build.
 
-```
+Maven:
+```xml
 <dependencies>
   <dependency>
     <groupId>com.labs64.netlicensing</groupId>
@@ -20,4 +21,10 @@ The recommended way to get started using [`netlicensing-client`](http://search.m
     <version>2.1.1</version>
   </dependency>
 </dependencies>
+```
+Gradle:
+```gradle
+dependencies {
+    compile 'com.labs64.netlicensing:netlicensing-client:2.1.1'
+}
 ```
