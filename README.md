@@ -8,7 +8,7 @@ Java wrapper for Labs64 NetLicensing RESTful API - https://www.labs64.de/conflue
 
 Visit Labs64 NetLicensing at http://www.labs64.com/netlicensing/
 
-### Quick Start
+## Quick Start
 
 The recommended way to get started using [`netlicensing-client`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.labs64.netlicensing%22) in your project is with a dependency management system – the Maven snippet below can be copied and pasted into your build.
 
@@ -18,13 +18,13 @@ Maven:
   <dependency>
     <groupId>com.labs64.netlicensing</groupId>
     <artifactId>netlicensing-client</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
   </dependency>
 </dependencies>
 ```
 Gradle:
 ```gradle
 dependencies {
-    compile 'com.labs64.netlicensing:netlicensing-client:2.1.1'
+    compile 'com.labs64.netlicensing:netlicensing-client:2.1.2'
 }
 ```
