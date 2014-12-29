@@ -46,7 +46,8 @@ public final class JAXBUtils {
         }
     }
 
-    public static <T> String xmlEntityToString(final T entity) {
+    public static <T> String
+    xmlEntityToString(final T entity) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(entity.getClass());
             Marshaller marshaller = jaxbContext.createMarshaller();
