@@ -3,6 +3,7 @@
 [![Stories in Ready](https://badge.waffle.io/Labs64/NetLicensingClient-java.svg?label=ready&title=Ready)](http://waffle.io/Labs64/NetLicensingClient-java)
 [![Build Status](https://travis-ci.org/Labs64/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/Labs64/NetLicensingClient-java)
 [![Dependency Status](https://www.versioneye.com/user/projects/53e5e1d735080d5aa50000c6/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53e5e1d735080d5aa50000c6)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.labs64.netlicensing/netlicensing-client/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.labs64.netlicensing/netlicensing-client)
 
 Java wrapper for Labs64 NetLicensing RESTful API - https://www.labs64.de/confluence/x/pwCo
 
