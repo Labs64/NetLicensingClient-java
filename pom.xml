@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -88,8 +89,8 @@
         <commons-collections4.version>4.0</commons-collections4.version>
         <commons-codec.version>1.10</commons-codec.version>
         <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.7.7</slf4j.version>
-        <junit.version>4.11</junit.version>
+        <slf4j.version>1.7.10</slf4j.version>
+        <junit.version>4.12</junit.version>
         <jersey.version>2.6</jersey.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
@@ -101,11 +102,12 @@
         <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>2.9</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
-        <maven-jaxb2-plugin.version>0.11.0</maven-jaxb2-plugin.version>
+        <maven-jaxb2-plugin.version>0.12.3</maven-jaxb2-plugin.version>
         <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
         <maven-jar-plugin.version>2.5</maven-jar-plugin.version>
         <maven-shade-plugin.version>2.3</maven-shade-plugin.version>
+        <swid-maven-plugin.version>0.1.0</swid-maven-plugin.version>
     </properties>
 
     <prerequisites>
@@ -236,6 +238,14 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
                     <version>${maven-shade-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.labs64.mojo</groupId>
+                    <artifactId>swid-maven-plugin</artifactId>
+                    <version>${swid-maven-plugin.version}</version>
+                    <configuration>
+                        <domain_creation_date>2010-04</domain_creation_date>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
