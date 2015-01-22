@@ -212,7 +212,7 @@ class NetLicensingService {
             }
         } else {
             if (SchemaFunction.hasErrorInfos(response.getEntity())) {
-                throw new ServiceException(status, response.getEntity());
+                throw new ServiceException(status, response.getHeaders(), response.getEntity());
             } else {
                 throw new RestException(String.format("Unknown service error %s: %s", status.getStatusCode(),
                         status.getReasonPhrase()));

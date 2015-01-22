@@ -78,6 +78,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
             final RestResponse<RES> restResponse = new RestResponse<RES>();
             restResponse.setStatusCode(response.getStatus());
+            restResponse.setHeaders(response.getHeaders());
             restResponse.setEntity(readEntity(response, responseType));
             return restResponse;
         } catch (final RuntimeException e) {

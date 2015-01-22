@@ -12,6 +12,9 @@
  */
 package com.labs64.netlicensing.provider;
 
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+
 /**
  * Contains info about response together with response entity.
  * 
@@ -21,6 +24,8 @@ package com.labs64.netlicensing.provider;
 public class RestResponse<T> {
 
     private int statusCode;
+    
+    private MultivaluedMap<String, Object> headers;
 
     private T entity;
 
@@ -30,6 +35,15 @@ public class RestResponse<T> {
 
     public void setStatusCode(final int statusCode) {
         this.statusCode = statusCode;
+    }
+    
+    public MultivaluedMap<String, Object> getHeaders() {
+        return this.headers;
+    }
+    
+    public void setHeaders(MultivaluedMap<String, Object> headers) {
+        this.headers = new MultivaluedHashMap<String, Object>();
+        this.headers.putAll(headers);
     }
 
     public T getEntity() {

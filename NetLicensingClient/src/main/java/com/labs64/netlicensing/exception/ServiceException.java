@@ -12,6 +12,8 @@
  */
 package com.labs64.netlicensing.exception;
 
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.labs64.netlicensing.schema.SchemaFunction;
@@ -25,6 +27,7 @@ public class ServiceException extends NetLicensingException {
     private static final long serialVersionUID = 5253993578845477398L;
 
     private final Response.Status status;
+    private final MultivaluedMap<String, Object> headers;
     private final Netlicensing errorResponse;
 
     /**
@@ -32,17 +35,25 @@ public class ServiceException extends NetLicensingException {
      * 
      * @param status
      *            response status
+     * @param headers
+     *            response headers
      * @param errorResponse
      *            the service response containing the error info.
      */
-    public ServiceException(final Response.Status status, final Netlicensing errorResponse) {
+    public ServiceException(final Response.Status status, final MultivaluedMap<String, Object> headers, final Netlicensing errorResponse) {
         super(SchemaFunction.infosToMessage(errorResponse));
         this.status = status;
+        this.headers = new MultivaluedHashMap<String, Object>();
+        this.headers.putAll(headers);
         this.errorResponse = errorResponse;
     }
 
     public Response.Status getStatus() {
         return status;
+    }
+    
+    public MultivaluedMap<String, Object> getHeaders() {
+        return headers;
     }
 
     public Netlicensing getErrorResponse() {
