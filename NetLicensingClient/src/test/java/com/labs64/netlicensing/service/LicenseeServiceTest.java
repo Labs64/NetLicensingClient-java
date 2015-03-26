@@ -12,6 +12,11 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,18 +36,14 @@ import org.junit.rules.ExpectedException;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
-import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.domain.vo.ValidationParameters;
+import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseeService}.
@@ -147,7 +148,9 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testValidate() throws Exception {
-        final ValidationResult result = LicenseeService.validate(context, "L001-TEST", "P001-TEST", "Test Licensee");
+        final ValidationParameters validationParameters = new ValidationParameters();
+        final ValidationResult result = LicenseeService.validate(context, "L001-TEST", "P001-TEST", "Test Licensee",
+                validationParameters);
 
         assertNotNull(result);
 

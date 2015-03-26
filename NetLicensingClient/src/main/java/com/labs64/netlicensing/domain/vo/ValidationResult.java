@@ -10,13 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.domain.entity.impl;
+package com.labs64.netlicensing.domain.vo;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.labs64.netlicensing.domain.vo.Composition;
 
 public class ValidationResult implements Serializable {
 

@@ -1,8 +1,8 @@
 package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
-import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Composition;
+import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.List;

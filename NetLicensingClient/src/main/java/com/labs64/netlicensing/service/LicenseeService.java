@@ -14,6 +14,7 @@ package com.labs64.netlicensing.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.core.Form;
 
@@ -21,10 +22,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.domain.vo.ValidationParameters;
+import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
 
@@ -163,12 +165,16 @@ public class LicenseeService {
      *            optional productNumber, must be provided in case licensee auto-create is enabled
      * @param licenseeName
      *            optional human-readable licensee name in case licensee will be auto-created
+     * @param validationParameters
+     *            optional validation parameters, specific to licensing model. See licensing model documentation for
+     *            details.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
      *             corresponding service response messages.
      */
     public static ValidationResult validate(final Context context, final String number, final String productNumber,
-            final String licenseeName, final MetaInfo... meta) throws NetLicensingException {
+            final String licenseeName, ValidationParameters validationParameters, final MetaInfo... meta)
+            throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();
@@ -177,6 +183,14 @@ public class LicenseeService {
         }
         if (StringUtils.isNotBlank(licenseeName)) {
             params.put(Constants.Licensee.PROP_LICENSEE_NAME, licenseeName);
+        }
+        int pmIndex = 0;
+        for (Entry<String, Map<String, String>> productModuleValidationParams : validationParameters.getParameters()
+                .entrySet()) {
+            params.put(Constants.ProductModule.PRODUCT_MODULE_NUMBER.concat(Integer.toString(pmIndex)), productModuleValidationParams.getKey());
+            for (Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
+                params.put(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
+            }
         }
         return NetLicensingService.getInstance().get(context, Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, params,
                 ValidationResult.class, meta);

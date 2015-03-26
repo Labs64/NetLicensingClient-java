@@ -32,13 +32,14 @@ import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
 import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.domain.entity.impl.ProductModuleImpl;
 import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
-import com.labs64.netlicensing.domain.entity.impl.ValidationResult;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.domain.vo.TokenType;
+import com.labs64.netlicensing.domain.vo.ValidationParameters;
+import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.service.LicenseService;
 import com.labs64.netlicensing.service.LicenseTemplateService;
@@ -298,12 +299,14 @@ public class NetLicensingClientDemo {
 
             // region ********* Validate
 
-            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber,
-                    productNumber, null);
+            final ValidationParameters validationParameters = new ValidationParameters();
+            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, null,
+                    validationParameters);
             out.writeObject("Validation result for created licensee:", validationResult);
 
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, null);
+            validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, null,
+                    validationParameters);
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
             out.writeObject("Validation repeated with API Key:", validationResult);
 
