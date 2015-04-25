@@ -1,5 +1,5 @@
 <netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
-    <items pagenumber="0" itemsnumber="2" totalpages="1" totalitems="2" hasnext="false">
+    <items pagenumber="0" itemsnumber="3" totalpages="1" totalitems="3" hasnext="false">
         <item type="LicenseTemplate">
             <property name="number">LT001-TEST</property>
             <property name="active">true</property>
@@ -28,6 +28,21 @@
             <property name="productModuleName">Test Product Module</property>
             <property name="inUse">true</property>
             <property name="timeVolume">30</property>
+        </item>
+        <item type="LicenseTemplate">
+            <property name="number">EAAVFLO01-DEMO</property>
+            <property name="active">true</property>
+            <property name="name">3 sessions floating</property>
+            <property name="licenseType">FLOATING</property>
+            <property name="price">50.00</property>
+            <property name="currency">EUR</property>
+            <property name="automatic">false</property>
+            <property name="hidden">false</property>
+            <property name="hideLicenses">false</property>
+            <property name="productModuleNumber">MAAVFLO-DEMO</property>
+            <property name="productModuleName">Module licensed under Floating LM</property>
+            <property name="inUse">true</property>
+            <property name="maxSessions">3</property>
         </item>
     </items>
 </netlicensing>

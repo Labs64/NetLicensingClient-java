@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +34,11 @@ import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseTemplateService}.
@@ -168,7 +168,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
         assertNotNull(licenseTemplates);
         assertTrue(licenseTemplates.hasContent());
-        assertEquals(2, licenseTemplates.getItemsNumber());
+        assertEquals(3, licenseTemplates.getItemsNumber());
 
         final LicenseTemplate template1 = licenseTemplates.getContent().get(0);
         assertEquals("LT001-TEST", template1.getNumber());
@@ -178,6 +178,11 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals("Time Volume License Template", template2.getName());
         assertEquals(LicenseType.TIMEVOLUME, template2.getLicenseType());
         assertEquals("30", template2.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
+
+        final LicenseTemplate template3 = licenseTemplates.getContent().get(2);
+        assertEquals("3 sessions floating", template3.getName());
+        assertEquals(LicenseType.FLOATING, template3.getLicenseType());
+        assertEquals("3", template3.getLicenseTemplateProperties().get("maxSessions"));
     }
 
     @Test
