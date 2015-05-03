@@ -76,6 +76,7 @@ public class NetLicensingClientDemo {
         final String licenseTemplateNumber = numberWithPrefix("LT", randomNumber);
         final String licenseeNumber = numberWithPrefix("L", randomNumber);
         final String licenseNumber = numberWithPrefix("LC", randomNumber);
+        final String licenseeName = numberWithPrefix("Licensee ", RandomStringUtils.randomAlphanumeric(8));
 
         final ConsoleWriter out = new ConsoleWriter();
 
@@ -300,12 +301,13 @@ public class NetLicensingClientDemo {
             // region ********* Validate
 
             final ValidationParameters validationParameters = new ValidationParameters();
-            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, null,
-                    validationParameters);
+            validationParameters.put(productModuleNumber, "paramKey", "paramValue");
+            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, productNumber,
+                    licenseeName, validationParameters);
             out.writeObject("Validation result for created licensee:", validationResult);
 
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, null,
+            validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, licenseeName,
                     validationParameters);
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
             out.writeObject("Validation repeated with APIKey:", validationResult);
