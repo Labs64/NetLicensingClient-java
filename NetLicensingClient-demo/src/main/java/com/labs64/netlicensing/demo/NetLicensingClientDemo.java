@@ -138,7 +138,7 @@ public class NetLicensingClientDemo {
             out.writeObject("Got product module:", productModule);
 
             Page<ProductModule> productModules = ProductModuleService.list(context, null);
-            out.writePage("Got the following ProductModules:", productModules);
+            out.writePage("Got the following product modules:", productModules);
 
             final ProductModule updateProductModule = new ProductModuleImpl();
             updateProductModule.addProperty("Updated property name", "Updated property value");
@@ -146,16 +146,16 @@ public class NetLicensingClientDemo {
             out.writeObject("Updated product module:", productModule);
 
             ProductModuleService.delete(context, productModuleNumber, true);
-            out.writeMessage("Deleted ProductModule!");
+            out.writeMessage("Deleted product module!");
 
             productModules = ProductModuleService.list(context, null);
-            out.writePage("Got the following ProductModules:", productModules);
+            out.writePage("Got the following product modules:", productModules);
 
             productModule = ProductModuleService.create(context, productNumber, newProductModule);
             out.writeObject("Added product module again:", productModule);
 
             productModules = ProductModuleService.list(context, null);
-            out.writePage("Got the following ProductModules:", productModules);
+            out.writePage("Got the following product modules:", productModules);
 
             // endregion
 
@@ -187,7 +187,7 @@ public class NetLicensingClientDemo {
             out.writeObject("Updated license template:", licenseTemplate);
 
             LicenseTemplateService.delete(context, licenseTemplateNumber, true);
-            out.writeMessage("Deleted LicenseTemplate!");
+            out.writeMessage("Deleted license template!");
 
             licenseTemplates = LicenseTemplateService.list(context, null);
             out.writePage("Got the following license templates:", licenseTemplates);
@@ -241,13 +241,13 @@ public class NetLicensingClientDemo {
             out.writeObject("Added license:", license);
 
             Page<License> licenses = LicenseService.list(context, null);
-            out.writePage("Got the following license templates:", licenses);
+            out.writePage("Got the following licenses:", licenses);
 
             LicenseService.delete(context, licenseNumber, true);
             out.writeMessage("Deleted license!");
 
             licenses = LicenseService.list(context, null);
-            out.writePage("Got the following license templates:", licenses);
+            out.writePage("Got the following licenses:", licenses);
 
             license = LicenseService.create(context, licenseeNumber, licenseTemplateNumber, null,
                     newLicense);
@@ -275,7 +275,7 @@ public class NetLicensingClientDemo {
             final Token newToken = new TokenImpl();
             newToken.setTokenType(TokenType.APIKEY);
             final Token apiKey = TokenService.create(context, newToken);
-            out.writeObject("Created API Key:", apiKey);
+            out.writeObject("Created APIKey:", apiKey);
 
             context.setApiKey(apiKey.getNumber());
             newToken.setTokenType(TokenType.SHOP);
@@ -308,7 +308,7 @@ public class NetLicensingClientDemo {
             validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, null,
                     validationParameters);
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
-            out.writeObject("Validation repeated with API Key:", validationResult);
+            out.writeObject("Validation repeated with APIKey:", validationResult);
 
             // endregion
 
@@ -323,7 +323,7 @@ public class NetLicensingClientDemo {
         } finally {
             // Cleanup
             try {
-                // delete API key in case it was used (exists)
+                // delete APIKey in case it was used (exists)
                 if (StringUtils.isNotBlank(context.getApiKey())) {
                     TokenService.delete(context, context.getApiKey());
                     context.setApiKey(null);
