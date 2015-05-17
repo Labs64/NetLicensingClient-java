@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -74,12 +75,26 @@
                 </executions>
                 <configuration>
                     <schemaDirectory>${project.build.directory}/classes/schema</schemaDirectory>
+                    <schemaIncludes>
+                        <include>**/netlicensing-context*.xsd</include>
+                    </schemaIncludes>
+                    <catalog>${project.build.directory}/classes/schema/xmldsig.cat</catalog>
+                    <!-- Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.
+                         Please refer to the following link for more information:
+                         https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode -->
+                    <strict>false</strict>
                     <!-- see also https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-89 -->
-                    <specVersion>2.1</specVersion>
+                    <specVersion>2.2</specVersion>
                     <extension>true</extension>
                     <args>
                         <arg>-Xvalue-constructor</arg>
                     </args>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-value-constructor</artifactId>
+                        </plugin>
+                    </plugins>
                 </configuration>
             </plugin>
             <plugin>
@@ -114,39 +129,39 @@
             </plugin>
         </plugins>
         <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>
-        									com.labs64.mojo
-        								</groupId>
-        								<artifactId>
-        									swid-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[0.1.0,)
-        								</versionRange>
-        								<goals>
-        									<goal>generate</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore />
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            com.labs64.mojo
+                                        </groupId>
+                                        <artifactId>
+                                            swid-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [0.1.0,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>generate</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
 
