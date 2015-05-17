@@ -84,7 +84,7 @@
                          https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode -->
                     <strict>false</strict>
                     <!-- see also https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-89 -->
-                    <specVersion>2.2</specVersion>
+                    <specVersion>2.1</specVersion>
                     <extension>true</extension>
                     <args>
                         <arg>-Xvalue-constructor</arg>
