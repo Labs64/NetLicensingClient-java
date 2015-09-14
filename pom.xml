@@ -90,7 +90,7 @@
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.12</slf4j.version>
         <junit.version>4.12</junit.version>
-        <jersey.version>2.6</jersey.version>
+        <jersey.version>2.21</jersey.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
         <maven-enforcer-plugin.version>1.4</maven-enforcer-plugin.version>
@@ -267,6 +267,12 @@
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-client</artifactId>
+                <version>${jersey.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency> <!-- from 2.16 on: https://jersey.java.net/documentation/latest/migration.html#mig-2.16 -->
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-jaxb</artifactId>
                 <version>${jersey.version}</version>
                 <scope>compile</scope>
             </dependency>
