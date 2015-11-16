@@ -88,6 +88,10 @@
                          https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode -->
                     <strict>false</strict>
                     <!-- see also https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-89 -->
+                    <bindingDirectory>src/main/resources</bindingDirectory>
+                    <bindingIncludes>
+                        <bindingInclude>nlic-schema-bindings.xjb</bindingInclude>
+                    </bindingIncludes>
                     <specVersion>2.1</specVersion>
                     <extension>true</extension>
                     <args>
