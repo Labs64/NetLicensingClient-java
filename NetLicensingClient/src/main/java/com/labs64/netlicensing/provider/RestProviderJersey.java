@@ -87,7 +87,7 @@ public class RestProviderJersey extends AbstractRestProvider {
     }
 
     private static String getUserAgent() {
-        return "NetLicensing/Java " + System.getProperty("java.version") + " (http://netlicensing.labs64.com)";
+        return "NetLicensing/Java " + System.getProperty("java.version") + " (http://netlicensing.io)";
     }
 
     /**

@@ -65,7 +65,7 @@ public class NetLicensingClientDemo {
         SLF4JBridgeHandler.install();
 
         final Context context = new Context();
-        context.setBaseUrl("https://netlicensing.labs64.com/core/v2/rest");
+        context.setBaseUrl("https://go.netlicensing.io/core/v2/rest");
         context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
         context.setUsername("demo");
         context.setPassword("demo");

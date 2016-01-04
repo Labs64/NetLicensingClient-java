@@ -53,7 +53,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
     static final String REST_API_PATH = "/core/v2/rest";
     static final String BASE_URL_UNITTEST = "http://localhost:9998";
-    static final String BASE_URL_PROD = "https://netlicensing.labs64.com";
+    static final String BASE_URL_PROD = "https://go.netlicensing.io";
 
     static final String BASE_URL = BASE_URL_UNITTEST + REST_API_PATH;
 

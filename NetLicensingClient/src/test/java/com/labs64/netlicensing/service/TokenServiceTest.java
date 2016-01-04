@@ -177,7 +177,7 @@ public class TokenServiceTest extends BaseServiceTest {
         assertEquals(DateUtils.parseDate("2014-07-23T15:19:56.147Z").getTime(), token.getExpirationTime());
         assertEquals(TokenType.SHOP, token.getTokenType());
         assertEquals(
-                "https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=afeb41d9-314e-49be-8465-148c614badfa",
+                "https://go.netlicensing.io/shop/v2/?shoptoken=afeb41d9-314e-49be-8465-148c614badfa",
                 token.getTokenProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
         assertEquals("L001-TEST", token.getTokenProperties().get(Constants.Licensee.LICENSEE_NUMBER));
         assertEquals("VDEMO", token.getVendorNumber());
@@ -251,7 +251,7 @@ public class TokenServiceTest extends BaseServiceTest {
             }
             if (TokenType.SHOP.name().equals(targetTokenType)) {
                 defaultPropertyValues.put(Constants.Token.TOKEN_PROP_SHOP_URL,
-                        "https://netlicensing.labs64.com/app/v2/content/shop.xhtml?shoptoken=" +
+                        "https://go.netlicensing.io/shop/v2/?shoptoken=" +
                                 defaultPropertyValues.get(Constants.NUMBER));
             }
 
