@@ -148,7 +148,7 @@ public class RestProviderJersey extends AbstractRestProvider {
             buffered = response.bufferEntity();
             return response.readEntity(responseType);
         } catch (final ProcessingException ex) {
-            if (ex.getCause() instanceof NoContentException) {
+            if (response.getStatus() == Response.Status.NO_CONTENT.getStatusCode() || ex.getCause() instanceof NoContentException) {
                 return null;
             } else {
                 if ((response.getStatusInfo().getFamily() == Response.Status.Family.CLIENT_ERROR)
