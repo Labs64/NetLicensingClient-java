@@ -1,4 +1,7 @@
-<netlicensing xmlns="http://netlicensing.labs64.com/schema/context">
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://netlicensing.labs64.com/schema/context
+                                  https://go.netlicensing.io/schema/context/netlicensing-context-2.1.xsd">
     <items>
         <item type="Product">
             <property name="number">P014-TEST</property>
