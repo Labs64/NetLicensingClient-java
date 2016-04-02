@@ -163,7 +163,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(
                 "true",
                 validation.getProperties().get("LIST1").getProperties()
-                        .get(Constants.LicensingModel.Rental.VALID).getValue());
+                        .get(Constants.LicensingModel.VALID).getValue());
         assertEquals(
                 "green",
                 validation.getProperties().get("LIST2").getProperties()

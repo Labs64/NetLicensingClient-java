@@ -107,12 +107,18 @@ public final class Constants {
     }
 
     public static final class LicensingModel {
+
+        public static final String VALID = "valid";
+
         public static final class TryAndBuy {
             public static final String NAME = "TryAndBuy";
         }
 
         public static final class Rental {
             public static final String NAME = "Rental";
+            /**
+             * @deprecated please use com.labs64.netlicensing.domain.Constants.LicensingModel#VALID instead.
+             */
             public static final String VALID = "valid";
             public static final String RED_THRESHOLD = "redThreshold";
             public static final String YELLOW_THRESHOLD = "yellowThreshold";
@@ -121,6 +127,14 @@ public final class Constants {
 
         public static final class Subscription {
             public static final String NAME = "Subscription";
+        }
+
+        public static final class Floating {
+            public static final String NAME = "Floating";
+        }
+
+        public static final class MultiFeature {
+            public static final String NAME = "MultiFeature";
         }
     }
 
