@@ -18,6 +18,7 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -63,18 +64,21 @@ public class RestProviderJersey extends AbstractRestProvider {
         try {
             WebTarget target = getTarget(this.basePath);
             addAuthHeaders(target, getAuthentication());
-
-            final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-            final Response response;
             target = target.path(urlTemplate);
             if ((queryParams != null) && (queryParams.size() > 0)) {
                 for (final String paramKey : queryParams.keySet()) {
                     target = target.queryParam(paramKey, queryParams.get(paramKey));
                 }
             }
-            response = target.request(DEFAULT_ACCEPT_TYPES)
-                    .header(HttpHeaders.USER_AGENT, getUserAgent())
-                    .method(httpMethod, requestEntity);
+
+            Response response;
+            Builder builder = target.request(DEFAULT_ACCEPT_TYPES).header(HttpHeaders.USER_AGENT, getUserAgent());
+            if ("POST".equals(httpMethod) || "PUT".equals(httpMethod)) {
+                final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+                response = builder.method(httpMethod, requestEntity);
+            } else {
+                response = builder.method(httpMethod);
+            }
 
             final RestResponse<RES> restResponse = new RestResponse<RES>();
             restResponse.setStatusCode(response.getStatus());

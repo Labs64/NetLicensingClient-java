@@ -19,13 +19,13 @@ Maven:
   <dependency>
     <groupId>com.labs64.netlicensing</groupId>
     <artifactId>netlicensing-client</artifactId>
-    <version>2.3.0</version>
+    <version>2.3.1</version>
   </dependency>
 </dependencies>
 ```
 Gradle:
 ```gradle
 dependencies {
-    compile 'com.labs64.netlicensing:netlicensing-client:2.3.0'
+    compile 'com.labs64.netlicensing:netlicensing-client:2.3.1'
 }
 ```
