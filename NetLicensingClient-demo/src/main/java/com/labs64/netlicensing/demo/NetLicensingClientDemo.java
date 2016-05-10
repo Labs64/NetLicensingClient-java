@@ -316,10 +316,10 @@ public class NetLicensingClientDemo {
 
             out.writeMessage("All done.");
 
-        } catch (NetLicensingException e) {
+        } catch (final NetLicensingException e) {
             out.writeException("Got NetLicensing exception:", e);
             exitCode = CODE_ERROR;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             out.writeException("Got exception:", e);
             exitCode = CODE_ERROR;
         } finally {
@@ -334,10 +334,10 @@ public class NetLicensingClientDemo {
                 // delete test product with all its related items
                 ProductService.delete(context, productNumber, true);
 
-            } catch (NetLicensingException e) {
+            } catch (final NetLicensingException e) {
                 out.writeException("Got NetLicensing exception during cleanup:", e);
                 exitCode = CODE_ERROR;
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 out.writeException("Got exception during cleanup:", e);
                 exitCode = CODE_ERROR;
             }

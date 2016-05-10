@@ -14,6 +14,7 @@ package com.labs64.netlicensing.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.PageImpl;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
+import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.schema.context.Item;
@@ -46,6 +48,8 @@ import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTokenConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
 import com.labs64.netlicensing.schema.converter.ItemsToValidationResultConverter;
+import com.labs64.netlicensing.util.Visitable;
+import com.labs64.netlicensing.util.Visitor;
 
 /**
  * Factory that contains static methods for creating entities
@@ -67,9 +71,18 @@ public class EntityFactory {
         entityToConverterMap.put(LicenseTypeProperties.class, ItemToLicenseTypePropertiesConverter.class);
     }
 
+    private Map<Class<?>, Converter<Item, ?>> convertersCache;
+
+    private Map<Class<?>, Converter<Item, ?>> getConvertersCache() {
+        if (convertersCache == null) {
+            convertersCache = new HashMap<>();
+        }
+        return convertersCache;
+    }
+
     /**
      * Creates entity of specific class from service response
-     * 
+     *
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -87,9 +100,60 @@ public class EntityFactory {
         }
     }
 
+    public class LinkedEntitiesPopulator extends Visitor {
+
+        private final List<Object> linkedEntities;
+
+        public LinkedEntitiesPopulator(final List<Object> linkedEntities) {
+            this.linkedEntities = linkedEntities;
+        }
+
+        public void visit(final Product product) throws Exception {
+            final List<ProductModule> linkedProductModules = new ArrayList<>();
+            for (final Iterator<Object> iter = linkedEntities.iterator(); iter.hasNext();) {
+                final Object linkedEntity = iter.next();
+                if (ProductModule.class.isAssignableFrom(linkedEntity.getClass())) {
+                    final ProductModule linkedProductModule = (ProductModule) linkedEntity;
+                    if (product.getNumber().equals(linkedProductModule.getProduct().getNumber())) {
+                        iter.remove();
+                        linkedProductModules.add(linkedProductModule);
+                        linkedProductModule.setProduct(product);
+                    }
+                }
+            }
+            for (final ProductModule linkedProductModule : linkedProductModules) {
+                if (Visitable.class.isAssignableFrom(linkedProductModule.getClass())) {
+                    ((Visitable) linkedProductModule).accept(this);
+                }
+            }
+        }
+
+        public void visit(final ProductModule productModule) {
+            for (final Iterator<Object> iter = linkedEntities.iterator(); iter.hasNext();) {
+                final Object linkedEntity = iter.next();
+                if (LicenseTemplate.class.isAssignableFrom(linkedEntity.getClass())) {
+                    final LicenseTemplate linkedLicenseTemplate = (LicenseTemplate) linkedEntity;
+                    if (productModule.getNumber().equals(linkedLicenseTemplate.getProductModule().getNumber())) {
+                        iter.remove();
+                        linkedLicenseTemplate.setProductModule(productModule);
+                    }
+                }
+            }
+            // @formatter:off
+            /* No further nesting needed at the moment
+            for (final LicenseTemplate linkedLicenseTemplate : linkedLicenseTemplates) {
+                if (Visitable.class.isAssignableFrom(linkedLicenseTemplate.getClass())) {
+                    ((Visitable) linkedLicenseTemplate).accept(this);
+                }
+            }
+             */
+            // @formatter:on
+        }
+    }
+
     /**
      * Creates page of entities of specified class from service response
-     * 
+     *
      * @param netlicensing
      *            service XML response
      * @param entityClass
@@ -101,10 +165,27 @@ public class EntityFactory {
             throws NetLicensingException {
         if (netlicensing.getItems() != null) {
             final List<T> entities = new ArrayList<T>();
+            final List<Object> linkedEntities = new ArrayList<Object>();
 
-            final Converter<Item, T> converter = converterFor(entityClass);
-            for (final Item item : extractListOfType(netlicensing, entityClass)) {
-                entities.add(converter.convert(item));
+            for (final Item item : netlicensing.getItems().getItem()) {
+                final Class<?> itemEntityClass = getEntityClassByItemType(item);
+                if (entityClass.isAssignableFrom(itemEntityClass)) {
+                    entities.add(converterFor(entityClass).convert(item));
+                } else {
+                    linkedEntities.add(converterFor(itemEntityClass).convert(item));
+                }
+            }
+
+            if (!linkedEntities.isEmpty()) {
+                for (final T entity : entities) {
+                    if (Visitable.class.isAssignableFrom(entity.getClass())) {
+                        try {
+                            ((Visitable) entity).accept(new LinkedEntitiesPopulator(linkedEntities));
+                        } catch (final Exception e) {
+                            throw new ConversionException("Error processing linked entities", e);
+                        }
+                    }
+                }
             }
 
             return PageImpl.createInstance(entities,
@@ -120,31 +201,40 @@ public class EntityFactory {
 
     /**
      * Returns converter that is able to convert an {@link Item} object to an entity of specified class
-     * 
+     *
      * @param entityClass
      *            entity class
      * @return {@link Converter} suitable for the given entity class
      */
     @SuppressWarnings("unchecked")
     private <T> Converter<Item, T> converterFor(final Class<T> entityClass) {
-        final Class<?> converterClass = entityToConverterMap.get(entityClass);
-        if (converterClass == null) {
-            throw new IllegalArgumentException("No converter is found for entity of class "
-                    + entityClass.getCanonicalName());
-        }
-
+        Converter<Item, T> converter = null;
         try {
-            return (Converter<Item, T>) converterClass.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
+            converter = (Converter<Item, T>) getConvertersCache().get(entityClass);
+        } catch (final ClassCastException e) {
+            throw new RuntimeException("Wrong converter type found for entity class " + entityClass.getCanonicalName());
         }
+        if (converter == null) {
+            final Class<?> converterClass = entityToConverterMap.get(entityClass);
+            if (converterClass == null) {
+                throw new IllegalArgumentException("No converter is found for entity of class "
+                        + entityClass.getCanonicalName());
+            }
+            try {
+                converter = (Converter<Item, T>) converterClass.newInstance();
+                getConvertersCache().put(entityClass, converter);
+            } catch (final InstantiationException e) {
+                throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
+            } catch (final IllegalAccessException e) {
+                throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
+            }
+        }
+        return converter;
     }
 
     /**
      * Finds and returns from {@link Netlicensing} object suitable item of specified type
-     * 
+     *
      * @param netlicensing
      *            {@link Netlicensing} response object
      * @param type
@@ -166,27 +256,8 @@ public class EntityFactory {
     }
 
     /**
-     * Extracts list of items of specified type from {@link Netlicensing} object
-     * 
-     * @param netlicensing
-     *            {@link Netlicensing} response object
-     * @param type
-     *            class type to be matched
-     * @return extracted list of items
-     */
-    private List<Item> extractListOfType(final Netlicensing netlicensing, final Class<?> type) {
-        final List<Item> items = new ArrayList<Item>();
-        for (final Item item : netlicensing.getItems().getItem()) {
-            if (isItemOfType(item, type)) {
-                items.add(item);
-            }
-        }
-        return items;
-    }
-
-    /**
      * Check whether the {@link Item} object is of provided type.
-     * 
+     *
      * @param item
      *            {@link Item} object
      * @param type
@@ -196,6 +267,26 @@ public class EntityFactory {
     private boolean isItemOfType(final Item item, final Class<?> type) {
         return type.getSimpleName().equals(item.getType())
                 || type.getSimpleName().equals(item.getType() + "Properties");
+    }
+
+    /**
+     * Gets the entity class by response item type.
+     *
+     * @param item
+     *            the item
+     * @return the entity class, if match is found
+     * @throws WrongResponseFormatException
+     *             if match is not found
+     */
+    private Class<?> getEntityClassByItemType(final Item item) throws WrongResponseFormatException {
+        final String itemType = item.getType();
+        final String itemTypeProps = itemType.concat("Properties");
+        for (final Class<?> entityClass : entityToConverterMap.keySet()) {
+            if (entityClass.getSimpleName().equals(itemType) || entityClass.getSimpleName().equals(itemTypeProps)) {
+                return entityClass;
+            }
+        }
+        throw new WrongResponseFormatException("Service response contains unexpected item type " + itemType);
     }
 
 }

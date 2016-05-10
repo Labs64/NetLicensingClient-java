@@ -70,7 +70,7 @@ class NetLicensingService {
     /**
      * Helper method for performing GET request to NetLicensing API services. Finds and returns first suitable item with
      * type resultType from the response.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -101,7 +101,7 @@ class NetLicensingService {
     /**
      * Helper method for performing GET request to NetLicensing API service that returns page of items with type
      * resultType.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -122,7 +122,7 @@ class NetLicensingService {
     /**
      * Helper method for performing POST request to NetLicensing API services. Finds and returns first suitable item
      * with type resultType from the response.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -142,7 +142,7 @@ class NetLicensingService {
 
     /**
      * Helper method for performing DELETE request to NetLicensing API services.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param urlTemplate
@@ -159,7 +159,7 @@ class NetLicensingService {
     /**
      * Helper method for performing request to NetLicensing API services. Knows about context for the NetLicensing API
      * calls, does authentication, provides error handling based on status of the response.
-     * 
+     *
      * @param context
      *            context for the NetLicensing API call
      * @param method
@@ -173,31 +173,31 @@ class NetLicensingService {
      * @return {@link Netlicensing} response object
      * @throws NetLicensingException
      */
-	Netlicensing request(final Context context, final String method, final String urlTemplate, final Form request,
+    Netlicensing request(final Context context, final String method, final String urlTemplate, final Form request,
             final Map<String, Object> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
 
-        Form combinedRequest = request; 
+        Form combinedRequest = request;
         Map<String, Object> combinedQueryParams = queryParams;
-    	if (StringUtils.isNotBlank(context.getVendorNumber())) {
+        if (StringUtils.isNotBlank(context.getVendorNumber())) {
             if (HttpMethod.POST.equals(method)) {
-        	    if (combinedRequest == null) {
-        	    	combinedRequest = new Form();
-        	    }
-            	combinedRequest.param(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
+                if (combinedRequest == null) {
+                    combinedRequest = new Form();
+                }
+                combinedRequest.param(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
             } else {
-    		    if (combinedQueryParams == null) {
-    			    combinedQueryParams = new HashMap<String, Object>();
-    		    }
-    		    combinedQueryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());	
+                if (combinedQueryParams == null) {
+                    combinedQueryParams = new HashMap<String, Object>();
+                }
+                combinedQueryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
             }
-    	}
+        }
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
         authenticate(restProvider, context);
 
         final RestResponse<Netlicensing> response = restProvider.call(method, urlTemplate, combinedRequest, Netlicensing.class,
-        		combinedQueryParams);
+                combinedQueryParams);
 
         final Response.Status status = Response.Status.fromStatusCode(response.getStatusCode());
         if (!isErrorStatus(status)) {
@@ -222,7 +222,7 @@ class NetLicensingService {
 
     /**
      * Passes the authentication data specified in the context of the call to the RESTful provider.
-     * 
+     *
      * @param restProvider
      *            RESTful provider to be authenticated
      * @param context
