@@ -41,7 +41,7 @@ import com.labs64.netlicensing.util.DateUtils;
 /**
  * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service classes.
  */
-class NetLicensingService {
+public class NetLicensingService {
 
     private static NetLicensingService instance;
 
@@ -50,7 +50,7 @@ class NetLicensingService {
     /**
      * Private constructor
      */
-    private NetLicensingService() {
+    public NetLicensingService() {
     }
 
     /**
@@ -173,7 +173,8 @@ class NetLicensingService {
      * @return {@link Netlicensing} response object
      * @throws NetLicensingException
      */
-    Netlicensing request(final Context context, final String method, final String urlTemplate, final Form request,
+    public Netlicensing request(final Context context, final String method, final String urlTemplate,
+            final Form request,
             final Map<String, Object> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
 
