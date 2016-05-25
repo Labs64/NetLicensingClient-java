@@ -30,6 +30,8 @@ public enum PaymentMethodEnum {
 
     PAYPAL_SANDBOX,
 
+    STRIPE,
+
     CREDIT_CARD,
 
     GOOGLE_CHECKOUT,
