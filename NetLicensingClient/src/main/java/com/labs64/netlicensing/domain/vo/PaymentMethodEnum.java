@@ -32,6 +32,8 @@ public enum PaymentMethodEnum {
 
     STRIPE,
 
+    STRIPE_TESTING,
+
     CREDIT_CARD,
 
     GOOGLE_CHECKOUT,
