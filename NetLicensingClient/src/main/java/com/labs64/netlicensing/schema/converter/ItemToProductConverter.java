@@ -18,7 +18,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
-import com.labs64.netlicensing.domain.entity.impl.ProductDiscount;
+import com.labs64.netlicensing.domain.entity.impl.ProductDiscountImpl;
 import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Money;
 import com.labs64.netlicensing.exception.ConversionException;
@@ -46,7 +46,7 @@ public class ItemToProductConverter extends ItemToEntityBaseConverter<Product> {
 
         for (final com.labs64.netlicensing.schema.context.List list : source.getList()) {
             if (Constants.DISCOUNT.equals(list.getName())) {
-                final ProductDiscount productDiscount = new ProductDiscount();
+                final ProductDiscountImpl productDiscount = new ProductDiscountImpl();
                 final Money price = convertPrice(list.getProperty(), Constants.Product.Discount.TOTAL_PRICE);
                 productDiscount.setTotalPrice(price.getAmount());
                 productDiscount.setCurrency(price.getCurrencyCode());

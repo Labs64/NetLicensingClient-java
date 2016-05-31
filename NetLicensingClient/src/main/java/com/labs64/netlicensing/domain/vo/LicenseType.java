@@ -33,7 +33,7 @@ public enum LicenseType {
 
     /**
      * Instantiates a new license type.
-     * 
+     *
      * @param licenseTypeValue
      *            licenseType value
      */
@@ -43,7 +43,7 @@ public enum LicenseType {
 
     /**
      * Get enum value.
-     * 
+     *
      * @return enum value
      */
     public String value() {
@@ -52,7 +52,7 @@ public enum LicenseType {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Enum#toString()
      */
     @Override
@@ -62,7 +62,7 @@ public enum LicenseType {
 
     /**
      * Parse license type value to {@link LicenseType} enum.
-     * 
+     *
      * @param value
      *            licenseType value
      * @return {@link LicenseType} enum object or throws {@link IllegalArgumentException} if no corresponding
@@ -78,16 +78,16 @@ public enum LicenseType {
     }
 
     /**
-     * Gets the enum safe.
-     * 
-     * @param val
-     *            the val
-     * @return the enum safe
+     * Parse license type value to {@link LicenseType} enum, nothrow version.
+     *
+     * @param value
+     *            licenseType value as string
+     * @return {@link LicenseType} enum object or {@code null} if argument doesn't match any of the enum values
      */
-    public static LicenseType parseValueSafe(final String val) {
+    public static LicenseType parseValueSafe(final String value) {
         try {
-            return parseValue(val);
-        } catch (IllegalArgumentException e) {
+            return parseValue(value);
+        } catch (final IllegalArgumentException e) {
             return null;
         }
     }

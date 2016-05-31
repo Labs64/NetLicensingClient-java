@@ -12,10 +12,14 @@
  */
 package com.labs64.netlicensing.domain.vo;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * NetLicensing supported currencies.
  */
 public enum Currency {
+
+    NONE(""),
 
     EUR("EUR");
 
@@ -23,7 +27,7 @@ public enum Currency {
 
     /**
      * Instantiates a new currency.
-     * 
+     *
      * @param currency
      *            currency value
      */
@@ -33,7 +37,7 @@ public enum Currency {
 
     /**
      * Get enum value.
-     * 
+     *
      * @return enum value
      */
     public String value() {
@@ -42,7 +46,7 @@ public enum Currency {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Enum#toString()
      */
     @Override
@@ -52,7 +56,7 @@ public enum Currency {
 
     /**
      * Parse currency value to {@link Currency} enum.
-     * 
+     *
      * @param value
      *            currency value
      * @return {@link Currency} enum object or throws {@link IllegalArgumentException} if no corresponding
@@ -64,20 +68,23 @@ public enum Currency {
                 return currency;
             }
         }
+        if (value != null && StringUtils.isBlank(value)) {
+            return NONE;
+        }
         throw new IllegalArgumentException(value);
     }
 
     /**
-     * Gets the enum safe.
-     * 
+     * Parse currency value to {@link Currency} enum, nothrow version.
+     *
      * @param value
-     *            currency value
-     * @return the enum safe
+     *            licenseType value as string
+     * @return {@link Currency} enum object or {@code null} if argument doesn't match any of the enum values
      */
     public static Currency parseValueSafe(final String value) {
         try {
             return parseValue(value);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             return null;
         }
     }

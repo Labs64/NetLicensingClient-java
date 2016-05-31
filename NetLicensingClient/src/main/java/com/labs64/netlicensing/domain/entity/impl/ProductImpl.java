@@ -21,6 +21,7 @@ import java.util.Map;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.Product;
+import com.labs64.netlicensing.domain.entity.ProductDiscount;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 
 /**
