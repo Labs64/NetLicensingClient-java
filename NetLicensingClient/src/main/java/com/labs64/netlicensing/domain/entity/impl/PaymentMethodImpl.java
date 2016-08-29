@@ -12,7 +12,6 @@
  */
 package com.labs64.netlicensing.domain.entity.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +24,6 @@ public class PaymentMethodImpl extends BaseEntityImpl implements PaymentMethod {
 
     private static final long serialVersionUID = -529417516632266683L;
 
-    private Map<String, String> paymentMethodProperties;
-
     /**
      * @see BaseEntityImpl#getReservedProps()
      */
@@ -36,35 +33,7 @@ public class PaymentMethodImpl extends BaseEntityImpl implements PaymentMethod {
 
     @Override
     public Map<String, String> getPaymentMethodProperties() {
-        if (paymentMethodProperties == null) {
-            paymentMethodProperties = new HashMap<String, String>();
-        }
-        return paymentMethodProperties;
-    }
-
-    public void setPaymentMethodProperties(final Map<String, String> paymentMethodProperties) {
-        this.paymentMethodProperties = paymentMethodProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getPaymentMethodProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getPaymentMethodProperties().remove(property);
-    }
-
-    @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        if (paymentMethodProperties != null) {
-            for (final Map.Entry<String, String> property : paymentMethodProperties.entrySet()) {
-                map.put(property.getKey(), property.getValue());
-            }
-        }
-        return map;
+        return getProperties();
     }
 
 }

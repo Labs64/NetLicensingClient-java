@@ -14,6 +14,7 @@ package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
     private String number;
 
     private Boolean active;
+
+    private Map<String, String> properties;
 
     /**
      * List of reserved properties is used for handling of custom properties. Property name that is included in the list
@@ -72,6 +75,24 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
     }
 
     @Override
+    public Map<String, String> getProperties() {
+        if (properties == null) {
+            properties = new HashMap<String, String>();
+        }
+        return properties;
+    }
+
+    @Override
+    public void addProperty(final String property, final String value) {
+        getProperties().put(property, value);
+    }
+
+    @Override
+    public void removeProperty(final String property) {
+        getProperties().remove(property);
+    }
+
+    @Override
     public String toString() {
         return toString(asPropertiesMap());
     }
@@ -93,6 +114,11 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
         final Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put(Constants.NUMBER, getNumber());
         map.put(Constants.ACTIVE, getActive());
+        if (properties != null) {
+            for (final Map.Entry<String, String> lp : properties.entrySet()) {
+                map.put(lp.getKey(), lp.getValue());
+            }
+        }
         return map;
     }
 

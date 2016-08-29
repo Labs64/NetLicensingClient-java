@@ -13,7 +13,6 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +40,6 @@ public class LicenseImpl extends BaseEntityImpl implements License {
     private Licensee licensee;
 
     private LicenseTemplate licenseTemplate;
-
-    private Map<String, String> licenseProperties;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -126,24 +123,7 @@ public class LicenseImpl extends BaseEntityImpl implements License {
 
     @Override
     public Map<String, String> getLicenseProperties() {
-        if (licenseProperties == null) {
-            licenseProperties = new HashMap<String, String>();
-        }
-        return licenseProperties;
-    }
-
-    public void setLicenseProperties(final Map<String, String> licenseProperties) {
-        this.licenseProperties = licenseProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getLicenseProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getLicenseProperties().remove(property);
+        return getProperties();
     }
 
     @Override
@@ -153,11 +133,6 @@ public class LicenseImpl extends BaseEntityImpl implements License {
         map.put(Constants.PRICE, getPrice());
         map.put(Constants.CURRENCY, getCurrency());
         map.put(Constants.License.HIDDEN, getHidden());
-        if (licenseProperties != null) {
-            for (final Map.Entry<String, String> lp : licenseProperties.entrySet()) {
-                map.put(lp.getKey(), lp.getValue());
-            }
-        }
         return map;
     }
 

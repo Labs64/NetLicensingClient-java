@@ -14,7 +14,6 @@ package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +32,6 @@ public class LicenseeImpl extends BaseEntityImpl implements Licensee {
     private Product product;
 
     private Collection<License> licenses;
-
-    private Map<String, String> licenseeProperties;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -72,35 +69,7 @@ public class LicenseeImpl extends BaseEntityImpl implements Licensee {
 
     @Override
     public Map<String, String> getLicenseeProperties() {
-        if (licenseeProperties == null) {
-            licenseeProperties = new HashMap<String, String>();
-        }
-        return licenseeProperties;
-    }
-
-    public void setLicenseeProperties(final Map<String, String> licenseeProperties) {
-        this.licenseeProperties = licenseeProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getLicenseeProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getLicenseeProperties().remove(property);
-    }
-
-    @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        if (licenseeProperties != null) {
-            for (final Map.Entry<String, String> lp : licenseeProperties.entrySet()) {
-                map.put(lp.getKey(), lp.getValue());
-            }
-        }
-        return map;
+        return getProperties();
     }
 
 }

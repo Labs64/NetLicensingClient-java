@@ -13,7 +13,6 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +32,6 @@ public class TokenImpl extends BaseEntityImpl implements Token {
     private Date expirationTime;
 
     private TokenType tokenType;
-
-    private Map<String, String> tokenProperties;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -86,24 +83,7 @@ public class TokenImpl extends BaseEntityImpl implements Token {
 
     @Override
     public Map<String, String> getTokenProperties() {
-        if (tokenProperties == null) {
-            tokenProperties = new HashMap<String, String>();
-        }
-        return tokenProperties;
-    }
-
-    public void setTokenProperties(final Map<String, String> tokenProperties) {
-        this.tokenProperties = tokenProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getTokenProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getTokenProperties().remove(property);
+        return getProperties();
     }
 
     @Override
@@ -112,11 +92,6 @@ public class TokenImpl extends BaseEntityImpl implements Token {
         map.put(Constants.Token.EXPIRATION_TIME, getExpirationTime());
         map.put(Constants.Token.TOKEN_TYPE, getTokenType());
         map.put(Constants.Token.TOKEN_PROP_VENDORNUMBER, getVendorNumber());
-        if (tokenProperties != null) {
-            for (final Map.Entry<String, String> property : tokenProperties.entrySet()) {
-                map.put(property.getKey(), property.getValue());
-            }
-        }
         return map;
     }
 

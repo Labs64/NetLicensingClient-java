@@ -73,10 +73,9 @@ public interface Transaction extends BaseEntity {
 
     void setDateClosed(Date dateClosed);
 
+    // Methods for working with custom properties
+
+    @Deprecated
     Map<String, String> getTransactionProperties();
-
-    void addProperty(String property, String value);
-
-    void removeProperty(final String property);
 
 }

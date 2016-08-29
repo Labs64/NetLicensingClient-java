@@ -33,13 +33,10 @@ import java.util.Map;
  */
 public interface Licensee extends BaseEntity {
 
-    // Methods for working with properties
+    // Methods for working with custom properties
 
+    @Deprecated
     Map<String, String> getLicenseeProperties();
-
-    void addProperty(String property, String value);
-
-    void removeProperty(String property);
 
     // Methods for interacting with other entities
 

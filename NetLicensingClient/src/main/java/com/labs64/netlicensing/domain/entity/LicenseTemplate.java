@@ -81,11 +81,10 @@ public interface LicenseTemplate extends BaseEntity {
 
     void setHideLicenses(Boolean hideLicenses);
 
+    // Methods for working with custom properties
+
+    @Deprecated
     Map<String, String> getLicenseTemplateProperties();
-
-    void addProperty(String property, String value);
-
-    void removeProperty(String property);
 
     // Methods for interacting with other entities
 

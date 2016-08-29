@@ -36,10 +36,9 @@ public interface Token extends BaseEntity {
 
     void setTokenType(TokenType tokenType);
 
+    // Methods for working with custom properties
+
+    @Deprecated
     Map<String, String> getTokenProperties();
-
-    void addProperty(String property, String value);
-
-    void removeProperty(String property);
 
 }

@@ -44,11 +44,10 @@ public interface ProductModule extends BaseEntity {
 
     void setLicensingModel(String licensingModel);
 
+    // Methods for working with custom properties
+
+    @Deprecated
     Map<String, String> getProductModuleProperties();
-
-    void addProperty(String property, String value);
-
-    void removeProperty(String property);
 
     // Methods for interacting with other entities
 

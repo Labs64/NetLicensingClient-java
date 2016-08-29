@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.domain.entity;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.ws.rs.core.Form;
 
@@ -21,6 +22,8 @@ import javax.ws.rs.core.Form;
  */
 public interface BaseEntity extends Serializable {
 
+    // Methods for working with properties
+
     String getNumber();
 
     void setNumber(String number);
@@ -28,6 +31,14 @@ public interface BaseEntity extends Serializable {
     Boolean getActive();
 
     void setActive(Boolean active);
+
+    // Methods for working with custom properties
+
+    Map<String, String> getProperties();
+
+    void addProperty(String property, String value);
+
+    void removeProperty(final String property);
 
     /**
      * Converts properties of the entity to the body of POST request

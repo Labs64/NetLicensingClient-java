@@ -14,7 +14,6 @@ package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +36,6 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
     private String licensingModel;
 
     private Collection<LicenseTemplate> licenseTemplates;
-
-    private Map<String, String> productModuleProperties;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -97,24 +94,7 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
 
     @Override
     public Map<String, String> getProductModuleProperties() {
-        if (productModuleProperties == null) {
-            productModuleProperties = new HashMap<String, String>();
-        }
-        return productModuleProperties;
-    }
-
-    public void setProductModuleProperties(final Map<String, String> productModuleProperties) {
-        this.productModuleProperties = productModuleProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getProductModuleProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getProductModuleProperties().remove(property);
+        return getProperties();
     }
 
     @Override
@@ -122,11 +102,6 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
         final Map<String, Object> map = super.asPropertiesMap();
         map.put(Constants.NAME, getName());
         map.put(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
-        if (productModuleProperties != null) {
-            for (final Map.Entry<String, String> pmp : productModuleProperties.entrySet()) {
-                map.put(pmp.getKey(), pmp.getValue());
-            }
-        }
         return map;
     }
 

@@ -14,7 +14,6 @@ package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +43,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     private Date dateCreated;
 
     private Date dateClosed;
-
-    private Map<String, String> transactionProperties;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -151,24 +148,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     @Override
     public Map<String, String> getTransactionProperties() {
-        if (transactionProperties == null) {
-            transactionProperties = new HashMap<String, String>();
-        }
-        return transactionProperties;
-    }
-
-    public void setTransactionProperties(final Map<String, String> transactionProperties) {
-        this.transactionProperties = transactionProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getTransactionProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getTransactionProperties().remove(property);
+        return getProperties();
     }
 
     @Override
@@ -179,11 +159,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         map.put(Constants.PRICE, getPrice());
         map.put(Constants.DISCOUNT, getDiscount());
         map.put(Constants.CURRENCY, getCurrency());
-        if (transactionProperties != null) {
-            for (final Map.Entry<String, String> property : transactionProperties.entrySet()) {
-                map.put(property.getKey(), property.getValue());
-            }
-        }
         return map;
     }
 

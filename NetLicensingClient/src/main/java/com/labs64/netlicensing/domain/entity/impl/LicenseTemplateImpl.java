@@ -15,7 +15,6 @@ package com.labs64.netlicensing.domain.entity.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +49,6 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
     private Boolean hideLicenses = Boolean.FALSE;
 
     private Collection<License> licenses;
-
-    private Map<String, String> licenseTemplateProperties;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -168,24 +165,7 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
 
     @Override
     public Map<String, String> getLicenseTemplateProperties() {
-        if (licenseTemplateProperties == null) {
-            licenseTemplateProperties = new HashMap<String, String>();
-        }
-        return licenseTemplateProperties;
-    }
-
-    public void setLicenseTemplateProperties(final Map<String, String> licenseTemplateProperties) {
-        this.licenseTemplateProperties = licenseTemplateProperties;
-    }
-
-    @Override
-    public void addProperty(final String property, final String value) {
-        getLicenseTemplateProperties().put(property, value);
-    }
-
-    @Override
-    public void removeProperty(final String property) {
-        getLicenseTemplateProperties().remove(property);
+        return getProperties();
     }
 
     @Override
@@ -198,11 +178,6 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
         map.put(Constants.LicenseTemplate.AUTOMATIC, getAutomatic());
         map.put(Constants.LicenseTemplate.HIDDEN, getHidden());
         map.put(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
-        if (licenseTemplateProperties != null) {
-            for (final Map.Entry<String, String> ltp : licenseTemplateProperties.entrySet()) {
-                map.put(ltp.getKey(), ltp.getValue());
-            }
-        }
         return map;
     }
 

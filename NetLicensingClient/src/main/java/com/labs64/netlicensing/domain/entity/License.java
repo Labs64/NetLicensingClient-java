@@ -64,11 +64,10 @@ public interface License extends BaseEntity {
 
     void setHidden(Boolean hidden);
 
+    // Methods for working with custom properties
+
+    @Deprecated
     Map<String, String> getLicenseProperties();
-
-    void addProperty(String property, String value);
-
-    void removeProperty(String property);
 
     // Methods for interacting with other entities
 
