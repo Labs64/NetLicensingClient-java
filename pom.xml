@@ -107,6 +107,7 @@
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
         <swid-maven-plugin.version>0.1.0</swid-maven-plugin.version>
+        <maven-bundle-plugin.version>3.2.0</maven-bundle-plugin.version>
     </properties>
 
     <prerequisites>
@@ -245,6 +246,11 @@
                     <configuration>
                         <domain_creation_date>2010-04</domain_creation_date>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${maven-bundle-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
