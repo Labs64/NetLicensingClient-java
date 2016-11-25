@@ -29,3 +29,7 @@ dependencies {
     compile 'com.labs64.netlicensing:netlicensing-client:2.3.2'
 }
 ```
+OSGi:
+```
+Require-Bundle: com.labs64.netlicensing.client;bundle-version="2.3.2"
+```

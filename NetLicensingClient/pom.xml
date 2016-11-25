@@ -64,6 +64,21 @@
 
     <build>
         <plugins>
+            <!-- Apache Felix Maven Bundle Plugin Documentation : http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                	<finalName>${artifactId}-osgi-${version}</finalName>
+                    <instructions>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+                        <Embed-Directory>dependency</Embed-Directory>
+                    </instructions>
+                </configuration>
+            </plugin>
             <!-- Maven JAXB2 Plugin Documentation : http://confluence.highsource.org/x/HgBJ -->
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
