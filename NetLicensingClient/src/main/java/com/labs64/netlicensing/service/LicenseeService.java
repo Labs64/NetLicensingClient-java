@@ -191,6 +191,7 @@ public class LicenseeService {
             for (Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
                 params.put(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
             }
+            ++pmIndex;
         }
         return NetLicensingService.getInstance().get(context, Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, params,
                 ValidationResult.class, meta);
