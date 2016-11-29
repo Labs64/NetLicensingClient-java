@@ -5,7 +5,54 @@ import java.util.Map;
 
 public class ValidationParameters {
 
+    private String productNumber;
+    private String licenseeName;
+    private String licenseeSecret;
     private Map<String, Map<String, String>> parameters;
+
+    /**
+     * Sets the target product
+     *
+     * @param productNumber
+     *            optional productNumber, must be provided in case licensee auto-create is enabled
+     */
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    /**
+     * Sets the name for the new licensee
+     * 
+     * @param licenseeName
+     *            optional human-readable licensee name in case licensee will be auto-created. This parameter must not
+     *            be the name, but can be used to store any other useful string information with new licensees, up to
+     *            1000 characters.
+     */
+    public void setLicenseeName(String licenseeName) {
+        this.licenseeName = licenseeName;
+    }
+
+    public String getLicenseeName() {
+        return licenseeName;
+    }
+
+    /**
+     * Sets the licensee secret
+     * 
+     * @param licenseeSecret
+     *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
+     */
+    public void setLicenseeSecret(String licenseeSecret) {
+        this.licenseeSecret = licenseeSecret;
+    }
+
+    public String getLicenseeSecret() {
+        return licenseeSecret;
+    }
 
     public Map<String, Map<String, String>> getParameters() {
         if (parameters == null) {

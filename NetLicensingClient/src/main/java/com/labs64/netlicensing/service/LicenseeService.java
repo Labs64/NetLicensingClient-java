@@ -168,33 +168,63 @@ public class LicenseeService {
      * @param validationParameters
      *            optional validation parameters, specific to licensing model. See licensing model documentation for
      *            details.
+     * @param meta
+     *            optional parameter, receiving messages returned within response <infos> section.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
      */
+    @Deprecated
     public static ValidationResult validate(final Context context, final String number, final String productNumber,
             final String licenseeName, ValidationParameters validationParameters, final MetaInfo... meta)
             throws NetLicensingException {
+        validationParameters.setProductNumber(productNumber);
+        validationParameters.setLicenseeName(licenseeName);
+        return validate(context, number, validationParameters, meta);
+    }
+
+    /**
+     * Validates active licenses of the licensee.
+     * 
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            licensee number
+     * @param validationParameters
+     *            optional validation parameters. See ValidationParameters and licensing model documentation for
+     *            details.
+     * @param meta
+     *            optional parameter, receiving messages returned within response <infos> section.
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
+     */
+    public static ValidationResult validate(final Context context, final String number,
+            ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
         final Map<String, Object> params = new HashMap<String, Object>();
-        if (StringUtils.isNotBlank(productNumber)) {
-            params.put(Constants.Product.PRODUCT_NUMBER, productNumber);
-        }
-        if (StringUtils.isNotBlank(licenseeName)) {
-            params.put(Constants.Licensee.PROP_LICENSEE_NAME, licenseeName);
-        }
-        int pmIndex = 0;
-        for (Entry<String, Map<String, String>> productModuleValidationParams : validationParameters.getParameters()
-                .entrySet()) {
-            params.put(Constants.ProductModule.PRODUCT_MODULE_NUMBER.concat(Integer.toString(pmIndex)), productModuleValidationParams.getKey());
-            for (Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
-                params.put(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
+        if (validationParameters != null) {
+            if (StringUtils.isNotBlank(validationParameters.getProductNumber())) {
+                params.put(Constants.Product.PRODUCT_NUMBER, validationParameters.getProductNumber());
             }
-            ++pmIndex;
+            if (StringUtils.isNotBlank(validationParameters.getLicenseeName())) {
+                params.put(Constants.Licensee.PROP_LICENSEE_NAME, validationParameters.getLicenseeName());
+            }
+            int pmIndex = 0;
+            for (Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
+                    .getParameters().entrySet()) {
+                params.put(Constants.ProductModule.PRODUCT_MODULE_NUMBER.concat(Integer.toString(pmIndex)),
+                        productModuleValidationParams.getKey());
+                for (Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
+                    params.put(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
+                }
+                ++pmIndex;
+            }
         }
-        return NetLicensingService.getInstance().get(context, Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, params,
-                ValidationResult.class, meta);
+        return NetLicensingService.getInstance().get(context,
+                Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE,
+                params, ValidationResult.class, meta);
     }
 
 }
