@@ -211,6 +211,9 @@ public class LicenseeService {
             if (StringUtils.isNotBlank(validationParameters.getLicenseeName())) {
                 params.put(Constants.Licensee.PROP_LICENSEE_NAME, validationParameters.getLicenseeName());
             }
+            if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
+                params.put(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
+            }
             int pmIndex = 0;
             for (Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
                     .getParameters().entrySet()) {

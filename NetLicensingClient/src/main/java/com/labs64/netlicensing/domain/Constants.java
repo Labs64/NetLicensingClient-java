@@ -99,6 +99,7 @@ public final class Constants {
         public static final String ENDPOINT_PATH_VALIDATE = "validate";
         public static final String LICENSEE_NUMBER = "licenseeNumber";
         public static final String PROP_LICENSEE_NAME = "licenseeName";
+        public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
     public static final class License {
@@ -119,6 +120,7 @@ public final class Constants {
             /**
              * @deprecated please use com.labs64.netlicensing.domain.Constants.LicensingModel#VALID instead.
              */
+            @Deprecated
             public static final String VALID = "valid";
             public static final String RED_THRESHOLD = "redThreshold";
             public static final String YELLOW_THRESHOLD = "yellowThreshold";
