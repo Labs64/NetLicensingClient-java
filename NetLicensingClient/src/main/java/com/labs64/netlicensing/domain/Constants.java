@@ -136,6 +136,10 @@ public final class Constants {
         public static final class MultiFeature {
             public static final String NAME = "MultiFeature";
         }
+
+        public static final class PayPerUse {
+            public static final String NAME = "PayPerUse";
+        }
     }
 
     public static final class Transaction {

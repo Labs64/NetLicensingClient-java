@@ -27,7 +27,12 @@ public enum LicenseType {
     /**
      * licenseType: TimeVolume.
      */
-    FLOATING("FLOATING");
+    FLOATING("FLOATING"),
+
+    /**
+     * licenseType: Volume.
+     */
+    VOLUME("VOLUME");
 
     private final String value;
 

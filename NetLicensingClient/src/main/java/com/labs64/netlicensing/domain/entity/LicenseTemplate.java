@@ -33,7 +33,8 @@ import com.labs64.netlicensing.domain.vo.LicenseType;
  * <p/>
  * <b>name</b> - Name for the licensed item.
  * <p/>
- * <b>licenseType</b> - type of licenses created from this license template. Supported types: "FEATURE", "TIMEVOLUME".
+ * <b>licenseType</b> - type of licenses created from this license template. Supported types: "FEATURE", "TIMEVOLUME",
+ * "FLOATING", "VOLUME".
  * <p/>
  * <b>price</b> - price for the license. If >0, it must always be accompanied by the currency specification.
  * <p/>
