@@ -53,6 +53,9 @@ public class LicenseeServiceTest extends BaseServiceTest {
     private static final String LICENSEE_CUSTOM_PROPERTY = "CustomProperty";
     private static final String LICENSEE_DELETING_PROPERTY = "toBeDeleted";
 
+    final String productNumber = "P001-TEST";
+    final String licenseeNumber = "L001-TEST";
+
     // *** NLIC Tests ***
 
     private static Context context;
@@ -68,25 +71,25 @@ public class LicenseeServiceTest extends BaseServiceTest {
     @Test
     public void testCreate() throws Exception {
         final Licensee newLicensee = new LicenseeImpl();
-        newLicensee.setNumber("L001-TEST");
+        newLicensee.setNumber(licenseeNumber);
         newLicensee.setActive(false);
 
-        final Licensee createdLicensee = LicenseeService.create(context, "P001-TEST", newLicensee);
+        final Licensee createdLicensee = LicenseeService.create(context, productNumber, newLicensee);
 
         assertNotNull(createdLicensee);
-        assertEquals("L001-TEST", createdLicensee.getNumber());
+        assertEquals(licenseeNumber, createdLicensee.getNumber());
         assertEquals(false, createdLicensee.getActive());
-        assertEquals("P001-TEST", createdLicensee.getProduct().getNumber());
+        assertEquals(productNumber, createdLicensee.getProduct().getNumber());
     }
 
     @Test
     public void testCreateEmpty() throws Exception {
         final Licensee newLicensee = new LicenseeImpl();
-        final Licensee createdLicensee = LicenseeService.create(context, "P001-TEST", newLicensee);
+        final Licensee createdLicensee = LicenseeService.create(context, productNumber, newLicensee);
 
         assertNotNull(createdLicensee);
         assertEquals(true, createdLicensee.getActive());
-        assertEquals("P001-TEST", createdLicensee.getProduct().getNumber());
+        assertEquals(productNumber, createdLicensee.getProduct().getNumber());
     }
 
     @Test
@@ -98,12 +101,12 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testGet() throws Exception {
-        final Licensee licensee = LicenseeService.get(context, "L001-TEST");
+        final Licensee licensee = LicenseeService.get(context, licenseeNumber);
 
         assertNotNull(licensee);
-        assertEquals("L001-TEST", licensee.getNumber());
+        assertEquals(licenseeNumber, licensee.getNumber());
         assertEquals(true, licensee.getActive());
-        assertEquals("P001-TEST", licensee.getProduct().getNumber());
+        assertEquals(productNumber, licensee.getProduct().getNumber());
         assertEquals("Custom property value", licensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
     }
 
@@ -114,9 +117,9 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertNotNull(licensees);
         assertTrue(licensees.hasContent());
         assertEquals(3, licensees.getItemsNumber());
-        assertEquals("L001-TEST", licensees.getContent().get(0).getNumber());
+        assertEquals(licenseeNumber, licensees.getContent().get(0).getNumber());
         assertEquals(true, licensees.getContent().get(1).getActive());
-        assertEquals("P001-TEST", licensees.getContent().get(2).getProduct().getNumber());
+        assertEquals(productNumber, licensees.getContent().get(2).getProduct().getNumber());
     }
 
     @Test
@@ -127,19 +130,19 @@ public class LicenseeServiceTest extends BaseServiceTest {
         licensee.addProperty(LICENSEE_CUSTOM_PROPERTY, "New property value");
         licensee.addProperty(LICENSEE_DELETING_PROPERTY, "");
 
-        final Licensee updatedLicensee = LicenseeService.update(context, "L001-TEST", licensee);
+        final Licensee updatedLicensee = LicenseeService.update(context, licenseeNumber, licensee);
 
         assertNotNull(updatedLicensee);
         assertEquals("L002-TEST", updatedLicensee.getNumber());
         assertEquals(true, updatedLicensee.getActive());
-        assertEquals("P001-TEST", updatedLicensee.getProduct().getNumber());
+        assertEquals(productNumber, updatedLicensee.getProduct().getNumber());
         assertEquals("New property value", updatedLicensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
         assertNull(updatedLicensee.getLicenseeProperties().get(LICENSEE_DELETING_PROPERTY));
     }
 
     @Test
     public void testDelete() throws Exception {
-        LicenseeService.delete(context, "L001-TEST", true);
+        LicenseeService.delete(context, licenseeNumber, true);
 
         thrown.expect(ServiceException.class);
         thrown.expectMessage("NotFoundException: Requested licensee does not exist");
@@ -148,9 +151,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testValidate() throws Exception {
+
         final ValidationParameters validationParameters = new ValidationParameters();
-        final ValidationResult result = LicenseeService.validate(context, "L001-TEST", "P001-TEST", "Test Licensee",
-                validationParameters);
+        validationParameters.setLicenseeName("Test Licensee");
+        validationParameters.setProductNumber(productNumber);
+        final ValidationResult result = LicenseeService.validate(context, licenseeNumber, validationParameters);
 
         assertNotNull(result);
 
@@ -163,11 +168,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(
                 "true",
                 validation.getProperties().get("LIST1").getProperties()
-                        .get(Constants.LicensingModel.VALID).getValue());
+                .get(Constants.LicensingModel.VALID).getValue());
         assertEquals(
                 "green",
                 validation.getProperties().get("LIST2").getProperties()
-                        .get(Constants.LicensingModel.Rental.EXPIRATION_WARNING_LEVEL).getValue());
+                .get(Constants.LicensingModel.Rental.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
     // *** NLIC test mock resource ***
@@ -197,12 +202,12 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         @Override
         public Response delete(final String licenseeNumber, final UriInfo uriInfo) {
-            return delete(licenseeNumber, "L001-TEST", uriInfo.getQueryParameters());
+            return delete(licenseeNumber, licenseeNumber, uriInfo.getQueryParameters());
         }
 
         /**
          * Mock for "validate licensee" service.
-         * 
+         *
          * @param licenseeNumber
          *            licensee number
          * @param productNumber
@@ -217,7 +222,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
                 @QueryParam("productNumber") final String productNumber,
                 @QueryParam("licenseeName") final String licenseeName) {
 
-            if (!"P001-TEST".equals(productNumber)) {
+            if (!productNumber.equals(productNumber)) {
                 return unexpectedValueErrorResponse("productNumber");
             }
             if (!"Test Licensee".equals(licenseeName)) {
