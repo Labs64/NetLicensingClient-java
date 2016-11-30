@@ -202,7 +202,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
         @Override
         public Response delete(final String licenseeNumber, final UriInfo uriInfo) {
-            return delete(licenseeNumber, licenseeNumber, uriInfo.getQueryParameters());
+            return delete(licenseeNumber, "L001-TEST", uriInfo.getQueryParameters());
         }
 
         /**
