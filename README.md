@@ -1,4 +1,4 @@
-# [Labs64 NetLicensing](http://netlicensing.io) Client (Java)
+# [Labs64 NetLicensing](http://netlicensing.io) Java Client
 
 [![Stories in Ready](https://badge.waffle.io/Labs64/NetLicensingClient-java.svg?label=ready&title=Ready)](http://waffle.io/Labs64/NetLicensingClient-java)
 [![Build Status](https://travis-ci.org/Labs64/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/Labs64/NetLicensingClient-java)
