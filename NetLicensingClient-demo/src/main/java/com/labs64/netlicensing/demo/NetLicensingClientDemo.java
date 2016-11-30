@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.demo;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +36,7 @@ import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
+import com.labs64.netlicensing.domain.vo.LicenseeSecretMode;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.domain.vo.TokenType;
@@ -58,6 +60,8 @@ public class NetLicensingClientDemo {
 
     private final static String DEMO_NUMBER_PREFIX = "DEMO-";
 
+    private static String randomLicenseeSecret = UUID.randomUUID().toString();
+
     public static void main(final String[] args) {
 
         // configure J.U.L. to Slf4j bridge for Jersey
@@ -76,7 +80,6 @@ public class NetLicensingClientDemo {
         final String licenseTemplateNumber = numberWithPrefix("LT", randomNumber);
         final String licenseeNumber = numberWithPrefix("L", randomNumber);
         final String licenseNumber = numberWithPrefix("LC", randomNumber);
-        final String licenseeName = numberWithPrefix("Licensee ", RandomStringUtils.randomAlphanumeric(8));
 
         final ConsoleWriter out = new ConsoleWriter();
 
@@ -109,6 +112,8 @@ public class NetLicensingClientDemo {
 
             final Product updateProduct = new ProductImpl();
             updateProduct.addProperty("Updated property name", "Updated value");
+            updateProduct.addProperty(Constants.Product.PROP_LICENSEE_SECRET_MODE,
+                    LicenseeSecretMode.PREDEFINED.toString());
             product = ProductService.update(context, productNumber, updateProduct);
             out.writeObject("Updated product:", product);
 
@@ -225,6 +230,8 @@ public class NetLicensingClientDemo {
 
             final Licensee updateLicensee = new LicenseeImpl();
             updateLicensee.addProperty("Updated property name", "Updated value");
+            updateLicensee.addProperty(Constants.Licensee.PROP_LICENSEE_SECRET, randomLicenseeSecret);
+
             licensee = LicenseeService.update(context, licenseeNumber, updateLicensee);
             out.writeObject("Updated licensee:", licensee);
 
@@ -302,13 +309,12 @@ public class NetLicensingClientDemo {
 
             final ValidationParameters validationParameters = new ValidationParameters();
             validationParameters.put(productModuleNumber, "paramKey", "paramValue");
-            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, productNumber,
-                    licenseeName, validationParameters);
+            validationParameters.setLicenseeSecret(randomLicenseeSecret);
+            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             out.writeObject("Validation result for created licensee:", validationResult);
 
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            validationResult = LicenseeService.validate(context, licenseeNumber, productNumber, licenseeName,
-                    validationParameters);
+            validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
             out.writeObject("Validation repeated with APIKey:", validationResult);
 

@@ -70,6 +70,7 @@ public final class Constants {
         public static final String DESCRIPTION = "description";
         public static final String LICENSING_INFO = "licensingInfo";
         public static final String DISCOUNTS = "discounts";
+        public static final String PROP_LICENSEE_SECRET_MODE = "licenseeSecretMode";
 
         public static final class Discount {
             public static final String TOTAL_PRICE = "totalPrice";
