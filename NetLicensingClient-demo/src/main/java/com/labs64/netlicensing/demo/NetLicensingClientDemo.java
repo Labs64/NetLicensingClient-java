@@ -80,6 +80,7 @@ public class NetLicensingClientDemo {
         final String licenseTemplateNumber = numberWithPrefix("LT", randomNumber);
         final String licenseeNumber = numberWithPrefix("L", randomNumber);
         final String licenseNumber = numberWithPrefix("LC", randomNumber);
+        final String licenseeName = numberWithPrefix("Licensee ", RandomStringUtils.randomAlphanumeric(8));
 
         final ConsoleWriter out = new ConsoleWriter();
 
@@ -310,6 +311,8 @@ public class NetLicensingClientDemo {
             final ValidationParameters validationParameters = new ValidationParameters();
             validationParameters.put(productModuleNumber, "paramKey", "paramValue");
             validationParameters.setLicenseeSecret(randomLicenseeSecret);
+            validationParameters.setLicenseeName(licenseeName);
+            validationParameters.setProductNumber(productNumber);
             ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             out.writeObject("Validation result for created licensee:", validationResult);
 
