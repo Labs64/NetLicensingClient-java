@@ -30,9 +30,9 @@ public enum LicenseType {
     FLOATING("FLOATING"),
 
     /**
-     * licenseType: Volume.
+     * licenseType: Quantity.
      */
-    VOLUME("VOLUME");
+    QUANTITY("QUANTITY");
 
     private final String value;
 
