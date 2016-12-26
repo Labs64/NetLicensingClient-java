@@ -8,3 +8,5 @@ jdk:
 script:
   - mvn clean verify
   - java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
+after_success:
+  - env
