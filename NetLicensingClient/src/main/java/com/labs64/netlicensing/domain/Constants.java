@@ -152,6 +152,9 @@ public final class Constants {
         public static final String SOURCE = "source";
         public static final String DATE_CREATED = "datecreated";
         public static final String DATE_CLOSED = "dateclosed";
+        public static final String VAT = "vat";
+        public static final String COUNTRY = "country";
+        public static final String PRICE_TYPE = "priceType";
     }
 
     public static final class PaymentMethod {
