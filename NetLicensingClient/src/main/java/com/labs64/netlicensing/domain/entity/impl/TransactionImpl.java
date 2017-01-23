@@ -43,7 +43,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     private BigDecimal vat;
 
-    private String country;
+    private String countryCode;
 
     private PriceType priceType;
 
@@ -65,7 +65,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         reserved.add(Constants.DISCOUNT);
         reserved.add(Constants.CURRENCY);
         reserved.add(Constants.Transaction.VAT);
-        reserved.add(Constants.Transaction.COUNTRY);
+        reserved.add(Constants.Transaction.COUNTRY_CODE);
         reserved.add(Constants.Transaction.PRICE_TYPE);
         return reserved;
     }
@@ -131,13 +131,13 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
     @Override
-    public void setCountry(final String country) {
-        this.country = country;
+    public void setCountryCode(final String countryCode) {
+        this.countryCode = countryCode;
     }
 
     @Override
@@ -200,7 +200,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         map.put(Constants.DISCOUNT, getDiscount());
         map.put(Constants.CURRENCY, getCurrency());
         map.put(Constants.Transaction.VAT, getVat());
-        map.put(Constants.Transaction.COUNTRY, getCountry());
+        map.put(Constants.Transaction.COUNTRY_CODE, getCountryCode());
         map.put(Constants.Transaction.PRICE_TYPE, getPriceType());
         return map;
     }

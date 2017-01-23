@@ -36,6 +36,7 @@ import com.labs64.netlicensing.domain.entity.impl.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.domain.vo.PriceType;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 import com.labs64.netlicensing.exception.RestException;
@@ -72,6 +73,9 @@ public class TransactionServiceTest extends BaseServiceTest {
         newTransaction.setCurrency(Currency.EUR);
         newTransaction.setPrice(new BigDecimal("100"));
         newTransaction.setDiscount(new BigDecimal("5"));
+        newTransaction.setCountryCode("DE");
+        newTransaction.setVat(new BigDecimal("9"));
+        newTransaction.setPriceType(PriceType.BRUTTO);
         newTransaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "Custom property value");
 
         final Transaction createdTransaction = TransactionService.create(context, newTransaction);
@@ -81,10 +85,13 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals("TR001TEST", createdTransaction.getNumber());
         assertEquals(false, createdTransaction.getActive());
         assertEquals(Currency.EUR, createdTransaction.getCurrency());
+        assertEquals(PriceType.BRUTTO, createdTransaction.getPriceType());
+        assertEquals("DE", createdTransaction.getCountryCode());
+        assertEquals(new BigDecimal("9"), createdTransaction.getVat());
         assertEquals(new BigDecimal("100.00"), createdTransaction.getPrice());
         assertEquals(new BigDecimal("5.00"), createdTransaction.getDiscount());
         assertEquals("Custom property value",
-                createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
+                createdTransaction.getProperties().get(TRANSACTION_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -144,7 +151,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(Currency.EUR, transaction.getCurrency());
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateCreated());
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateClosed());
-        assertEquals("VTEST", transaction.getTransactionProperties().get("vendorNumber"));
+        assertEquals("VTEST", transaction.getProperties().get("vendorNumber"));
     }
 
     @Test
@@ -165,6 +172,9 @@ public class TransactionServiceTest extends BaseServiceTest {
         transaction.setNumber("TR002TEST");
         transaction.setSource(TransactionSource.SHOP);
         transaction.setStatus(TransactionStatus.CLOSED);
+        transaction.setCountryCode("DE");
+        transaction.setVat(new BigDecimal("9"));
+        transaction.setPriceType(PriceType.BRUTTO);
         transaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "New property value");
         transaction.addProperty(TRANSACTION_DELETING_PROPERTY, "");
 
@@ -173,10 +183,13 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals("TR002TEST", createdTransaction.getNumber());
         assertEquals(TransactionSource.AUTO_LICENSE_CREATE, createdTransaction.getSource());
         assertEquals(TransactionStatus.CLOSED, createdTransaction.getStatus());
+        assertEquals(PriceType.BRUTTO, createdTransaction.getPriceType());
+        assertEquals("DE", createdTransaction.getCountryCode());
+        assertEquals(new BigDecimal("9"), createdTransaction.getVat());
         assertEquals(true, createdTransaction.getActive());
         assertEquals("New property value",
-                createdTransaction.getTransactionProperties().get(TRANSACTION_CUSTOM_PROPERTY));
-        assertNull(createdTransaction.getTransactionProperties().get(TRANSACTION_DELETING_PROPERTY));
+                createdTransaction.getProperties().get(TRANSACTION_CUSTOM_PROPERTY));
+        assertNull(createdTransaction.getProperties().get(TRANSACTION_DELETING_PROPERTY));
     }
 
     // *** NLIC test mock resource ***

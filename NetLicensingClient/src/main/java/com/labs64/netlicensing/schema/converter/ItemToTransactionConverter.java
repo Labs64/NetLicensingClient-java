@@ -18,6 +18,7 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.entity.impl.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.Currency;
+import com.labs64.netlicensing.domain.vo.PriceType;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 import com.labs64.netlicensing.exception.ConversionException;
@@ -53,12 +54,23 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
             target.setCurrency(Currency.valueOf(SchemaFunction.propertyByName(source.getProperty(),
                     Constants.CURRENCY).getValue()));
         }
-
+        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.VAT).getValue() != null) {
+            target.setVat(DatatypeConverter.parseDecimal(
+                    SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.VAT).getValue()));
+        }
+        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.COUNTRY_CODE)
+                .getValue() != null) {
+            target.setCountryCode(
+                    SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.COUNTRY_CODE).getValue());
+        }
+        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.PRICE_TYPE).getValue() != null) {
+            target.setPriceType(PriceType.valueOf(
+                    SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.PRICE_TYPE).getValue()));
+        }
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.DATE_CREATED).getValue() != null) {
             target.setDateCreated(DateUtils.parseDate(SchemaFunction.propertyByName(
                     source.getProperty(), Constants.Transaction.DATE_CREATED).getValue()).getTime());
         }
-
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.DATE_CLOSED).getValue() != null) {
             target.setDateClosed(DateUtils.parseDate(SchemaFunction.propertyByName(
                     source.getProperty(), Constants.Transaction.DATE_CLOSED).getValue()).getTime());

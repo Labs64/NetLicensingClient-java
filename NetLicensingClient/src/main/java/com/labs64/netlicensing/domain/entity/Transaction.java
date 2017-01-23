@@ -70,9 +70,9 @@ public interface Transaction extends BaseEntity {
 
     void setVat(BigDecimal vat);
 
-    String getCountry();
+    String getCountryCode();
 
-    void setCountry(String country);
+    void setCountryCode(String countryCode);
 
     PriceType getPriceType();
 
