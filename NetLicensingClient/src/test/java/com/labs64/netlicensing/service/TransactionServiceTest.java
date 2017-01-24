@@ -73,7 +73,6 @@ public class TransactionServiceTest extends BaseServiceTest {
         newTransaction.setCurrency(Currency.EUR);
         newTransaction.setPrice(new BigDecimal("100"));
         newTransaction.setDiscount(new BigDecimal("5"));
-        newTransaction.setCountryCode("DE");
         newTransaction.setVat(new BigDecimal("9"));
         newTransaction.setPriceType(PriceType.BRUTTO);
         newTransaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "Custom property value");
@@ -86,7 +85,6 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(false, createdTransaction.getActive());
         assertEquals(Currency.EUR, createdTransaction.getCurrency());
         assertEquals(PriceType.BRUTTO, createdTransaction.getPriceType());
-        assertEquals("DE", createdTransaction.getCountryCode());
         assertEquals(new BigDecimal("9"), createdTransaction.getVat());
         assertEquals(new BigDecimal("100.00"), createdTransaction.getPrice());
         assertEquals(new BigDecimal("5.00"), createdTransaction.getDiscount());
@@ -172,7 +170,6 @@ public class TransactionServiceTest extends BaseServiceTest {
         transaction.setNumber("TR002TEST");
         transaction.setSource(TransactionSource.SHOP);
         transaction.setStatus(TransactionStatus.CLOSED);
-        transaction.setCountryCode("DE");
         transaction.setVat(new BigDecimal("9"));
         transaction.setPriceType(PriceType.BRUTTO);
         transaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "New property value");
@@ -184,7 +181,6 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(TransactionSource.AUTO_LICENSE_CREATE, createdTransaction.getSource());
         assertEquals(TransactionStatus.CLOSED, createdTransaction.getStatus());
         assertEquals(PriceType.BRUTTO, createdTransaction.getPriceType());
-        assertEquals("DE", createdTransaction.getCountryCode());
         assertEquals(new BigDecimal("9"), createdTransaction.getVat());
         assertEquals(true, createdTransaction.getActive());
         assertEquals("New property value",

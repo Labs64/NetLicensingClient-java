@@ -58,10 +58,10 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
             target.setVat(DatatypeConverter.parseDecimal(
                     SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.VAT).getValue()));
         }
-        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.COUNTRY_CODE)
+        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.COUNTRY_ID)
                 .getValue() != null) {
-            target.setCountryCode(
-                    SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.COUNTRY_CODE).getValue());
+            target.setCountryId(Long.parseLong(
+                    SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.COUNTRY_ID).getValue()));
         }
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.PRICE_TYPE).getValue() != null) {
             target.setPriceType(PriceType.valueOf(

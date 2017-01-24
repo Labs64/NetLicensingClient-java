@@ -16,6 +16,9 @@
             <property name="inUse">false</property>
             <property name="toBeDeleted">123</property>
             <property name="customProperty">Custom property value</property>
+            <property name="countryId">1</property>
+            <property name="vat">19</property>
+            <property name="paymentType">brutto</property>
         </item>
     </items>
 </netlicensing>

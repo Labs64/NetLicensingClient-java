@@ -11,6 +11,9 @@
             <property name="datecreated">2014-07-08T13:24:02.843Z</property>
             <property name="dateclosed">2014-07-08T13:24:02.843Z</property>
             <property name="inUse">true</property>
+            <property name="countryId">1</property>
+            <property name="vat">19</property>
+            <property name="paymentType">brutto</property>
         </item>
         <item type="Transaction">
             <property name="number">TR002TEST</property>
@@ -20,6 +23,9 @@
             <property name="datecreated">2014-07-08T13:24:02.824Z</property>
             <property name="dateclosed">2014-07-08T13:24:02.824Z</property>
             <property name="inUse">true</property>
+            <property name="countryId">1</property>
+            <property name="vat">19</property>
+            <property name="paymentType">brutto</property>
         </item>
         <item type="Transaction">
             <property name="number">TR003TEST</property>
@@ -29,6 +35,9 @@
             <property name="datecreated">2014-06-20T23:28:05.571Z</property>
             <property name="dateclosed">2014-06-20T23:28:05.571Z</property>
             <property name="inUse">true</property>
+            <property name="countryId">1</property>
+            <property name="vat">19</property>
+            <property name="paymentType">brutto</property>
         </item>
     </items>
 </netlicensing>
