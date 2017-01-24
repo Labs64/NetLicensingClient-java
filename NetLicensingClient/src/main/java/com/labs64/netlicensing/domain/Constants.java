@@ -153,7 +153,6 @@ public final class Constants {
         public static final String DATE_CREATED = "datecreated";
         public static final String DATE_CLOSED = "dateclosed";
         public static final String VAT = "vat";
-        public static final String COUNTRY_ID = "countryId";
         public static final String PRICE_TYPE = "priceType";
     }
 

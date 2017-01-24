@@ -69,11 +69,7 @@ public interface Transaction extends BaseEntity {
     BigDecimal getVat();
 
     void setVat(BigDecimal vat);
-
-    Long getCountryId();
-
-    void setCountryId(Long countryId);
-
+    
     PriceType getPriceType();
 
     void setPriceType(PriceType priceType);

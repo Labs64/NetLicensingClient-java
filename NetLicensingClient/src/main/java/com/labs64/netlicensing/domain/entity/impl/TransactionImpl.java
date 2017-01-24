@@ -43,8 +43,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     private BigDecimal vat;
 
-    private Long countryId;
-
     private PriceType priceType;
 
     private Date dateCreated;
@@ -65,7 +63,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         reserved.add(Constants.DISCOUNT);
         reserved.add(Constants.CURRENCY);
         reserved.add(Constants.Transaction.VAT);
-        reserved.add(Constants.Transaction.COUNTRY_ID);
         reserved.add(Constants.Transaction.PRICE_TYPE);
         return reserved;
     }
@@ -131,16 +128,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    public Long getCountryId() {
-        return countryId;
-    }
-
-    @Override
-    public void setCountryId(final Long countryId) {
-        this.countryId = countryId;
-    }
-
-    @Override
     public PriceType getPriceType() {
         return priceType;
     }
@@ -200,7 +187,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         map.put(Constants.DISCOUNT, getDiscount());
         map.put(Constants.CURRENCY, getCurrency());
         map.put(Constants.Transaction.VAT, getVat());
-        map.put(Constants.Transaction.COUNTRY_ID, getCountryId());
         map.put(Constants.Transaction.PRICE_TYPE, getPriceType());
         return map;
     }
