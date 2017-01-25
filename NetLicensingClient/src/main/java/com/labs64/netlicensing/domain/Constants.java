@@ -160,6 +160,13 @@ public final class Constants {
         public static final String ENDPOINT_PATH = "paymentmethod";
     }
 
+    public static final class Country {
+        public static final String CODE = "code";
+        public static final String NAME = "name";
+        public static final String VAT = "vat";
+        public static final String IS_EU = "isEu";
+    }
+
     public static final class Shop {
         public static final String PROP_SHOP_LICENSE_ID = "shop-license-id";
         public static final String PROP_SHOPPING_CART = "shopping-cart";

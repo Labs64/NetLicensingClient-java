@@ -69,7 +69,7 @@ public interface Transaction extends BaseEntity {
     BigDecimal getVat();
 
     void setVat(BigDecimal vat);
-    
+
     PriceType getPriceType();
 
     void setPriceType(PriceType priceType);
@@ -83,6 +83,10 @@ public interface Transaction extends BaseEntity {
     void setDateClosed(Date dateClosed);
 
     // Methods for working with custom properties
+
+    void setCountry(final Country country);
+
+    Country getCountry();
 
     @Deprecated
     Map<String, String> getTransactionProperties();

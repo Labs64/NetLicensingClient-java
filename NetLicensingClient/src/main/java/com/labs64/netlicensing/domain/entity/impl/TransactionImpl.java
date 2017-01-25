@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.PriceType;
@@ -48,6 +49,8 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     private Date dateCreated;
 
     private Date dateClosed;
+
+    private Country country;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -171,6 +174,16 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         } else {
             this.dateClosed = new Date(dateClosed.getTime());
         }
+    }
+
+    @Override
+    public void setCountry(final Country country) {
+        this.country = country;
+    }
+
+    @Override
+    public Country getCountry() {
+        return country;
     }
 
     @Override
