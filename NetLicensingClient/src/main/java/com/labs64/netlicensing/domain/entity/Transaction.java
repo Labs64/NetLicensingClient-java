@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.vo.Currency;
-import com.labs64.netlicensing.domain.vo.PriceType;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 
@@ -66,14 +65,6 @@ public interface Transaction extends BaseEntity {
 
     void setCurrency(Currency currency);
 
-    BigDecimal getVat();
-
-    void setVat(BigDecimal vat);
-
-    PriceType getPriceType();
-
-    void setPriceType(PriceType priceType);
-
     Date getDateCreated();
 
     void setDateCreated(Date dateCreated);
@@ -83,10 +74,6 @@ public interface Transaction extends BaseEntity {
     void setDateClosed(Date dateClosed);
 
     // Methods for working with custom properties
-
-    void setCountry(final Country country);
-
-    Country getCountry();
 
     @Deprecated
     Map<String, String> getTransactionProperties();

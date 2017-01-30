@@ -12,12 +12,15 @@
  */
 package com.labs64.netlicensing.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Transformer;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
 import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
@@ -87,6 +90,23 @@ public class UtilityService {
                 licensingModels.getTotalPages(),
                 licensingModels.getTotalItems(),
                 licensingModels.hasNext());
+    }
+
+    /**
+     * Returns all countries.
+     *
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @return collection of available countries or null/empty list if nothing found.
+     * @throws com.labs64.netlicensing.exception.NetLicensingException
+     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
+     *             exceptions will be transformed to the corresponding service response messages.
+     */
+    public static Page<Country> listCountries(final Context context) throws NetLicensingException {
+        final Map<String, Object> params = new HashMap<String, Object>();
+        return NetLicensingService.getInstance().list(context,
+                Constants.Utility.ENDPOINT_PATH + "/" + Constants.Country.ENDPOINT_PATH, params,
+                Country.class);
     }
 
 }

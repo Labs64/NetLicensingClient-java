@@ -18,10 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
-import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Currency;
-import com.labs64.netlicensing.domain.vo.PriceType;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
 import com.labs64.netlicensing.domain.vo.TransactionStatus;
 
@@ -42,15 +40,9 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     private Currency currency;
 
-    private BigDecimal vat;
-
-    private PriceType priceType;
-
     private Date dateCreated;
 
     private Date dateClosed;
-
-    private Country country;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -65,8 +57,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         reserved.add(Constants.PRICE);
         reserved.add(Constants.DISCOUNT);
         reserved.add(Constants.CURRENCY);
-        reserved.add(Constants.Transaction.VAT);
-        reserved.add(Constants.Transaction.PRICE_TYPE);
         return reserved;
     }
 
@@ -121,26 +111,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    public BigDecimal getVat() {
-        return vat;
-    }
-
-    @Override
-    public void setVat(final BigDecimal vat) {
-        this.vat = vat;
-    }
-
-    @Override
-    public PriceType getPriceType() {
-        return priceType;
-    }
-
-    @Override
-    public void setPriceType(final PriceType priceType) {
-        this.priceType = priceType;
-    }
-
-    @Override
     public Date getDateCreated() {
         if (dateCreated == null) {
             return null;
@@ -177,16 +147,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    public void setCountry(final Country country) {
-        this.country = country;
-    }
-
-    @Override
-    public Country getCountry() {
-        return country;
-    }
-
-    @Override
     public Map<String, String> getTransactionProperties() {
         return getProperties();
     }
@@ -199,8 +159,6 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         map.put(Constants.PRICE, getPrice());
         map.put(Constants.DISCOUNT, getDiscount());
         map.put(Constants.CURRENCY, getCurrency());
-        map.put(Constants.Transaction.VAT, getVat());
-        map.put(Constants.Transaction.PRICE_TYPE, getPriceType());
         return map;
     }
 

@@ -14,12 +14,9 @@ package com.labs64.netlicensing.domain.entity.impl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Country;
-import com.labs64.netlicensing.domain.entity.Transaction;
 
 /**
  * Represents discount step as a discount amount (absolute or percentage) after total price reaches the given threshold.
@@ -28,8 +25,6 @@ public class CountryImpl implements Country, Serializable {
 
     private static final long serialVersionUID = -6890659657570098474L;
 
-    private List<Transaction> transactions;
-
     private String code;
 
     private String name;
@@ -37,27 +32,6 @@ public class CountryImpl implements Country, Serializable {
     private BigDecimal vat;
 
     private boolean isEu;
-
-    @Override
-    public List<Transaction> getTransactions() {
-        if (transactions == null) {
-            transactions = new ArrayList<Transaction>();
-        }
-        return transactions;
-    }
-
-    public void setTransactions(final List<Transaction> transactions) {
-        this.transactions = transactions;
-        for (final Transaction transaction : this.transactions) {
-            transaction.setCountry(this);
-        }
-    }
-
-    @Override
-    public void addTransaction(final Transaction transaction) {
-        transaction.setCountry(this);
-        getTransactions().add(transaction);
-    }
 
     @Override
     public String getCode() {
