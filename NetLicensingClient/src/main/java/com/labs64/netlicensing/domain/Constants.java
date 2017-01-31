@@ -161,7 +161,7 @@ public final class Constants {
     }
 
     public static final class Country {
-        public static final String ENDPOINT_PATH = "country";
+        public static final String ENDPOINT_PATH = "countries";
         public static final String CODE = "code";
         public static final String NAME = "name";
         public static final String VAT = "vat";
