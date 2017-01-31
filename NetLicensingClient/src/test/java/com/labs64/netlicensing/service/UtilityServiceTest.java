@@ -92,19 +92,19 @@ public class UtilityServiceTest extends BaseServiceTest {
     public static class UtilityServiceResource {
 
         @GET
-        @Path("licensingModels")
+        @Path(Constants.Utility.ENDPOINT_PATH_LICENSING_MODELS)
         public Response listLicensingModels() {
             return listFromResource("netlicensing-licensingModels-list.xml");
         }
 
         @GET
-        @Path("licenseTypes")
+        @Path(Constants.Utility.ENDPOINT_PATH_LICENSE_TYPES)
         public Response listLicenseTypes() {
             return listFromResource("netlicensing-licenseTypes-list.xml");
         }
 
         @GET
-        @Path("country")
+        @Path(Constants.Country.ENDPOINT_PATH)
         public Response listCountries() {
             return listFromResource("netlicensing-countries-list.xml");
         }
