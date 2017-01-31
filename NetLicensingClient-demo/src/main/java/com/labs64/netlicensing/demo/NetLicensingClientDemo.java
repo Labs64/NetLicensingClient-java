@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Licensee;
@@ -94,6 +95,9 @@ public class NetLicensingClientDemo {
 
             final Page<String> licensingModels = UtilityService.listLicensingModels(context);
             out.writePage("Licensing Models:", licensingModels);
+
+            final Page<Country> countries = UtilityService.listCountries(context, null);
+            out.writePage("Countries:", countries);
 
             // endregion
 

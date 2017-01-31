@@ -12,16 +12,15 @@
  */
 package com.labs64.netlicensing.domain.entity.impl;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Country;
 
 /**
- * Represents discount step as a discount amount (absolute or percentage) after total price reaches the given threshold.
+ * Default implementation of {@link com.labs64.netlicensing.domain.entity.Country}.
  */
-public class CountryImpl implements Country, Serializable {
+public class CountryImpl extends BaseEntityImpl implements Country {
 
     private static final long serialVersionUID = -6890659657570098474L;
 
@@ -94,10 +93,5 @@ public class CountryImpl implements Country, Serializable {
         builder.append(getIsEu());
         builder.append("]");
         return builder.toString();
-    }
-
-    @Override
-    public int compareTo(final Country country) {
-        return country.getCode().compareTo(code);
     }
 }

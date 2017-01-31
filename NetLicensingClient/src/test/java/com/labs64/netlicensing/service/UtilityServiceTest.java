@@ -16,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -24,6 +26,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -66,6 +69,18 @@ public class UtilityServiceTest extends BaseServiceTest {
         assertEquals("TIMEVOLUME", licenseTypes.getContent().get(1));
     }
 
+    @Test
+    public void testListCountries() throws Exception {
+        final Page<Country> countries = UtilityService.listCountries(context, null);
+
+        assertNotNull(countries);
+        assertTrue(countries.hasContent());
+        assertEquals(3, countries.getItemsNumber());
+        assertEquals("GERMANY", countries.getContent().get(1).getName());
+        assertEquals(new BigDecimal("19"), countries.getContent().get(1).getVat());
+        assertEquals(true, countries.getContent().get(1).getIsEu());
+    }
+
     // *** NLIC test mock resource ***
 
     @Override
@@ -86,6 +101,12 @@ public class UtilityServiceTest extends BaseServiceTest {
         @Path("licenseTypes")
         public Response listLicenseTypes() {
             return listFromResource("netlicensing-licenseTypes-list.xml");
+        }
+
+        @GET
+        @Path("country")
+        public Response listCountries() {
+            return listFromResource("netlicensing-countries-list.xml");
         }
 
         private Response listFromResource(final String resourceFileName) {
