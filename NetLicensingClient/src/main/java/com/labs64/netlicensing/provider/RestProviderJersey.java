@@ -45,12 +45,27 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     private final String basePath;
 
+    private class JerseyDefaultConfig implements RestProvider.Configuration {
+
+        @Override
+        public String getUserAgent() {
+            return "NetLicensing/Java " + System.getProperty("java.version") + " (http://netlicensing.io)";
+        }
+
+        @Override
+        public boolean isLoggingEnabled() {
+            return true;
+        }
+
+    }
+
     /**
      * @param basePath
      *            base provider path
      */
     public RestProviderJersey(final String basePath) {
         this.basePath = basePath;
+        configure(new JerseyDefaultConfig());
     }
 
     /*
@@ -72,7 +87,8 @@ public class RestProviderJersey extends AbstractRestProvider {
             }
 
             Response response;
-            Builder builder = target.request(DEFAULT_ACCEPT_TYPES).header(HttpHeaders.USER_AGENT, getUserAgent());
+            final Builder builder = target.request(DEFAULT_ACCEPT_TYPES).header(HttpHeaders.USER_AGENT,
+                    getConfiguration().getUserAgent());
             if ("POST".equals(httpMethod) || "PUT".equals(httpMethod)) {
                 final Entity<REQ> requestEntity = Entity.entity(request, MediaType.APPLICATION_FORM_URLENCODED_TYPE);
                 response = builder.method(httpMethod, requestEntity);
@@ -80,7 +96,7 @@ public class RestProviderJersey extends AbstractRestProvider {
                 response = builder.method(httpMethod);
             }
 
-            final RestResponse<RES> restResponse = new RestResponse<RES>();
+            final RestResponse<RES> restResponse = new RestResponse<>();
             restResponse.setStatusCode(response.getStatus());
             restResponse.setHeaders(response.getHeaders());
             restResponse.setEntity(readEntity(response, responseType));
@@ -90,22 +106,20 @@ public class RestProviderJersey extends AbstractRestProvider {
         }
     }
 
-    private static String getUserAgent() {
-        return "NetLicensing/Java " + System.getProperty("java.version") + " (http://netlicensing.io)";
-    }
-
     /**
      * Get static instance of RESTful client
-     * 
+     *
      * @return RESTful client
      */
-    private static Client getClient() {
+    private static Client getClient(final RestProvider.Configuration configuration) {
         // initialize client only once since it's expensive operation
         if (client == null) {
             synchronized (RestProviderJersey.class) {
                 if (client == null) {
                     client = ClientBuilder.newClient(new ClientConfig());
-                    client.register(new LoggingFilter());
+                    if (configuration.isLoggingEnabled()) {
+                        client.register(new LoggingFilter());
+                    }
                 }
             }
         }
@@ -114,13 +128,13 @@ public class RestProviderJersey extends AbstractRestProvider {
 
     /**
      * Get the RESTful client target
-     * 
+     *
      * @param basePath
      *            base provider path
      * @return RESTful client target
      */
     private WebTarget getTarget(final String basePath) {
-        return getClient().target(basePath);
+        return getClient(getConfiguration()).target(basePath);
     }
 
     /**
@@ -132,13 +146,13 @@ public class RestProviderJersey extends AbstractRestProvider {
     private void addAuthHeaders(final WebTarget target, final Authentication auth) {
         if (auth != null) {
             // see also https://jersey.java.net/documentation/latest/client.html, chapter "Securing a Client"
-        	target.register(HttpAuthenticationFeature.basic(auth.getUsername(), auth.getPassword()));
+            target.register(HttpAuthenticationFeature.basic(auth.getUsername(), auth.getPassword()));
         }
     }
 
     /**
      * Reads entity of given type from response. Returns null when the response has a zero-length content.
-     * 
+     *
      * @param response
      *            service response
      * @param responseType

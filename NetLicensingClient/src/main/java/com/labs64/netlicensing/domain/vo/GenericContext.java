@@ -20,20 +20,27 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class GenericContext<T> {
 
-    private Map<String, T> contextMap = new ConcurrentHashMap<String, T>();
+    private Map<String, Object> contextMap = new ConcurrentHashMap<>();
 
-    public GenericContext() {
+    private final Class<T> valueClass;
+
+    public GenericContext(final Class<T> valueClass) {
+        this.valueClass = valueClass;
     }
 
-    protected Map<String, T> getContextMap() {
+    protected Map<String, Object> getContextMap() {
         if (contextMap == null) {
-            contextMap = new ConcurrentHashMap<String, T>();
+            contextMap = new ConcurrentHashMap<>();
         }
         return contextMap;
     }
 
     public boolean containsKey(final String key) {
-        return contextMap.containsKey(key);
+        return getContextMap().containsKey(key);
+    }
+
+    public boolean containsKey(final Class<?> key) {
+        return getContextMap().containsKey(key.getName());
     }
 
     public GenericContext<T> setValue(final String key, final T value) {
@@ -60,11 +67,46 @@ public class GenericContext<T> {
     }
 
     public T getValue(final String key) {
-        return contextMap.get(key);
+        final Object value = getContextMap().get(key);
+        if ((value != null) && valueClass.isAssignableFrom(value.getClass())) {
+            return valueClass.cast(value);
+        } else {
+            return null;
+        }
     }
 
     public T getValue(final Class<?> key) {
-        return contextMap.get(key.getName());
+        return getValue(key.getName());
     }
 
+    public GenericContext<T> setObject(final String key, final Object value) {
+        if (value != null) {
+            getContextMap().put(key, value);
+        }
+        return this;
+    }
+
+    public GenericContext<T> setObject(final Class<?> key, final Object value) {
+        if (value == null) {
+            return this;
+        } else {
+            return setObject(key.getName(), value);
+        }
+    }
+
+    public GenericContext<T> setObject(final Object value) {
+        if (value == null) {
+            return this;
+        } else {
+            return setObject(value.getClass(), value);
+        }
+    }
+
+    public Object getObject(final String key) {
+        return getContextMap().get(key);
+    }
+
+    public Object getObject(final Class<?> key) {
+        return getObject(key.getName());
+    }
 }
