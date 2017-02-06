@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Country;
@@ -70,6 +71,16 @@ public class CountryImpl extends BaseEntityImpl implements Country {
     @Override
     public boolean getIsEu() {
         return isEu;
+    }
+
+    @Override
+    protected Map<String, Object> asPropertiesMap() {
+        final Map<String, Object> map = super.asPropertiesMap();
+        map.put(Constants.Country.CODE, getCode());
+        map.put(Constants.Country.NAME, getName());
+        map.put(Constants.Country.VAT, getVat());
+        map.put(Constants.Country.IS_EU, getIsEu());
+        return map;
     }
 
     @Override
