@@ -134,9 +134,20 @@ public class NetLicensingService {
      * @return first suitable item with type resultType from the response
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
-    <RES> RES post(final Context context, final String urlTemplate, final Form request, final Class<RES> resultType)
+    <RES> RES post(final Context context, final String urlTemplate, final Form request, final Class<RES> resultType,
+            final MetaInfo... meta)
             throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.POST, urlTemplate, request, null);
+        if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
+            if (netlicensing.getId() != null) {
+                meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
+            }
+            if (netlicensing.getTtl() != null) {
+                final Calendar dummyTTL = DateUtils.getCurrentDate();
+                dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
+                meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl().toXMLFormat());
+            }
+        }
         return entityFactory.create(netlicensing, resultType);
     }
 

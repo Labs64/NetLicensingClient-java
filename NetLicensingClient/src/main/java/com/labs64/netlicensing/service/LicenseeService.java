@@ -200,34 +200,34 @@ public class LicenseeService {
      *             exceptions will be transformed to the corresponding service response messages.
      */
     public static ValidationResult validate(final Context context, final String number,
-            ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
+            final ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Form form = new Form();
         if (validationParameters != null) {
             if (StringUtils.isNotBlank(validationParameters.getProductNumber())) {
-                params.put(Constants.Product.PRODUCT_NUMBER, validationParameters.getProductNumber());
+                form.param(Constants.Product.PRODUCT_NUMBER, validationParameters.getProductNumber());
             }
             if (StringUtils.isNotBlank(validationParameters.getLicenseeName())) {
-                params.put(Constants.Licensee.PROP_LICENSEE_NAME, validationParameters.getLicenseeName());
+                form.param(Constants.Licensee.PROP_LICENSEE_NAME, validationParameters.getLicenseeName());
             }
             if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
-                params.put(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
+                form.param(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
             }
             int pmIndex = 0;
-            for (Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
+            for (final Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
                     .getParameters().entrySet()) {
-                params.put(Constants.ProductModule.PRODUCT_MODULE_NUMBER.concat(Integer.toString(pmIndex)),
+                form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER.concat(Integer.toString(pmIndex)),
                         productModuleValidationParams.getKey());
-                for (Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
-                    params.put(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
+                for (final Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
+                    form.param(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
                 }
                 ++pmIndex;
             }
         }
-        return NetLicensingService.getInstance().get(context,
-                Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE,
-                params, ValidationResult.class, meta);
+        return NetLicensingService.getInstance().post(context,
+                Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
+                ValidationResult.class, meta);
     }
 
 }
