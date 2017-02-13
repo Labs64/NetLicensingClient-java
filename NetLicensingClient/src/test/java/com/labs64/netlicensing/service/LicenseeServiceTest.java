@@ -175,6 +175,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
                 .get(Constants.LicensingModel.Rental.EXPIRATION_WARNING_LEVEL).getValue());
     }
 
+    @Test
+    public void testTransfer() throws Exception {
+        // TODO: Dummy test
+    }
+
     // *** NLIC test mock resource ***
 
     @Override

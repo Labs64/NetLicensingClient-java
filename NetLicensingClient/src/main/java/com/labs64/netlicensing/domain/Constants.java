@@ -100,9 +100,12 @@ public final class Constants {
     public static final class Licensee {
         public static final String ENDPOINT_PATH = "licensee";
         public static final String ENDPOINT_PATH_VALIDATE = "validate";
+        public static final String ENDPOINT_PATH_TRANSFER = "transfer";
         public static final String LICENSEE_NUMBER = "licenseeNumber";
+        public static final String FROM_LICENSEE = "fromLicensee";
         public static final String PROP_LICENSEE_NAME = "licenseeName";
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
+        public static final String PROP_IS_TRANSFER = "isTransfer";
     }
 
     public static final class License {
