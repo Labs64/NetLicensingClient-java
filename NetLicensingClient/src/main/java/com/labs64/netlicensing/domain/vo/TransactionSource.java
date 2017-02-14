@@ -48,5 +48,10 @@ public enum TransactionSource {
     /**
      * Auto transaction for product delete with forceCascade.
      */
-    AUTO_PRODUCT_DELETE
+    AUTO_PRODUCT_DELETE,
+
+    /**
+     * Auto transaction for transfer licenses between licensee.
+     */
+    AUTO_LICENSES_TRANSFER
 }
