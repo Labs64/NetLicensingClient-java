@@ -20,10 +20,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -107,7 +107,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals(licenseeNumber, licensee.getNumber());
         assertEquals(true, licensee.getActive());
         assertEquals(productNumber, licensee.getProduct().getNumber());
-        assertEquals("Custom property value", licensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
+        assertEquals("Custom property value", licensee.getProperties().get(LICENSEE_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -136,8 +136,8 @@ public class LicenseeServiceTest extends BaseServiceTest {
         assertEquals("L002-TEST", updatedLicensee.getNumber());
         assertEquals(true, updatedLicensee.getActive());
         assertEquals(productNumber, updatedLicensee.getProduct().getNumber());
-        assertEquals("New property value", updatedLicensee.getLicenseeProperties().get(LICENSEE_CUSTOM_PROPERTY));
-        assertNull(updatedLicensee.getLicenseeProperties().get(LICENSEE_DELETING_PROPERTY));
+        assertEquals("New property value", updatedLicensee.getProperties().get(LICENSEE_CUSTOM_PROPERTY));
+        assertNull(updatedLicensee.getProperties().get(LICENSEE_DELETING_PROPERTY));
     }
 
     @Test
@@ -221,11 +221,11 @@ public class LicenseeServiceTest extends BaseServiceTest {
          *            licensee name
          * @return response with XML representation of validation result
          */
-        @GET
+        @POST
         @Path("{licenseeNumber}/validate")
         public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
-                @QueryParam("productNumber") final String productNumber,
-                @QueryParam("licenseeName") final String licenseeName) {
+                @FormParam("productNumber") final String productNumber,
+                @FormParam("licenseeName") final String licenseeName) {
 
             if (!productNumber.equals(productNumber)) {
                 return unexpectedValueErrorResponse("productNumber");
