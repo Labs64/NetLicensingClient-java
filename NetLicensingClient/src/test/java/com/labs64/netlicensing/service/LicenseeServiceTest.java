@@ -263,14 +263,14 @@ public class LicenseeServiceTest extends BaseServiceTest {
          *
          * @param licenseeNumber
          *            licensee number
-         * @param fromLicensee
+         * @param transfer
          *            transfer licensee number
          * @return response with XML representation of transfer result
          */
         @POST
         @Path("{licenseeNumber}/transfer")
         public Response transferLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
-                @FormParam("fromLicensee") final String fromLicensee) {
+                @FormParam("transfer") final String transferLicensee) {
 
             final Netlicensing netlicensing = JAXBUtils
                     .readObject(TEST_CASE_BASE + "netlicensing-licensee-transfer.xml",

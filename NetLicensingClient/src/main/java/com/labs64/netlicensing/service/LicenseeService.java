@@ -237,20 +237,20 @@ public class LicenseeService {
      *            determines the vendor on whose behalf the call is performed
      * @param number
      *            licensee number
-     * @param fromNumber
+     * @param transferNumber
      *            licensee number from which transfer will be happen
      * @return updated licensee.
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
      *             exceptions will be transformed to the corresponding service response messages.
      */
-    public static Licensee transfer(final Context context, final String number, final String fromNumber)
+    public static Licensee transfer(final Context context, final String number, final String transferNumber)
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
-        CheckUtils.paramNotEmpty(fromNumber, "fromNumber");
+        CheckUtils.paramNotEmpty(transferNumber, "transferNumber");
 
         final Form form = new Form();
-        form.param(Constants.Licensee.FROM_LICENSEE, fromNumber);
+        form.param(Constants.Licensee.TRANSFER, transferNumber);
 
         return NetLicensingService.getInstance().post(context,
                 Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_TRANSFER, form,
