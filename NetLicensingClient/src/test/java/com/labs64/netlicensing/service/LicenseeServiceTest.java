@@ -177,7 +177,26 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testTransfer() throws Exception {
-        // TODO: Dummy test
+        final String transferLicenseeNumber = "L002-TEST";
+
+        final Licensee licensee = new LicenseeImpl();
+        licensee.setNumber(licenseeNumber);
+        licensee.setActive(true);
+        LicenseeService.create(context, productNumber, licensee);
+
+        final Licensee transferLicensee = new LicenseeImpl();
+        transferLicensee.setNumber(transferLicenseeNumber);
+        transferLicensee.setActive(true);
+        transferLicensee.addProperty(Constants.Licensee.PROP_IS_TRANSFER, Boolean.toString(true));
+        LicenseeService.create(context, productNumber, transferLicensee);
+
+        final Licensee transferToLicensee = LicenseeService.transfer(context, licenseeNumber, transferLicenseeNumber);
+
+        assertNotNull(transferToLicensee);
+        assertEquals(licenseeNumber, transferToLicensee.getNumber());
+        assertEquals(true, transferToLicensee.getActive());
+        assertEquals(productNumber, transferToLicensee.getProduct().getNumber());
+        assertNull(transferToLicensee.getProperties().get(LICENSEE_DELETING_PROPERTY));
     }
 
     // *** NLIC test mock resource ***
@@ -236,6 +255,26 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
                     + "netlicensing-licensee-validate.xml", Netlicensing.class);
+            return Response.ok(netlicensing).build();
+        }
+
+        /**
+         * Mock for "transfer licensee" service.
+         *
+         * @param licenseeNumber
+         *            licensee number
+         * @param fromLicensee
+         *            transfer licensee number
+         * @return response with XML representation of transfer result
+         */
+        @POST
+        @Path("{licenseeNumber}/transfer")
+        public Response transferLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
+                @FormParam("fromLicensee") final String fromLicensee) {
+
+            final Netlicensing netlicensing = JAXBUtils
+                    .readObject(TEST_CASE_BASE + "netlicensing-licensee-transfer.xml",
+                            Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
     }

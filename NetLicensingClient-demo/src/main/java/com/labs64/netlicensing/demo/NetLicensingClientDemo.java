@@ -327,6 +327,46 @@ public class NetLicensingClientDemo {
 
             // endregion
 
+            // region ********* Transfer
+            Licensee transferLicensee = new LicenseeImpl();
+            transferLicensee.setNumber("TR" + licenseeNumber);
+            transferLicensee.getProperties().put(Constants.Licensee.PROP_IS_TRANSFER, Boolean.toString(true));
+            transferLicensee = LicenseeService.create(context, productNumber, transferLicensee);
+            out.writeObject("Added transfer licensee:", transferLicensee);
+
+            final License transferLicense = new LicenseImpl();
+            transferLicense.setNumber("LTR" + licenseNumber);
+            final License newTransferLicense = LicenseService.create(context, transferLicensee.getNumber(),
+                    licenseTemplateNumber, null, transferLicense);
+            out.writeObject("Added license for transfer:", newTransferLicense);
+
+            final Licensee transfer = LicenseeService.transfer(context, licensee.getNumber(),
+                    transferLicensee.getNumber());
+            out.writeObject("Transfer result:", transfer);
+
+            licenses = LicenseService.list(context, "licenseeNumber=" + licensee.getNumber());
+            out.writePage("Got the following licenses after transfer:", licenses);
+
+            Licensee transferLicenseeWithApiKey = new LicenseeImpl();
+            transferLicenseeWithApiKey.setNumber("Key" + licenseeNumber);
+            transferLicenseeWithApiKey.getProperties().put(Constants.Licensee.PROP_IS_TRANSFER, Boolean.toString(true));
+            transferLicenseeWithApiKey = LicenseeService.create(context, productNumber, transferLicenseeWithApiKey);
+
+            final License transferLicenseWithApiKey = new LicenseImpl();
+            transferLicenseWithApiKey.setNumber("Key" + licenseNumber);
+            LicenseService.create(context, transferLicenseeWithApiKey.getNumber(), licenseTemplateNumber, null,
+                    transferLicenseWithApiKey);
+
+            context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
+            final Licensee transferWithApiKey = LicenseeService.transfer(context, licensee.getNumber(),
+                    transferLicenseeWithApiKey.getNumber());
+            context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
+            out.writeObject("Transfer result with Api Key:", transferWithApiKey);
+
+            licenses = LicenseService.list(context, "licenseeNumber=" + licensee.getNumber());
+            out.writePage("Got the following licenses after transfer:", licenses);
+            // endregion
+
             out.writeMessage("All done.");
 
         } catch (final NetLicensingException e) {
