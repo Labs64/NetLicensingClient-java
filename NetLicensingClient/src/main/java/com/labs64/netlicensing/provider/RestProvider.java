@@ -21,11 +21,19 @@ import com.labs64.netlicensing.provider.auth.Authentication;
  */
 public interface RestProvider {
 
+    public interface Configuration {
+
+        String getUserAgent();
+
+        boolean isLoggingEnabled();
+
+    }
+
     /**
      * Helper method for performing REST requests with optional REST parameter map.
      * <p/>
      * This method has a long list of parameters. It is only intended for internal use.
-     * 
+     *
      * @param method
      *            the HTTP method to be used, i.e. GET, PUT, POST.
      * @param urlTemplate
@@ -67,5 +75,11 @@ public interface RestProvider {
      * @return authenticated RESTful provider
      */
     RestProvider authenticate(Authentication authentication);
+
+    /**
+     * @param configuration
+     *            {@link Configuration} configuration to use for the provider
+     */
+    void configure(Configuration configuration);
 
 }

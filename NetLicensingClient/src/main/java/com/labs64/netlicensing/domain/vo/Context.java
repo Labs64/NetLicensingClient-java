@@ -23,6 +23,10 @@ import com.labs64.netlicensing.domain.Constants;
  */
 public class Context extends GenericContext<String> {
 
+    public Context() {
+        super(String.class);
+    }
+
     public Context setBaseUrl(final String baseUrl) {
         return (Context) this.setValue(Constants.BASE_URL, baseUrl);
     }

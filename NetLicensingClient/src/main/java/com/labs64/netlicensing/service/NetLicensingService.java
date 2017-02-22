@@ -199,14 +199,14 @@ public class NetLicensingService {
                 combinedRequest.param(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
             } else {
                 if (combinedQueryParams == null) {
-                    combinedQueryParams = new HashMap<String, Object>();
+                    combinedQueryParams = new HashMap<>();
                 }
                 combinedQueryParams.put(Constants.Vendor.VENDOR_NUMBER, context.getVendorNumber());
             }
         }
 
         final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
-        authenticate(restProvider, context);
+        configure(restProvider, context);
 
         final RestResponse<Netlicensing> response = restProvider.call(method, urlTemplate, combinedRequest, Netlicensing.class,
                 combinedQueryParams);
@@ -241,7 +241,7 @@ public class NetLicensingService {
      *            additional context
      * @throws RestException
      */
-    private void authenticate(final RestProvider restProvider, final Context context) throws RestException {
+    private void configure(final RestProvider restProvider, final Context context) throws RestException {
         if (context.getSecurityMode() == null) {
             throw new RestException("Security mode must be specified");
         }
@@ -254,6 +254,12 @@ public class NetLicensingService {
             break;
         default:
             throw new RestException("Unknown security mode");
+        }
+        if (context.containsKey(RestProvider.Configuration.class)) {
+            final Object config = context.getObject(RestProvider.Configuration.class);
+            if (config instanceof RestProvider.Configuration) {
+                restProvider.configure((RestProvider.Configuration) config);
+            }
         }
     }
 
