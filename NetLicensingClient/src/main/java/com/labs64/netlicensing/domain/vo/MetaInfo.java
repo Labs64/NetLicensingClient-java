@@ -14,7 +14,7 @@ package com.labs64.netlicensing.domain.vo;
 
 public class MetaInfo extends GenericContext<String> {
 
-    public MetaInfo(final Class<String> v) {
+    public MetaInfo() {
         super(String.class);
     }
 
