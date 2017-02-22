@@ -7,6 +7,7 @@ jdk:
   - oraclejdk8
 script:
   - mvn clean verify
-  - java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
+# Temporary disabled due to changes incompatible with previous release
+#  - java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
 after_success:
   - test "${TRAVIS_JDK_VERSION}" == "openjdk7" && test "${TRAVIS_TEST_RESULT}" == "0" && mvn deploy --settings travis-mvn-settings.xml -Drepo.snapshots.url=https://oss.sonatype.org/content/repositories/snapshots -DskipTests=true -B
