@@ -155,6 +155,17 @@ public class ProductDiscountImpl implements ProductDiscount, Serializable {
     }
 
     @Override
+    public String asString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getTotalPrice());
+        builder.append(";");
+        builder.append(getCurrency());
+        builder.append(";");
+        builder.append(getStringAmount());
+        return builder.toString();
+    }
+
+    @Override
     public int compareTo(final ProductDiscount productDiscount) {
         return productDiscount.getTotalPrice().compareTo(totalPrice); // reverse order!
     }

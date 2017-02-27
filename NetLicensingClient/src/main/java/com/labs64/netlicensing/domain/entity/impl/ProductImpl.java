@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Form;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -164,7 +166,6 @@ public class ProductImpl extends BaseEntityImpl implements Product {
     @Override
     public String toString() {
         final Map<String, Object> propMap = asPropertiesMap();
-        propMap.put(Constants.Product.DISCOUNTS, getProductDiscounts());
         return toString(propMap);
     }
 
@@ -177,6 +178,17 @@ public class ProductImpl extends BaseEntityImpl implements Product {
         map.put(Constants.Product.DESCRIPTION, getDescription());
         map.put(Constants.Product.LICENSING_INFO, getLicensingInfo());
         return map;
+    }
+
+    @Override
+    public Form asRequestForm() {
+        final Form form = super.asRequestForm();
+        if (productDiscounts != null) {
+            for (final ProductDiscount productDiscount : productDiscounts) {
+                form.param(Constants.DISCOUNT, productDiscount.asString());
+            }
+        }
+        return form;
     }
 
 }
