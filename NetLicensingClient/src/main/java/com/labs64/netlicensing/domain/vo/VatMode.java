@@ -1,27 +1,25 @@
 package com.labs64.netlicensing.domain.vo;
 
-public enum PriceType {
+public enum VatMode {
 
     /**
-     * ProductPrice: brutto.
+     * VatMode: brutto.
      */
     BRUTTO("BRUTTO"),
 
     /**
-     * ProductPrice: netto.
+     * VatMode: netto.
      */
     NETTO("NETTO");
 
     private final String value;
 
     /**
-     * Instantiates a new license type.
-     *
-     * @param priceTypeValue
-     *            priceType value
+     * @param vatModeValue
+     *            vatMode value
      */
-    PriceType(final String priceTypeValue) {
-        value = priceTypeValue;
+    VatMode(final String vatModeValue) {
+        value = vatModeValue;
     }
 
     /**
@@ -44,17 +42,17 @@ public enum PriceType {
     }
 
     /**
-     * Parse product price type to {@link PriceType} enum.
+     * Parse product VAT mode to {@link VatMode} enum.
      *
      * @param value
-     *            priceType value
-     * @return {@link PriceType} enum object or throws {@link IllegalArgumentException} if no corresponding
-     *         {@link PriceType} enum object found
+     *            vatMode value
+     * @return {@link VatMode} enum object or throws {@link IllegalArgumentException} if no corresponding
+     *         {@link VatMode} enum object found
      */
-    public static PriceType parseValue(final String value) {
-        for (final PriceType priceType : PriceType.values()) {
-            if (priceType.value.equalsIgnoreCase(value)) {
-                return priceType;
+    public static VatMode parseValue(final String value) {
+        for (final VatMode vatMode : VatMode.values()) {
+            if (vatMode.value.equalsIgnoreCase(value)) {
+                return vatMode;
             }
         }
         throw new IllegalArgumentException(value);
@@ -67,7 +65,7 @@ public enum PriceType {
      *            the val
      * @return the enum safe
      */
-    public static PriceType parseValueSafe(final String val) {
+    public static VatMode parseValueSafe(final String val) {
         try {
             return parseValue(val);
         } catch (final IllegalArgumentException e) {
