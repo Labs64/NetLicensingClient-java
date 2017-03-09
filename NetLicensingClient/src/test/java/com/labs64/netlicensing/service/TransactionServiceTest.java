@@ -70,7 +70,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         newTransaction.setNumber("TR001TEST");
         newTransaction.setActive(false);
         newTransaction.setCurrency(Currency.EUR);
-        newTransaction.setPrice(new BigDecimal("100"));
+        newTransaction.setGrandTotal(new BigDecimal("100"));
         newTransaction.setDiscount(new BigDecimal("5"));
         newTransaction.addProperty(TRANSACTION_CUSTOM_PROPERTY, "Custom property value");
 
@@ -81,7 +81,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals("TR001TEST", createdTransaction.getNumber());
         assertEquals(false, createdTransaction.getActive());
         assertEquals(Currency.EUR, createdTransaction.getCurrency());
-        assertEquals(new BigDecimal("100.00"), createdTransaction.getPrice());
+        assertEquals(new BigDecimal("100.00"), createdTransaction.getGrandTotal());
         assertEquals(new BigDecimal("5.00"), createdTransaction.getDiscount());
         assertEquals("Custom property value",
                 createdTransaction.getProperties().get(TRANSACTION_CUSTOM_PROPERTY));
@@ -111,7 +111,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         final Transaction newTransaction = new TransactionImpl();
         newTransaction.setSource(TransactionSource.SHOP);
         newTransaction.setStatus(TransactionStatus.PENDING);
-        newTransaction.setPrice(new BigDecimal("80"));
+        newTransaction.setGrandTotal(new BigDecimal("80"));
         newTransaction.setDiscount(new BigDecimal("4"));
 
         thrown.expect(RestException.class);
@@ -123,7 +123,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         final Transaction newTransaction = new TransactionImpl();
         newTransaction.setSource(TransactionSource.SHOP);
         newTransaction.setStatus(TransactionStatus.PENDING);
-        newTransaction.setPrice(new BigDecimal("80"));
+        newTransaction.setGrandTotal(new BigDecimal("80"));
         newTransaction.setCurrency(Currency.EUR);
 
         thrown.expect(RestException.class);
@@ -139,7 +139,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         assertEquals(true, transaction.getActive());
         assertEquals(TransactionStatus.CLOSED, transaction.getStatus());
         assertEquals(TransactionSource.SHOP, transaction.getSource());
-        assertEquals(new BigDecimal("21.00"), transaction.getPrice());
+        assertEquals(new BigDecimal("21.00"), transaction.getGrandTotal());
         assertEquals(new BigDecimal("9.00"), transaction.getDiscount());
         assertEquals(Currency.EUR, transaction.getCurrency());
         assertEquals(DateUtils.parseDate("2014-07-07T21:30:46.658Z").getTime(), transaction.getDateCreated());
@@ -200,12 +200,12 @@ public class TransactionServiceTest extends BaseServiceTest {
                     || !formParams.containsKey(Constants.Transaction.STATUS)) {
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
-            if (formParams.containsKey(Constants.PRICE)
+            if (formParams.containsKey(Constants.Transaction.GRAND_TOTAL)
                     && (!formParams.containsKey(Constants.DISCOUNT) || !formParams.containsKey(Constants.CURRENCY))) {
                 return Response.status(Response.Status.BAD_REQUEST).entity(netlicensing).build();
             }
 
-            roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);
+            roundParamValueToTwoDecimalPlaces(formParams, Constants.Transaction.GRAND_TOTAL);
             roundParamValueToTwoDecimalPlaces(formParams, Constants.DISCOUNT);
 
             final Map<String, String> defaultPropertyValues = new HashMap<String, String>();

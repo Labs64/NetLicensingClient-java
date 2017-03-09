@@ -53,9 +53,9 @@ public interface Transaction extends BaseEntity {
 
     void setSource(TransactionSource source);
 
-    BigDecimal getPrice();
+    BigDecimal getGrandTotal();
 
-    void setPrice(BigDecimal price);
+    void setGrandTotal(BigDecimal grandTotal);
 
     BigDecimal getDiscount();
 

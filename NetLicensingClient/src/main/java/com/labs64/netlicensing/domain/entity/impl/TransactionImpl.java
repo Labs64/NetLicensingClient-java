@@ -54,7 +54,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         reserved.add(Constants.Transaction.DATE_CREATED);
         reserved.add(Constants.Transaction.DATE_CLOSED);
         reserved.add(Constants.IN_USE);
-        reserved.add(Constants.PRICE);
+        reserved.add(Constants.Transaction.GRAND_TOTAL);
         reserved.add(Constants.DISCOUNT);
         reserved.add(Constants.CURRENCY);
         return reserved;
@@ -81,12 +81,12 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    public BigDecimal getPrice() {
+    public BigDecimal getGrandTotal() {
         return price;
     }
 
     @Override
-    public void setPrice(final BigDecimal price) {
+    public void setGrandTotal(final BigDecimal price) {
         this.price = price;
     }
 
@@ -156,7 +156,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         final Map<String, Object> map = super.asPropertiesMap();
         map.put(Constants.Transaction.STATUS, getStatus());
         map.put(Constants.Transaction.SOURCE, getSource());
-        map.put(Constants.PRICE, getPrice());
+        map.put(Constants.Transaction.GRAND_TOTAL, getGrandTotal());
         map.put(Constants.DISCOUNT, getDiscount());
         map.put(Constants.CURRENCY, getCurrency());
         return map;

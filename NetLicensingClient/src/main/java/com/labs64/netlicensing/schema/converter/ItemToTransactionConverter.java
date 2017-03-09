@@ -41,9 +41,9 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
         target.setSource(TransactionSource.valueOf(SchemaFunction.propertyByName(source.getProperty(),
                 Constants.Transaction.SOURCE)
                 .getValue()));
-        if (SchemaFunction.propertyByName(source.getProperty(), Constants.PRICE).getValue() != null) {
-            target.setPrice(DatatypeConverter.parseDecimal(SchemaFunction.propertyByName(source.getProperty(),
-                    Constants.PRICE).getValue()));
+        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Transaction.GRAND_TOTAL).getValue() != null) {
+            target.setGrandTotal(DatatypeConverter.parseDecimal(SchemaFunction.propertyByName(source.getProperty(),
+                    Constants.Transaction.GRAND_TOTAL).getValue()));
         }
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.DISCOUNT).getValue() != null) {
             target.setDiscount(DatatypeConverter.parseDecimal(SchemaFunction.propertyByName(source.getProperty(),

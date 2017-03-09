@@ -154,6 +154,7 @@ public final class Constants {
     public static final class Transaction {
         public static final String ENDPOINT_PATH = "transaction";
         public static final String TRANSACTION_NUMBER = "transactionNumber";
+        public static final String GRAND_TOTAL = "grandTotal";
         public static final String STATUS = "status";
         public static final String SOURCE = "source";
         public static final String DATE_CREATED = "datecreated";
