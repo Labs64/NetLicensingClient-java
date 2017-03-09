@@ -8,7 +8,7 @@
             <property name="active">true</property>
             <property name="status">PENDING</property>
             <property name="source">AUTO_LICENSE_CREATE</property>
-            <property name="price">100.00</property>
+            <property name="grandTotal">100.00</property>
             <property name="discount">5.00</property>
             <property name="currency">EUR</property>
             <property name="datecreated">2014-07-20T00:49:02.640Z</property>
