@@ -107,7 +107,7 @@ public class TransactionServiceTest extends BaseServiceTest {
     }
 
     @Test
-    public void testCreateWithPriceAndDiscountAndWithoutCurrency() throws Exception {
+    public void testCreateWithGrandTotalAndDiscountAndWithoutCurrency() throws Exception {
         final Transaction newTransaction = new TransactionImpl();
         newTransaction.setSource(TransactionSource.SHOP);
         newTransaction.setStatus(TransactionStatus.PENDING);
@@ -119,7 +119,7 @@ public class TransactionServiceTest extends BaseServiceTest {
     }
 
     @Test
-    public void testCreateWithPriceAndCurrencyAndWithoutDiscount() throws Exception {
+    public void testCreateWithGrandTotalAndCurrencyAndWithoutDiscount() throws Exception {
         final Transaction newTransaction = new TransactionImpl();
         newTransaction.setSource(TransactionSource.SHOP);
         newTransaction.setStatus(TransactionStatus.PENDING);

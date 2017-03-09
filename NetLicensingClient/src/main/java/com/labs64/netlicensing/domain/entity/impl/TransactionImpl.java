@@ -34,7 +34,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     private TransactionSource source;
 
-    private BigDecimal price;
+    private BigDecimal grandTotal;
 
     private BigDecimal discount;
 
@@ -82,12 +82,12 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     @Override
     public BigDecimal getGrandTotal() {
-        return price;
+        return grandTotal;
     }
 
     @Override
-    public void setGrandTotal(final BigDecimal price) {
-        this.price = price;
+    public void setGrandTotal(final BigDecimal grandTotal) {
+        this.grandTotal = grandTotal;
     }
 
     @Override

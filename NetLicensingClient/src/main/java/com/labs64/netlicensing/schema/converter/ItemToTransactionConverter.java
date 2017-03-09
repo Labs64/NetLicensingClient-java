@@ -65,7 +65,7 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!TransactionImpl.getReservedProps().contains(property.getName())) {
-                target.getTransactionProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 
