@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MultivaluedHashMap;
@@ -47,7 +48,7 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
      * @return the list of reserved property names
      */
     public static List<String> getReservedProps() {
-        final List<String> reserved = new ArrayList<String>();
+        final List<String> reserved = new ArrayList<>();
         reserved.add(Constants.ID);
         reserved.add(Constants.NUMBER);
         reserved.add(Constants.ACTIVE);
@@ -78,7 +79,7 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
     @Override
     public Map<String, String> getProperties() {
         if (properties == null) {
-            properties = new HashMap<String, String>();
+            properties = new HashMap<>();
         }
         return properties;
     }
@@ -101,16 +102,10 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
     @Override
     public Form asRequestForm() {
         final Form form = new Form();
-        final MultivaluedMap<String, Object> propMap = asPropertiesMap();
-        for (final String propKey : propMap.keySet()) {
-            if (propMap.get(propKey).size() > 1) {
-                for (final Object propValue : propMap.get(propKey)) {
-                    form.param(propKey, propValue.toString());
-                }
-            } else {
-                final Object propValue = propMap.getFirst(propKey);
-                if (propValue != null) {
-                    form.param(propKey, propValue.toString());
+        for (final Entry<String, List<Object>> prop : asPropertiesMap().entrySet()) {
+            for (final Object value : prop.getValue()) {
+                if (value != null) {
+                    form.param(prop.getKey(), value.toString());
                 }
             }
         }
@@ -118,7 +113,7 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
     }
 
     protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = new MultivaluedHashMap<String, Object>();
+        final MultivaluedMap<String, Object> map = new MultivaluedHashMap<>();
         map.add(Constants.NUMBER, getNumber());
         map.add(Constants.ACTIVE, getActive());
         if (properties != null) {
@@ -126,7 +121,6 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
                 map.add(lp.getKey(), lp.getValue());
             }
         }
-
         return map;
     }
 

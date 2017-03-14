@@ -34,11 +34,11 @@ import com.labs64.netlicensing.domain.vo.TransactionStatus;
  * <p/>
  * <b>source</b> - see {@link TransactionSource}
  * <p/>
- * <b>grandTotal</b> - grandTotal price for the transaction.
+ * <b>grandTotal</b> - grand total for SHOP transaction (see source).
  * <p/>
- * <b>discount</b> - discount for the transaction.
+ * <b>discount</b> - discount for SHOP transaction (see source).
  * <p/>
- * <b>currency</b> - specifies currency for the transaction grandTotal price. Check data types to discover which
+ * <b>currency</b> - specifies currency for money fields (grandTotal and discount). Check data types to discover which
  * currencies are supported.
  */
 public interface Transaction extends BaseEntity {

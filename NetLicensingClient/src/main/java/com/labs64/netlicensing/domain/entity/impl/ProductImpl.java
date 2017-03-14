@@ -116,7 +116,7 @@ public class ProductImpl extends BaseEntityImpl implements Product {
     @Override
     public Collection<ProductModule> getProductModules() {
         if (productModules == null) {
-            productModules = new ArrayList<ProductModule>();
+            productModules = new ArrayList<>();
         }
         return productModules;
     }
@@ -128,7 +128,7 @@ public class ProductImpl extends BaseEntityImpl implements Product {
     @Override
     public Collection<Licensee> getLicensees() {
         if (licensees == null) {
-            licensees = new ArrayList<Licensee>();
+            licensees = new ArrayList<>();
         }
         return licensees;
     }
@@ -140,7 +140,7 @@ public class ProductImpl extends BaseEntityImpl implements Product {
     @Override
     public List<ProductDiscount> getProductDiscounts() {
         if (productDiscounts == null) {
-            productDiscounts = new ArrayList<ProductDiscount>();
+            productDiscounts = new ArrayList<>();
         }
         return productDiscounts;
     }
@@ -161,12 +161,6 @@ public class ProductImpl extends BaseEntityImpl implements Product {
     @Override
     public Map<String, String> getProductProperties() {
         return getProperties();
-    }
-
-    @Override
-    public String toString() {
-        final MultivaluedMap<String, Object> propMap = asPropertiesMap();
-        return toString(propMap);
     }
 
     @Override
