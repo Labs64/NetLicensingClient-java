@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedMap;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
@@ -165,30 +165,24 @@ public class ProductImpl extends BaseEntityImpl implements Product {
 
     @Override
     public String toString() {
-        final Map<String, Object> propMap = asPropertiesMap();
+        final MultivaluedMap<String, Object> propMap = asPropertiesMap();
         return toString(propMap);
     }
 
     @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        map.put(Constants.NAME, getName());
-        map.put(Constants.VERSION, getVersion());
-        map.put(Constants.Product.LICENSEE_AUTO_CREATE, getLicenseeAutoCreate());
-        map.put(Constants.Product.DESCRIPTION, getDescription());
-        map.put(Constants.Product.LICENSING_INFO, getLicensingInfo());
-        return map;
-    }
-
-    @Override
-    public Form asRequestForm() {
-        final Form form = super.asRequestForm();
+    protected MultivaluedMap<String, Object> asPropertiesMap() {
+        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
+        map.add(Constants.NAME, getName());
+        map.add(Constants.VERSION, getVersion());
+        map.add(Constants.Product.LICENSEE_AUTO_CREATE, getLicenseeAutoCreate());
+        map.add(Constants.Product.DESCRIPTION, getDescription());
+        map.add(Constants.Product.LICENSING_INFO, getLicensingInfo());
         if (productDiscounts != null) {
             for (final ProductDiscount productDiscount : productDiscounts) {
-                form.param(Constants.DISCOUNT, productDiscount.asString());
+                map.add(Constants.DISCOUNT, productDiscount.asString());
             }
         }
-        return form;
+        return map;
     }
 
 }

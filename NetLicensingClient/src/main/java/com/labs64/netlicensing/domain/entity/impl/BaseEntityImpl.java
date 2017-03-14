@@ -15,11 +15,12 @@ package com.labs64.netlicensing.domain.entity.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.BaseEntity;
@@ -100,29 +101,36 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
     @Override
     public Form asRequestForm() {
         final Form form = new Form();
-        final Map<String, Object> propMap = asPropertiesMap();
+        final MultivaluedMap<String, Object> propMap = asPropertiesMap();
         for (final String propKey : propMap.keySet()) {
-            final Object propValue = propMap.get(propKey);
-            if (propValue != null) {
-                form.param(propKey, propValue.toString());
+            if (propMap.get(propKey).size() > 1) {
+                for (final Object propValue : propMap.get(propKey)) {
+                    form.param(propKey, propValue.toString());
+                }
+            } else {
+                final Object propValue = propMap.getFirst(propKey);
+                if (propValue != null) {
+                    form.param(propKey, propValue.toString());
+                }
             }
         }
         return form;
     }
 
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put(Constants.NUMBER, getNumber());
-        map.put(Constants.ACTIVE, getActive());
+    protected MultivaluedMap<String, Object> asPropertiesMap() {
+        final MultivaluedMap<String, Object> map = new MultivaluedHashMap<String, Object>();
+        map.add(Constants.NUMBER, getNumber());
+        map.add(Constants.ACTIVE, getActive());
         if (properties != null) {
             for (final Map.Entry<String, String> lp : properties.entrySet()) {
-                map.put(lp.getKey(), lp.getValue());
+                map.add(lp.getKey(), lp.getValue());
             }
         }
+
         return map;
     }
 
-    protected String toString(final Map<String, Object> propMap) {
+    protected String toString(final MultivaluedMap<String, Object> propMap) {
         final StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
         builder.append(" [");
         boolean firstProp = true;

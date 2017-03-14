@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Currency;
@@ -152,13 +154,13 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     }
 
     @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        map.put(Constants.Transaction.STATUS, getStatus());
-        map.put(Constants.Transaction.SOURCE, getSource());
-        map.put(Constants.Transaction.GRAND_TOTAL, getGrandTotal());
-        map.put(Constants.DISCOUNT, getDiscount());
-        map.put(Constants.CURRENCY, getCurrency());
+    protected MultivaluedMap<String, Object> asPropertiesMap() {
+        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
+        map.add(Constants.Transaction.STATUS, getStatus());
+        map.add(Constants.Transaction.SOURCE, getSource());
+        map.add(Constants.Transaction.GRAND_TOTAL, getGrandTotal());
+        map.add(Constants.DISCOUNT, getDiscount());
+        map.add(Constants.CURRENCY, getCurrency());
         return map;
     }
 

@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.vo.TokenType;
@@ -87,11 +89,11 @@ public class TokenImpl extends BaseEntityImpl implements Token {
     }
 
     @Override
-    protected Map<String, Object> asPropertiesMap() {
-        final Map<String, Object> map = super.asPropertiesMap();
-        map.put(Constants.Token.EXPIRATION_TIME, getExpirationTime());
-        map.put(Constants.Token.TOKEN_TYPE, getTokenType());
-        map.put(Constants.Token.TOKEN_PROP_VENDORNUMBER, getVendorNumber());
+    protected MultivaluedMap<String, Object> asPropertiesMap() {
+        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
+        map.add(Constants.Token.EXPIRATION_TIME, getExpirationTime());
+        map.add(Constants.Token.TOKEN_TYPE, getTokenType());
+        map.add(Constants.Token.TOKEN_PROP_VENDORNUMBER, getVendorNumber());
         return map;
     }
 
