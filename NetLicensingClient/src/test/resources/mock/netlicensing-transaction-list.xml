@@ -13,7 +13,7 @@
             <property name="inUse">true</property>
             <property name="countryId">1</property>
             <property name="vat">19</property>
-            <property name="paymentType">BRUTTO</property>
+            <property name="paymentType">GROSS</property>
         </item>
         <item type="Transaction">
             <property name="number">TR002TEST</property>
@@ -25,7 +25,7 @@
             <property name="inUse">true</property>
             <property name="countryId">1</property>
             <property name="vat">19</property>
-            <property name="paymentType">BRUTTO</property>
+            <property name="paymentType">GROSS</property>
         </item>
         <item type="Transaction">
             <property name="number">TR003TEST</property>
@@ -37,7 +37,7 @@
             <property name="inUse">true</property>
             <property name="countryId">1</property>
             <property name="vat">19</property>
-            <property name="paymentType">BRUTTO</property>
+            <property name="paymentType">GROSS</property>
         </item>
     </items>
 </netlicensing>

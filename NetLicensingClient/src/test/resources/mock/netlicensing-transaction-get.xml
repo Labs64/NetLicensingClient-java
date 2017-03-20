@@ -13,7 +13,7 @@
             <property name="currency">EUR</property>
             <property name="countryId">1</property>
             <property name="vat">19</property>
-            <property name="paymentType">BRUTTO</property>
+            <property name="paymentType">GROSS</property>
             <property name="datecreated">2014-07-07T21:30:46.658Z</property>
             <property name="dateclosed">2014-07-07T21:30:46.658Z</property>
             <property name="inUse">true</property>

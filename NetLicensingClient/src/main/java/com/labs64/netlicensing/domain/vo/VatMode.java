@@ -3,14 +3,14 @@ package com.labs64.netlicensing.domain.vo;
 public enum VatMode {
 
     /**
-     * VatMode: brutto.
+     * VatMode: Gross
      */
-    BRUTTO("BRUTTO"),
+    GROSS("GROSS"),
 
     /**
-     * VatMode: netto.
+     * VatMode: Net
      */
-    NETTO("NETTO");
+    NET("NET");
 
     private final String value;
 

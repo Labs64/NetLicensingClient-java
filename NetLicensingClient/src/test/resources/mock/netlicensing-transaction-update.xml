@@ -18,7 +18,7 @@
             <property name="customProperty">Custom property value</property>
             <property name="countryId">1</property>
             <property name="vat">19</property>
-            <property name="paymentType">BRUTTO</property>
+            <property name="paymentType">GROSS</property>
         </item>
     </items>
 </netlicensing>
