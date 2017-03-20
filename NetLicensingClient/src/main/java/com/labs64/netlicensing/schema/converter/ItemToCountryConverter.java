@@ -36,9 +36,9 @@ public class ItemToCountryConverter extends ItemToEntityBaseConverter<Country> {
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.Country.NAME).getValue() != null) {
             target.setName(SchemaFunction.propertyByName(source.getProperty(), Constants.Country.NAME).getValue());
         }
-        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Country.VAT).getValue() != null) {
-            target.setVat(DatatypeConverter.parseDecimal(
-                    SchemaFunction.propertyByName(source.getProperty(), Constants.Country.VAT).getValue()));
+        if (SchemaFunction.propertyByName(source.getProperty(), Constants.Country.VAT_PERCENT).getValue() != null) {
+            target.setVatPercent(DatatypeConverter.parseDecimal(
+                    SchemaFunction.propertyByName(source.getProperty(), Constants.Country.VAT_PERCENT).getValue()));
         }
         if (SchemaFunction.propertyByName(source.getProperty(), Constants.Country.IS_EU).getValue() != null) {
             target.setIsEu(Boolean

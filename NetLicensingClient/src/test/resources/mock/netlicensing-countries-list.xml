@@ -6,19 +6,19 @@
         <item type="Country">
             <property name="code">AF</property>
             <property name="name">AFGHANISTAN</property>
-            <property name="vat"></property>
+            <property name="vatPercent"></property>
             <property name="isEu">false</property>
         </item>
         <item type="Country">
             <property name="code">DE</property>
             <property name="name">GERMANY</property>
-            <property name="vat">19</property>
+            <property name="vatPercent">19</property>
             <property name="isEu">true</property>
         </item>
         <item type="Country">
             <property name="code">AT</property>
             <property name="name">AUSTRIA</property>
-            <property name="vat">20</property>
+            <property name="vatPercent">20</property>
             <property name="isEu">true</property>
         </item>
     </items>

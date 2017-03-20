@@ -38,9 +38,9 @@ public interface Country extends BaseEntity {
 
     String getName();
 
-    void setVat(final BigDecimal vat);
+    void setVatPercent(final BigDecimal vat);
 
-    BigDecimal getVat();
+    BigDecimal getVatPercent();
 
     void setIsEu(final boolean isEu);
 

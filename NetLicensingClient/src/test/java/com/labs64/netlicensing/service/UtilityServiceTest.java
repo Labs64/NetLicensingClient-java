@@ -77,7 +77,7 @@ public class UtilityServiceTest extends BaseServiceTest {
         assertTrue(countries.hasContent());
         assertEquals(3, countries.getItemsNumber());
         assertEquals("GERMANY", countries.getContent().get(1).getName());
-        assertEquals(new BigDecimal("19"), countries.getContent().get(1).getVat());
+        assertEquals(new BigDecimal("19"), countries.getContent().get(1).getVatPercent());
         assertEquals(true, countries.getContent().get(1).getIsEu());
     }
 

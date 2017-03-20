@@ -30,7 +30,7 @@ public class CountryImpl extends BaseEntityImpl implements Country {
 
     private String name;
 
-    private BigDecimal vat;
+    private BigDecimal vatPercent;
 
     private boolean isEu;
 
@@ -55,13 +55,13 @@ public class CountryImpl extends BaseEntityImpl implements Country {
     }
 
     @Override
-    public void setVat(final BigDecimal vat) {
-        this.vat = vat;
+    public void setVatPercent(final BigDecimal vatPercent) {
+        this.vatPercent = vatPercent;
     }
 
     @Override
-    public BigDecimal getVat() {
-        return vat;
+    public BigDecimal getVatPercent() {
+        return vatPercent;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class CountryImpl extends BaseEntityImpl implements Country {
         final MultivaluedMap<String, Object> map = super.asPropertiesMap();
         map.add(Constants.Country.CODE, getCode());
         map.add(Constants.Country.NAME, getName());
-        map.add(Constants.Country.VAT, getVat());
+        map.add(Constants.Country.VAT_PERCENT, getVatPercent());
         map.add(Constants.Country.IS_EU, getIsEu());
         return map;
     }
@@ -96,9 +96,9 @@ public class CountryImpl extends BaseEntityImpl implements Country {
         builder.append("=");
         builder.append(getName());
         builder.append(", ");
-        builder.append(Constants.Country.VAT);
+        builder.append(Constants.Country.VAT_PERCENT);
         builder.append("=");
-        builder.append(getVat());
+        builder.append(getVatPercent());
         builder.append(", ");
         builder.append(Constants.Country.IS_EU);
         builder.append("=");
