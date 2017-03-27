@@ -187,7 +187,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         final Licensee transferLicensee = new LicenseeImpl();
         transferLicensee.setNumber(transferLicenseeNumber);
         transferLicensee.setActive(true);
-        transferLicensee.addProperty(Constants.Licensee.PROP_IS_TRANSFER, Boolean.toString(true));
+        transferLicensee.addProperty(Constants.Licensee.PROP_MARKED_FOR_TRANSFER, Boolean.toString(true));
         LicenseeService.create(context, productNumber, transferLicensee);
 
         final Licensee transferToLicensee = LicenseeService.transfer(context, licenseeNumber, transferLicenseeNumber);
@@ -219,7 +219,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
                 return errorResponse("MalformedRequestException", "Product number is not provided");
             }
 
-            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            final Map<String, String> defaultPropertyValues = new HashMap<>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             return create(formParams, defaultPropertyValues);
         }

@@ -330,7 +330,7 @@ public class NetLicensingClientDemo {
             // region ********* Transfer
             Licensee transferLicensee = new LicenseeImpl();
             transferLicensee.setNumber("TR" + licenseeNumber);
-            transferLicensee.getProperties().put(Constants.Licensee.PROP_IS_TRANSFER, Boolean.toString(true));
+            transferLicensee.getProperties().put(Constants.Licensee.PROP_MARKED_FOR_TRANSFER, Boolean.toString(true));
             transferLicensee = LicenseeService.create(context, productNumber, transferLicensee);
             out.writeObject("Added transfer licensee:", transferLicensee);
 
@@ -349,7 +349,8 @@ public class NetLicensingClientDemo {
 
             Licensee transferLicenseeWithApiKey = new LicenseeImpl();
             transferLicenseeWithApiKey.setNumber("Key" + licenseeNumber);
-            transferLicenseeWithApiKey.getProperties().put(Constants.Licensee.PROP_IS_TRANSFER, Boolean.toString(true));
+            transferLicenseeWithApiKey.getProperties().put(Constants.Licensee.PROP_MARKED_FOR_TRANSFER,
+                    Boolean.toString(true));
             transferLicenseeWithApiKey = LicenseeService.create(context, productNumber, transferLicenseeWithApiKey);
 
             final License transferLicenseWithApiKey = new LicenseImpl();
