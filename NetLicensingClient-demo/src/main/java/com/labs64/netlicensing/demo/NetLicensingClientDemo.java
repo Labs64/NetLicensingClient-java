@@ -340,9 +340,7 @@ public class NetLicensingClientDemo {
                     licenseTemplateNumber, null, transferLicense);
             out.writeObject("Added license for transfer:", newTransferLicense);
 
-            final Licensee transfer = LicenseeService.transfer(context, licensee.getNumber(),
-                    transferLicensee.getNumber());
-            out.writeObject("Transfer result:", transfer);
+            LicenseeService.transfer(context, licensee.getNumber(), transferLicensee.getNumber());
 
             licenses = LicenseService.list(context, "licenseeNumber=" + licensee.getNumber());
             out.writePage("Got the following licenses after transfer:", licenses);
@@ -359,10 +357,8 @@ public class NetLicensingClientDemo {
                     transferLicenseWithApiKey);
 
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            final Licensee transferWithApiKey = LicenseeService.transfer(context, licensee.getNumber(),
-                    transferLicenseeWithApiKey.getNumber());
+            LicenseeService.transfer(context, licensee.getNumber(), transferLicenseeWithApiKey.getNumber());
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
-            out.writeObject("Transfer result with Api Key:", transferWithApiKey);
 
             licenses = LicenseService.list(context, "licenseeNumber=" + licensee.getNumber());
             out.writePage("Got the following licenses after transfer:", licenses);

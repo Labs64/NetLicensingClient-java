@@ -47,7 +47,7 @@ public class LicenseeService {
 
     /**
      * Creates new licensee object with given properties.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param productNumber
@@ -73,7 +73,7 @@ public class LicenseeService {
 
     /**
      * Gets licensee by its number.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -91,7 +91,7 @@ public class LicenseeService {
 
     /**
      * Returns all licensees of a vendor.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param filter
@@ -102,7 +102,7 @@ public class LicenseeService {
      *             corresponding service response messages.
      */
     public static Page<Licensee> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -111,7 +111,7 @@ public class LicenseeService {
 
     /**
      * Updates licensee properties.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -134,7 +134,7 @@ public class LicenseeService {
 
     /**
      * Deletes licensee.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -149,14 +149,14 @@ public class LicenseeService {
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, Object> params = new HashMap<>();
         params.put(Constants.CASCADE, forceCascade);
         NetLicensingService.getInstance().delete(context, Constants.Licensee.ENDPOINT_PATH + "/" + number, params);
     }
 
     /**
      * Validates active licenses of the licensee.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -176,8 +176,8 @@ public class LicenseeService {
      */
     @Deprecated
     public static ValidationResult validate(final Context context, final String number, final String productNumber,
-            final String licenseeName, ValidationParameters validationParameters, final MetaInfo... meta)
-            throws NetLicensingException {
+            final String licenseeName, final ValidationParameters validationParameters, final MetaInfo... meta)
+                    throws NetLicensingException {
         validationParameters.setProductNumber(productNumber);
         validationParameters.setLicenseeName(licenseeName);
         return validate(context, number, validationParameters, meta);
@@ -185,7 +185,7 @@ public class LicenseeService {
 
     /**
      * Validates active licenses of the licensee.
-     * 
+     *
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
@@ -236,23 +236,22 @@ public class LicenseeService {
      * @param context
      *            determines the vendor on whose behalf the call is performed
      * @param number
-     *            licensee number
-     * @param transferNumber
-     *            licensee number from which transfer will be happen
-     * @return updated licensee.
+     *            the number of the licensee receiving licenses
+     * @param sourceLicenseeNumber
+     *            the number of the licensee delivering licenses
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
      *             exceptions will be transformed to the corresponding service response messages.
      */
-    public static Licensee transfer(final Context context, final String number, final String transferNumber)
+    public static void transfer(final Context context, final String number, final String sourceLicenseeNumber)
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
-        CheckUtils.paramNotEmpty(transferNumber, "transferNumber");
+        CheckUtils.paramNotEmpty(sourceLicenseeNumber, Constants.Licensee.SOURCE_LICENSEE_NUMBER);
 
         final Form form = new Form();
-        form.param(Constants.Licensee.TRANSFER, transferNumber);
+        form.param(Constants.Licensee.SOURCE_LICENSEE_NUMBER, sourceLicenseeNumber);
 
-        return NetLicensingService.getInstance().post(context,
+        NetLicensingService.getInstance().post(context,
                 Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_TRANSFER, form,
                 Licensee.class);
     }

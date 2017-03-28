@@ -177,7 +177,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testTransfer() throws Exception {
-        final String transferLicenseeNumber = "L002-TEST";
+        final String sourceLicenseeNumber = "L002-TEST";
 
         final Licensee licensee = new LicenseeImpl();
         licensee.setNumber(licenseeNumber);
@@ -185,18 +185,13 @@ public class LicenseeServiceTest extends BaseServiceTest {
         LicenseeService.create(context, productNumber, licensee);
 
         final Licensee transferLicensee = new LicenseeImpl();
-        transferLicensee.setNumber(transferLicenseeNumber);
+        transferLicensee.setNumber(sourceLicenseeNumber);
         transferLicensee.setActive(true);
         transferLicensee.addProperty(Constants.Licensee.PROP_MARKED_FOR_TRANSFER, Boolean.toString(true));
         LicenseeService.create(context, productNumber, transferLicensee);
 
-        final Licensee transferToLicensee = LicenseeService.transfer(context, licenseeNumber, transferLicenseeNumber);
-
-        assertNotNull(transferToLicensee);
-        assertEquals(licenseeNumber, transferToLicensee.getNumber());
-        assertEquals(true, transferToLicensee.getActive());
-        assertEquals(productNumber, transferToLicensee.getProduct().getNumber());
-        assertNull(transferToLicensee.getProperties().get(LICENSEE_DELETING_PROPERTY));
+        LicenseeService.transfer(context, licenseeNumber, sourceLicenseeNumber);
+        // TODO(2K): test for exceptions
     }
 
     // *** NLIC test mock resource ***
