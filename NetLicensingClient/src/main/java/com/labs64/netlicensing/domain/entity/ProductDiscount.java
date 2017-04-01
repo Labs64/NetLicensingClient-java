@@ -24,6 +24,4 @@ public interface ProductDiscount extends Comparable<ProductDiscount> {
 
     BigDecimal getAmountPercent();
 
-    String asString();
-
 }

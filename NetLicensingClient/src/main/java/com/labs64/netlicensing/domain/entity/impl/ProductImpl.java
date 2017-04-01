@@ -173,7 +173,7 @@ public class ProductImpl extends BaseEntityImpl implements Product {
         map.add(Constants.Product.LICENSING_INFO, getLicensingInfo());
         if (productDiscounts != null) {
             for (final ProductDiscount productDiscount : productDiscounts) {
-                map.add(Constants.DISCOUNT, productDiscount.asString());
+                map.add(Constants.DISCOUNT, productDiscount.toString());
             }
         }
         return map;

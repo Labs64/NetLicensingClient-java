@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 
 import javax.xml.bind.DatatypeConverter;
 
-import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductDiscount;
 import com.labs64.netlicensing.domain.vo.Currency;
@@ -129,33 +128,6 @@ public class ProductDiscountImpl implements ProductDiscount, Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Product Discount [");
-        builder.append(Constants.Product.Discount.TOTAL_PRICE);
-        builder.append("=");
-        builder.append(getTotalPrice());
-        builder.append(", ");
-        builder.append(Constants.CURRENCY);
-        builder.append("=");
-        builder.append(getCurrency());
-        if (getAmountFix() != null) {
-            builder.append(", ");
-            builder.append(Constants.Product.Discount.AMOUNT_FIX);
-            builder.append("=");
-            builder.append(getAmountFix());
-        }
-        if (getAmountPercent() != null) {
-            builder.append(", ");
-            builder.append(Constants.Product.Discount.AMOUNT_PERCENT);
-            builder.append("=");
-            builder.append(getAmountPercent());
-        }
-        builder.append("]");
-        return builder.toString();
-    }
-
-    @Override
-    public String asString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTotalPrice());
         builder.append(";");
