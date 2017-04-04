@@ -107,6 +107,7 @@ public final class Constants {
         public static final String PROP_LICENSEE_NAME = "licenseeName";
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
         public static final String PROP_MARKED_FOR_TRANSFER = "markedForTransfer";
+        public static final String DRY_RUN = "dryRun";
     }
 
     public static final class License {
