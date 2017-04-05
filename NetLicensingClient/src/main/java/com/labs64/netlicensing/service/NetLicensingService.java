@@ -131,24 +131,29 @@ public class NetLicensingService {
      *            The request body to be sent to the server. May be null.
      * @param resultType
      *            the type of the result
-     * @return first suitable item with type resultType from the response
+     * @return first suitable item with type resultType from the response or null if response has no content
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     <RES> RES post(final Context context, final String urlTemplate, final Form request, final Class<RES> resultType,
             final MetaInfo... meta)
-            throws NetLicensingException {
+                    throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.POST, urlTemplate, request, null);
-        if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
-            if (netlicensing.getId() != null) {
-                meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
+        // if response has no content
+        if (netlicensing == null) {
+            return null;
+        } else {
+            if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
+                if (netlicensing.getId() != null) {
+                    meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
+                }
+                if (netlicensing.getTtl() != null) {
+                    final Calendar dummyTTL = DateUtils.getCurrentDate();
+                    dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
+                    meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl().toXMLFormat());
+                }
             }
-            if (netlicensing.getTtl() != null) {
-                final Calendar dummyTTL = DateUtils.getCurrentDate();
-                dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
-                meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl().toXMLFormat());
-            }
+            return entityFactory.create(netlicensing, resultType);
         }
-        return entityFactory.create(netlicensing, resultType);
     }
 
     /**
