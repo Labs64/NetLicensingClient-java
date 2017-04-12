@@ -8,7 +8,6 @@ public class ValidationParameters {
     private String productNumber;
     private String licenseeName;
     private String licenseeSecret;
-    private Boolean dryRun;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -53,20 +52,6 @@ public class ValidationParameters {
 
     public String getLicenseeSecret() {
         return licenseeSecret;
-    }
-
-    /**
-     * Sets the Dry Run
-     *
-     * @param dryRun
-     *            if in "true" call will be without changing current licensee assignments.
-     */
-    public void setDryRun(final Boolean dryRun) {
-        this.dryRun = dryRun;
-    }
-
-    public Boolean getDryRun() {
-        return dryRun;
     }
 
     public Map<String, Map<String, String>> getParameters() {
