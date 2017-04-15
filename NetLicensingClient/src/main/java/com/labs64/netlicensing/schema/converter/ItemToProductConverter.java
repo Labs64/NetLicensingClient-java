@@ -49,9 +49,7 @@ public class ItemToProductConverter extends ItemToEntityBaseConverter<Product> {
                 final ProductDiscountImpl productDiscount = new ProductDiscountImpl();
                 final Money price = convertPrice(list.getProperty(), Constants.Product.Discount.TOTAL_PRICE);
                 productDiscount.setTotalPrice(price.getAmount());
-                if (price.getCurrencyCode() != null) {
-                    productDiscount.setCurrency(price.getCurrencyCode());
-                }
+                productDiscount.setCurrency(price.getCurrencyCode());
                 if (SchemaFunction.propertyByName(list.getProperty(), Constants.Product.Discount.AMOUNT_FIX).getValue() != null) {
                     final Money amountFix = convertPrice(list.getProperty(), Constants.Product.Discount.AMOUNT_FIX);
                     productDiscount.setAmountFix(amountFix.getAmount());
