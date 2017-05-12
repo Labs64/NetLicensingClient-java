@@ -131,26 +131,37 @@ public class EntityFactory {
             }
         }
 
-        public void visit(final ProductModule productModule) {
+        public void visit(final ProductModule productModule) throws Exception {
+            final List<LicenseTemplate> linkedLicenseTemplates = new ArrayList<>();
             for (final Iterator<Object> iter = linkedEntities.iterator(); iter.hasNext();) {
                 final Object linkedEntity = iter.next();
                 if (LicenseTemplate.class.isAssignableFrom(linkedEntity.getClass())) {
                     final LicenseTemplate linkedLicenseTemplate = (LicenseTemplate) linkedEntity;
                     if (productModule.getNumber().equals(linkedLicenseTemplate.getProductModule().getNumber())) {
                         iter.remove();
+                        linkedLicenseTemplates.add(linkedLicenseTemplate);
                         linkedLicenseTemplate.setProductModule(productModule);
                     }
                 }
             }
-            // @formatter:off
-            /* No further nesting needed at the moment
             for (final LicenseTemplate linkedLicenseTemplate : linkedLicenseTemplates) {
                 if (Visitable.class.isAssignableFrom(linkedLicenseTemplate.getClass())) {
                     ((Visitable) linkedLicenseTemplate).accept(this);
                 }
             }
-             */
-            // @formatter:on
+        }
+
+        public void visit(final LicenseTemplate licenseTemplate) throws Exception {
+            for (final Iterator<Object> iter = linkedEntities.iterator(); iter.hasNext();) {
+                final Object linkedEntity = iter.next();
+                if (License.class.isAssignableFrom(linkedEntity.getClass())) {
+                    final License linkedLicense = (License) linkedEntity;
+                    if (licenseTemplate.getNumber().equals(linkedLicense.getLicenseTemplate().getNumber())) {
+                        iter.remove();
+                        linkedLicense.setLicenseTemplate(licenseTemplate);
+                    }
+                }
+            }
         }
     }
 
