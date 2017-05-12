@@ -122,6 +122,12 @@ public class EntityFactory {
                         linkedProductModules.add(linkedProductModule);
                         linkedProductModule.setProduct(product);
                     }
+                } else if (Licensee.class.isAssignableFrom(linkedEntity.getClass())) {
+                    final Licensee linkedLecensee = (Licensee) linkedEntity;
+                    if (product.getNumber().equals(linkedLecensee.getProduct().getNumber())) {
+                        iter.remove();
+                        linkedLecensee.setProduct(product);
+                    }
                 }
             }
             for (final ProductModule linkedProductModule : linkedProductModules) {
