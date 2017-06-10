@@ -60,8 +60,7 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         assertNotNull(paymentMethod);
         assertEquals("PAYPAL", paymentMethod.getNumber());
         assertEquals(true, paymentMethod.getActive());
-        assertEquals("sample_paypal_subject",
-                paymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
+        assertEquals("sample_paypal_subject", paymentMethod.getProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -88,8 +87,8 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         assertNotNull(updatedPaymentMethod);
         assertEquals(false, updatedPaymentMethod.getActive());
         assertEquals("new_sample_paypal_subject",
-                updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
-        assertNull(updatedPaymentMethod.getPaymentMethodProperties().get(PAYMENT_METHOD_DELETING_PROPERTY));
+                updatedPaymentMethod.getProperties().get(PAYMENT_METHOD_CUSTOM_PROPERTY));
+        assertNull(updatedPaymentMethod.getProperties().get(PAYMENT_METHOD_DELETING_PROPERTY));
     }
 
     @Test

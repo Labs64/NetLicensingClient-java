@@ -77,7 +77,7 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals("v3.2", createdProduct.getVersion());
         assertEquals(true, createdProduct.getLicenseeAutoCreate());
         assertEquals("Test Product description", createdProduct.getDescription());
-        assertEquals("Test Value", createdProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
+        assertEquals("Test Value", createdProduct.getProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals("P014-TEST", resultProduct.getNumber());
         assertEquals("Product Numero Uno", resultProduct.getName());
         assertEquals("Licensed to Licensee", resultProduct.getLicensingInfo());
-        assertEquals("CustomPropertyValue", resultProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
+        assertEquals("CustomPropertyValue", resultProduct.getProperties().get(PRODUCT_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -142,8 +142,8 @@ public class ProductServiceTest extends BaseServiceTest {
         assertEquals(false, updatedProduct.getActive());
         assertEquals("v1.0", updatedProduct.getVersion());
         assertEquals(true, updatedProduct.getLicenseeAutoCreate());
-        assertEquals("Test Value", updatedProduct.getProductProperties().get(PRODUCT_CUSTOM_PROPERTY));
-        assertNull(updatedProduct.getProductProperties().get(PRODUCT_DELETING_PROPERTY));
+        assertEquals("Test Value", updatedProduct.getProperties().get(PRODUCT_CUSTOM_PROPERTY));
+        assertNull(updatedProduct.getProperties().get(PRODUCT_DELETING_PROPERTY));
     }
 
     @Test
@@ -175,7 +175,7 @@ public class ProductServiceTest extends BaseServiceTest {
                 return errorResponse("MalformedRequestException", "Product name is required");
             }
 
-            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            final Map<String, String> defaultPropertyValues = new HashMap<>();
             defaultPropertyValues.put(Constants.VERSION, "");
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             defaultPropertyValues.put(Constants.Product.LICENSEE_AUTO_CREATE, "false");

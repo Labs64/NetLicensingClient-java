@@ -44,7 +44,7 @@ public class ItemToTokenConverter extends ItemToEntityBaseConverter<Token> {
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!TokenImpl.getReservedProps().contains(property.getName())) {
-                target.getTokenProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 

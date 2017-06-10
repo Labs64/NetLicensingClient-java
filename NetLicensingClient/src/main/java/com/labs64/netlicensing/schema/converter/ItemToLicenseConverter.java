@@ -49,22 +49,22 @@ public class ItemToLicenseConverter extends ItemToEntityBaseConverter<License> {
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!LicenseImpl.getReservedProps().contains(property.getName())) {
-                target.getLicenseProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 
         target.setLicensee(new LicenseeImpl());
         target.getLicensee()
-                .setNumber(
-                        SchemaFunction.propertyByName(source.getProperty(), Constants.Licensee.LICENSEE_NUMBER)
-                                .getValue());
+        .setNumber(
+                SchemaFunction.propertyByName(source.getProperty(), Constants.Licensee.LICENSEE_NUMBER)
+                .getValue());
 
         target.setLicenseTemplate(new LicenseTemplateImpl());
         target.getLicenseTemplate()
-                .setNumber(
-                        SchemaFunction.propertyByName(source.getProperty(),
-                                Constants.LicenseTemplate.LICENSE_TEMPLATE_NUMBER)
-                                .getValue());
+        .setNumber(
+                SchemaFunction.propertyByName(source.getProperty(),
+                        Constants.LicenseTemplate.LICENSE_TEMPLATE_NUMBER)
+                .getValue());
 
         return target;
     }

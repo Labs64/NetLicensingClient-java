@@ -12,6 +12,11 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -34,11 +39,6 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.util.DateUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link TokenService}.
@@ -98,7 +98,7 @@ public class TokenServiceTest extends BaseServiceTest {
         assertNotNull(createdToken.getExpirationTime());
         assertEquals(TokenType.REGISTRATION, createdToken.getTokenType());
         assertEquals("VDEMO", createdToken.getVendorNumber());
-        assertEquals("test@test.com", createdToken.getTokenProperties().get(Constants.Token.TOKEN_PROP_EMAIL));
+        assertEquals("test@test.com", createdToken.getProperties().get(Constants.Token.TOKEN_PROP_EMAIL));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class TokenServiceTest extends BaseServiceTest {
         assertNotNull(createdToken.getExpirationTime());
         assertEquals(TokenType.PASSWORDRESET, createdToken.getTokenType());
         assertEquals("VDEMO2", createdToken.getVendorNumber());
-        assertEquals("test@test.com", createdToken.getTokenProperties().get(Constants.Token.TOKEN_PROP_EMAIL));
+        assertEquals("test@test.com", createdToken.getProperties().get(Constants.Token.TOKEN_PROP_EMAIL));
     }
 
     @Test
@@ -132,8 +132,8 @@ public class TokenServiceTest extends BaseServiceTest {
         assertEquals(true, createdToken.getActive());
         assertNotNull(createdToken.getExpirationTime());
         assertEquals(TokenType.SHOP, createdToken.getTokenType());
-        assertNotNull(createdToken.getTokenProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
-        assertEquals("L001-TEST", createdToken.getTokenProperties().get(Constants.Licensee.LICENSEE_NUMBER));
+        assertNotNull(createdToken.getProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
+        assertEquals("L001-TEST", createdToken.getProperties().get(Constants.Licensee.LICENSEE_NUMBER));
         assertEquals("VDEMO", createdToken.getVendorNumber());
     }
 
@@ -178,8 +178,8 @@ public class TokenServiceTest extends BaseServiceTest {
         assertEquals(TokenType.SHOP, token.getTokenType());
         assertEquals(
                 "https://go.netlicensing.io/shop/v2/?shoptoken=afeb41d9-314e-49be-8465-148c614badfa",
-                token.getTokenProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
-        assertEquals("L001-TEST", token.getTokenProperties().get(Constants.Licensee.LICENSEE_NUMBER));
+                token.getProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
+        assertEquals("L001-TEST", token.getProperties().get(Constants.Licensee.LICENSEE_NUMBER));
         assertEquals("VDEMO", token.getVendorNumber());
     }
 
@@ -240,7 +240,7 @@ public class TokenServiceTest extends BaseServiceTest {
                         "TokenValidation", "Property 'licenseeNumber' not found");
             }
 
-            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            final Map<String, String> defaultPropertyValues = new HashMap<>();
             defaultPropertyValues.put(Constants.NUMBER, UUID.randomUUID().toString());
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             defaultPropertyValues.put(Constants.Token.TOKEN_TYPE, TokenType.DEFAULT.name());

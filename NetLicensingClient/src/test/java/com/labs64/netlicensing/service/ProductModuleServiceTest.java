@@ -71,14 +71,8 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("Test Product Module", createdModule.getName());
         assertEquals(Constants.LicensingModel.Rental.NAME, createdModule.getLicensingModel());
         assertEquals("P001-TEST", createdModule.getProduct().getNumber());
-        assertEquals(
-                "10",
-                createdModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.Rental.YELLOW_THRESHOLD));
-        assertEquals(
-                "3",
-                createdModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.Rental.RED_THRESHOLD));
+        assertEquals("10", createdModule.getProperties().get(Constants.LicensingModel.Rental.YELLOW_THRESHOLD));
+        assertEquals("3", createdModule.getProperties().get(Constants.LicensingModel.Rental.RED_THRESHOLD));
     }
 
     @Test
@@ -147,14 +141,8 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         assertEquals("Demo Product Module", updatedModule.getName());
         assertEquals(Constants.LicensingModel.Rental.NAME, updatedModule.getLicensingModel());
         assertEquals("P001-TEST", updatedModule.getProduct().getNumber());
-        assertEquals(
-                "10",
-                updatedModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.Rental.YELLOW_THRESHOLD));
-        assertEquals(
-                "5",
-                updatedModule.getProductModuleProperties().get(
-                        Constants.LicensingModel.Rental.RED_THRESHOLD));
+        assertEquals("10", updatedModule.getProperties().get(Constants.LicensingModel.Rental.YELLOW_THRESHOLD));
+        assertEquals("5", updatedModule.getProperties().get(Constants.LicensingModel.Rental.RED_THRESHOLD));
     }
 
     @Test
@@ -189,7 +177,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
                 return errorResponse("MalformedRequestException", "Product module name is required");
             }
 
-            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            final Map<String, String> defaultPropertyValues = new HashMap<>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             return create(formParams, defaultPropertyValues);
         }

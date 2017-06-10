@@ -41,7 +41,7 @@ public class ItemToProductModuleConverter extends ItemToEntityBaseConverter<Prod
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!ProductModuleImpl.getReservedProps().contains(property.getName())) {
-                target.getProductModuleProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 

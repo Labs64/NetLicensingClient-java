@@ -30,7 +30,7 @@ public class ItemToPaymentMethodConverter extends ItemToEntityBaseConverter<Paym
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!PaymentMethodImpl.getReservedProps().contains(property.getName())) {
-                target.getPaymentMethodProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 

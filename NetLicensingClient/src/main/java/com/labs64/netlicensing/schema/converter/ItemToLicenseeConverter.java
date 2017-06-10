@@ -33,7 +33,7 @@ public class ItemToLicenseeConverter extends ItemToEntityBaseConverter<Licensee>
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!LicenseeImpl.getReservedProps().contains(property.getName())) {
-                target.getLicenseeProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 

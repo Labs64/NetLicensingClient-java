@@ -12,6 +12,11 @@
  */
 package com.labs64.netlicensing.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,11 +39,6 @@ import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseTemplateService}.
@@ -86,7 +86,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(true, createdTemplate.getHidden());
         assertEquals(true, createdTemplate.getHideLicenses());
         assertEquals("PM001-TEST", createdTemplate.getProductModule().getNumber());
-        assertEquals("30", createdTemplate.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
+        assertEquals("30", createdTemplate.getProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
@@ -159,7 +159,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(true, licenseTemplate.getHidden());
         assertEquals(true, licenseTemplate.getHideLicenses());
         assertEquals("PM001-TEST", licenseTemplate.getProductModule().getNumber());
-        assertEquals("30", licenseTemplate.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
+        assertEquals("30", licenseTemplate.getProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
@@ -177,12 +177,12 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         final LicenseTemplate template2 = licenseTemplates.getContent().get(1);
         assertEquals("Time Volume License Template", template2.getName());
         assertEquals(LicenseType.TIMEVOLUME, template2.getLicenseType());
-        assertEquals("30", template2.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
+        assertEquals("30", template2.getProperties().get(TIME_VOLUME_PROPERTY));
 
         final LicenseTemplate template3 = licenseTemplates.getContent().get(2);
         assertEquals("3 sessions floating", template3.getName());
         assertEquals(LicenseType.FLOATING, template3.getLicenseType());
-        assertEquals("3", template3.getLicenseTemplateProperties().get("maxSessions"));
+        assertEquals("3", template3.getProperties().get("maxSessions"));
     }
 
     @Test
@@ -207,7 +207,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         assertEquals(false, updatedTemplate.getHidden());
         assertEquals(false, updatedTemplate.getHideLicenses());
         assertEquals("PM001-TEST", updatedTemplate.getProductModule().getNumber());
-        assertNull(updatedTemplate.getLicenseTemplateProperties().get(TIME_VOLUME_PROPERTY));
+        assertNull(updatedTemplate.getProperties().get(TIME_VOLUME_PROPERTY));
     }
 
     @Test
@@ -262,7 +262,7 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
             roundParamValueToTwoDecimalPlaces(formParams, Constants.PRICE);
 
-            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            final Map<String, String> defaultPropertyValues = new HashMap<>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             defaultPropertyValues.put(Constants.LicenseTemplate.AUTOMATIC, "false");
             defaultPropertyValues.put(Constants.LicenseTemplate.HIDDEN, "false");

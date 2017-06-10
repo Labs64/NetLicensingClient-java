@@ -86,7 +86,7 @@ public class LicenseServiceTest extends BaseServiceTest {
         assertEquals(true, createdLicense.getHidden());
         assertEquals("L001-TEST", createdLicense.getLicensee().getNumber());
         assertEquals("LT001-TEST", createdLicense.getLicenseTemplate().getNumber());
-        assertEquals("Custom property value", createdLicense.getLicenseProperties().get(LICENSE_CUSTOM_PROPERTY));
+        assertEquals("Custom property value", createdLicense.getProperties().get(LICENSE_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class LicenseServiceTest extends BaseServiceTest {
         assertEquals(false, license.getHidden());
         assertEquals("L001-TEST", license.getLicensee().getNumber());
         assertEquals("LT001-TEST", license.getLicenseTemplate().getNumber());
-        assertEquals("Custom property value", license.getLicenseProperties().get(LICENSE_CUSTOM_PROPERTY));
+        assertEquals("Custom property value", license.getProperties().get(LICENSE_CUSTOM_PROPERTY));
     }
 
     @Test
@@ -166,8 +166,8 @@ public class LicenseServiceTest extends BaseServiceTest {
         assertEquals(new BigDecimal("15.00"), updatedLicense.getPrice());
         assertEquals(Currency.EUR, updatedLicense.getCurrency());
         assertEquals(true, updatedLicense.getHidden());
-        assertEquals("New property value", updatedLicense.getLicenseProperties().get(LICENSE_CUSTOM_PROPERTY));
-        assertNull(updatedLicense.getLicenseProperties().get(LICENSE_DELETING_PROPERTY));
+        assertEquals("New property value", updatedLicense.getProperties().get(LICENSE_CUSTOM_PROPERTY));
+        assertNull(updatedLicense.getProperties().get(LICENSE_DELETING_PROPERTY));
     }
 
     @Test
@@ -225,7 +225,7 @@ public class LicenseServiceTest extends BaseServiceTest {
         }
 
         private Map<String, String> getDefaultPropertyValuesFromLicenseTemplate() {
-            final Map<String, String> values = new HashMap<String, String>();
+            final Map<String, String> values = new HashMap<>();
 
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
                     + "netlicensing-licensetemplate-get.xml",

@@ -54,14 +54,14 @@ public class ItemToLicenseTemplateConverter extends ItemToEntityBaseConverter<Li
         // Custom properties
         for (final Property property : source.getProperty()) {
             if (!LicenseTemplateImpl.getReservedProps().contains(property.getName())) {
-                target.getLicenseTemplateProperties().put(property.getName(), property.getValue());
+                target.getProperties().put(property.getName(), property.getValue());
             }
         }
 
         target.setProductModule(new ProductModuleImpl());
         target.getProductModule().setNumber(
                 SchemaFunction.propertyByName(source.getProperty(), Constants.ProductModule.PRODUCT_MODULE_NUMBER)
-                        .getValue());
+                .getValue());
 
         return target;
     }
