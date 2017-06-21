@@ -158,6 +158,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         final ValidationResult result = LicenseeService.validate(context, licenseeNumber, validationParameters);
 
         assertNotNull(result);
+        assertNotNull(result.getTtl());
 
         final Composition validation = result.getProductModuleValidation("M001-TEST");
         assertNotNull(validation);

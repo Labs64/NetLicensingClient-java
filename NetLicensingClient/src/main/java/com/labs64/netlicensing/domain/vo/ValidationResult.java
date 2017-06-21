@@ -13,8 +13,12 @@
 package com.labs64.netlicensing.domain.vo;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+
+import com.labs64.netlicensing.domain.Constants;
 
 public class ValidationResult implements Serializable {
 
@@ -22,11 +26,26 @@ public class ValidationResult implements Serializable {
 
     private Map<String, Composition> validations;
 
+    private Calendar ttl;
+
     public Map<String, Composition> getValidations() {
         if (validations == null) {
             validations = new HashMap<String, Composition>();
         }
         return validations;
+    }
+
+    public Calendar getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(final Calendar ttl) {
+        this.ttl = ttl;
+    }
+
+    public ValidationResult() {
+        ttl = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        ttl.add(Calendar.MINUTE, Constants.ValidationResult.DEFAULT_TTL_MINUTES);
     }
 
     public Composition getProductModuleValidation(final String productModuleNumber) {

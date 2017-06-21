@@ -50,6 +50,7 @@ import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTokenConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
 import com.labs64.netlicensing.schema.converter.ItemsToValidationResultConverter;
+import com.labs64.netlicensing.util.DateUtils;
 import com.labs64.netlicensing.util.Visitable;
 import com.labs64.netlicensing.util.Visitor;
 
@@ -94,9 +95,15 @@ public class EntityFactory {
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
     @SuppressWarnings("unchecked")
-    public <T> T create(final Netlicensing netlicensing, final Class<T> entityClass) throws NetLicensingException {
+    public <T> T create(final Netlicensing netlicensing, final Class<T> entityClass)
+            throws NetLicensingException {
         if (entityClass == ValidationResult.class) {
-            return (T) new ItemsToValidationResultConverter().convert(netlicensing.getItems());
+            final ValidationResult validationResult = new ItemsToValidationResultConverter().convert(netlicensing.getItems());
+            // set ttl for validation result
+            if (netlicensing.getTtl() != null) {
+                validationResult.setTtl(DateUtils.parseDate(netlicensing.getTtl()));
+            }
+            return (T) validationResult;
         } else {
             final Item item = findSuitableItemOfType(netlicensing, entityClass);
             return converterFor(entityClass).convert(item);

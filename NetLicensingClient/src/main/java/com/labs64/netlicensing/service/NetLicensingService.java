@@ -92,7 +92,7 @@ public class NetLicensingService {
             if (netlicensing.getTtl() != null) {
                 final Calendar dummyTTL = DateUtils.getCurrentDate();
                 dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
-                meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl().toXMLFormat());
+                meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl());
             }
         }
         return entityFactory.create(netlicensing, resultType);
@@ -149,7 +149,7 @@ public class NetLicensingService {
                 if (netlicensing.getTtl() != null) {
                     final Calendar dummyTTL = DateUtils.getCurrentDate();
                     dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
-                    meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl().toXMLFormat());
+                    meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl());
                 }
             }
             return entityFactory.create(netlicensing, resultType);
