@@ -73,7 +73,7 @@
                     <xsd:documentation>Request unique identifier.</xsd:documentation>
                 </xsd:annotation>
             </xsd:attribute>
-            <xsd:attribute name="ttl" type="xsd:string" use="optional">
+            <xsd:attribute name="ttl" type="xsd:dateTime" use="optional">
                 <xsd:annotation>
                     <xsd:documentation>Time To Live - time stamp that determines the validity span of the response.
                         If not provided, the response should not be cached.
