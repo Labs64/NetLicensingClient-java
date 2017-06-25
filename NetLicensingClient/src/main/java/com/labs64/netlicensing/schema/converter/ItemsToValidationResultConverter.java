@@ -6,22 +6,32 @@ import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.List;
+import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.Netlicensing.Items;
 import com.labs64.netlicensing.schema.context.Property;
+import com.labs64.netlicensing.util.DateUtils;
 
 /**
  * Convert {@link Items} object into {@link ValidationResult} entity.
  */
-public class ItemsToValidationResultConverter implements Converter<Items, ValidationResult> {
+public class ItemsToValidationResultConverter implements Converter<Netlicensing, ValidationResult> {
 
     @Override
-    public ValidationResult convert(final Items source) throws ConversionException {
+    public ValidationResult convert(final Netlicensing source) throws ConversionException {
         final ValidationResult target = new ValidationResult();
         if (source == null) {
             return target;
         }
 
-        for (final Item item : source.getItem()) {
+        if (source.getTtl() != null) {
+            target.setTtl(DateUtils.parseDate(source.getTtl().toXMLFormat()));
+        }
+
+        if (source.getItems() == null) {
+            return target;
+        }
+
+        for (final Item item : source.getItems().getItem()) {
             if (!Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType())) {
                 final String sourceType = (item.getType() != null) ? item.getType() : "<null>";
                 throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType,

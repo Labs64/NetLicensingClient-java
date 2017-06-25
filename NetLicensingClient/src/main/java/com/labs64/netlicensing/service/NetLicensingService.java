@@ -12,7 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +35,6 @@ import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.DateUtils;
 
 /**
  * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service classes.
@@ -89,11 +87,6 @@ public class NetLicensingService {
             if (netlicensing.getId() != null) {
                 meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
             }
-            if (netlicensing.getTtl() != null) {
-                final Calendar dummyTTL = DateUtils.getCurrentDate();
-                dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
-                meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl());
-            }
         }
         return entityFactory.create(netlicensing, resultType);
     }
@@ -145,11 +138,6 @@ public class NetLicensingService {
             if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
                 if (netlicensing.getId() != null) {
                     meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
-                }
-                if (netlicensing.getTtl() != null) {
-                    final Calendar dummyTTL = DateUtils.getCurrentDate();
-                    dummyTTL.add(Calendar.DAY_OF_MONTH, 1);
-                    meta[0].setValue(Constants.PROP_TTL, netlicensing.getTtl());
                 }
             }
             return entityFactory.create(netlicensing, resultType);

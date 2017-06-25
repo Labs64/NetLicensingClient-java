@@ -50,7 +50,6 @@ import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTokenConverter;
 import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
 import com.labs64.netlicensing.schema.converter.ItemsToValidationResultConverter;
-import com.labs64.netlicensing.util.DateUtils;
 import com.labs64.netlicensing.util.Visitable;
 import com.labs64.netlicensing.util.Visitor;
 
@@ -59,7 +58,7 @@ import com.labs64.netlicensing.util.Visitor;
  */
 public class EntityFactory {
 
-    private static final Map<Class<?>, Class<?>> entityToConverterMap = new HashMap<Class<?>, Class<?>>();
+    private static final Map<Class<?>, Class<?>> entityToConverterMap = new HashMap<>();
 
     static {
         entityToConverterMap.put(License.class, ItemToLicenseConverter.class);
@@ -98,12 +97,7 @@ public class EntityFactory {
     public <T> T create(final Netlicensing netlicensing, final Class<T> entityClass)
             throws NetLicensingException {
         if (entityClass == ValidationResult.class) {
-            final ValidationResult validationResult = new ItemsToValidationResultConverter().convert(netlicensing.getItems());
-            // set ttl for validation result
-            if (netlicensing.getTtl() != null) {
-                validationResult.setTtl(DateUtils.parseDate(netlicensing.getTtl()));
-            }
-            return (T) validationResult;
+            return (T) new ItemsToValidationResultConverter().convert(netlicensing);
         } else {
             final Item item = findSuitableItemOfType(netlicensing, entityClass);
             return converterFor(entityClass).convert(item);
@@ -191,8 +185,8 @@ public class EntityFactory {
     public <T> Page<T> createPage(final Netlicensing netlicensing, final Class<T> entityClass)
             throws NetLicensingException {
         if (netlicensing.getItems() != null) {
-            final List<T> entities = new ArrayList<T>();
-            final List<Object> linkedEntities = new ArrayList<Object>();
+            final List<T> entities = new ArrayList<>();
+            final List<Object> linkedEntities = new ArrayList<>();
 
             for (final Item item : netlicensing.getItems().getItem()) {
                 final Class<?> itemEntityClass = getEntityClassByItemType(item);
