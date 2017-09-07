@@ -79,4 +79,9 @@ public interface Product extends BaseEntity {
 
     void addDiscount(ProductDiscount discount);
 
+    void removeDiscount(ProductDiscount discount);
+
+    void removeDiscounts(List<ProductDiscount> discounts);
+
+    void removeDiscounts();
 }
