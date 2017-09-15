@@ -48,8 +48,6 @@ public class ProductImpl extends BaseEntityImpl implements Product {
 
     private List<ProductDiscount> productDiscounts;
 
-    private Boolean productDiscountsTouched = false;
-
     /**
      * @see BaseEntityImpl#getReservedProps()
      */
@@ -152,40 +150,12 @@ public class ProductImpl extends BaseEntityImpl implements Product {
         for (final ProductDiscount productDiscount : this.productDiscounts) {
             productDiscount.setProduct(this);
         }
-        productDiscountsTouched = true;
     }
 
     @Override
     public void addDiscount(final ProductDiscount discount) {
         discount.setProduct(this);
         getProductDiscounts().add(discount);
-        productDiscountsTouched = true;
-    }
-
-    @Override
-    public void removeDiscount(final ProductDiscount discount) {
-        discount.setProduct(new ProductImpl());
-        productDiscounts.remove(discount);
-        productDiscountsTouched = true;
-    }
-
-    @Override
-    public void removeDiscounts(List<ProductDiscount> discounts) {
-        if (discounts != null) {
-            for (ProductDiscount discount : discounts) {
-                removeDiscount(discount);
-            }
-        }
-    }
-
-    @Override
-    public void removeDiscounts() {
-        for (ProductDiscount productDiscount : productDiscounts) {
-            productDiscount.setProduct(new ProductImpl());
-        }
-
-        productDiscounts = new ArrayList<>();
-        productDiscountsTouched = true;
     }
 
     @Override
@@ -206,11 +176,6 @@ public class ProductImpl extends BaseEntityImpl implements Product {
                 map.add(Constants.DISCOUNT, productDiscount.toString());
             }
         }
-
-        if (map.get(Constants.DISCOUNT) == null && productDiscountsTouched) {
-            map.add(Constants.DISCOUNT, "");
-        }
-
         return map;
     }
 
