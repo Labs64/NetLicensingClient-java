@@ -3,11 +3,12 @@ jdk:
 # JDK6 isn't supported after Jersey upgrade 2.6 -> 2.21
 #  - openjdk6
   - openjdk7
-  - oraclejdk7
+# JDK7 is not supported anymore; https://github.com/travis-ci/travis-ci/issues/7884#issuecomment-308451879
+#  - oraclejdk7
   - oraclejdk8
 script:
   - mvn clean verify
 # Temporary disabled due to changes incompatible with previous release
-#  - java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
+  - java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
 after_success:
   - test "${TRAVIS_JDK_VERSION}" == "openjdk7" && test "${TRAVIS_TEST_RESULT}" == "0" && mvn deploy --settings travis-mvn-settings.xml -Drepo.snapshots.url=https://oss.sonatype.org/content/repositories/snapshots -DskipTests=true -B
