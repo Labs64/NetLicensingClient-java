@@ -155,15 +155,36 @@ public class ProductImpl extends BaseEntityImpl implements Product {
         productDiscountsTouched = true;
     }
 
-    public void setProductDiscounts() {
-        this.productDiscounts = new ArrayList<>();
-        productDiscountsTouched = true;
-    }
-
     @Override
     public void addDiscount(final ProductDiscount discount) {
         discount.setProduct(this);
         getProductDiscounts().add(discount);
+        productDiscountsTouched = true;
+    }
+
+    @Override
+    public void removeDiscount(final ProductDiscount discount) {
+        discount.setProduct(new ProductImpl());
+        productDiscounts.remove(discount);
+        productDiscountsTouched = true;
+    }
+
+    @Override
+    public void removeDiscounts(List<ProductDiscount> discounts) {
+        if (discounts != null) {
+            for (ProductDiscount discount : discounts) {
+                removeDiscount(discount);
+            }
+        }
+    }
+
+    @Override
+    public void removeDiscounts() {
+        for (ProductDiscount productDiscount : productDiscounts) {
+            productDiscount.setProduct(new ProductImpl());
+        }
+
+        productDiscounts = new ArrayList<>();
         productDiscountsTouched = true;
     }
 
