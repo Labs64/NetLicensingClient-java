@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-import org.glassfish.jersey.filter.LoggingFilter;
+//import org.glassfish.jersey.filter.LoggingFilter;
 
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.auth.Authentication;
@@ -118,7 +118,8 @@ public class RestProviderJersey extends AbstractRestProvider {
                 if (client == null) {
                     client = ClientBuilder.newClient(new ClientConfig());
                     if (configuration.isLoggingEnabled()) {
-                        client.register(new LoggingFilter());
+                        //TODO: enable logging for jersey 2.26
+                        //client.register(new LoggingFilter());
                     }
                 }
             }
