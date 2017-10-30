@@ -8,7 +8,7 @@ jdk:
 # JDK7 is not supported anymore; https://github.com/travis-ci/travis-ci/issues/7884#issuecomment-308451879
 #  - oraclejdk7
   - oraclejdk8
-  - oraclejdk9
+#  - oraclejdk9
 script:
   - mvn clean verify
 # Temporary disabled due to changes incompatible with previous release
