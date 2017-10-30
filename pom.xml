@@ -282,6 +282,11 @@
                 <version>${jersey.version}</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency><!-- from 2.26 on: https://github.com/jersey/jersey/issues/3584 -->
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
