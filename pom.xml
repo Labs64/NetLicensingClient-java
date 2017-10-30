@@ -286,7 +286,7 @@
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey.version}</version>
-                <scope>test</scope>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
