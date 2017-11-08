@@ -148,6 +148,14 @@ public final class Constants {
         public static final class PayPerUse {
             public static final String NAME = "PayPerUse";
         }
+
+        public static final class PricingPlans {
+            public static final String NAME = "PricingPlans";
+        }
+
+        public static final class Quota {
+            public static final String NAME = "Quota";
+        }
     }
 
     public static final class Transaction {
