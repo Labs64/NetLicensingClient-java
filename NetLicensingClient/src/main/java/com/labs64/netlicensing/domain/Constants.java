@@ -149,8 +149,8 @@ public final class Constants {
             public static final String NAME = "PayPerUse";
         }
 
-        public static final class PricingPlans {
-            public static final String NAME = "PricingPlans";
+        public static final class PricingTable {
+            public static final String NAME = "PricingTable";
         }
 
         public static final class Quota {
