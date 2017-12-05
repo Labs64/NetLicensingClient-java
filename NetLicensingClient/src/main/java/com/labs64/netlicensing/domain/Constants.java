@@ -151,6 +151,8 @@ public final class Constants {
 
         public static final class PricingTable {
             public static final String NAME = "PricingTable";
+            public static final String PROP_PLAN = "plan";
+            public static final String PROP_SKU = "sku";
         }
 
         public static final class Quota {
