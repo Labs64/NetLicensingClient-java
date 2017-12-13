@@ -53,5 +53,10 @@ public enum TransactionSource {
     /**
      * Auto transaction for transfer licenses between licensee.
      */
-    AUTO_LICENSES_TRANSFER
+    AUTO_LICENSES_TRANSFER,
+
+    /**
+     * Transaction for update licenses (inactive with PT LM, Subscription).
+     */
+    SUBSCRIPTION_UPDATE
 }
