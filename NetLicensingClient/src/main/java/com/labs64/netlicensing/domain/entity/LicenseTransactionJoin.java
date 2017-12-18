@@ -1,6 +1,8 @@
 package com.labs64.netlicensing.domain.entity;
 
-public interface LicenseTransactionJoin {
+import java.io.Serializable;
+
+public interface LicenseTransactionJoin extends Serializable {
 
     void setTransaction(final Transaction transaction);
 
