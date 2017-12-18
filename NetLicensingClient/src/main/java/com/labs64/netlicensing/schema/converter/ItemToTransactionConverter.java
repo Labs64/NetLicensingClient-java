@@ -12,10 +12,16 @@
  */
 package com.labs64.netlicensing.schema.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.LicenseTransactionJoin;
 import com.labs64.netlicensing.domain.entity.Transaction;
+import com.labs64.netlicensing.domain.entity.impl.LicenseImpl;
+import com.labs64.netlicensing.domain.entity.impl.LicenseTransactionJoinImpl;
 import com.labs64.netlicensing.domain.entity.impl.TransactionImpl;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
@@ -68,6 +74,23 @@ public class ItemToTransactionConverter extends ItemToEntityBaseConverter<Transa
                 target.getProperties().put(property.getName(), property.getValue());
             }
         }
+
+        final List<LicenseTransactionJoin> licenseTransactionJoins = new ArrayList<>();
+        for (final com.labs64.netlicensing.schema.context.List list : source.getList()) {
+            if (Constants.Transaction.LICENSE_TRANSACTION_JOIN.equals(list.getName())) {
+
+                final LicenseTransactionJoinImpl licenseTransactionJoin = new LicenseTransactionJoinImpl();
+                licenseTransactionJoin.setTransaction(new TransactionImpl());
+                licenseTransactionJoin.getTransaction().setNumber(SchemaFunction
+                        .propertyByName(list.getProperty(), Constants.Transaction.TRANSACTION_NUMBER).getValue());
+
+                licenseTransactionJoin.setLicense(new LicenseImpl());
+                licenseTransactionJoin.getLicense().setNumber(
+                        SchemaFunction.propertyByName(list.getProperty(), Constants.License.LICENSE_NUMBER).getValue());
+                licenseTransactionJoins.add(licenseTransactionJoin);
+            }
+        }
+        target.setLicenseTransactionJoins(licenseTransactionJoins);
 
         return target;
     }

@@ -111,6 +111,7 @@ public final class Constants {
     public static final class License {
         public static final String ENDPOINT_PATH = "license";
         public static final String HIDDEN = "hidden";
+        public static final String LICENSE_NUMBER = "licenseNumber";
     }
 
     public static final class LicensingModel {
@@ -170,6 +171,8 @@ public final class Constants {
         public static final String DATE_CLOSED = "dateclosed";
         public static final String VAT = "vat";
         public static final String VAT_MODE = "vatMode";
+        public static final String LICENSE_TRANSACTION_JOIN = "licenseTransactionJoin";
+
     }
 
     public static final class PaymentMethod {

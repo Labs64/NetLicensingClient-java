@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.Map;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.LicenseTransactionJoin;
 import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.TransactionSource;
@@ -45,6 +47,8 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
     private Date dateCreated;
 
     private Date dateClosed;
+
+    List<LicenseTransactionJoin> licenseTransactionJoins;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -162,6 +166,19 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
         map.add(Constants.DISCOUNT, getDiscount());
         map.add(Constants.CURRENCY, getCurrency());
         return map;
+    }
+
+    @Override
+    public List<LicenseTransactionJoin> getLicenseTransactionJoins() {
+        if (licenseTransactionJoins == null) {
+            licenseTransactionJoins = new ArrayList<>();
+        }
+        return licenseTransactionJoins;
+    }
+
+    @Override
+    public void setLicenseTransactionJoins(final List<LicenseTransactionJoin> licenseTransactionJoins) {
+        this.licenseTransactionJoins = licenseTransactionJoins;
     }
 
 }

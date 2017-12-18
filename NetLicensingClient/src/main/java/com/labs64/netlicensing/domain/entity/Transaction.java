@@ -14,6 +14,7 @@ package com.labs64.netlicensing.domain.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.vo.Currency;
@@ -72,6 +73,10 @@ public interface Transaction extends BaseEntity {
     Date getDateClosed();
 
     void setDateClosed(Date dateClosed);
+
+    List<LicenseTransactionJoin> getLicenseTransactionJoins();
+
+    void setLicenseTransactionJoins(List<LicenseTransactionJoin> licenseTransactionJoins);
 
     // Methods for working with custom properties
 
