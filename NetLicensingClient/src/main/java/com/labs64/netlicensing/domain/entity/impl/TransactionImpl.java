@@ -48,7 +48,7 @@ public class TransactionImpl extends BaseEntityImpl implements Transaction {
 
     private Date dateClosed;
 
-    List<LicenseTransactionJoin> licenseTransactionJoins;
+    private List<LicenseTransactionJoin> licenseTransactionJoins;
 
     /**
      * @see BaseEntityImpl#getReservedProps()

@@ -16,9 +16,7 @@ import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTransactionJoin;
 import com.labs64.netlicensing.domain.entity.Transaction;
 
-public class LicenseTransactionJoinImpl extends BaseEntityImpl implements LicenseTransactionJoin {
-
-    private static final long serialVersionUID = 492067092403719368L;
+public class LicenseTransactionJoinImpl implements LicenseTransactionJoin {
 
     private Transaction transaction;
     private License license;
