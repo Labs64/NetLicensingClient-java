@@ -58,5 +58,10 @@ public enum TransactionSource {
     /**
      * Transaction for update licenses (inactive with PT LM, Subscription).
      */
-    SUBSCRIPTION_UPDATE
+    SUBSCRIPTION_UPDATE,
+
+    /**
+     * Transaction for cancel recurring payment.
+     */
+    CANCEL_RECURRING_PAYMENT
 }
