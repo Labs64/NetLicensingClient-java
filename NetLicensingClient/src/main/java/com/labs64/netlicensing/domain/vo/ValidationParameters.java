@@ -55,7 +55,7 @@ public class ValidationParameters {
         return licenseeSecret;
     }
 
-    public void setTtlInterval(int ttlInterval) {
+    public void setTtlInterval(Integer ttlInterval) {
         this.ttlInterval = ttlInterval;
     }
 
