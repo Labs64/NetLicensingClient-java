@@ -214,6 +214,9 @@ public class LicenseeService {
             if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
                 form.param(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
             }
+            if (validationParameters.getTtlInterval() != null) {
+                form.param(Constants.ValidationParameters.TTL_INTERVAL, validationParameters.getTtlInterval().toString());
+            }
             int pmIndex = 0;
             for (final Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
                     .getParameters().entrySet()) {

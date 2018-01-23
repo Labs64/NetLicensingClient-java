@@ -197,5 +197,9 @@ public final class Constants {
         public static final int DEFAULT_TTL_MINUTES = 60 * 24; // 1 day
     }
 
+    public static final class ValidationParameters {
+        public static final String TTL_INTERVAL = "ttlInterval";
+    }
+
     // CHECKSTYLE:ON
 }
