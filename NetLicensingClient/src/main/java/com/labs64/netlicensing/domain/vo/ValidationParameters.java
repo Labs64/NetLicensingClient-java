@@ -8,7 +8,6 @@ public class ValidationParameters {
     private String productNumber;
     private String licenseeName;
     private String licenseeSecret;
-    private Integer ttlInterval;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -27,7 +26,7 @@ public class ValidationParameters {
 
     /**
      * Sets the name for the new licensee
-     *
+     * 
      * @param licenseeName
      *            optional human-readable licensee name in case licensee will be auto-created. This parameter must not
      *            be the name, but can be used to store any other useful string information with new licensees, up to
@@ -43,7 +42,7 @@ public class ValidationParameters {
 
     /**
      * Sets the licensee secret
-     *
+     * 
      * @param licenseeSecret
      *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
      */
@@ -53,14 +52,6 @@ public class ValidationParameters {
 
     public String getLicenseeSecret() {
         return licenseeSecret;
-    }
-
-    public void setTtlInterval(int ttlInterval) {
-        this.ttlInterval = ttlInterval;
-    }
-
-    public Integer getTtlInterval() {
-        return this.ttlInterval;
     }
 
     public Map<String, Map<String, String>> getParameters() {
