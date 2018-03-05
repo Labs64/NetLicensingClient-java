@@ -172,7 +172,7 @@ public final class Constants {
         public static final String VAT = "vat";
         public static final String VAT_MODE = "vatMode";
         public static final String LICENSE_TRANSACTION_JOIN = "licenseTransactionJoin";
-
+        public static final String SOURCE_SHOP_ONLY = "shopOnly";
     }
 
     public static final class PaymentMethod {

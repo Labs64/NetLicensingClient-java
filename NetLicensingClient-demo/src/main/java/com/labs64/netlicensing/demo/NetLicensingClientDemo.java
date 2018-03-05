@@ -28,6 +28,7 @@ import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
+import com.labs64.netlicensing.domain.entity.Transaction;
 import com.labs64.netlicensing.domain.entity.impl.LicenseImpl;
 import com.labs64.netlicensing.domain.entity.impl.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
@@ -51,17 +52,20 @@ import com.labs64.netlicensing.service.PaymentMethodService;
 import com.labs64.netlicensing.service.ProductModuleService;
 import com.labs64.netlicensing.service.ProductService;
 import com.labs64.netlicensing.service.TokenService;
+import com.labs64.netlicensing.service.TransactionService;
 import com.labs64.netlicensing.service.UtilityService;
 
 public class NetLicensingClientDemo {
 
-    /** Exit codes */
+    /**
+     * Exit codes
+     */
     private final static int CODE_OK = 0;
     private final static int CODE_ERROR = 1;
 
     private final static String DEMO_NUMBER_PREFIX = "DEMO-";
 
-    private static String randomLicenseeSecret = UUID.randomUUID().toString();
+    private static final String randomLicenseeSecret = UUID.randomUUID().toString();
 
     public static void main(final String[] args) {
 
@@ -362,6 +366,15 @@ public class NetLicensingClientDemo {
 
             licenses = LicenseService.list(context, "licenseeNumber=" + licensee.getNumber());
             out.writePage("Got the following licenses after transfer:", licenses);
+            // endregion
+
+            // region ********* Transactions
+            Page<Transaction> transactions = TransactionService.list(context,
+                    Constants.Transaction.SOURCE_SHOP_ONLY + "=" + Boolean.TRUE.toString());
+            out.writePage("Got the following transactions shop only:", transactions);
+
+            transactions = TransactionService.list(context, null);
+            out.writePage("Got the following transactions after transfer:", transactions);
             // endregion
 
             out.writeMessage("All done.");
