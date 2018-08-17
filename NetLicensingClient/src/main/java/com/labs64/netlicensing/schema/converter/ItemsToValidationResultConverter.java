@@ -33,9 +33,7 @@ public class ItemsToValidationResultConverter implements Converter<Netlicensing,
 
         for (final Item item : source.getItems().getItem()) {
             if (!Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType())) {
-                final String sourceType = (item.getType() != null) ? item.getType() : "<null>";
-                throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType,
-                        Constants.ValidationResult.VALIDATION_RESULT_TYPE));
+                continue;
             }
 
             final Composition composition = new Composition();
