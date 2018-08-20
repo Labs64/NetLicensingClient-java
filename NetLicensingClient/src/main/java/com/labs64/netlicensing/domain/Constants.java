@@ -62,6 +62,7 @@ public final class Constants {
 
     public static final class Vendor {
         public static final String VENDOR_NUMBER = "vendorNumber";
+        public static final String VENDOR_TYPE = "Vendor";
     }
 
     public static final class Product {
