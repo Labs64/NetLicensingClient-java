@@ -25,9 +25,7 @@ public enum TokenType {
 
     PASSWORDRESET,
 
-    SHOP,
-
-    SESSION;
+    SHOP;
 
     public static TokenType parseString(final String token) {
         if (token != null) {
