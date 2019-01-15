@@ -31,7 +31,7 @@ public interface RestProvider {
 
     /**
      * Helper method for performing REST requests with optional REST parameter map.
-     * <p/>
+     * <p>
      * This method has a long list of parameters. It is only intended for internal use.
      *
      * @param method

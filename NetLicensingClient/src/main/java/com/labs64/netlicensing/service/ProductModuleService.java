@@ -28,7 +28,7 @@ import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides product module handling routines.
- * <p/>
+ * <p>
  * {@linkplain ProductService Product} may comprise of multiple product modules, but must have at least one. Each
  * product module is licensed using one of the licensing models offered by NetLicensing service. Licensing within a
  * product module is independent of other product modules, however all product modules of a single product are visible

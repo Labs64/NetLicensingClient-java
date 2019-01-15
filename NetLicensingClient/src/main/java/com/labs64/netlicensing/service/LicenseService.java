@@ -28,13 +28,13 @@ import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides license handling routines.
- * <p/>
+ * <p>
  * Licenses always belong to a certain {@linkplain LicenseeService licensee}. Licenses are cloned off the corresponding
  * {@linkplain LicenseTemplateService license templates} when a licensee obtains them. On validation request the
  * licenses that belong to a licensee are processed according to the licensing models configured for the product
  * modules, and the validation result is sent back for further processing to the requesting side (which is typically a
  * vendor service or a program executed by the end user).
- * <p/>
+ * <p>
  * In simple cases there is no need to work with licenses directly via NetLicensing API, as licenses are assigned either
  * by a licensing model automatically (e.g. evaluation licenses) or actively purchased by a licensee via NetLicensing
  * Shop. However, for some complex licensing models, there may be a need to assign licenses to a licensee
@@ -150,7 +150,7 @@ public class LicenseService {
 
     /**
      * Deletes license.
-     * <p/>
+     * <p>
      * When any license is deleted, corresponding transaction is created automatically.
      * 
      * @param context

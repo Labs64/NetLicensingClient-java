@@ -18,25 +18,25 @@ import java.util.Map;
 
 /**
  * NetLicensing Product entity.
- * <p/>
+ * <p>
  * Properties visible via NetLicensing API:
- * <p/>
+ * <p>
  * <b>number</b> - Unique number that identifies the product. Vendor can assign this number when creating a product or
  * let NetLicensing generate one. Read-only after creation of the first licensee for the product.
- * <p/>
+ * <p>
  * <b>active</b> - If set to false, the product is disabled. No new licensees can be registered for the product,
  * existing licensees can not obtain new licenses.
- * <p/>
+ * <p>
  * <b>name</b> - Product name. Together with the version identifies the product for the end customer.
- * <p/>
+ * <p>
  * <b>version</b> - Product version. Convenience parameter, additional to the product name.
- * <p/>
+ * <p>
  * <b>licenseeAutoCreate</b> - If set to 'true', non-existing licensees will be created at first validation attempt.
- * <p/>
+ * <p>
  * <b>description</b> - Product description. Optional.
- * <p/>
+ * <p>
  * <b>licensingInfo</b> - Licensing information. Optional.
- * <p/>
+ * <p>
  * Arbitrary additional user properties of string type may be associated with each product. The name of user property
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted</b>.
  */

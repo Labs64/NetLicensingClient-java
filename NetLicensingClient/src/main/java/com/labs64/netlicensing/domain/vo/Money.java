@@ -22,7 +22,7 @@ import com.labs64.netlicensing.domain.Constants;
 
 /**
  * Holds amount of money with associated currency.
- * <p/>
+ * <p>
  * Consider more comprehensive implementation using one of:
  * <ul>
  * <li>http://joda-money.sourceforge.net/</li>

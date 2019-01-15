@@ -17,16 +17,16 @@ import java.util.Map;
 
 /**
  * Licensee entity used internally by NetLicensing.
- * <p/>
+ * <p>
  * Properties visible via NetLicensing API:
- * <p/>
+ * <p>
  * <b>number</b> - Unique number (across all products of a vendor) that identifies the licensee. Vendor can assign this
  * number when creating a licensee or let NetLicensing generate one. Read-only after creation of the first license for
  * the licensee.
- * <p/>
+ * <p>
  * <b>active</b> - If set to false, the licensee is disabled. Licensee can not obtain new licenses, and validation is
  * disabled (tbd).
- * <p/>
+ * <p>
  * Arbitrary additional user properties of string type may be associated with each licensee. The name of user property
  * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted,
  * productNumber</b>.

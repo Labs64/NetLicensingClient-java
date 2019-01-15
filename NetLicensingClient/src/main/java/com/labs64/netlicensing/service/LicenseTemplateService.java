@@ -28,7 +28,7 @@ import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides license template handling routines.
- * <p/>
+ * <p>
  * License template is a configuration element of a {@linkplain ProductModuleService product module}. License templates
  * define concrete items available for a {@linkplain LicenseeService licensee} to obtain. License template specifies
  * what is an item, its price, amount (if applicable), etc. When licensee obtains an item, actual

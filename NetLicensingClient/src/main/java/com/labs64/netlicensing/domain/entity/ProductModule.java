@@ -17,18 +17,18 @@ import java.util.Map;
 
 /**
  * Product module entity used internally by NetLicensing.
- * <p/>
+ * <p>
  * Properties visible via NetLicensing API:
- * <p/>
+ * <p>
  * <b>number</b> - Unique number (across all products of a vendor) that identifies the product module. Vendor can assign
  * this number when creating a product module or let NetLicensing generate one. Read-only after creation of the first
  * licensee for the product.
- * <p/>
+ * <p>
  * <b>active</b> - If set to false, the product module is disabled. Licensees can not obtain any new licenses for this
  * product module.
- * <p/>
+ * <p>
  * <b>name</b> - Product module name that is visible to the end customers in NetLicensing Shop.
- * <p/>
+ * <p>
  * <b>licensingModel</b> - Licensing model applied to this product module. Defines what license templates can be
  * configured for the product module and how licenses for this product module are processed during validation.
  */

@@ -27,14 +27,13 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-//import org.glassfish.jersey.filter.LoggingFilter;
 
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.provider.auth.Authentication;
 
 /**
  * Low level REST client implementation.
- * <p/>
+ * <p>
  * This will also log each request in INFO level.
  */
 public class RestProviderJersey extends AbstractRestProvider {
@@ -86,7 +85,7 @@ public class RestProviderJersey extends AbstractRestProvider {
                 }
             }
 
-            Response response;
+            final Response response;
             final Builder builder = target.request(DEFAULT_ACCEPT_TYPES).header(HttpHeaders.USER_AGENT,
                     getConfiguration().getUserAgent());
             if ("POST".equals(httpMethod) || "PUT".equals(httpMethod)) {

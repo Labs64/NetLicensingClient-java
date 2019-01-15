@@ -69,13 +69,13 @@ public abstract class NetLicensingException extends Exception {
     /**
      * Retrieve the most specific cause of this exception, that is, either the innermost cause (root cause) or this
      * exception itself.
-     * <p/>
+     * <p>
      * Differs from {@link #getRootCause()} in that it falls back to the present exception if there is no root cause.
      * 
      * @return the most specific cause (never <code>null</code>)
      */
     public Throwable getMostSpecificCause() {
-        Throwable rootCause = getRootCause();
+        final Throwable rootCause = getRootCause();
         if (rootCause == null) {
             return this;
         } else {

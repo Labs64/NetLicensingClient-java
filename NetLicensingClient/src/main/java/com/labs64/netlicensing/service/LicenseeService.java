@@ -32,7 +32,7 @@ import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides licensee handling routines.
- * <p/>
+ * <p>
  * Licensee is usually an end customer, capable of obtaining licenses for the product. Each licensee is associated with
  * a single {@linkplain ProductService product}. From the vendor perspective a licensee object in NetLicensing may
  * correspond to a physical instance of the product, customer account within a vendor's service, or it can represent a

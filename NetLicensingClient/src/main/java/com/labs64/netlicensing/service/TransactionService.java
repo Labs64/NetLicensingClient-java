@@ -26,7 +26,7 @@ import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides transaction handling routines.
- * <p/>
+ * <p>
  * Transaction is created each time change to {@linkplain LicenseService licenses} happens. For instance licenses are
  * obtained by a licensee, licenses disabled by vendor, licenses deleted, etc. Transaction is created no matter what
  * source has initiated the change to licenses: it can be either a direct purchase of licenses by a licensee via
@@ -39,7 +39,7 @@ public class TransactionService {
 
     /**
      * Creates new transaction object with given properties.
-     * <p/>
+     * <p>
      * This routine is for internal use by NetLicensing. Where appropriate, transactions will be created by NetLicensing
      * automatically.
      * 
@@ -63,7 +63,7 @@ public class TransactionService {
 
     /**
      * Gets transaction by its number.
-     * <p/>
+     * <p>
      * Use this operation for getting details about certain transaction. List of all transactions can be obtained by the
      * {@link #list(Context, String)} operation.
      * 
@@ -85,7 +85,7 @@ public class TransactionService {
 
     /**
      * Returns all transactions of a vendor.
-     * <p/>
+     * <p>
      * Use this operation to get the list of all transactions.
      * 
      * @param context
@@ -108,7 +108,7 @@ public class TransactionService {
 
     /**
      * Updates transaction properties.
-     * <p/>
+     * <p>
      * This routine is for internal use by NetLicensing. Where appropriate, transactions will be modified by
      * NetLicensing automatically.
      * 

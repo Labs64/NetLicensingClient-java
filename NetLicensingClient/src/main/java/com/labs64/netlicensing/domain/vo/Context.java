@@ -16,9 +16,9 @@ import com.labs64.netlicensing.domain.Constants;
 
 /**
  * Provides calling context for the NetLicensing API calls.
- * <p/>
+ * <p>
  * The Context object may differ depending on the level at which NetLicensing API is called.
- * <p/>
+ * <p>
  * For the internal Java NetLicensing API the Context provides information about the targeted Vendor.
  */
 public class Context extends GenericContext<String> {

@@ -16,17 +16,17 @@ import java.math.BigDecimal;
 
 /**
  * Country entity used internally by NetLicensing.
- * <p/>
+ * <p>
  * Properties visible via NetLicensing API:
- * <p/>
+ * <p>
  * <b>code</b> - Unique code of country.
- * <p/>
+ * <p>
  * <b>name</b> - Unique name of country
- * <p/>
+ * <p>
  * <b>vat</b> - Country vat.
- * <p/>
+ * <p>
  * <b>isEu</b> - is country in EU.
- * <p/>
+ * <p>
  */
 public interface Country extends BaseEntity {
 

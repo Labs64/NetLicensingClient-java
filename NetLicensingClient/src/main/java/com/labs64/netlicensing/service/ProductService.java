@@ -26,7 +26,7 @@ import com.labs64.netlicensing.util.CheckUtils;
 
 /**
  * Provides product handling routines.
- * <p/>
+ * <p>
  * {@linkplain Product Product entity} represents the vendor product within NetLicensing. Usually it corresponds to an
  * actual product of the vendor, but variations possible - in some cases it may be feasible to configure two or more
  * separate products within NetLicensing for a single actual product of the vendor. Products comprise of multiple
