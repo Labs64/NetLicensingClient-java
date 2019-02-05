@@ -77,7 +77,7 @@
         <project.title>${project.name}</project.title>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <maven.version>3.0.5</maven.version>
 
         <repo.releases.url>OVERRIDE_REPO_URL</repo.releases.url>
@@ -106,8 +106,9 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
-        <swid-maven-plugin.version>0.1.0</swid-maven-plugin.version>
         <maven-bundle-plugin.version>4.0.0</maven-bundle-plugin.version>
+        <jaxb.version>2.3.0</jaxb.version>
+        <javax.activation.version>1.1.1</javax.activation.version>
     </properties>
 
     <prerequisites>
@@ -173,9 +174,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <encoding>utf-8</encoding>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
+                        <source>8</source>
+                        <target>8</target>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -244,14 +244,6 @@
                     <version>${maven-shade-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>com.labs64.mojo</groupId>
-                    <artifactId>swid-maven-plugin</artifactId>
-                    <version>${swid-maven-plugin.version}</version>
-                    <configuration>
-                        <domain_creation_date>2010-04</domain_creation_date>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>${maven-bundle-plugin.version}</version>
@@ -291,6 +283,27 @@
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey.version}</version>
                 <scope>compile</scope>
+            </dependency>
+            <!--Support JAXB in Java 9 +-->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>${javax.activation.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
