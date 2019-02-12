@@ -56,16 +56,6 @@
             <organizationUrl>http://www.labs64.de</organizationUrl>
             <timezone>+1</timezone>
         </developer>
-        <developer>
-            <id>artem.shafranov</id>
-            <name>Artem Shafranov</name>
-            <email>artem.shafranov@gmail.com</email>
-            <roles>
-                <role>Lead Developer</role>
-            </roles>
-            <url>https://www.linkedin.com/in/artemshafranov</url>
-            <timezone>+6</timezone>
-        </developer>
     </developers>
 
     <modules>
