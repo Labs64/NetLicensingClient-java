@@ -20,7 +20,6 @@ package com.labs64.netlicensing.domain.vo;
  */
 public enum SecurityMode {
 
-    BASIC_AUTHENTICATION,
-    APIKEY_IDENTIFICATION
+    BASIC_AUTHENTICATION, APIKEY_IDENTIFICATION, ANONYMOUS_IDENTIFICATION
 
 }

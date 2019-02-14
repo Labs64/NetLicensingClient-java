@@ -245,6 +245,8 @@ public class NetLicensingService {
         case APIKEY_IDENTIFICATION:
             restProvider.authenticate(context.getApiKey());
             break;
+        case ANONYMOUS_IDENTIFICATION:
+            break;
         default:
             throw new RestException("Unknown security mode");
         }
