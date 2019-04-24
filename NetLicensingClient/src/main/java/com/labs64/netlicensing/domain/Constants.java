@@ -72,6 +72,10 @@ public final class Constants {
         public static final String DESCRIPTION = "description";
         public static final String LICENSING_INFO = "licensingInfo";
         public static final String DISCOUNTS = "discounts";
+        /**
+         * @deprecated please use com.labs64.netlicensing.domain.Constants.ProductModule#PROP_LICENSEE_SECRET_MODE instead.
+         */
+        @Deprecated
         public static final String PROP_LICENSEE_SECRET_MODE = "licenseeSecretMode";
         public static final String PROP_VAT_MODE = "vatMode";
 
@@ -87,6 +91,7 @@ public final class Constants {
         public static final String PRODUCT_MODULE_NUMBER = "productModuleNumber";
         public static final String PRODUCT_MODULE_NAME = "productModuleName";
         public static final String LICENSING_MODEL = "licensingModel";
+        public static final String PROP_LICENSEE_SECRET_MODE = "licenseeSecretMode";
     }
 
     public static final class LicenseTemplate {
@@ -96,6 +101,7 @@ public final class Constants {
         public static final String AUTOMATIC = "automatic";
         public static final String HIDDEN = "hidden";
         public static final String HIDE_LICENSES = "hideLicenses";
+        public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
     public static final class Licensee {
@@ -105,6 +111,10 @@ public final class Constants {
         public static final String LICENSEE_NUMBER = "licenseeNumber";
         public static final String SOURCE_LICENSEE_NUMBER = "sourceLicenseeNumber";
         public static final String PROP_LICENSEE_NAME = "licenseeName";
+        /**
+         * @deprecated please use com.labs64.netlicensing.domain.Constants.License#PROP_LICENSEE_SECRET instead.
+         */
+        @Deprecated
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
         public static final String PROP_MARKED_FOR_TRANSFER = "markedForTransfer";
     }
@@ -113,6 +123,7 @@ public final class Constants {
         public static final String ENDPOINT_PATH = "license";
         public static final String HIDDEN = "hidden";
         public static final String LICENSE_NUMBER = "licenseNumber";
+        public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
     public static final class LicensingModel {
@@ -159,6 +170,11 @@ public final class Constants {
 
         public static final class Quota {
             public static final String NAME = "Quota";
+        }
+
+        public static final class NodeLocked {
+            public static final String NAME = "NodeLocked";
+            public static final String LICENSEE_SECRET = "licenseeSecret";
         }
     }
 

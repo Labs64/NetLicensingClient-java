@@ -2,7 +2,10 @@ package com.labs64.netlicensing.domain.vo;
 
 public enum LicenseeSecretMode {
 
-    DISABLED("DISABLED"),
+    /**
+     * @deprecated
+     */
+    @Deprecated DISABLED("DISABLED"),
 
     PREDEFINED("PREDEFINED"),
 
@@ -26,7 +29,7 @@ public enum LicenseeSecretMode {
                 return licenseeSecretMode;
             }
         }
-        return LicenseeSecretMode.DISABLED;
+        return LicenseeSecretMode.PREDEFINED;
     }
 
     /*
