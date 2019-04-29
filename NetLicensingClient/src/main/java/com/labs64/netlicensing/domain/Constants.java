@@ -174,7 +174,6 @@ public final class Constants {
 
         public static final class NodeLocked {
             public static final String NAME = "NodeLocked";
-            public static final String LICENSEE_SECRET = "licenseeSecret";
         }
     }
 
