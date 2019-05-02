@@ -81,6 +81,8 @@
         <slf4j.version>1.7.25</slf4j.version>
         <junit.version>4.12</junit.version>
         <jersey.version>2.27</jersey.version>
+        <jaxb.api.version>2.3.1</jaxb.api.version>
+        <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
@@ -91,13 +93,13 @@
         <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <!-- TODO(AY): change version when the new release comes. Java 11 Warning https://github.com/highsource/maven-jaxb2-plugin/issues/148 -->
         <maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
         <maven-bundle-plugin.version>4.0.0</maven-bundle-plugin.version>
-        <jaxb.version>2.3.0</jaxb.version>
         <javax.activation.version>1.1.1</javax.activation.version>
     </properties>
 
@@ -275,26 +277,15 @@
                 <version>${jersey.version}</version>
                 <scope>compile</scope>
             </dependency>
-            <!--Support JAXB in Java 9 +-->
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
-                <version>${jaxb.version}</version>
+                <version>${jaxb.api.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.sun.xml.bind</groupId>
-                <artifactId>jaxb-impl</artifactId>
-                <version>${jaxb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sun.xml.bind</groupId>
-                <artifactId>jaxb-core</artifactId>
-                <version>${jaxb.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>${javax.activation.version}</version>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb-runtime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
