@@ -48,7 +48,7 @@ public class NetLicensingService {
     /**
      * Private constructor
      */
-    public NetLicensingService() {
+    private NetLicensingService() {
     }
 
     /**
