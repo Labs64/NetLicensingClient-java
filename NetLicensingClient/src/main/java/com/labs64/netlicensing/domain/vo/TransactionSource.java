@@ -36,6 +36,11 @@ public enum TransactionSource {
     AUTO_LICENSEE_DELETE,
 
     /**
+     * Transaction for update license during validate
+     */
+    AUTO_LICENSEE_VALIDATE,
+
+    /**
      * Auto transaction for license template delete with forceCascade.
      */
     AUTO_LICENSETEMPLATE_DELETE,
