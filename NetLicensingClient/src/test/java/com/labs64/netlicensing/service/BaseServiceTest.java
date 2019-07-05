@@ -258,7 +258,7 @@ abstract class BaseServiceTest extends JerseyTest {
          */
         protected final Response errorResponse(final String... errorIdsAndMessages) {
             if (errorIdsAndMessages.length % 2 != 0) {
-                throw new IllegalArgumentException("Some exception ID doesn't have corresponding error message");
+                throw new IllegalArgumentException("Some exception ID doesn't have corresponding error message.");
             }
 
             final Netlicensing netlicensing = objectFactory.createNetlicensing();

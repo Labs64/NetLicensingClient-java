@@ -58,21 +58,21 @@ public class Money {
                 target.setAmount(DatatypeConverter.parseDecimal(rawPrice));
             } catch (final NumberFormatException e) {
                 throw new IllegalArgumentException("'" + Constants.PRICE
-                        + "' format is not correct, expected '0.00' format");
+                        + "' format is not correct, expected '0.00' format.");
             }
             if (StringUtils.isNotBlank(rawCurrency)) {
                 if (Currency.parseValueSafe(rawCurrency) == null) {
-                    throw new IllegalArgumentException("Unsupported currency!");
+                    throw new IllegalArgumentException("Unsupported currency.");
                 }
                 target.setCurrencyCode(rawCurrency);
             } else {
                 throw new IllegalArgumentException("'" + Constants.PRICE + "' field must be accompanied with the '"
-                        + Constants.CURRENCY + "' field");
+                        + Constants.CURRENCY + "' field.");
             }
         } else { // 'price' is not provided
             if (StringUtils.isNotBlank(rawCurrency)) {
                 throw new IllegalArgumentException("'" + Constants.CURRENCY + "' field can not be used without the '"
-                        + Constants.PRICE + "' field");
+                        + Constants.PRICE + "' field.");
             }
         }
         return target;

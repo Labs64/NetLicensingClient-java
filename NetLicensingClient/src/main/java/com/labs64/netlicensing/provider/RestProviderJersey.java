@@ -101,7 +101,7 @@ public class RestProviderJersey extends AbstractRestProvider {
             restResponse.setEntity(readEntity(response, responseType));
             return restResponse;
         } catch (final RuntimeException e) {
-            throw new RestException("Exception while calling service", e);
+            throw new RestException("Exception while calling service.", e);
         }
     }
 
@@ -175,7 +175,7 @@ public class RestProviderJersey extends AbstractRestProvider {
                 }
                 final String body = buffered ? " '" + response.readEntity(String.class) + "' of type '"
                         + response.getMediaType() + "'" : "";
-                throw new RestException("Could not interpret the response body" + body, ex);
+                throw new RestException("Could not interpret the response body" + body + ".", ex);
             }
         }
     }

@@ -56,7 +56,7 @@ public class ItemsToValidationResultConverter implements Converter<Netlicensing,
             }
 
             if (productModuleNumber == null) {
-                throw new ConversionException(String.format("Validation item does not contain property '%s'",
+                throw new ConversionException(String.format("Validation item does not contain property '%s'.",
                         Constants.ProductModule.PRODUCT_MODULE_NUMBER));
             }
 

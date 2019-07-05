@@ -36,7 +36,8 @@ abstract class ItemToEntityBaseConverter<T extends BaseEntity> implements Conver
         final String entityClass = target.getClass().getInterfaces()[0].getSimpleName();
         if (!entityClass.equals(source.getType())) {
             final String sourceType = (source.getType() != null) ? source.getType() : "<null>";
-            throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType, entityClass));
+            throw new ConversionException(
+                    String.format("Wrong item type '%s', expected '%s'.", sourceType, entityClass));
         }
 
         target.setActive(Boolean.parseBoolean(

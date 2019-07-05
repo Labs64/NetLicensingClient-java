@@ -27,7 +27,7 @@ public class ItemToLicenseTypePropertiesConverter implements Converter<Item, Lic
     public LicenseTypeProperties convert(final Item source) throws ConversionException {
         if (!Constants.Utility.LICENSE_TYPE.equals(source.getType())) {
             final String sourceType = (source.getType() != null) ? source.getType() : "<null>";
-            throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType,
+            throw new ConversionException(String.format("Wrong item type '%s', expected '%s'.", sourceType,
                     Constants.Utility.LICENSE_TYPE));
         }
 

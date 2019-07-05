@@ -203,7 +203,7 @@ public class EntityFactory {
                         try {
                             ((Visitable) entity).accept(new LinkedEntitiesPopulator(linkedEntities));
                         } catch (final Exception e) {
-                            throw new ConversionException("Error processing linked entities", e);
+                            throw new ConversionException("Error processing linked entities.", e);
                         }
                     }
                 }
@@ -216,7 +216,7 @@ public class EntityFactory {
                     netlicensing.getItems().getTotalitems(),
                     netlicensing.getItems().getHasnext());
         } else {
-            throw new WrongResponseFormatException("Service response is not a page response");
+            throw new WrongResponseFormatException("Service response is not a page response.");
         }
     }
 
@@ -233,21 +233,24 @@ public class EntityFactory {
         try {
             converter = (Converter<Item, T>) getConvertersCache().get(entityClass);
         } catch (final ClassCastException e) {
-            throw new RuntimeException("Wrong converter type found for entity class " + entityClass.getCanonicalName());
+            throw new RuntimeException(
+                    "Wrong converter type found for entity class " + entityClass.getCanonicalName() + ".");
         }
         if (converter == null) {
             final Class<?> converterClass = entityToConverterMap.get(entityClass);
             if (converterClass == null) {
                 throw new IllegalArgumentException("No converter is found for entity of class "
-                        + entityClass.getCanonicalName());
+                        + entityClass.getCanonicalName() + ".");
             }
             try {
                 converter = (Converter<Item, T>) converterClass.newInstance();
                 getConvertersCache().put(entityClass, converter);
             } catch (final InstantiationException e) {
-                throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
+                throw new RuntimeException(
+                        "Can not instantiate converter of class " + converterClass.getCanonicalName() + ".");
             } catch (final IllegalAccessException e) {
-                throw new RuntimeException("Can not instantiate converter of class " + converterClass.getCanonicalName());
+                throw new RuntimeException(
+                        "Can not instantiate converter of class " + converterClass.getCanonicalName() + ".");
             }
         }
         return converter;
@@ -273,7 +276,7 @@ public class EntityFactory {
             }
         }
         throw new WrongResponseFormatException("Service response doesn't contain item of type "
-                + type.getCanonicalName());
+                + type.getCanonicalName() + ".");
     }
 
     /**
@@ -307,7 +310,7 @@ public class EntityFactory {
                 return entityClass;
             }
         }
-        throw new WrongResponseFormatException("Service response contains unexpected item type " + itemType);
+        throw new WrongResponseFormatException("Service response contains unexpected item type " + itemType + ".");
     }
 
 }

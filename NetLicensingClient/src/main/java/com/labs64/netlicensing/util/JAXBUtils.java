@@ -37,25 +37,25 @@ public final class JAXBUtils {
 
     public static <T> T readObjectFromInputStream(final InputStream inputStream, final Class<T> expectedType) {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(expectedType);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement<T> element = unmarshaller.unmarshal(new StreamSource(inputStream), expectedType);
+            final JAXBContext jaxbContext = JAXBContext.newInstance(expectedType);
+            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            final JAXBElement<T> element = unmarshaller.unmarshal(new StreamSource(inputStream), expectedType);
             return element.getValue();
         } catch (final JAXBException e) {
-            throw new RuntimeException("Cannot process resource!", e);
+            throw new RuntimeException("Cannot process resource.", e);
         }
     }
 
     public static <T> String xmlEntityToString(final T entity) {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(entity.getClass());
-            Marshaller marshaller = jaxbContext.createMarshaller();
+            final JAXBContext jaxbContext = JAXBContext.newInstance(entity.getClass());
+            final Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
             marshaller.marshal(entity, out);
             return out.toString();
         } catch (final JAXBException e) {
-            throw new RuntimeException("Cannot convert object to string !", e);
+            throw new RuntimeException("Cannot convert object to string.", e);
         }
     }
 

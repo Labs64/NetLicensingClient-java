@@ -118,7 +118,7 @@ public class ProductDiscountImpl implements ProductDiscount, Serializable {
                 setAmountPercent(DatatypeConverter.parseDecimal(amount.substring(0, amount.length() - 1)));
             } catch (final NumberFormatException e) {
                 throw new IllegalArgumentException(
-                        "Format for discount amount in percent is not correct, expected numeric format");
+                        "Format for discount amount in percent is not correct, expected numeric format.");
             }
         } else {
             final Money amountFix = Money.convertPrice(amount, Currency.EUR.value());

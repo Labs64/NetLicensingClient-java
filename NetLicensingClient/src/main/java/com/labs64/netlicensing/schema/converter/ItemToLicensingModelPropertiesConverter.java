@@ -27,7 +27,7 @@ public class ItemToLicensingModelPropertiesConverter implements Converter<Item, 
     public LicensingModelProperties convert(final Item source) throws ConversionException {
         if (!Constants.Utility.LICENSING_MODEL_PROPERTIES.equals(source.getType())) {
             final String sourceType = (source.getType() != null) ? source.getType() : "<null>";
-            throw new ConversionException(String.format("Wrong item type '%s', expected '%s'", sourceType,
+            throw new ConversionException(String.format("Wrong item type '%s', expected '%s'.", sourceType,
                     Constants.Utility.LICENSING_MODEL_PROPERTIES));
         }
 

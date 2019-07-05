@@ -212,14 +212,14 @@ public class NetLicensingService {
             case NO_CONTENT:
                 return null;
             default:
-                throw new RestException(String.format("Unsupported response status code %s: %s",
+                throw new RestException(String.format("Unsupported response status code %s: %s.",
                         status.getStatusCode(), status.getReasonPhrase()));
             }
         } else {
             if (SchemaFunction.hasErrorInfos(response.getEntity())) {
                 throw new ServiceException(status, response.getHeaders(), response.getEntity());
             } else {
-                throw new RestException(String.format("Unknown service error %s: %s", status.getStatusCode(),
+                throw new RestException(String.format("Unknown service error %s: %s.", status.getStatusCode(),
                         status.getReasonPhrase()));
             }
         }
@@ -236,7 +236,7 @@ public class NetLicensingService {
      */
     private void configure(final RestProvider restProvider, final Context context) throws RestException {
         if (context.getSecurityMode() == null) {
-            throw new RestException("Security mode must be specified");
+            throw new RestException("Security mode must be specified.");
         }
         switch (context.getSecurityMode()) {
         case BASIC_AUTHENTICATION:
@@ -248,7 +248,7 @@ public class NetLicensingService {
         case ANONYMOUS_IDENTIFICATION:
             break;
         default:
-            throw new RestException("Unknown security mode");
+            throw new RestException("Unknown security mode.");
         }
         if (context.containsKey(RestProvider.Configuration.class)) {
             final Object config = context.getObject(RestProvider.Configuration.class);
