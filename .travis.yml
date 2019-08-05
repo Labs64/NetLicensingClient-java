@@ -1,3 +1,4 @@
+dist: trusty
 language: java
 jdk:
 # - openjdk7 => # From Jersey 2.26, all modules support only Java SE 8
