@@ -48,7 +48,7 @@ public class RestProviderJersey extends AbstractRestProvider {
 
         @Override
         public String getUserAgent() {
-            return "NetLicensing/Java " + System.getProperty("java.version") + " (http://netlicensing.io)";
+            return "NetLicensing/Java " + System.getProperty("java.version") + " (https://netlicensing.io)";
         }
 
         @Override
