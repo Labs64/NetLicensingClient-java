@@ -15,7 +15,7 @@ package com.labs64.netlicensing.domain.vo;
 /**
  * Enumerates possible security modes for accessing the NetLicensing API.
  * <p>
- * See {@link https://www.labs64.de/confluence/x/pwCo} for details.
+ * See {@link https://netlicensing.io/wiki/restful-api} for details.
  * </p>
  */
 public enum SecurityMode {
