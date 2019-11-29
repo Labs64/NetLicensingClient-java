@@ -83,12 +83,7 @@ public class NetLicensingService {
     <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams,
             final Class<RES> resultType, final MetaInfo... meta) throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
-        if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
-            if (netlicensing.getId() != null) {
-                meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
-            }
-        }
-        return entityFactory.create(netlicensing, resultType);
+        return processResponse(meta, netlicensing, resultType);
     }
 
     /**
@@ -135,12 +130,7 @@ public class NetLicensingService {
         if (netlicensing == null) {
             return null;
         } else {
-            if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
-                if (netlicensing.getId() != null) {
-                    meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
-                }
-            }
-            return entityFactory.create(netlicensing, resultType);
+            return processResponse(meta, netlicensing, resultType);
         }
     }
 
@@ -266,6 +256,16 @@ public class NetLicensingService {
     private boolean isErrorStatus(final Response.Status status) {
         return (status.getFamily() == Response.Status.Family.CLIENT_ERROR)
                 || (status.getFamily() == Response.Status.Family.SERVER_ERROR);
+    }
+
+    protected <RES> RES processResponse(final MetaInfo[] meta, final Netlicensing netlicensing, final Class<RES> resultType)
+            throws NetLicensingException {
+        if ((meta != null) && (meta.length > 0) && (meta[0] != null)) {
+            if (netlicensing.getId() != null) {
+                meta[0].setValue(Constants.PROP_ID, netlicensing.getId());
+            }
+        }
+        return entityFactory.create(netlicensing, resultType);
     }
 
 }

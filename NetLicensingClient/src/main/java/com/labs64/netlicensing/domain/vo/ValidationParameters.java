@@ -8,6 +8,7 @@ public class ValidationParameters {
     private String productNumber;
     private String licenseeName;
     private String licenseeSecret;
+    private String publicKey;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -16,7 +17,7 @@ public class ValidationParameters {
      * @param productNumber
      *            optional productNumber, must be provided in case licensee auto-create is enabled
      */
-    public void setProductNumber(String productNumber) {
+    public void setProductNumber(final String productNumber) {
         this.productNumber = productNumber;
     }
 
@@ -32,7 +33,7 @@ public class ValidationParameters {
      *            be the name, but can be used to store any other useful string information with new licensees, up to
      *            1000 characters.
      */
-    public void setLicenseeName(String licenseeName) {
+    public void setLicenseeName(final String licenseeName) {
         this.licenseeName = licenseeName;
     }
 
@@ -46,12 +47,27 @@ public class ValidationParameters {
      * @param licenseeSecret
      *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
      */
-    public void setLicenseeSecret(String licenseeSecret) {
+    public void setLicenseeSecret(final String licenseeSecret) {
         this.licenseeSecret = licenseeSecret;
     }
 
     public String getLicenseeSecret() {
         return licenseeSecret;
+    }
+
+    /**
+     * Sets the public key
+     *
+     * @param publicKey
+     *            publicKey stored on the client side.
+     */
+    public void setPublicKey(final String publicKey) {
+        this.publicKey = publicKey.replaceAll("\\n", "").replace("-----BEGIN PUBLIC KEY-----", "").replace(
+                "-----END PUBLIC KEY-----", "");
+    }
+
+    public String getPublicKey() {
+        return publicKey;
     }
 
     public Map<String, Map<String, String>> getParameters() {

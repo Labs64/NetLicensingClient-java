@@ -59,6 +59,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.helger</groupId>
+            <artifactId>ph-xmldsig</artifactId>
+        </dependency>
 
         <!-- Testing framework dependencies -->
         <dependency>

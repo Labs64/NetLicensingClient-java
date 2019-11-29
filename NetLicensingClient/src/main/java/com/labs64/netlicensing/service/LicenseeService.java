@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +29,9 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.ValidationParameters;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
+import com.labs64.netlicensing.exception.WrongResponseFormatException;
+import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.util.CheckSignature;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -225,9 +229,26 @@ public class LicenseeService {
                 ++pmIndex;
             }
         }
-        return NetLicensingService.getInstance().post(context,
+        final NetLicensingService service = NetLicensingService.getInstance();
+        final Netlicensing netlicensing = service.request(context, HttpMethod.POST,
                 Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
-                ValidationResult.class, meta);
+                null);
+
+        // check signature
+        if (validationParameters != null && !StringUtils.isEmpty(validationParameters.getPublicKey())
+                && !StringUtils.isEmpty(context.getApiKey())) {
+            try {
+                CheckSignature.check(netlicensing, validationParameters.getPublicKey().getBytes());
+            } catch (final Exception e) {
+                throw new WrongResponseFormatException(e.getMessage());
+            }
+        }
+        // if response has no content
+        if (netlicensing == null) {
+            return null;
+        } else {
+            return service.processResponse(meta, netlicensing, ValidationResult.class);
+        }
     }
 
     /**
