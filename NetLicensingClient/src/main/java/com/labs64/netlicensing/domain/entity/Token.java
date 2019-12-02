@@ -15,7 +15,7 @@ package com.labs64.netlicensing.domain.entity;
 import java.util.Date;
 import java.util.Map;
 
-import com.labs64.netlicensing.domain.vo.TokenType;
+import com.labs64.netlicensing.domain.vo.ITokenType;
 
 /**
  * Token entity used internally by NetLicensing.
@@ -32,9 +32,9 @@ public interface Token extends BaseEntity {
 
     void setExpirationTime(Date expirationTime);
 
-    TokenType getTokenType();
+    ITokenType getTokenType();
 
-    void setTokenType(TokenType tokenType);
+    void setTokenType(ITokenType tokenType);
 
     // Methods for working with custom properties
 

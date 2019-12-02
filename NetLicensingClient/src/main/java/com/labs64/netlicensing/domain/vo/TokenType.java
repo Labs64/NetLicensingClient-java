@@ -15,19 +15,15 @@ package com.labs64.netlicensing.domain.vo;
 /**
  * This enum defines available token types.
  */
-public enum TokenType {
+public enum TokenType implements ITokenType {
 
     DEFAULT,
 
     APIKEY,
 
-    REGISTRATION,
-
-    PASSWORDRESET,
-
     SHOP;
 
-    public static TokenType parseString(final String token) {
+    public static ITokenType parseString(final String token) {
         if (token != null) {
             for (final TokenType tokenType : TokenType.values()) {
                 if (token.equalsIgnoreCase(tokenType.name())) {

@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -39,6 +34,11 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.TokenType;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.util.DateUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link TokenService}.
@@ -85,41 +85,6 @@ public class TokenServiceTest extends BaseServiceTest {
     }
 
     @Test
-    public void testCreateEmptyRegistrationToken() throws Exception {
-        final TokenImpl newToken = new TokenImpl();
-        newToken.setTokenType(TokenType.REGISTRATION);
-        newToken.addProperty(Constants.Token.TOKEN_PROP_EMAIL, "test@test.com");
-
-        final Token createdToken = TokenService.create(context, newToken);
-
-        assertNotNull(createdToken);
-        assertNotNull(createdToken.getNumber());
-        assertEquals(true, createdToken.getActive());
-        assertNotNull(createdToken.getExpirationTime());
-        assertEquals(TokenType.REGISTRATION, createdToken.getTokenType());
-        assertEquals("VDEMO", createdToken.getVendorNumber());
-        assertEquals("test@test.com", createdToken.getProperties().get(Constants.Token.TOKEN_PROP_EMAIL));
-    }
-
-    @Test
-    public void testCreateEmptyPasswordResetToken() throws Exception {
-        final TokenImpl newToken = new TokenImpl();
-        newToken.setTokenType(TokenType.PASSWORDRESET);
-        newToken.setVendorNumber("VDEMO2");
-        newToken.addProperty(Constants.Token.TOKEN_PROP_EMAIL, "test@test.com");
-
-        final Token createdToken = TokenService.create(context, newToken);
-
-        assertNotNull(createdToken);
-        assertNotNull(createdToken.getNumber());
-        assertEquals(true, createdToken.getActive());
-        assertNotNull(createdToken.getExpirationTime());
-        assertEquals(TokenType.PASSWORDRESET, createdToken.getTokenType());
-        assertEquals("VDEMO2", createdToken.getVendorNumber());
-        assertEquals("test@test.com", createdToken.getProperties().get(Constants.Token.TOKEN_PROP_EMAIL));
-    }
-
-    @Test
     public void testCreateEmptyShopToken() throws Exception {
         final TokenImpl newToken = new TokenImpl();
         newToken.setTokenType(TokenType.SHOP);
@@ -135,26 +100,6 @@ public class TokenServiceTest extends BaseServiceTest {
         assertNotNull(createdToken.getProperties().get(Constants.Token.TOKEN_PROP_SHOP_URL));
         assertEquals("L001-TEST", createdToken.getProperties().get(Constants.Licensee.LICENSEE_NUMBER));
         assertEquals("VDEMO", createdToken.getVendorNumber());
-    }
-
-    @Test
-    public void testCreateRegistrationTokenWithoutEmail() throws Exception {
-        final TokenImpl newToken = new TokenImpl();
-        newToken.setTokenType(TokenType.REGISTRATION);
-
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'email' not found");
-        TokenService.create(context, newToken);
-    }
-
-    @Test
-    public void testCreatePasswordResetTokenWithoutEmailAndVendorNumber() throws Exception {
-        final TokenImpl newToken = new TokenImpl();
-        newToken.setTokenType(TokenType.PASSWORDRESET);
-
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'email' not found, TokenValidation: Property 'targetVendorNumber' not found");
-        TokenService.create(context, newToken);
     }
 
     @Test
@@ -193,7 +138,7 @@ public class TokenServiceTest extends BaseServiceTest {
         assertEquals("08b66094-a5c4-4c93-be71-567e982d9428", tokens.getContent().get(0).getNumber());
         assertEquals(DateUtils.parseDate("2014-07-22T23:07:46.742Z").getTime(), tokens.getContent().get(1)
                 .getExpirationTime());
-        assertEquals(TokenType.REGISTRATION, tokens.getContent().get(2).getTokenType());
+        assertEquals(TokenType.APIKEY, tokens.getContent().get(2).getTokenType());
     }
 
     @Test
@@ -222,18 +167,6 @@ public class TokenServiceTest extends BaseServiceTest {
         @Override
         public Response create(final MultivaluedMap<String, String> formParams) {
             final String targetTokenType = formParams.getFirst(Constants.Token.TOKEN_TYPE);
-            if (TokenType.REGISTRATION.name().equals(targetTokenType)
-                    && !formParams.containsKey(Constants.Token.TOKEN_PROP_EMAIL)) {
-                return errorResponse("MalformedRequestException", "Malformed token request",
-                        "TokenValidation", "Property 'email' not found");
-            }
-            if (TokenType.PASSWORDRESET.name().equals(targetTokenType)
-                    && !formParams.containsKey(Constants.Token.TOKEN_PROP_EMAIL)
-                    && !formParams.containsKey(Constants.Token.TOKEN_PROP_VENDORNUMBER)) {
-                return errorResponse("MalformedRequestException", "Malformed token request",
-                        "TokenValidation", "Property 'email' not found",
-                        "TokenValidation", "Property 'targetVendorNumber' not found");
-            }
             if (TokenType.SHOP.name().equals(targetTokenType)
                     && !formParams.containsKey(Constants.Licensee.LICENSEE_NUMBER)) {
                 return errorResponse("MalformedRequestException", "Malformed token request",

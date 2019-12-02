@@ -20,7 +20,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
-import com.labs64.netlicensing.domain.vo.TokenType;
+import com.labs64.netlicensing.domain.vo.ITokenType;
 
 /**
  * Default implementation of {@link com.labs64.netlicensing.domain.entity.Token}.
@@ -33,7 +33,7 @@ public class TokenImpl extends BaseEntityImpl implements Token {
 
     private Date expirationTime;
 
-    private TokenType tokenType;
+    private ITokenType tokenType;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -74,12 +74,12 @@ public class TokenImpl extends BaseEntityImpl implements Token {
     }
 
     @Override
-    public TokenType getTokenType() {
+    public ITokenType getTokenType() {
         return tokenType;
     }
 
     @Override
-    public void setTokenType(final TokenType tokenType) {
+    public void setTokenType(final ITokenType tokenType) {
         this.tokenType = tokenType;
     }
 

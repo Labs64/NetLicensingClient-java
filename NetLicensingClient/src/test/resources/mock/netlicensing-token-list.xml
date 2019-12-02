@@ -25,8 +25,7 @@
             <property name="number">0c924950-de52-4581-b2dc-5031fa04ef29</property>
             <property name="active">true</property>
             <property name="expirationTime">2014-08-06T13:18:05.982Z</property>
-            <property name="tokenType">REGISTRATION</property>
-            <property name="email">test@test.com</property>
+            <property name="tokenType">APIKEY</property>
             <property name="vendorNumber">VDEMO</property>
         </item>
     </items>
