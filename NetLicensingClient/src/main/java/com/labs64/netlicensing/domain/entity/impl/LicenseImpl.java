@@ -13,7 +13,6 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
-import com.labs64.netlicensing.domain.entity.LicenseTransactionJoin;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.vo.Currency;
 
@@ -44,8 +42,6 @@ public class LicenseImpl extends BaseEntityImpl implements License {
     private Licensee licensee;
 
     private LicenseTemplate licenseTemplate;
-
-    private List<LicenseTransactionJoin> licenseTransactionJoins;
 
     /**
      * @see BaseEntityImpl#getReservedProps()
@@ -140,19 +136,6 @@ public class LicenseImpl extends BaseEntityImpl implements License {
         map.add(Constants.CURRENCY, getCurrency());
         map.add(Constants.License.HIDDEN, getHidden());
         return map;
-    }
-
-    @Override
-    public List<LicenseTransactionJoin> getLicenseTransactionJoins() {
-        if (licenseTransactionJoins == null) {
-            licenseTransactionJoins = new ArrayList<>();
-        }
-        return licenseTransactionJoins;
-    }
-
-    @Override
-    public void setLicenseTransactionJoins(final List<LicenseTransactionJoin> licenseTransactionJoins) {
-        this.licenseTransactionJoins = licenseTransactionJoins;
     }
 
 }

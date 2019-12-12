@@ -13,7 +13,6 @@
 package com.labs64.netlicensing.domain.entity;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 import com.labs64.netlicensing.domain.vo.Currency;
@@ -79,8 +78,4 @@ public interface License extends BaseEntity {
     LicenseTemplate getLicenseTemplate();
 
     void setLicenseTemplate(LicenseTemplate licenseTemplate);
-
-    List<LicenseTransactionJoin> getLicenseTransactionJoins();
-
-    void setLicenseTransactionJoins(List<LicenseTransactionJoin> licenseTransactionJoins);
 }
