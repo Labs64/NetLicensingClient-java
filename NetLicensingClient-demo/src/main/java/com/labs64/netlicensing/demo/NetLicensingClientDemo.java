@@ -12,9 +12,13 @@
  */
 package com.labs64.netlicensing.demo;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -289,15 +293,17 @@ public class NetLicensingClientDemo {
 
             // region ********* Token
 
+            // load private/public test keys
+            String privateKey = loadFileContent("rsa_private.pem");
+            String publicKey = loadFileContent("rsa_public.pem");
+            String publicKey_wrong = loadFileContent("rsa_public_wrong.pem");
+            out.writeObject("loaded privateKey:", privateKey);
+            out.writeObject("loaded publicKey:", publicKey);
+            out.writeObject("loaded publicKey_wrong:", publicKey_wrong);
+
             final Token newToken = new TokenImpl();
             newToken.setTokenType(TokenType.APIKEY);
-            newToken.addProperty(Constants.Token.TOKEN_PROP_PRIVATE_KEY,
-                    "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAhleNJf9h+aZ9KlkLLIUiqt4p3O8kAijzvEUSG4CuS95"
-                            + "VsUC6iVnpTlepyLB4ZImyWBjcNme4DLufbwCKi0iPzQIDAQABAkBSv7sBnL0MubB/VTm8woUIGrBOlj7n1bHMVf9"
-                            + "BUZIKyI/2qOVmFKtlxXXe8i5XHcg0pZukICTSWB4htxXqs8ABAiEA4JUTuq9yl2jy4aAyyrOQyPJ9s2a449tsiw3"
-                            + "VNIcS8wECIQCZIrcE1FxNKZLgE4mrMnfZwXJ4MqO2WH6QGznMHLP4zQIgCxwUz8ViG89bRIISQSjE3svwH/HS76K"
-                            + "pKe/TPjf4XgECIQCRE5pgMO/hCmnjb58VWZLB8csIpLEEp4H/9EslXGwEYQIgVw4LJk0EINngF2qSv0z12Q29WMr"
-                            + "aaNNcwvc3k5g5kqc=");
+            newToken.addProperty(Constants.Token.TOKEN_PROP_PRIVATE_KEY, privateKey);
             final Token apiKey = TokenService.create(context, newToken);
             out.writeObject("Created APIKey:", apiKey);
 
@@ -343,10 +349,18 @@ public class NetLicensingClientDemo {
 
             // Validate using APIKey signed
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            validationParameters.setPublicKey("MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIZXjSX/YfmmfSpZCyyFIqreKdzvJAIo87xFEhuA"
-                    + "rkveVbFAuolZ6U5XqciweGSJslgY3DZnuAy7n28AiotIj80CAwEAAQ==");
+            validationParameters.setPublicKey(publicKey);
             validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             out.writeObject("Validation result (APIKey / signed):", validationResult);
+
+            // Validate using APIKey wrongly signed
+            context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
+            validationParameters.setPublicKey(publicKey_wrong);
+            try {
+                validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
+            } catch (final NetLicensingException e) {
+                out.writeException("Validation result exception (APIKey / wrongly signed):", e);
+            }
 
             // reset context for futher use
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
@@ -438,4 +452,9 @@ public class NetLicensingClientDemo {
         return String.format("%s%s%s", DEMO_NUMBER_PREFIX, prefix, number);
     }
 
+    private static String loadFileContent(final String fileName) throws IOException {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream = classloader.getResourceAsStream(fileName);
+        return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+    }
 }
