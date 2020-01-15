@@ -328,19 +328,28 @@ public class NetLicensingClientDemo {
             validationParameters.setLicenseeSecret(randomLicenseeSecret);
             validationParameters.setLicenseeName(licenseeName);
             validationParameters.setProductNumber(productNumber);
-            ValidationResult validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
-            out.writeObject("Validation result for created licensee:", validationResult);
 
+            ValidationResult validationResult = null;
+
+            // Validate using Basic Auth
+            context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
+            validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
+            out.writeObject("Validation result (Basic Auth):", validationResult);
+
+            // Validate using APIKey
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
             validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
-            out.writeObject("Validation repeated with APIKey:", validationResult);
+            out.writeObject("Validation result (APIKey):", validationResult);
 
+            // Validate using APIKey signed
+            context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
             validationParameters.setPublicKey("MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIZXjSX/YfmmfSpZCyyFIqreKdzvJAIo87xFEhuA"
                     + "rkveVbFAuolZ6U5XqciweGSJslgY3DZnuAy7n28AiotIj80CAwEAAQ==");
             validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
+            out.writeObject("Validation result (APIKey / signed):", validationResult);
 
+            // reset context for futher use
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
-            out.writeObject("Signed validation repeated with APIKey:", validationResult);
 
             // endregion
 
@@ -375,6 +384,7 @@ public class NetLicensingClientDemo {
 
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
             LicenseeService.transfer(context, licensee.getNumber(), transferLicenseeWithApiKey.getNumber());
+
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
 
             licenses = LicenseService.list(context, "licenseeNumber=" + licensee.getNumber());

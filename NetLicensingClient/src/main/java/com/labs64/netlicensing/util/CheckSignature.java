@@ -51,12 +51,12 @@ public class CheckSignature {
             final XMLDSigValidationResult validation = XMLDSigValidatorCustom.validateSignature(doc, publicKey);
             isValidAssetsFile = validation.isValid();
         } catch (final IllegalArgumentException | XMLSignatureException e) {
-            throw new SignatureException("Response has no signature.");
+            throw new SignatureException("Bad or empty response signature", e);
         } catch (final NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new SignatureException("Response has wrong signature.");
+            throw new SignatureException("Bad response signature", e);
         }
         if (!isValidAssetsFile) {
-            throw new SignatureException("Response has wrong signature.");
+            throw new SignatureException("Response signature verification failure");
         }
     }
 }
