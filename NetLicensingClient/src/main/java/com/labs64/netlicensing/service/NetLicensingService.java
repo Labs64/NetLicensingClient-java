@@ -26,6 +26,7 @@ import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.exception.BadSignatureException;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.exception.ServiceException;
@@ -34,6 +35,7 @@ import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.util.CheckSignature;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -198,7 +200,16 @@ public class NetLicensingService {
         if (!isErrorStatus(status)) {
             switch (status) {
             case OK:
-                return response.getEntity();
+                final Netlicensing netlicensing = response.getEntity();
+                // check signature
+                if (!StringUtils.isEmpty(context.getPublicKey()) && !StringUtils.isEmpty(context.getApiKey())) {
+                    try {
+                        CheckSignature.check(netlicensing, context.getPublicKey().getBytes());
+                    } catch (final Exception e) {
+                        throw new BadSignatureException(e.getMessage());
+                    }
+                }
+                return netlicensing;
             case NO_CONTENT:
                 return null;
             default:

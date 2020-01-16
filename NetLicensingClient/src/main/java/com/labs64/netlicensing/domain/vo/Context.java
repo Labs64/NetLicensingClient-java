@@ -23,6 +23,8 @@ import com.labs64.netlicensing.domain.Constants;
  */
 public class Context extends GenericContext<String> {
 
+    private String publicKey;
+
     public Context() {
         super(String.class);
     }
@@ -74,6 +76,25 @@ public class Context extends GenericContext<String> {
 
     public String getVendorNumber() {
         return getValue(Constants.Vendor.VENDOR_NUMBER);
+    }
+
+    /**
+     * Sets the public key
+     *
+     * @param publicKey
+     *            publicKey stored on the client side.
+     */
+    public void setPublicKey(final String publicKey) {
+        if (publicKey != null) {
+            this.publicKey = publicKey.replaceAll("\\n", "").replace("-----BEGIN PUBLIC KEY-----", "")
+                    .replace("-----END PUBLIC KEY-----", "");
+        } else {
+            this.publicKey = publicKey;
+        }
+    }
+
+    public String getPublicKey() {
+        return publicKey;
     }
 
 }

@@ -8,7 +8,6 @@ public class ValidationParameters {
     private String productNumber;
     private String licenseeName;
     private String licenseeSecret;
-    private String publicKey;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -55,24 +54,9 @@ public class ValidationParameters {
         return licenseeSecret;
     }
 
-    /**
-     * Sets the public key
-     *
-     * @param publicKey
-     *            publicKey stored on the client side.
-     */
-    public void setPublicKey(final String publicKey) {
-        this.publicKey = publicKey.replaceAll("\\n", "").replace("-----BEGIN PUBLIC KEY-----", "").replace(
-                "-----END PUBLIC KEY-----", "");
-    }
-
-    public String getPublicKey() {
-        return publicKey;
-    }
-
     public Map<String, Map<String, String>> getParameters() {
         if (parameters == null) {
-            parameters = new HashMap<String, Map<String, String>>();
+            parameters = new HashMap<>();
         }
         return parameters;
     }
