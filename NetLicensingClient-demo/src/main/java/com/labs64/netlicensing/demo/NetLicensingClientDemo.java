@@ -294,9 +294,9 @@ public class NetLicensingClientDemo {
             // region ********* Token
 
             // load private/public test keys
-            String privateKey = loadFileContent("rsa_private.pem");
-            String publicKey = loadFileContent("rsa_public.pem");
-            String publicKey_wrong = loadFileContent("rsa_public_wrong.pem");
+            final String privateKey = loadFileContent("rsa_private.pem");
+            final String publicKey = loadFileContent("rsa_public.pem");
+            final String publicKey_wrong = loadFileContent("rsa_public_wrong.pem");
             out.writeObject("loaded privateKey:", privateKey);
             out.writeObject("loaded publicKey:", publicKey);
             out.writeObject("loaded publicKey_wrong:", publicKey_wrong);
@@ -349,13 +349,13 @@ public class NetLicensingClientDemo {
 
             // Validate using APIKey signed
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            validationParameters.setPublicKey(publicKey);
+            context.setPublicKey(publicKey);
             validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             out.writeObject("Validation result (APIKey / signed):", validationResult);
 
             // Validate using APIKey wrongly signed
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);
-            validationParameters.setPublicKey(publicKey_wrong);
+            context.setPublicKey(publicKey_wrong);
             try {
                 validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             } catch (final NetLicensingException e) {
@@ -364,6 +364,7 @@ public class NetLicensingClientDemo {
 
             // reset context for futher use
             context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
+            context.setPublicKey(null);
 
             // endregion
 
@@ -453,8 +454,8 @@ public class NetLicensingClientDemo {
     }
 
     private static String loadFileContent(final String fileName) throws IOException {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream inputStream = classloader.getResourceAsStream(fileName);
+        final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        final InputStream inputStream = classloader.getResourceAsStream(fileName);
         return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
     }
 }

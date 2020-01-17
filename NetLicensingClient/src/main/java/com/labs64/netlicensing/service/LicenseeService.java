@@ -29,9 +29,7 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.ValidationParameters;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
-import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
-import com.labs64.netlicensing.util.CheckSignature;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -234,15 +232,6 @@ public class LicenseeService {
                 Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
                 null);
 
-        // check signature
-        if (validationParameters != null && !StringUtils.isEmpty(validationParameters.getPublicKey())
-                && !StringUtils.isEmpty(context.getApiKey())) {
-            try {
-                CheckSignature.check(netlicensing, validationParameters.getPublicKey().getBytes());
-            } catch (final Exception e) {
-                throw new WrongResponseFormatException(e.getMessage());
-            }
-        }
         // if response has no content
         if (netlicensing == null) {
             return null;
