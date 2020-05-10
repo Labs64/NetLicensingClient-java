@@ -10,7 +10,7 @@ public class Visitor {
         method.invoke(this, object);
     }
 
-    public void visitDefault(final Object object) {
+    public void visitDefault(final Object object) throws Exception {
         // Do nothing
     }
 

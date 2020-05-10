@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
@@ -58,6 +59,7 @@ import com.labs64.netlicensing.service.ProductService;
 import com.labs64.netlicensing.service.TokenService;
 import com.labs64.netlicensing.service.TransactionService;
 import com.labs64.netlicensing.service.UtilityService;
+import com.labs64.netlicensing.util.ServiceHelper;
 
 public class NetLicensingClientDemo {
 
@@ -413,6 +415,10 @@ public class NetLicensingClientDemo {
 
             transactions = TransactionService.list(context, null);
             out.writePage("Got the following transactions after transfer:", transactions);
+
+            final List<Transaction> allTransactions = ServiceHelper.listAll(context, null, Transaction.class);
+            out.writeObject("Retrieved all transactions, total count: ", allTransactions.size());
+
             // endregion
 
             out.writeMessage("All done.");
