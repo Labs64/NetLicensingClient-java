@@ -10,16 +10,20 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Licensee;
+import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
 import com.labs64.netlicensing.domain.entity.Token;
 import com.labs64.netlicensing.domain.entity.Transaction;
+import com.labs64.netlicensing.domain.entity.impl.CountryImpl;
 import com.labs64.netlicensing.domain.entity.impl.LicenseImpl;
 import com.labs64.netlicensing.domain.entity.impl.LicenseTemplateImpl;
 import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
+import com.labs64.netlicensing.domain.entity.impl.PaymentMethodImpl;
 import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.domain.entity.impl.ProductModuleImpl;
 import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
@@ -31,10 +35,12 @@ import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.service.LicenseService;
 import com.labs64.netlicensing.service.LicenseTemplateService;
 import com.labs64.netlicensing.service.LicenseeService;
+import com.labs64.netlicensing.service.PaymentMethodService;
 import com.labs64.netlicensing.service.ProductModuleService;
 import com.labs64.netlicensing.service.ProductService;
 import com.labs64.netlicensing.service.TokenService;
 import com.labs64.netlicensing.service.TransactionService;
+import com.labs64.netlicensing.service.UtilityService;
 
 public class ServiceHelper {
 
@@ -46,7 +52,9 @@ public class ServiceHelper {
             new AbstractMap.SimpleEntry<>(Licensee.class,        new LicenseeImpl()),
             new AbstractMap.SimpleEntry<>(License.class,         new LicenseImpl()),
             new AbstractMap.SimpleEntry<>(Transaction.class,     new TransactionImpl()),
-            new AbstractMap.SimpleEntry<>(Token.class,           new TokenImpl())
+            new AbstractMap.SimpleEntry<>(Token.class,           new TokenImpl()),
+            new AbstractMap.SimpleEntry<>(PaymentMethod.class,   new PaymentMethodImpl()),
+            new AbstractMap.SimpleEntry<>(Country.class,         new CountryImpl())
         ).collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
     // @formatter:on
 
@@ -133,6 +141,14 @@ public class ServiceHelper {
 
         public void visit(final Token e) throws NetLicensingException {
             processPageResult(TokenService.list(context, getFilter()));
+        }
+
+        public void visit(final PaymentMethod e) throws NetLicensingException {
+            processPageResult(PaymentMethodService.list(context, getFilter()));
+        }
+
+        public void visit(final Country e) throws NetLicensingException {
+            processPageResult(UtilityService.listCountries(context, getFilter()));
         }
     }
 
