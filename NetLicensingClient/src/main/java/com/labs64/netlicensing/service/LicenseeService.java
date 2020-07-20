@@ -205,41 +205,7 @@ public class LicenseeService {
      */
     public static ValidationResult validate(final Context context, final String number,
             final ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
-        CheckUtils.paramNotEmpty(number, "number");
-
-        final Form form = new Form();
-        if (validationParameters != null) {
-            if (StringUtils.isNotBlank(validationParameters.getProductNumber())) {
-                form.param(Constants.Product.PRODUCT_NUMBER, validationParameters.getProductNumber());
-            }
-            if (StringUtils.isNotBlank(validationParameters.getLicenseeName())) {
-                form.param(Constants.Licensee.PROP_LICENSEE_NAME, validationParameters.getLicenseeName());
-            }
-            if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
-                form.param(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
-            }
-            int pmIndex = 0;
-            for (final Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
-                    .getParameters().entrySet()) {
-                form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER.concat(Integer.toString(pmIndex)),
-                        productModuleValidationParams.getKey());
-                for (final Entry<String, String> param : productModuleValidationParams.getValue().entrySet()) {
-                    form.param(param.getKey().concat(Integer.toString(pmIndex)), param.getValue());
-                }
-                ++pmIndex;
-            }
-        }
-        final NetLicensingService service = NetLicensingService.getInstance();
-        final Netlicensing netlicensing = service.request(context, HttpMethod.POST,
-                Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
-                null);
-
-        // if response has no content
-        if (netlicensing == null) {
-            return null;
-        } else {
-            return service.processResponse(meta, netlicensing, ValidationResult.class);
-        }
+        return ValidationService.validate(context, number, validationParameters, meta);
     }
 
     /**
