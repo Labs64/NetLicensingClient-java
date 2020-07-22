@@ -35,7 +35,7 @@ import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
-import com.labs64.netlicensing.util.CheckSignature;
+import com.labs64.netlicensing.util.SignatureUtils;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -201,14 +201,7 @@ public class NetLicensingService {
             switch (status) {
             case OK:
                 final Netlicensing netlicensing = response.getEntity();
-                // check signature
-                if (!StringUtils.isEmpty(context.getPublicKey()) && !StringUtils.isEmpty(context.getApiKey())) {
-                    try {
-                        CheckSignature.check(netlicensing, context.getPublicKey().getBytes());
-                    } catch (final Exception e) {
-                        throw new BadSignatureException(e.getMessage());
-                    }
-                }
+                SignatureUtils.check(context, netlicensing);
                 return netlicensing;
             case NO_CONTENT:
                 return null;
