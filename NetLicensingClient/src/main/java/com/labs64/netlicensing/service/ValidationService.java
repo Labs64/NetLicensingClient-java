@@ -27,12 +27,34 @@ import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.SignatureUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class ValidationService {
 
-    protected static Form convertValidationParameters(final ValidationParameters validationParameters) {
+    public static ValidationResult validate(final Context context, final String number,
+            final ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
+        return convertValidationResult(receiveValidationFile(context, number, validationParameters), meta);
+    }
+
+    public static Netlicensing receiveValidationFile(final Context context, final String number,
+            final ValidationParameters validationParameters) throws NetLicensingException {
+        CheckUtils.paramNotEmpty(number, "number");
+        Form form = convertValidationParameters(validationParameters);
+        final NetLicensingService service = NetLicensingService.getInstance();
+        return service.request(context, HttpMethod.POST,
+                Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
+                null);
+    }
+
+    public static ValidationResult validateOffline(final Context context, final Netlicensing validationFile,
+            final MetaInfo... meta) throws NetLicensingException {
+        SignatureUtils.check(context, validationFile);
+        return convertValidationResult(validationFile, meta);
+    }
+
+    private static Form convertValidationParameters(final ValidationParameters validationParameters) {
         final Form form = new Form();
         if (validationParameters != null) {
             if (StringUtils.isNotBlank(validationParameters.getProductNumber())) {
@@ -58,29 +80,13 @@ public class ValidationService {
         return form;
     }
 
-    public static ValidationResult validate(final Context context, final String number,
-    final ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
-        return validateByFile(getLicenseFile(context, number, validationParameters, meta));
-    }
-
-    public static Netlicensing getLicenseFile(final Context context, final String number,
-            final ValidationParameters validationParameters, final MetaInfo... meta)
+    private static ValidationResult convertValidationResult(final Netlicensing validationFile, final MetaInfo... meta)
             throws NetLicensingException {
-        CheckUtils.paramNotEmpty(number, "number");
-        Form form = convertValidationParameters(validationParameters);
-        final NetLicensingService service = NetLicensingService.getInstance();
-        return service.request(context, HttpMethod.POST,
-                Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
-                null);
-    }
-
-    public static ValidationResult validateByFile(final Netlicensing licenseFile) throws NetLicensingException {
-        // if response has no content
-        if (licenseFile == null) {
+        if (validationFile == null) {
             return null;
         } else {
             final NetLicensingService service = NetLicensingService.getInstance();
-            return service.processResponse(null, licenseFile, ValidationResult.class);
+            return service.processResponse(meta, validationFile, ValidationResult.class);
         }
     }
 }
