@@ -14,9 +14,7 @@ package com.labs64.netlicensing.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +27,6 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.ValidationParameters;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
-import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
 
 /**
@@ -58,9 +55,8 @@ public class LicenseeService {
      *            non-null properties will be taken for the new object, null properties will either stay null, or will
      *            be set to a default value, depending on property.
      * @return the newly created licensee object
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static Licensee create(final Context context, final String productNumber, final Licensee licensee)
             throws NetLicensingException {
@@ -81,9 +77,8 @@ public class LicenseeService {
      * @param number
      *            the licensee number
      * @return the licensee
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static Licensee get(final Context context, final String number) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
@@ -99,9 +94,8 @@ public class LicenseeService {
      * @param filter
      *            reserved for the future use, must be omitted / set to NULL
      * @return list of licensees (of all products) or null/empty list if nothing found.
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static Page<Licensee> list(final Context context, final String filter) throws NetLicensingException {
         final Map<String, Object> params = new HashMap<>();
@@ -121,9 +115,8 @@ public class LicenseeService {
      * @param licensee
      *            non-null properties will be updated to the provided values, null properties will stay unchanged.
      * @return updated licensee.
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static Licensee update(final Context context, final String number, final Licensee licensee)
             throws NetLicensingException {
@@ -143,9 +136,8 @@ public class LicenseeService {
      *            licensee number
      * @param forceCascade
      *            if true, any entities that depend on the one being deleted will be deleted too
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These exceptions will be transformed to the
-     *             corresponding service response messages.
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static void delete(final Context context, final String number, final boolean forceCascade)
             throws NetLicensingException {
@@ -172,9 +164,9 @@ public class LicenseeService {
      *            details.
      * @param meta
      *            optional parameter, receiving messages returned within response <infos> section.
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
-     *             exceptions will be transformed to the corresponding service response messages.
+     * @return result of the validation
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     @Deprecated
     public static ValidationResult validate(final Context context, final String number, final String productNumber,
@@ -199,9 +191,9 @@ public class LicenseeService {
      *            details.
      * @param meta
      *            optional parameter, receiving messages returned within response <infos> section.
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
-     *             exceptions will be transformed to the corresponding service response messages.
+     * @return result of the validation
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static ValidationResult validate(final Context context, final String number,
             final ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
@@ -217,9 +209,8 @@ public class LicenseeService {
      *            the number of the licensee receiving licenses
      * @param sourceLicenseeNumber
      *            the number of the licensee delivering licenses
-     * @throws com.labs64.netlicensing.exception.NetLicensingException
-     *             any subclass of {@linkplain com.labs64.netlicensing.exception.NetLicensingException}. These
-     *             exceptions will be transformed to the corresponding service response messages.
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
      */
     public static void transfer(final Context context, final String number, final String sourceLicenseeNumber)
             throws NetLicensingException {

@@ -19,6 +19,8 @@ import java.util.Map.Entry;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Form;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.MetaInfo;
@@ -29,16 +31,49 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
 import com.labs64.netlicensing.util.SignatureUtils;
 
-import org.apache.commons.lang3.StringUtils;
-
+/**
+ * Provides routines for validating the licenses.
+ */
 public class ValidationService {
 
+    /**
+     * Validates active licenses of the licensee.
+     *
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            licensee number
+     * @param validationParameters
+     *            optional validation parameters. See ValidationParameters and licensing model documentation for
+     *            details.
+     * @param meta
+     *            optional parameter, receiving messages returned within response <infos> section.
+     * @return result of the validation
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
+     */
     public static ValidationResult validate(final Context context, final String number,
             final ValidationParameters validationParameters, final MetaInfo... meta) throws NetLicensingException {
-        return convertValidationResult(receiveValidationFile(context, number, validationParameters), meta);
+        return convertValidationResult(retrieveValidationFile(context, number, validationParameters), meta);
     }
 
-    public static Netlicensing receiveValidationFile(final Context context, final String number,
+    /**
+     * Retrieves validation file for the given licensee from the server as {@link Netlicensing} object. The file can be
+     * stored locally for subsequent validation by {@link #validateOffline} method, that doesn't require connection to
+     * the server.
+     *
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param number
+     *            licensee number
+     * @param validationParameters
+     *            optional validation parameters. See ValidationParameters and licensing model documentation for
+     *            details.
+     * @return validation file, possibly signed, for subsequent use in {@link #validateOffline}
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
+     */
+    public static Netlicensing retrieveValidationFile(final Context context, final String number,
             final ValidationParameters validationParameters) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
         Form form = convertValidationParameters(validationParameters);
@@ -48,6 +83,18 @@ public class ValidationService {
                 null);
     }
 
+    /**
+     * Perform validation without connecting to the server (offline) using validation file previously retrieved by
+     * {@link #retrieveValidationFile}.
+     *
+     * @param context
+     *            determines the vendor on whose behalf the call is performed
+     * @param validationFile
+     *            validation file returned by {@link #retrieveValidationFile} call
+     * @return result of the validation
+     * @throws NetLicensingException
+     *             in case of a service error. Check subclass and message for details.
+     */
     public static ValidationResult validateOffline(final Context context, final Netlicensing validationFile,
             final MetaInfo... meta) throws NetLicensingException {
         SignatureUtils.check(context, validationFile);
