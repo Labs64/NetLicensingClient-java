@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.labs64.netlicensing.demo;
+package com.labs64.netlicensing.utils;
 
 import static java.lang.System.out;
 
