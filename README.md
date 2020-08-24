@@ -4,6 +4,9 @@
 
 [![Build Status](https://travis-ci.org/Labs64/NetLicensingClient-java.svg?branch=master)](https://travis-ci.org/Labs64/NetLicensingClient-java)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.labs64.netlicensing/netlicensing-client/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.labs64.netlicensing/netlicensing-client)
+[![Apache License 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/Labs64/NetLicensingClient-java/blob/master/LICENSE)
+[![📖 Documentation](https://img.shields.io/badge/📖%20Documentation-Wiki-AB6543.svg)](https://netlicensing.io/wiki/restful-api)
+[![NetLicensing @ LinkedIn](https://img.shields.io/badge/NetLicensing-0077B5.svg?logo=LinkedIn)](https://www.linkedin.com/showcase/netlicensing)
 
 Java wrapper for Labs64 NetLicensing [RESTful API](https://netlicensing.io/wiki/restful-api)
 
