@@ -187,6 +187,8 @@ public class LicenseeService {
 
     /**
      * Validates active licenses of the licensee.
+     * In the case of multiple product modules validation,
+     * required parameters indexes will be added automatically.
      *
      * @param context
      *            determines the vendor on whose behalf the call is performed
