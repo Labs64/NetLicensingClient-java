@@ -121,6 +121,7 @@ public class ProductDiscountImpl implements ProductDiscount, Serializable {
                         "Format for discount amount in percent is not correct, expected numeric format.");
             }
         } else {
+            // Dummy currency, Money.convertPrice is only used for the amount format check.
             final Money amountFix = Money.convertPrice(amount, Currency.EUR.value());
             setAmountFix(amountFix.getAmount());
         }
