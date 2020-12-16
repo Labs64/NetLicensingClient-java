@@ -21,7 +21,9 @@ public enum Currency {
 
     NONE(""),
 
-    EUR("EUR");
+    EUR("EUR"),
+
+    USD("USD");
 
     private final String value;
 
@@ -68,7 +70,7 @@ public enum Currency {
                 return currency;
             }
         }
-        if (value != null && StringUtils.isBlank(value)) {
+        if ((value != null) && StringUtils.isBlank(value)) {
             return NONE;
         }
         throw new IllegalArgumentException(value);
