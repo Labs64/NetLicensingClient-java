@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 
 import com.helger.xmldsig.XMLDSigValidationResult;
+
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.BadSignatureException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -27,7 +28,7 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 public class SignatureUtils {
 
     public static void check(final Context context, final Netlicensing response) throws BadSignatureException {
-        if (!StringUtils.isEmpty(context.getPublicKey()) && !StringUtils.isEmpty(context.getApiKey())) {
+        if (StringUtils.isNotEmpty(context.getPublicKey())) {
             try {
                 check(response, context.getPublicKey().getBytes());
             } catch (final Exception e) {
