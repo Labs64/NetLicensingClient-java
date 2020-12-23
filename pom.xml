@@ -368,11 +368,11 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>lmbox-snapshots</id>
+            <id>nlic-snapshots</id>
             <url>${repo.snapshots.url}</url>
         </snapshotRepository>
         <repository>
-            <id>lmbox-releases</id>
+            <id>nlic-releases</id>
             <url>${repo.releases.url}</url>
         </repository>
     </distributionManagement>
