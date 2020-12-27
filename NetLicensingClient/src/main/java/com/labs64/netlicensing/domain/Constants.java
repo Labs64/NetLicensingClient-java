@@ -207,6 +207,10 @@ public final class Constants {
         public static final String PROP_SHOPPING_CART = "shopping-cart";
     }
 
+    public static final class Validation {
+        public static final String DRY_RUN = "dryRun";
+    }
+
     public static final class ValidationResult {
         public static final String VALIDATION_RESULT_TYPE = "ProductModuleValidation";
         public static final int DEFAULT_TTL_MINUTES = 60 * 24; // 1 day

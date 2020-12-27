@@ -8,6 +8,7 @@ public class ValidationParameters {
     private String productNumber;
     private String licenseeName;
     private String licenseeSecret;
+    private Boolean dryRun;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -26,7 +27,7 @@ public class ValidationParameters {
 
     /**
      * Sets the name for the new licensee
-     * 
+     *
      * @param licenseeName
      *            optional human-readable licensee name in case licensee will be auto-created. This parameter must not
      *            be the name, but can be used to store any other useful string information with new licensees, up to
@@ -42,7 +43,7 @@ public class ValidationParameters {
 
     /**
      * Sets the licensee secret
-     * 
+     *
      * @param licenseeSecret
      *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
      */
@@ -52,6 +53,20 @@ public class ValidationParameters {
 
     public String getLicenseeSecret() {
         return licenseeSecret;
+    }
+
+    /**
+     * Sets the "dry run" mode
+     *
+     * @param dryRun
+     *            if "true", validation will be executed in "dry run" mode, i.e. no modifications to any licenses.
+     */
+    public void setDryRun(final Boolean dryRun) {
+        this.dryRun = dryRun;
+    }
+
+    public Boolean isDryRun() {
+        return dryRun;
     }
 
     public Map<String, Map<String, String>> getParameters() {
