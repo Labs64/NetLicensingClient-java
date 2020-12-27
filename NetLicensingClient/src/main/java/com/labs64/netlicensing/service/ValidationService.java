@@ -76,7 +76,7 @@ public class ValidationService {
     public static Netlicensing retrieveValidationFile(final Context context, final String number,
             final ValidationParameters validationParameters) throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
-        Form form = convertValidationParameters(validationParameters);
+        final Form form = convertValidationParameters(validationParameters);
         final NetLicensingService service = NetLicensingService.getInstance();
         return service.request(context, HttpMethod.POST,
                 Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
@@ -112,6 +112,9 @@ public class ValidationService {
             }
             if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
                 form.param(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
+            }
+            if (Boolean.TRUE.equals(validationParameters.isDryRun())) {
+                form.param(Constants.Validation.DRY_RUN, Boolean.TRUE.toString());
             }
             int pmIndex = 0;
             for (final Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
