@@ -19,22 +19,21 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import com.labs64.netlicensing.examples.AllExamples;
 import com.labs64.netlicensing.examples.NetLicensingExample;
 
 public class NetLicensingClientDemo {
 
-    public static void main(String[] args) {
-        Options options = new Options();
+    public static void main(final String[] args) {
+        final Options options = new Options();
         options.addOption("l", false, "list available examples");
         options.addOption("r", true, "run specified example");
 
-        CommandLineParser parser = new DefaultParser();
+        final CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
         try {
             cmd = parser.parse(options, args);
-        } catch (ParseException e) {
-            HelpFormatter formatter = new HelpFormatter();
+        } catch (final ParseException e) {
+            final HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("java -jar netlicensing-client-demo.jar <option>", options);
             return;
         }
@@ -57,7 +56,7 @@ public class NetLicensingClientDemo {
                 ex = AllExamples.list.get(exampleToRun).newInstance();
                 ex.execute();
                 return;
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 System.out.println("Error executing example '" + exampleToRun + "'");
                 e.printStackTrace();
             }

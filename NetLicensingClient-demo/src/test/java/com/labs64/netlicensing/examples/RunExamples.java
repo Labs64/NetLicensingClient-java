@@ -5,8 +5,13 @@ import org.junit.Test;
 public class RunExamples {
 
     @Test
-    public void testExampleCallForEveryMethod() {
+    public void testCallEveryAPIMethod() {
         new CallEveryAPIMethod().execute();
+    }
+
+    @Test
+    public void testOfflineValidation() {
+        new OfflineValidation().execute();
     }
 
 }
