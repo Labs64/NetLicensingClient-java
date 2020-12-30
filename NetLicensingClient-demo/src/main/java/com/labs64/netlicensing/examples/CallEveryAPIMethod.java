@@ -12,14 +12,10 @@
  */
 package com.labs64.netlicensing.examples;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -61,6 +57,7 @@ import com.labs64.netlicensing.service.TransactionService;
 import com.labs64.netlicensing.service.UtilityService;
 import com.labs64.netlicensing.util.ServiceHelper;
 import com.labs64.netlicensing.utils.ConsoleWriter;
+import com.labs64.netlicensing.utils.TestHelpers;
 
 public class CallEveryAPIMethod implements NetLicensingExample {
 
@@ -298,9 +295,9 @@ public class CallEveryAPIMethod implements NetLicensingExample {
             // region ********* Token
 
             // load private/public test keys
-            final String privateKey = loadFileContent("rsa_private.pem");
-            final String publicKey = loadFileContent("rsa_public.pem");
-            final String publicKey_wrong = loadFileContent("rsa_public_wrong.pem");
+            final String privateKey = TestHelpers.loadFileContent("rsa_private.pem");
+            final String publicKey = TestHelpers.loadFileContent("rsa_public.pem");
+            final String publicKey_wrong = TestHelpers.loadFileContent("rsa_public_wrong.pem");
             out.writeObject("loaded privateKey:", privateKey);
             out.writeObject("loaded publicKey:", publicKey);
             out.writeObject("loaded publicKey_wrong:", publicKey_wrong);
@@ -459,11 +456,5 @@ public class CallEveryAPIMethod implements NetLicensingExample {
 
     private static String numberWithPrefix(final String prefix, final String number) {
         return String.format("%s%s%s", DEMO_NUMBER_PREFIX, prefix, number);
-    }
-
-    private static String loadFileContent(final String fileName) throws IOException {
-        final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        final InputStream inputStream = classloader.getResourceAsStream(fileName);
-        return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
     }
 }
