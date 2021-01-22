@@ -12,8 +12,7 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.Base64;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -21,7 +20,6 @@ import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.internal.util.Base64;
 import org.junit.Test;
 
 import com.labs64.netlicensing.domain.vo.Context;
@@ -29,6 +27,9 @@ import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.schema.context.Info;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for checking the ability to connect to services using different security modes
@@ -51,7 +52,7 @@ public class SecurityTest extends BaseServiceTest {
 
         assertTrue(authHeader.startsWith("Basic "));
 
-        final String[] userAndPassword = Base64.decodeAsString(authHeader.substring(6)).split(":");
+        final String[] userAndPassword = new String(Base64.getDecoder().decode(authHeader.substring(6))).split(":");
         assertEquals("user1", userAndPassword[0]);
         assertEquals("pswrd", userAndPassword[1]);
     }
@@ -69,7 +70,7 @@ public class SecurityTest extends BaseServiceTest {
 
         assertTrue(authHeader.startsWith("Basic "));
 
-        final String[] headerArray = Base64.decodeAsString(authHeader.substring(6)).split(":");
+        final String[] headerArray = new String(Base64.getDecoder().decode(authHeader.substring(6))).split(":");
         assertEquals("apiKey", headerArray[0]);
         assertEquals("TEST_API_KEY", headerArray[1]);
 
