@@ -86,7 +86,7 @@ public class Context extends GenericContext<String> {
      */
     public void setPublicKey(final String publicKey) {
         if (publicKey != null) {
-            this.publicKey = publicKey.replaceAll("\\n", "").replace("-----BEGIN PUBLIC KEY-----", "")
+            this.publicKey = publicKey.replaceAll("\\r\\n|\\r|\\n", "").replace("-----BEGIN PUBLIC KEY-----", "")
                     .replace("-----END PUBLIC KEY-----", "");
         } else {
             this.publicKey = publicKey;
