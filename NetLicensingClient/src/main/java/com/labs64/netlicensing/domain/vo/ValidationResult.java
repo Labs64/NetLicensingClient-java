@@ -24,26 +24,35 @@ public class ValidationResult implements Serializable {
 
     private static final long serialVersionUID = -4160421171524379008L;
 
+    private String licenseeNumber;
+    private Calendar ttl;
     private Map<String, Composition> validations;
 
-    private Calendar ttl;
-
-    public Map<String, Composition> getValidations() {
-        if (validations == null) {
-            validations = new HashMap<String, Composition>();
-        }
-        return validations;
+    public void setLicenseeNumber(final String licenseeNumber) {
+        this.licenseeNumber = licenseeNumber;
     }
 
-    public Calendar getTtl() {
-        return ttl;
+    public String getLicenseeNumber() {
+        return licenseeNumber;
     }
 
     public void setTtl(final Calendar ttl) {
         this.ttl = ttl;
     }
 
+    public Calendar getTtl() {
+        return ttl;
+    }
+
+    public Map<String, Composition> getValidations() {
+        if (validations == null) {
+            validations = new HashMap<>();
+        }
+        return validations;
+    }
+
     public ValidationResult() {
+        licenseeNumber = null;
         ttl = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         ttl.add(Calendar.MINUTE, Constants.ValidationResult.DEFAULT_TTL_MINUTES);
     }
@@ -64,7 +73,11 @@ public class ValidationResult implements Serializable {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ValidationResult [");
+        builder.append("ValidationResult");
+        if (licenseeNumber != null) {
+            builder.append("(").append(licenseeNumber).append(")");
+        }
+        builder.append(" [");
         boolean first = true;
         for (final Map.Entry<String, Composition> validationEntry : getValidations().entrySet()) {
             if (first) {

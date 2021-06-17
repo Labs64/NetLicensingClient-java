@@ -1,6 +1,7 @@
 package com.labs64.netlicensing.schema.converter;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.Constants.Licensee;
 import com.labs64.netlicensing.domain.vo.Composition;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.ConversionException;
@@ -31,7 +32,18 @@ public class ItemsToValidationResultConverter implements Converter<Netlicensing,
             return target;
         }
 
+        String licenseeNumber = null;
         for (final Item item : source.getItems().getItem()) {
+            if (Licensee.class.getSimpleName().equals(item.getType())) {
+                for (final Property property : item.getProperty()) {
+                    if (Constants.Licensee.LICENSEE_NUMBER.equals(property.getName())) {
+                        licenseeNumber = property.getValue();
+                        break;
+                    }
+                }
+                continue;
+            }
+
             if (!Constants.ValidationResult.VALIDATION_RESULT_TYPE.equals(item.getType())) {
                 continue;
             }
@@ -62,6 +74,7 @@ public class ItemsToValidationResultConverter implements Converter<Netlicensing,
 
             target.setProductModuleValidation(productModuleNumber, composition);
         }
+        target.setLicenseeNumber(licenseeNumber);
         return target;
     }
 
