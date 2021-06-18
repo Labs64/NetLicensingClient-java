@@ -97,18 +97,17 @@
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <schemaDirectory>${project.build.directory}/classes/schema</schemaDirectory>
+                    <schemaDirectory>src/main/resources/schema</schemaDirectory>
                     <schemaIncludes>
                         <include>**/netlicensing-context*.xsd</include>
                     </schemaIncludes>
-                    <catalog>${project.build.directory}/classes/schema/xmldsig.cat</catalog>
+                    <catalog>src/main/resources/schema/xmldsig.cat</catalog>
                     <!-- Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.
                          Please refer to the following link for more information:
                          https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode -->
