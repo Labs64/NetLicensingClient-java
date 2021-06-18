@@ -93,7 +93,7 @@
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <!-- TODO(AY): change version when the new release comes. Java 11 Warning https://github.com/highsource/maven-jaxb2-plugin/issues/148 -->
@@ -147,6 +147,7 @@
                     <!--https://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete-->
                     <configuration>
                         <doclint>none</doclint>
+                        <source>8</source>
                     </configuration>
                 </plugin>
                 <plugin>
