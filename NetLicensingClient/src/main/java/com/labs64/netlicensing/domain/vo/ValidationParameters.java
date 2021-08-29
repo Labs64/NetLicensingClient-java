@@ -9,6 +9,7 @@ public class ValidationParameters {
     private String licenseeName;
     private String licenseeSecret;
     private Boolean dryRun;
+    private Boolean forOfflineUse;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -67,6 +68,20 @@ public class ValidationParameters {
 
     public Boolean isDryRun() {
         return dryRun;
+    }
+
+    /**
+     * Indicates, that the validation response is intended the offline use
+     *
+     * @param forOfflineUse
+     *            if "true", validation response will be extended with data required for the offline use
+     */
+    public void setForOfflineUse(final Boolean forOfflineUse) {
+        this.forOfflineUse = forOfflineUse;
+    }
+
+    public Boolean isForOfflineUse() {
+        return forOfflineUse;
     }
 
     public Map<String, Map<String, String>> getParameters() {
