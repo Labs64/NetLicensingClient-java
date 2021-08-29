@@ -116,6 +116,9 @@ public class ValidationService {
             if (Boolean.TRUE.equals(validationParameters.isDryRun())) {
                 form.param(Constants.Validation.DRY_RUN, Boolean.TRUE.toString());
             }
+            if (Boolean.TRUE.equals(validationParameters.isForOfflineUse())) {
+                form.param(Constants.Validation.FOR_OFFLINE_USE, Boolean.TRUE.toString());
+            }
             int pmIndex = 0;
             for (final Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
                     .getParameters().entrySet()) {
