@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,9 +36,15 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.ValidationParameters;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
+import com.labs64.netlicensing.domain.vo.WarningLevel;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseeService}.
@@ -166,14 +167,12 @@ public class LicenseeServiceTest extends BaseServiceTest {
                 .getValue());
         assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME)
                 .getValue());
+        assertTrue(Boolean.parseBoolean(validation.getProperties().get("LIST1").getProperties()
+                .get(Constants.LicensingModel.VALID).getValue()));
         assertEquals(
-                "true",
-                validation.getProperties().get("LIST1").getProperties()
-                .get(Constants.LicensingModel.VALID).getValue());
-        assertEquals(
-                "green",
-                validation.getProperties().get("LIST2").getProperties()
-                .get(Constants.LicensingModel.Rental.EXPIRATION_WARNING_LEVEL).getValue());
+                WarningLevel.GREEN,
+                WarningLevel.parseString(validation.getProperties().get("LIST2").getProperties()
+                        .get(Constants.ValidationResult.WARNING_LEVEL).getValue()));
     }
 
     @Test
