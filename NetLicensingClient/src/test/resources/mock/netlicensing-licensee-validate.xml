@@ -10,12 +10,12 @@
             <list name="LIST1">
                 <property name="valid">true</property>
                 <property name="expires">2014-08-06T21:30:45.574Z</property>
-                <property name="expirationWarningLevel">green</property>
+                <property name="warningLevel">GREEN</property>
             </list>
             <list name="LIST2">
                 <property name="valid">true</property>
                 <property name="expires">2014-08-06T21:30:45.186Z</property>
-                <property name="expirationWarningLevel">green</property>
+                <property name="warningLevel">GREEN</property>
             </list>
         </item>
     </items>

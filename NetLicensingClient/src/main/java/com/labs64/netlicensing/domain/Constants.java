@@ -137,14 +137,8 @@ public final class Constants {
 
         public static final class Rental {
             public static final String NAME = "Rental";
-            /**
-             * @deprecated please use com.labs64.netlicensing.domain.Constants.LicensingModel#VALID instead.
-             */
-            @Deprecated
-            public static final String VALID = "valid";
             public static final String RED_THRESHOLD = "redThreshold";
             public static final String YELLOW_THRESHOLD = "yellowThreshold";
-            public static final String EXPIRATION_WARNING_LEVEL = "expirationWarningLevel";
         }
 
         public static final class Subscription {
@@ -215,6 +209,7 @@ public final class Constants {
     public static final class ValidationResult {
         public static final String VALIDATION_RESULT_TYPE = "ProductModuleValidation";
         public static final int DEFAULT_TTL_MINUTES = 60 * 24; // 1 day
+        public static final String WARNING_LEVEL = "warningLevel";
     }
 
     // CHECKSTYLE:ON
