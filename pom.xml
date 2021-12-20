@@ -44,14 +44,14 @@
 
     <developers>
         <developer>
-            <id>alexey.averikhin</id>
-            <name>Alexey Averikhin</name>
-            <email>alexey.averikhin@labs64.de</email>
+            <id>netlicensing</id>
+            <name>Labs64 NetLicensing</name>
+            <email>info@netlicensing.io</email>
             <roles>
                 <role>Project Manager</role>
-                <role>Architect</role>
+                <role>Developer</role>
             </roles>
-            <url>https://www.linkedin.com/in/averikhin</url>
+            <url>https://www.linkedin.com/showcase/netlicensing/</url>
             <organization>Labs64 GmbH</organization>
             <organizationUrl>https://www.labs64.de</organizationUrl>
             <timezone>+1</timezone>
@@ -67,7 +67,7 @@
         <project.title>${project.name}</project.title>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <maven.version>3.5.0</maven.version>
 
         <repo.releases.url>OVERRIDE_REPO_URL</repo.releases.url>
@@ -79,8 +79,7 @@
         <commons-codec.version>1.11</commons-codec.version>
         <commons-io.version>2.7</commons-io.version>
         <commons-cli.version>1.4</commons-cli.version>
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <log4j.version>2.17.0</log4j.version>
         <junit.version>4.13.1</junit.version>
         <jersey.version>2.33</jersey.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
@@ -147,7 +146,7 @@
                     <!--https://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete-->
                     <configuration>
                         <doclint>none</doclint>
-                        <source>8</source>
+                        <source>11</source>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -344,34 +343,11 @@
                 <version>${com.helger.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
                 <version>${log4j.version}</version>
-                <scope>compile</scope>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
