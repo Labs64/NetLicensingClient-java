@@ -2,7 +2,7 @@ package com.labs64.netlicensing.util;
 
 import java.lang.reflect.Method;
 
-// Inspired by: http://www.javaworld.com/article/2077602/learn-java/java-tip-98--reflect-on-the-visitor-design-pattern.html
+// Inspired by: https://www.javaworld.com/article/2077602/learn-java/java-tip-98--reflect-on-the-visitor-design-pattern.html
 public class Visitor {
 
     public void visit(final Object object) throws Exception {

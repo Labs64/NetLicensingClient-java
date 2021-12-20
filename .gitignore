@@ -9,7 +9,7 @@
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# virtual machine crash logs, see https://www.java.com/en/download/help/error_hotspot.html
 hs_err_pid*
 
 target
@@ -24,6 +24,9 @@ bin/**
 
 # External tool builders
 .externalToolBuilders/
+
+# VSCode
+.vscode
 
 # Locally stored "Eclipse launch configurations"
 *.launch
