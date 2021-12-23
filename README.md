@@ -22,17 +22,17 @@ Maven:
   <dependency>
     <groupId>com.labs64.netlicensing</groupId>
     <artifactId>netlicensing-client</artifactId>
-    <version>2.8.2</version>
+    <version>X.Y.Z</version>
   </dependency>
 </dependencies>
 ```
 Gradle:
 ```gradle
 dependencies {
-    compile 'com.labs64.netlicensing:netlicensing-client:2.8.2'
+    compile 'com.labs64.netlicensing:netlicensing-client:X.Y.Z'
 }
 ```
 OSGi:
 ```
-Require-Bundle: com.labs64.netlicensing.client;bundle-version="2.8.2"
+Require-Bundle: com.labs64.netlicensing.client;bundle-version="X.Y.Z"
 ```
