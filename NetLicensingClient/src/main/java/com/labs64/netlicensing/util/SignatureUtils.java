@@ -27,16 +27,71 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 
 public class SignatureUtils {
 
+    /**
+     * Cleanse public key; replace CRLF and strip key headers
+     * @param publicKey
+     * @return cleansed public key
+     */
+    public static String cleansePublicKey(final String publicKey) {
+        if (publicKey == null) {
+            return publicKey;
+        } else {
+            return publicKey.replaceAll("\\n|\\r", "").replace("-----BEGIN PUBLIC KEY-----", "")
+                    .replace("-----END PUBLIC KEY-----", "");
+        }
+    }
+
+    /**
+     * Read public key from the byte array
+     * @param publicKey
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PublicKey readPublicKey(final byte[] publicKey)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        final byte[] publicKeyByte = Base64.getDecoder().decode(publicKey);
+        final X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyByte);
+        final KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePublic(spec);
+    }
+
+    /**
+     * Read public key from the string
+     * @param publicKey
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PublicKey readPublicKey(final String publicKey)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return readPublicKey(publicKey.getBytes());
+    }
+
+    /**
+     * Verify response signature.
+     * @param context
+     * @param response
+     * @throws BadSignatureException
+     */
     public static void check(final Context context, final Netlicensing response) throws BadSignatureException {
         if (StringUtils.isNotEmpty(context.getPublicKey())) {
             try {
-                check(response, context.getPublicKey().getBytes());
+                check(response, cleansePublicKey(context.getPublicKey()).getBytes());
             } catch (final Exception e) {
                 throw new BadSignatureException(e.getMessage());
             }
         }
     }
 
+    /**
+     * Verify response signature.
+     * @param response
+     * @param publicKeyByteArray
+     * @throws JAXBException
+     * @throws ParserConfigurationException
+     * @throws SignatureException
+     */
     public static void check(final Netlicensing response, final byte[] publicKeyByteArray)
             throws JAXBException, ParserConfigurationException, SignatureException {
 
@@ -56,10 +111,7 @@ public class SignatureUtils {
 
         boolean isValidAssetsFile = false;
         try {
-            final byte[] publicKeyByte = Base64.getDecoder().decode(publicKeyByteArray);
-            final X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyByte);
-            final KeyFactory kf = KeyFactory.getInstance("RSA");
-            final PublicKey publicKey = kf.generatePublic(spec);
+            final PublicKey publicKey = readPublicKey(publicKeyByteArray);
 
             final XMLDSigValidationResult validation = XMLDSigValidatorCustom.validateSignature(doc, publicKey);
             isValidAssetsFile = validation.isValid();
@@ -72,4 +124,5 @@ public class SignatureUtils {
             throw new SignatureException("Response signature verification failure");
         }
     }
+
 }

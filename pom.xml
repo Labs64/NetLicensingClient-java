@@ -77,14 +77,14 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.15</commons-codec.version>
-        <commons-io.version>2.7</commons-io.version>
-        <commons-cli.version>1.4</commons-cli.version>
-        <log4j.version>2.17.0</log4j.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-cli.version>1.5.0</commons-cli.version>
+        <log4j.version>2.17.1</log4j.version>
         <junit.version>4.13.2</junit.version>
         <jersey.version>2.33</jersey.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
-        <com.helger.version>3.0.2</com.helger.version>
+        <ph-xmldsig.version>4.4.2</ph-xmldsig.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
@@ -346,7 +346,7 @@
             <dependency>
                 <groupId>com.helger</groupId>
                 <artifactId>ph-xmldsig</artifactId>
-                <version>${com.helger.version}</version>
+                <version>${ph-xmldsig.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
