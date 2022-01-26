@@ -38,8 +38,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/Labs64/NetLicensingClient-java</url>
+        <system>GitHub Actions</system>
+        <url>https://github.com/Labs64/NetLicensingClient-java/actions</url>
     </ciManagement>
 
     <developers>
