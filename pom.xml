@@ -104,7 +104,7 @@
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
         <!-- Code Analysis -->
-        <labs64.code-analysis.version>2.0.0</labs64.code-analysis.version>
+        <labs64.code-analysis.version>2.0.1</labs64.code-analysis.version>
         <labs64.code-analysis.phase>verify</labs64.code-analysis.phase>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <spotbugs-maven-plugin.version>4.5.3.0</spotbugs-maven-plugin.version>
@@ -283,7 +283,7 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${maven-checkstyle-plugin.version}</version>
                     <configuration>
-                        <configLocation>labs64-rulesets/checkstyle.xml</configLocation>
+                        <configLocation>labs64-code-analysis/checkstyle.xml</configLocation>
                         <failsOnError>false</failsOnError>
                         <propertyExpansion>basedir=${project.basedir}</propertyExpansion>
                         <excludes>**/generated-sources/**/*</excludes>
@@ -312,7 +312,7 @@
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${spotbugs-maven-plugin.version}</version>
                     <configuration>
-                        <includeFilterFile>labs64-rulesets/spotbugs.xml</includeFilterFile>
+                        <includeFilterFile>labs64-code-analysis/spotbugs.xml</includeFilterFile>
                         <onlyAnalyze>com.labs64.-</onlyAnalyze>
                         <failOnError>false</failOnError>
                     </configuration>
@@ -341,7 +341,7 @@
                     <version>${maven-pmd-plugin.version}</version>
                     <configuration>
                         <rulesets>
-                            <ruleset>labs64-rulesets/pmd.xml</ruleset>
+                            <ruleset>labs64-code-analysis/pmd.xml</ruleset>
                         </rulesets>
                         <excludeRoots>
                             <excludeRoot>target/generated-sources/xjc</excludeRoot>
