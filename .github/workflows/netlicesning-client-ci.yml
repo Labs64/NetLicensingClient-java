@@ -28,3 +28,9 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean verify
+    - name: Run Demo App
+      run: |
+        ls -la
+        ls -la NetLicensingClient-demo/
+        ls -la NetLicensingClient-demo/target/
+        java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
