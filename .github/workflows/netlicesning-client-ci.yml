@@ -31,4 +31,4 @@ jobs:
     - name: Run Demo App
       run: |
         ls -la NetLicensingClient-demo/target/
-        java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar
+        java -jar NetLicensingClient-demo/target/netlicensing-client-demo.jar -r CallEveryAPIMethod
