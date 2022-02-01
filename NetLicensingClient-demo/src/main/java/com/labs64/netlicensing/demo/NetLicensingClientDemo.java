@@ -39,8 +39,8 @@ public class NetLicensingClientDemo {
         }
 
         if (cmd.hasOption("l")) {
+            System.out.println("Available examples:");
             AllExamples.list.forEach((key, val) -> {
-                System.out.println("Available examples:");
                 System.out.println("  " + key);
             });
             return;
