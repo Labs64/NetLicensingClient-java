@@ -105,7 +105,7 @@
         <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
         <!-- Code Analysis -->
         <labs64.code-analysis.version>2.0.1</labs64.code-analysis.version>
-        <labs64.code-analysis.phase>verify</labs64.code-analysis.phase>
+        <labs64.code-analysis.phase>site</labs64.code-analysis.phase>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <spotbugs-maven-plugin.version>4.5.3.0</spotbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.15.0</maven-pmd-plugin.version>
