@@ -107,6 +107,7 @@
         <!-- Code Analysis -->
         <labs64.code-analysis.version>2.0.1</labs64.code-analysis.version>
         <labs64.code-analysis.phase>site</labs64.code-analysis.phase>
+        <labs64.code-analysis.failOnViolation>false</labs64.code-analysis.failOnViolation>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <spotbugs-maven-plugin.version>4.5.3.0</spotbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.15.0</maven-pmd-plugin.version>
@@ -294,7 +295,7 @@
                     <version>${maven-checkstyle-plugin.version}</version>
                     <configuration>
                         <configLocation>labs64-code-analysis/checkstyle.xml</configLocation>
-                        <failsOnError>false</failsOnError>
+                        <failsOnError>${labs64.code-analysis.failOnViolation}</failsOnError>
                         <propertyExpansion>basedir=${project.basedir}</propertyExpansion>
                         <excludes>**/generated-sources/**/*</excludes>
                     </configuration>
@@ -324,7 +325,7 @@
                     <configuration>
                         <includeFilterFile>labs64-code-analysis/spotbugs.xml</includeFilterFile>
                         <onlyAnalyze>com.labs64.-</onlyAnalyze>
-                        <failOnError>false</failOnError>
+                        <failOnError>${labs64.code-analysis.failOnViolation}</failOnError>
                     </configuration>
                     <executions>
                         <execution>
@@ -357,7 +358,7 @@
                             <excludeRoot>target/generated-sources/xjc</excludeRoot>
                             <excludeRoot>target/generated-sources/jaxws</excludeRoot>
                         </excludeRoots>
-                        <failOnViolation>false</failOnViolation>
+                        <failOnViolation>${labs64.code-analysis.failOnViolation}</failOnViolation>
                         <printFailingErrors>true</printFailingErrors>
                     </configuration>
                     <executions>
