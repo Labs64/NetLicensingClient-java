@@ -92,7 +92,8 @@
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <!-- TODO(AY): change version when the new release comes. Java 11 Warning https://github.com/highsource/maven-jaxb2-plugin/issues/148 -->
@@ -103,6 +104,13 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
+        <!-- Code Analysis -->
+        <labs64.code-analysis.version>2.0.1</labs64.code-analysis.version>
+        <labs64.code-analysis.phase>site</labs64.code-analysis.phase>
+        <labs64.code-analysis.failOnViolation>false</labs64.code-analysis.failOnViolation>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <spotbugs-maven-plugin.version>4.5.3.0</spotbugs-maven-plugin.version>
+        <maven-pmd-plugin.version>3.15.0</maven-pmd-plugin.version>
     </properties>
 
     <build>
@@ -131,6 +139,15 @@
                         </execution>
                     </executions>
                 </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+                <configuration>
+                    <locales>en</locales>
+                    <outputEncoding>UTF-8</outputEncoding>
+                </configuration>
+            </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -270,6 +287,97 @@
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>${maven-bundle-plugin.version}</version>
                 </plugin>
+
+                <!-- https://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                    <configuration>
+                        <configLocation>labs64-code-analysis/checkstyle.xml</configLocation>
+                        <failsOnError>${labs64.code-analysis.failOnViolation}</failsOnError>
+                        <propertyExpansion>basedir=${project.basedir}</propertyExpansion>
+                        <excludes>**/generated-sources/**/*</excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>checkstyle</id>
+                            <phase>${labs64.code-analysis.phase}</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.labs64.commons</groupId>
+                            <artifactId>code-analysis</artifactId>
+                            <version>${labs64.code-analysis.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <!-- https://spotbugs.github.io -->
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs-maven-plugin.version}</version>
+                    <configuration>
+                        <includeFilterFile>labs64-code-analysis/spotbugs.xml</includeFilterFile>
+                        <onlyAnalyze>com.labs64.-</onlyAnalyze>
+                        <failOnError>${labs64.code-analysis.failOnViolation}</failOnError>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>spotbugs</id>
+                            <phase>${labs64.code-analysis.phase}</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.labs64.commons</groupId>
+                            <artifactId>code-analysis</artifactId>
+                            <version>${labs64.code-analysis.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <!-- https://maven.apache.org/plugins/maven-pmd-plugin/usage.html -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven-pmd-plugin.version}</version>
+                    <configuration>
+                        <rulesets>
+                            <ruleset>labs64-code-analysis/pmd.xml</ruleset>
+                        </rulesets>
+                        <excludeRoots>
+                            <excludeRoot>target/generated-sources/xjc</excludeRoot>
+                            <excludeRoot>target/generated-sources/jaxws</excludeRoot>
+                        </excludeRoots>
+                        <failOnViolation>${labs64.code-analysis.failOnViolation}</failOnViolation>
+                        <printFailingErrors>true</printFailingErrors>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pmd</id>
+                            <phase>${labs64.code-analysis.phase}</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.labs64.commons</groupId>
+                            <artifactId>code-analysis</artifactId>
+                            <version>${labs64.code-analysis.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -277,6 +385,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

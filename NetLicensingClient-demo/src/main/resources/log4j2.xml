@@ -2,14 +2,14 @@
 <Configuration>
 
     <Appenders>
-        <Console name="nlic-console" target="SYSTEM_OUT">
+        <Console name="demo-console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d [%p] %m%n"/>
         </Console>
     </Appenders>
 
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="nlic-console"/>
+            <AppenderRef ref="demo-console"/>
         </Root>
     </Loggers>
 
