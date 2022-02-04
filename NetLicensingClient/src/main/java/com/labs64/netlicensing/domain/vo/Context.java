@@ -79,18 +79,13 @@ public class Context extends GenericContext<String> {
     }
 
     /**
-     * Sets the public key
+     * Add public key to be used for validate signed NetLicensing response.
      *
      * @param publicKey
-     *            publicKey stored on the client side.
+     *            client publicKey.
      */
     public void setPublicKey(final String publicKey) {
-        if (publicKey != null) {
-            this.publicKey = publicKey.replaceAll("\\n|\\r", "").replace("-----BEGIN PUBLIC KEY-----", "")
-                    .replace("-----END PUBLIC KEY-----", "");
-        } else {
-            this.publicKey = publicKey;
-        }
+        this.publicKey = publicKey;
     }
 
     public String getPublicKey() {
