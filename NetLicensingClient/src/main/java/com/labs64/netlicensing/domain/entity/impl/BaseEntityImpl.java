@@ -52,7 +52,6 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
         reserved.add(Constants.ID);
         reserved.add(Constants.NUMBER);
         reserved.add(Constants.ACTIVE);
-        reserved.add(Constants.DELETED);
         return reserved;
     }
 
@@ -130,7 +129,7 @@ public abstract class BaseEntityImpl extends Visitable implements BaseEntity {
         boolean firstProp = true;
         for (final String propKey : propMap.keySet()) {
             final Object propValue = propMap.get(propKey);
-            if (propValue != null && (!(propValue instanceof Collection<?>) || ((Collection<?>) propValue).size() > 0)) {
+            if ((propValue != null) && (!(propValue instanceof Collection<?>) || (((Collection<?>) propValue).size() > 0))) {
                 builder.append(firstProp ? "" : ", ");
                 firstProp = false;
 

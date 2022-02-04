@@ -38,7 +38,7 @@ import java.util.Map;
  * <b>licensingInfo</b> - Licensing information. Optional.
  * <p>
  * Arbitrary additional user properties of string type may be associated with each product. The name of user property
- * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted</b>.
+ * must not be equal to any of the fixed property names listed above and must not be <b>id</b>.
  */
 public interface Product extends BaseEntity {
 

@@ -27,7 +27,6 @@ public final class Constants {
     public static final String NUMBER = "number";
     public static final String NAME = "name";
     public static final String VERSION = "version";
-    public static final String DELETED = "deleted";
     public static final String CASCADE = "forceCascade";
     public static final String PRICE = "price";
     public static final String DISCOUNT = "discount";
