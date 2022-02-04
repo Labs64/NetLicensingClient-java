@@ -28,8 +28,7 @@ import java.util.Map;
  * disabled (tbd).
  * <p>
  * Arbitrary additional user properties of string type may be associated with each licensee. The name of user property
- * must not be equal to any of the fixed property names listed above and must be none of <b>id, deleted,
- * productNumber</b>.
+ * must not be equal to any of the fixed property names listed above and must be none of <b>id, productNumber</b>.
  */
 public interface Licensee extends BaseEntity {
 
