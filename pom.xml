@@ -79,7 +79,7 @@
         <commons-codec.version>1.15</commons-codec.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-cli.version>1.5.0</commons-cli.version>
-        <log4j.version>2.17.1</log4j.version>
+        <log4j.version>2.17.2</log4j.version>
         <junit.version>4.13.2</junit.version>
         <jersey.version>2.33</jersey.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
@@ -88,29 +88,29 @@
 
         <!-- plugin.version>0.0.0</plugin.version -->
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
+        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
+        <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <!-- TODO(AY): change version when the new release comes. Java 11 Warning https://github.com/highsource/maven-jaxb2-plugin/issues/148 -->
         <maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
         <jaxb.version>2.3.1</jaxb.version>
-        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+        <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
+        <maven-bundle-plugin.version>5.1.4</maven-bundle-plugin.version>
         <!-- Code Analysis -->
         <labs64.code-analysis.version>2.0.1</labs64.code-analysis.version>
         <labs64.code-analysis.phase>site</labs64.code-analysis.phase>
         <labs64.code-analysis.failOnViolation>false</labs64.code-analysis.failOnViolation>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-        <spotbugs-maven-plugin.version>4.5.3.0</spotbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>3.15.0</maven-pmd-plugin.version>
+        <spotbugs-maven-plugin.version>4.6.0.0</spotbugs-maven-plugin.version>
+        <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
     </properties>
 
     <build>
