@@ -22,9 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Token;
@@ -38,6 +36,7 @@ import com.labs64.netlicensing.util.DateUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -48,9 +47,6 @@ public class TokenServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -107,9 +103,12 @@ public class TokenServiceTest extends BaseServiceTest {
         final TokenImpl newToken = new TokenImpl();
         newToken.setTokenType(TokenType.SHOP);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Malformed token request, TokenValidation: Property 'licenseeNumber' not found");
-        TokenService.create(context, newToken);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            TokenService.create(context, newToken);
+        });
+        assertEquals(
+                "MalformedRequestException: Malformed token request, TokenValidation: Property 'licenseeNumber' not found",
+                e.getMessage());
     }
 
     @Test
@@ -145,9 +144,10 @@ public class TokenServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         TokenService.delete(context, "0fd9ef0a-d8dc-46e7-bc84-0a8c100a25d0");
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("NotFoundException: Requested token does not exist");
-        TokenService.delete(context, "00000000-0000-0000-0000-000000000000");
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            TokenService.delete(context, "00000000-0000-0000-0000-000000000000");
+        });
+        assertEquals("NotFoundException: Requested token does not exist", e.getMessage());
     }
 
     // *** NLIC test mock resource ***

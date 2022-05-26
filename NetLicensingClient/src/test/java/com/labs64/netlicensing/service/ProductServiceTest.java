@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,9 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -36,6 +29,12 @@ import com.labs64.netlicensing.domain.entity.impl.ProductImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link ProductService}.
@@ -48,9 +47,6 @@ public class ProductServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -82,11 +78,11 @@ public class ProductServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateEmpty() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Product name is required");
-
         final Product newProduct = new ProductImpl();
-        ProductService.create(context, newProduct);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            ProductService.create(context, newProduct);
+        });
+        assertEquals("MalformedRequestException: Product name is required", e.getMessage());
     }
 
     @Test
@@ -150,9 +146,10 @@ public class ProductServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         ProductService.delete(context, "P001-TEST", true);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("NotFoundException: Requested product does not exist");
-        ProductService.delete(context, "P001-NONE", false);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            ProductService.delete(context, "P001-NONE", false);
+        });
+        assertEquals("NotFoundException: Requested product does not exist", e.getMessage());
     }
 
     // *** NLIC test mock resource ***

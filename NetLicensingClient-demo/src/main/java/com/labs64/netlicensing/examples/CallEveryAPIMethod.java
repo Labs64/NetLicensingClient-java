@@ -38,7 +38,6 @@ import com.labs64.netlicensing.domain.entity.impl.TokenImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
-import com.labs64.netlicensing.domain.vo.LicenseeSecretMode;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.domain.vo.SecurityMode;
 import com.labs64.netlicensing.domain.vo.TokenType;
@@ -121,8 +120,6 @@ public class CallEveryAPIMethod implements NetLicensingExample {
 
             final Product updateProduct = new ProductImpl();
             updateProduct.addProperty("Updated property name", "Updated value");
-            updateProduct.addProperty(Constants.Product.PROP_LICENSEE_SECRET_MODE,
-                    LicenseeSecretMode.PREDEFINED.toString());
             product = ProductService.update(context, productNumber, updateProduct);
             out.writeObject("Updated product:", product);
 
@@ -239,7 +236,6 @@ public class CallEveryAPIMethod implements NetLicensingExample {
 
             final Licensee updateLicensee = new LicenseeImpl();
             updateLicensee.addProperty("Updated property name", "Updated value");
-            updateLicensee.addProperty(Constants.Licensee.PROP_LICENSEE_SECRET, randomLicenseeSecret);
 
             licensee = LicenseeService.update(context, licenseeNumber, updateLicensee);
             out.writeObject("Updated licensee:", licensee);

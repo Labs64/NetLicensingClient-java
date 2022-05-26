@@ -12,19 +12,12 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
@@ -32,6 +25,12 @@ import com.labs64.netlicensing.domain.entity.impl.PaymentMethodImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link PaymentMethodService}.
@@ -44,9 +43,6 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -96,9 +92,10 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         final PaymentMethod paymentMethod = new PaymentMethodImpl();
         paymentMethod.setNumber("PAYPAL_NEW");
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Requested payment method is not supported");
-        PaymentMethodService.update(context, "PAYPAL", paymentMethod);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            PaymentMethodService.update(context, "PAYPAL", paymentMethod);
+        });
+        assertEquals("MalformedRequestException: Requested payment method is not supported", e.getMessage());
     }
 
     // *** NLIC test mock resource ***

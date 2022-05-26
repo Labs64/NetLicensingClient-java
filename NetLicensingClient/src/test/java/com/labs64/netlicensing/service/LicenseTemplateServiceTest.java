@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
@@ -39,6 +32,12 @@ import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.LicenseType;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link LicenseTemplateService}.
@@ -50,9 +49,6 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -91,18 +87,19 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutProductModuleNumber() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Product module number is not provided");
-        LicenseTemplateService.create(context, null, new LicenseTemplateImpl());
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseTemplateService.create(context, null, new LicenseTemplateImpl());
+        });
+        assertEquals("MalformedRequestException: Product module number is not provided", e.getMessage());
     }
 
     @Test
     public void testCreateEmpty() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: License template name is required");
-
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
-        LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
+        });
+        assertEquals("MalformedRequestException: License template name is required", e.getMessage());
     }
 
     @Test
@@ -127,9 +124,11 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         licenseTemplate.setLicenseType(LicenseType.FEATURE);
         licenseTemplate.setPrice(new BigDecimal("10"));
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: 'price' field must be accompanied with the 'currency' field");
-        LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
+        });
+        assertEquals("MalformedRequestException: 'price' field must be accompanied with the 'currency' field",
+                e.getMessage());
     }
 
     @Test
@@ -139,9 +138,11 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         licenseTemplate.setLicenseType(LicenseType.FEATURE);
         licenseTemplate.setCurrency(Currency.EUR);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: 'currency' field can not be used without the 'price' field");
-        LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseTemplateService.create(context, "PM001-TEST", licenseTemplate);
+        });
+        assertEquals("MalformedRequestException: 'currency' field can not be used without the 'price' field",
+                e.getMessage());
     }
 
     @Test
@@ -215,18 +216,22 @@ public class LicenseTemplateServiceTest extends BaseServiceTest {
         final LicenseTemplate licenseTemplate = new LicenseTemplateImpl();
         licenseTemplate.setLicenseType(LicenseType.TIMEVOLUME);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("IllegalOperationException: License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.");
-        LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseTemplateService.update(context, "LT001-TEST", licenseTemplate);
+        });
+        assertEquals(
+                "IllegalOperationException: License template of type 'TIMEVOLUME' must have property 'timeVolume' specified.",
+                e.getMessage());
     }
 
     @Test
     public void testDelete() throws Exception {
         LicenseTemplateService.delete(context, "LT001-TEST", true);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("NotFoundException: Requested license template does not exist");
-        LicenseTemplateService.delete(context, "PM001-NONE", false);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseTemplateService.delete(context, "PM001-NONE", false);
+        });
+        assertEquals("NotFoundException: Requested license template does not exist", e.getMessage());
     }
 
     // *** NLIC test mock resource ***

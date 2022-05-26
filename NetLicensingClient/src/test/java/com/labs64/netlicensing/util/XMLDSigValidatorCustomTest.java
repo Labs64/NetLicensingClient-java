@@ -12,22 +12,22 @@
  */
 package com.labs64.netlicensing.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static java.lang.System.out;
-
-import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.apache.commons.io.IOUtils;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.w3c.dom.Document;
+
+import static java.lang.System.out;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public final class XMLDSigValidatorCustomTest {
 
@@ -73,9 +73,9 @@ public final class XMLDSigValidatorCustomTest {
     final Document aDoc = loadXmlDocument("xmldsig/xml-signed-nlic-01.xml");
     assertTrue(XMLDSigValidatorCustom.containsSignature(aDoc));
 
-    String publicKeyContent = IOUtils.toString(loadFileContent("xmldsig/rsa_public.pem"),
+    final String publicKeyContent = IOUtils.toString(loadFileContent("xmldsig/rsa_public.pem"),
         StandardCharsets.UTF_8.name());
-    PublicKey publicKey = SignatureUtils.readPublicKey(SignatureUtils.cleansePublicKey(publicKeyContent));
+    final PublicKey publicKey = SignatureUtils.readPublicKey(SignatureUtils.cleansePublicKey(publicKeyContent));
     assertTrue(XMLDSigValidatorCustom.validateSignature(aDoc, publicKey).isValid());
   }
 
@@ -84,9 +84,9 @@ public final class XMLDSigValidatorCustomTest {
     final Document aDoc = loadXmlDocument("xmldsig/xml-signed-nlic-02-mismatch.xml");
     assertTrue(XMLDSigValidatorCustom.containsSignature(aDoc));
 
-    String publicKeyContent = IOUtils.toString(loadFileContent("xmldsig/rsa_public.pem"),
+    final String publicKeyContent = IOUtils.toString(loadFileContent("xmldsig/rsa_public.pem"),
         StandardCharsets.UTF_8.name());
-    PublicKey publicKey = SignatureUtils.readPublicKey(SignatureUtils.cleansePublicKey(publicKeyContent));
+    final PublicKey publicKey = SignatureUtils.readPublicKey(SignatureUtils.cleansePublicKey(publicKeyContent));
     assertFalse(XMLDSigValidatorCustom.validateSignature(aDoc, publicKey).isValid());
   }
 
@@ -95,9 +95,9 @@ public final class XMLDSigValidatorCustomTest {
     final Document aDoc = loadXmlDocument("xmldsig/xml-signed-nlic-01.xml");
     assertTrue(XMLDSigValidatorCustom.containsSignature(aDoc));
 
-    String publicKeyContent = IOUtils.toString(loadFileContent("xmldsig/rsa_public_wrong.pem"),
+    final String publicKeyContent = IOUtils.toString(loadFileContent("xmldsig/rsa_public_wrong.pem"),
         StandardCharsets.UTF_8.name());
-    PublicKey publicKey = SignatureUtils.readPublicKey(SignatureUtils.cleansePublicKey(publicKeyContent));
+    final PublicKey publicKey = SignatureUtils.readPublicKey(SignatureUtils.cleansePublicKey(publicKeyContent));
     assertFalse(XMLDSigValidatorCustom.validateSignature(aDoc, publicKey).isValid());
   }
 

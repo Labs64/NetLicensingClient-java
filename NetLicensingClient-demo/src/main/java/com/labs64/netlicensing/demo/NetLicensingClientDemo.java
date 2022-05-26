@@ -53,7 +53,7 @@ public class NetLicensingClientDemo {
         if (AllExamples.list.containsKey(exampleToRun)) {
             NetLicensingExample ex;
             try {
-                ex = AllExamples.list.get(exampleToRun).newInstance();
+                ex = AllExamples.list.get(exampleToRun).getConstructor().newInstance();
                 ex.execute();
                 return;
             } catch (final Exception e) {

@@ -243,12 +243,9 @@ public class EntityFactory {
                         + entityClass.getCanonicalName() + ".");
             }
             try {
-                converter = (Converter<Item, T>) converterClass.newInstance();
+                converter = (Converter<Item, T>) converterClass.getConstructor().newInstance();
                 getConvertersCache().put(entityClass, converter);
-            } catch (final InstantiationException e) {
-                throw new RuntimeException(
-                        "Can not instantiate converter of class " + converterClass.getCanonicalName() + ".");
-            } catch (final IllegalAccessException e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(
                         "Can not instantiate converter of class " + converterClass.getCanonicalName() + ".");
             }
