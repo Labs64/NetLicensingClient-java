@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
@@ -44,6 +37,12 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.Property;
 import com.labs64.netlicensing.util.JAXBUtils;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Integration tests for {@link LicenseService}.
  */
@@ -55,9 +54,6 @@ public class LicenseServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -106,16 +102,18 @@ public class LicenseServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutLicenseeNumber() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Licensee number is not provided");
-        LicenseService.create(context, null, null, null, new LicenseImpl());
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseService.create(context, null, null, null, new LicenseImpl());
+        });
+        assertEquals("MalformedRequestException: Licensee number is not provided", e.getMessage());
     }
 
     @Test
     public void testCreateWithoutLicenseTemplateNumber() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: License template number is not provided");
-        LicenseService.create(context, "L001-TEST", null, null, new LicenseImpl());
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseService.create(context, "L001-TEST", null, null, new LicenseImpl());
+        });
+        assertEquals("MalformedRequestException: License template number is not provided", e.getMessage());
     }
 
     @Test
@@ -174,9 +172,10 @@ public class LicenseServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         LicenseService.delete(context, "LC001-TEST", true);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("NotFoundException: Requested license does not exist");
-        LicenseService.delete(context, "LC001-NONE", false);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseService.delete(context, "LC001-NONE", false);
+        });
+        assertEquals("NotFoundException: Requested license does not exist", e.getMessage());
     }
 
     // *** NLIC test mock resource ***

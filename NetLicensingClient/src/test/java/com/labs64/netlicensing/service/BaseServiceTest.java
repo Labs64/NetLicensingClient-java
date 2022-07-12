@@ -13,6 +13,7 @@
 package com.labs64.netlicensing.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.text.WordUtils;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -100,7 +101,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "create entity" service.
-         * 
+         *
          * @param formParams
          *            POST request body parameters
          * @return response with XML representation of the created entity
@@ -113,7 +114,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "get entity" service.
-         * 
+         *
          * @return response with XML representation of the entity
          */
         @GET
@@ -127,7 +128,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "list entities" service.
-         * 
+         *
          * @return response with XML representation of the entities page
          */
         @GET
@@ -140,7 +141,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "update entity" service.
-         * 
+         *
          * @param formParams
          *            POST request body parameters
          * @return response with XML representation of the updated entity
@@ -157,7 +158,7 @@ abstract class BaseServiceTest extends JerseyTest {
             for (final String paramKey : formParams.keySet()) {
                 final Property property = SchemaFunction.propertyByName(properties, paramKey);
                 final String paramValue = formParams.getFirst(paramKey);
-                if (paramValue != null && paramValue.trim().equals("")) {
+                if ((paramValue != null) && paramValue.trim().equals("")) {
                     properties.remove(property);
                 } else {
                     if (!properties.contains(property)) {
@@ -172,7 +173,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Mock for "delete entity" service.
-         * 
+         *
          * @param number
          *            entity number
          * @param uriInfo
@@ -187,7 +188,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "create entity" service.
-         * 
+         *
          * @param formParams
          *            POST request body parameters
          * @param defaultPropertyValues
@@ -203,7 +204,7 @@ abstract class BaseServiceTest extends JerseyTest {
             item.setType(WordUtils.capitalize(serviceId));
             netlicensing.getItems().getItem().add(item);
 
-            final Map<String, String> propertyValues = new HashMap<String, String>(defaultPropertyValues);
+            final Map<String, String> propertyValues = new HashMap<>(defaultPropertyValues);
             for (final String paramKey : formParams.keySet()) {
                 propertyValues.put(paramKey, formParams.getFirst(paramKey));
             }
@@ -222,7 +223,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Defines common functionality for a "delete entity" service.
-         * 
+         *
          * @param number
          *            entity number
          * @param expectedNumber
@@ -240,7 +241,7 @@ abstract class BaseServiceTest extends JerseyTest {
             }
 
             // for testing purposes parameter "forceCascade" for "existing" entities should always be true if not absent
-            final boolean hasForceCascade = queryParams != null && queryParams.containsKey(Constants.CASCADE);
+            final boolean hasForceCascade = (queryParams != null) && queryParams.containsKey(Constants.CASCADE);
             if (hasForceCascade && !Boolean.valueOf(queryParams.getFirst(Constants.CASCADE))) {
                 return unexpectedValueErrorResponse(Constants.CASCADE);
             }
@@ -250,14 +251,14 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Generates error response for the service mock
-         * 
+         *
          * @param errorIdsAndMessages
          *            array where every string with even index is exception ID and every string with odd index is
          *            corresponding error message
          * @return response object
          */
         protected final Response errorResponse(final String... errorIdsAndMessages) {
-            if (errorIdsAndMessages.length % 2 != 0) {
+            if ((errorIdsAndMessages.length % 2) != 0) {
                 throw new IllegalArgumentException("Some exception ID doesn't have corresponding error message.");
             }
 
@@ -272,7 +273,7 @@ abstract class BaseServiceTest extends JerseyTest {
 
         /**
          * Generates UnexpectedValueException response for the service mock
-         * 
+         *
          * @param parameterName
          *            parameter name
          * @return response object
@@ -292,7 +293,7 @@ abstract class BaseServiceTest extends JerseyTest {
                 final String paramKey) {
             if (formParams.containsKey(paramKey)) {
                 final String priceStr = formParams.getFirst(paramKey);
-                final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, BigDecimal.ROUND_HALF_UP);
+                final BigDecimal roundedPrice = new BigDecimal(priceStr).setScale(2, RoundingMode.HALF_UP);
                 formParams.putSingle(paramKey, roundedPrice.toString());
             }
         }

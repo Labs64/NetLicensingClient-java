@@ -12,10 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.ProductModule;
@@ -35,6 +29,11 @@ import com.labs64.netlicensing.domain.entity.impl.ProductModuleImpl;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.ServiceException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link ProductModuleService}.
@@ -44,9 +43,6 @@ public class ProductModuleServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -77,18 +73,19 @@ public class ProductModuleServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutProductNumber() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Product number is not provided");
-        ProductModuleService.create(context, null, new ProductModuleImpl());
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            ProductModuleService.create(context, null, new ProductModuleImpl());
+        });
+        assertEquals("MalformedRequestException: Product number is not provided", e.getMessage());
     }
 
     @Test
     public void testCreateEmpty() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Product module name is required");
-
         final ProductModule newModule = new ProductModuleImpl();
-        ProductModuleService.create(context, "P001-TEST", newModule);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            ProductModuleService.create(context, "P001-TEST", newModule);
+        });
+        assertEquals("MalformedRequestException: Product module name is required", e.getMessage());
     }
 
     @Test
@@ -148,10 +145,10 @@ public class ProductModuleServiceTest extends BaseServiceTest {
     @Test
     public void testDelete() throws Exception {
         ProductModuleService.delete(context, "PM001-TEST", true);
-
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("NotFoundException: Requested product module does not exist");
-        ProductModuleService.delete(context, "PM001-NONE", false);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            ProductModuleService.delete(context, "PM001-NONE", false);
+        });
+        assertEquals("NotFoundException: Requested product module does not exist", e.getMessage());
     }
 
     // *** NLIC test mock resource ***

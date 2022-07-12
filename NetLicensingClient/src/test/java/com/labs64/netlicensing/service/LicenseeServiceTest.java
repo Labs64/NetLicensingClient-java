@@ -24,9 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
@@ -44,6 +42,7 @@ import com.labs64.netlicensing.util.JAXBUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -60,9 +59,6 @@ public class LicenseeServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -95,9 +91,10 @@ public class LicenseeServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateWithoutProductNumber() throws Exception {
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("MalformedRequestException: Product number is not provided");
-        LicenseeService.create(context, null, new LicenseeImpl());
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseeService.create(context, null, new LicenseeImpl());
+        });
+        assertEquals("MalformedRequestException: Product number is not provided", e.getMessage());
     }
 
     @Test
@@ -145,9 +142,10 @@ public class LicenseeServiceTest extends BaseServiceTest {
     public void testDelete() throws Exception {
         LicenseeService.delete(context, licenseeNumber, true);
 
-        thrown.expect(ServiceException.class);
-        thrown.expectMessage("NotFoundException: Requested licensee does not exist");
-        LicenseeService.delete(context, "L001-NONE", false);
+        final Exception e = assertThrows(ServiceException.class, () -> {
+            LicenseeService.delete(context, "L001-NONE", false);
+        });
+        assertEquals("NotFoundException: Requested licensee does not exist", e.getMessage());
     }
 
     @Test

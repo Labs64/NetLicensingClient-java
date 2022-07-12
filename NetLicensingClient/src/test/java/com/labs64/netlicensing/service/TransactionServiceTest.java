@@ -12,11 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +21,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Transaction;
@@ -42,6 +35,12 @@ import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.DateUtils;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Integration tests for {@link TransactionService}.
  */
@@ -53,9 +52,6 @@ public class TransactionServiceTest extends BaseServiceTest {
     // *** NLIC Tests ***
 
     private static Context context;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -89,10 +85,10 @@ public class TransactionServiceTest extends BaseServiceTest {
 
     @Test
     public void testCreateEmpty() throws Exception {
-        thrown.expect(RestException.class);
-
         final Transaction newTransaction = new TransactionImpl();
-        TransactionService.create(context, newTransaction);
+        assertThrows(RestException.class, () -> {
+            TransactionService.create(context, newTransaction);
+        });
     }
 
     @Test
@@ -114,8 +110,9 @@ public class TransactionServiceTest extends BaseServiceTest {
         newTransaction.setGrandTotal(new BigDecimal("80"));
         newTransaction.setDiscount(new BigDecimal("4"));
 
-        thrown.expect(RestException.class);
-        TransactionService.create(context, newTransaction);
+        assertThrows(RestException.class, () -> {
+            TransactionService.create(context, newTransaction);
+        });
     }
 
     @Test
@@ -126,8 +123,9 @@ public class TransactionServiceTest extends BaseServiceTest {
         newTransaction.setGrandTotal(new BigDecimal("80"));
         newTransaction.setCurrency(Currency.EUR);
 
-        thrown.expect(RestException.class);
-        TransactionService.create(context, newTransaction);
+        assertThrows(RestException.class, () -> {
+            TransactionService.create(context, newTransaction);
+        });
     }
 
     @Test
@@ -208,7 +206,7 @@ public class TransactionServiceTest extends BaseServiceTest {
             roundParamValueToTwoDecimalPlaces(formParams, Constants.Transaction.GRAND_TOTAL);
             roundParamValueToTwoDecimalPlaces(formParams, Constants.DISCOUNT);
 
-            final Map<String, String> defaultPropertyValues = new HashMap<String, String>();
+            final Map<String, String> defaultPropertyValues = new HashMap<>();
             defaultPropertyValues.put(Constants.ACTIVE, "true");
             return create(formParams, defaultPropertyValues);
         }

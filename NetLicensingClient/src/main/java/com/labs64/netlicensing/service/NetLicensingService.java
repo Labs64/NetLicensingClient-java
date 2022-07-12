@@ -26,7 +26,6 @@ import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.BadSignatureException;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.exception.ServiceException;
@@ -35,8 +34,8 @@ import com.labs64.netlicensing.provider.RestProviderJersey;
 import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
-import com.labs64.netlicensing.util.SignatureUtils;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.SignatureUtils;
 
 /**
  * Provides generic requests to NetLicensing services. This class is supposed to be used by other **Service classes.
