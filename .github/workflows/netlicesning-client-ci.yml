@@ -12,31 +12,20 @@ on:
 
 jobs:
   build:
-
     runs-on: [self-hosted]
-    
     container: maven:3.8.6-openjdk-11
-
     strategy:
       matrix:
         java-version: [11]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Check environment 1
-      run: |
-        pwd
-        env
     - name: Set up JDK ${{ matrix.java-version }}
       uses: actions/setup-java@v2
       with:
         java-version: ${{ matrix.java-version }}
         distribution: 'adopt'
         cache: maven
-    - name: Check environment 2
-      run: |
-        pwd
-        env
     - name: Build with Maven
       run: mvn clean verify
     - name: Run Demo App
