@@ -1,0 +1,55 @@
+# This workflow will release the project
+
+name: NetLicensing Client - Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        required: true
+        description: The release version X.Y.Z
+      development-version:
+        required: true
+        description: The next development version X.Y.Z-SNAPSHOT
+
+jobs:
+  release:
+    runs-on: self-hosted
+    container: maven:3.8.6-openjdk-11
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Prepare git config
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<netlicensing@labs64.com>"
+
+    - name: Prepare maven settings.xml
+      run: |
+        mkdir ~/.m2
+        cat << EOF >~/.m2/settings.xml
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>ossrh</id>
+              <username>${{ secrets.OSS_USER }}</username>
+              <password>${{ secrets.OSS_PASS }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+
+    - name: Import GPG key
+      run: echo "${{ secrets.GPG_KEY }}" | base64 -d | gpg --pinentry-mode loopback --passphrase "${{ secrets.GPG_KEY_PASS }}" --import
+
+    - name: Release with Maven
+      run: |
+        mvn -B release:prepare -Prelease \
+            -DautoVersionSubmodules=true \
+            -DreleaseVersion=${{ github.event.inputs.release-version }} \
+            -Dtag=${{ github.event.inputs.release-version }} \
+            -DdevelopmentVersion=${{ github.event.inputs.development-version }} \
+            -Darguments="-Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}"
+        mvn -B release:perform -Prelease
