@@ -1,0 +1,31 @@
+# This workflow will release the project
+
+name: NetLcensing Client - Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        required: true
+        description: The release version X.Y.Z
+      development-version:
+        required: true
+        description: The next development version X.Y.Z-SNAPSHOT
+
+jobs:
+  release:
+    runs-on: self-hosted
+    container: maven:3.8.6-openjdk-11
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Release with Maven
+      run: |
+        gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys ${{ secrets.GPG_KEY }}
+        mvn -B release:prepare -Prelease \
+            -DautoVersionSubmodules=true \
+            -DreleaseVersion=${{ github.event.inputs.release-version }} \
+            -Dtag=${{ github.event.inputs.release-version }} \
+            -DdevelopmentVersion=${{ github.event.inputs.development-version }} \
+            -Darguments="-Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}"
+        mvn -B release:perform -Prelease
