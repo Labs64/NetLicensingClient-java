@@ -3,11 +3,12 @@ package com.labs64.netlicensing.domain.vo;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.labs64.netlicensing.domain.Constants;
+
 public class ValidationParameters {
 
     private String productNumber;
-    private String licenseeName;
-    private String licenseeSecret;
+    private Map<String, String> licenseeProperties;
     private Boolean dryRun;
     private Boolean forOfflineUse;
     private Map<String, Map<String, String>> parameters;
@@ -26,6 +27,18 @@ public class ValidationParameters {
         return productNumber;
     }
 
+    public Map<String, String> getLicenseeProperties() {
+        if (licenseeProperties == null) {
+            licenseeProperties = new HashMap<>();
+        }
+        return licenseeProperties;
+    }
+
+    public void setLicenseeProperty(final String key, final String value) {
+        getLicenseeProperties().put(key, value);
+    }
+
+
     /**
      * Sets the name for the new licensee
      *
@@ -35,11 +48,11 @@ public class ValidationParameters {
      *            1000 characters.
      */
     public void setLicenseeName(final String licenseeName) {
-        this.licenseeName = licenseeName;
+        setLicenseeProperty(Constants.NAME, licenseeName);
     }
 
     public String getLicenseeName() {
-        return licenseeName;
+        return getLicenseeProperties().get(Constants.NAME);
     }
 
     /**
@@ -49,12 +62,13 @@ public class ValidationParameters {
      *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
      */
     public void setLicenseeSecret(final String licenseeSecret) {
-        this.licenseeSecret = licenseeSecret;
+        setLicenseeProperty(Constants.SECRET, licenseeSecret);
     }
 
     public String getLicenseeSecret() {
-        return licenseeSecret;
+        return getLicenseeProperties().get(Constants.SECRET);
     }
+
 
     /**
      * Sets the "dry run" mode

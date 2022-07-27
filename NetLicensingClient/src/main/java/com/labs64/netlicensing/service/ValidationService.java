@@ -114,6 +114,14 @@ public class ValidationService {
             if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
                 form.param(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
             }
+
+            validationParameters.getLicenseeProperties()
+                    .forEach((k, v) -> {
+                        if (StringUtils.isNotBlank(k) && !(Constants.NAME.equals(k) || Constants.SECRET.equals(k))) {
+                            form.param(k, v);
+                        }
+                    });
+
             if (Boolean.TRUE.equals(validationParameters.isDryRun())) {
                 form.param(Constants.Validation.DRY_RUN, Boolean.TRUE.toString());
             }
