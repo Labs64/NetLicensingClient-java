@@ -48,11 +48,11 @@ public class ValidationParameters {
      *            1000 characters.
      */
     public void setLicenseeName(final String licenseeName) {
-        setLicenseeProperty(Constants.NAME, licenseeName);
+        setLicenseeProperty(Constants.Licensee.PROP_LICENSEE_NAME, licenseeName);
     }
 
     public String getLicenseeName() {
-        return getLicenseeProperties().get(Constants.NAME);
+        return getLicenseeProperties().get(Constants.Licensee.PROP_LICENSEE_NAME);
     }
 
     /**
@@ -62,11 +62,11 @@ public class ValidationParameters {
      *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
      */
     public void setLicenseeSecret(final String licenseeSecret) {
-        setLicenseeProperty(Constants.SECRET, licenseeSecret);
+        setLicenseeProperty(Constants.Licensee.PROP_LICENSEE_SECRET, licenseeSecret);
     }
 
     public String getLicenseeSecret() {
-        return getLicenseeProperties().get(Constants.SECRET);
+        return getLicenseeProperties().get(Constants.Licensee.PROP_LICENSEE_SECRET);
     }
 
 
