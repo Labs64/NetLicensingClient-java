@@ -16,18 +16,23 @@ jobs:
   release:
     runs-on: self-hosted
     container: maven:3.8.6-openjdk-11
+    name: Release ${{ github.event.inputs.release-version }} (next dev ${{ github.event.inputs.development-version }})
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+        ssh-key: '${{ secrets.REPO_SSH_KEY }}'
 
+    # Relies on actions/checkout with 'ssh-key' parameter.
     - name: Prepare git config
       run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<netlicensing@labs64.com>"
+        git config --global core.sshCommand "$(git config --local --get core.sshCommand)"
 
     - name: Prepare maven settings.xml
       run: |
-        mkdir ~/.m2
+        mkdir -p ~/.m2
         cat << EOF >~/.m2/settings.xml
         <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
