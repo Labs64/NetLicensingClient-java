@@ -70,8 +70,8 @@
         <java.version>11</java.version>
         <maven.version>3.6.0</maven.version>
 
-        <repo.releases.url>https://nexus.labs64.com/repository/nlic-releases</repo.releases.url>
-        <repo.snapshots.url>https://nexus.labs64.com/repository/nlic-snapshots</repo.snapshots.url>
+        <repo.releases.url>OVERRIDE_REPO_URL</repo.releases.url>
+        <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
 
         <!-- dependency.version>0.0.0</dependency.version -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
