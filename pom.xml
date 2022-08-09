@@ -111,6 +111,8 @@
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <spotbugs-maven-plugin.version>4.6.0.0</spotbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
+        <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
+        <maven-scm-plugin.version>1.13.0</maven-scm-plugin.version>
     </properties>
 
     <build>
@@ -365,11 +367,11 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
-                    <version>1.2.7</version>
+                    <version>${flatten-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-scm-plugin</artifactId>
-                    <version>1.13.0</version>
+                    <version>${maven-scm-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -541,10 +543,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                     </plugin>
-<!--                    <plugin>-->
-<!--                        <groupId>org.sonatype.plugins</groupId>-->
-<!--                        <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--                    </plugin>-->
                     <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <executions>
