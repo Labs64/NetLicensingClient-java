@@ -8,15 +8,12 @@ on:
       release-version:
         required: true
         description: The release version X.Y.Z
-      development-version:
-        required: true
-        description: The next development version X.Y.Z-SNAPSHOT
 
 jobs:
   release:
+    name: Release ${{ github.event.inputs.release-version }}
     runs-on: self-hosted
     container: maven:3.8.6-openjdk-11
-    name: Release ${{ github.event.inputs.release-version }} (next dev ${{ github.event.inputs.development-version }})
 
     steps:
     - uses: actions/checkout@v3
@@ -27,8 +24,7 @@ jobs:
     - name: Prepare git config
       run: |
         git config user.name "GitHub Actions Bot"
-        git config user.email "<netlicensing@labs64.com>"
-        git config --global core.sshCommand "$(git config --local --get core.sshCommand)"
+        git config user.email "netlicensing@labs64.com"
 
     - name: Prepare maven settings.xml
       run: |
@@ -49,12 +45,11 @@ jobs:
     - name: Import GPG key
       run: echo "${{ secrets.GPG_KEY }}" | base64 -d | gpg --pinentry-mode loopback --passphrase "${{ secrets.GPG_KEY_PASS }}" --import
 
-    - name: Release with Maven
+    - name: Release to Maven Central staging
       run: |
-        mvn -B release:prepare -Prelease \
-            -DautoVersionSubmodules=true \
-            -DreleaseVersion=${{ github.event.inputs.release-version }} \
-            -Dtag=${{ github.event.inputs.release-version }} \
-            -DdevelopmentVersion=${{ github.event.inputs.development-version }} \
-            -Darguments="-Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}"
-        mvn -B release:perform -Prelease
+        mvn -s ~/.m2/settings.xml -B \
+            clean deploy scm:tag \
+            -P release \
+            -Drevision=${{ github.event.inputs.release-version }} \
+            -Dmessage="Release ${{ github.event.inputs.release-version }}" \
+            -Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}
