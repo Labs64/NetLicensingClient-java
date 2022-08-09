@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.labs64.netlicensing</groupId>
     <artifactId>netlicensing-client-parent</artifactId>
     <version>${revision}</version>
@@ -71,8 +70,8 @@
         <java.version>11</java.version>
         <maven.version>3.6.0</maven.version>
 
-        <repo.releases.url>OVERRIDE_REPO_URL</repo.releases.url>
-        <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
+        <repo.releases.url>https://nexus.labs64.com/repository/nlic-releases</repo.releases.url>
+        <repo.snapshots.url>https://nexus.labs64.com/repository/nlic-snapshots</repo.snapshots.url>
 
         <!-- dependency.version>0.0.0</dependency.version -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -372,12 +371,6 @@
                     <artifactId>maven-scm-plugin</artifactId>
                     <version>1.13.0</version>
                 </plugin>
-
-                <plugin>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>3.0.1</version>
-                </plugin>
-
             </plugins>
         </pluginManagement>
 
