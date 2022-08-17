@@ -154,6 +154,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         final ValidationParameters validationParameters = new ValidationParameters();
         validationParameters.setLicenseeName("Test Licensee");
         validationParameters.setProductNumber(productNumber);
+        validationParameters.setLicenseeProperty("customProperty", "Licensee Custom Property");
         final ValidationResult result = LicenseeService.validate(context, licenseeNumber, validationParameters);
 
         assertNotNull(result);
@@ -237,13 +238,18 @@ public class LicenseeServiceTest extends BaseServiceTest {
         @Path("{licenseeNumber}/validate")
         public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
                 @FormParam("productNumber") final String productNumber,
-                @FormParam("licenseeName") final String licenseeName) {
+                @FormParam("licenseeName") final String licenseeName,
+                @FormParam("customProperty") final String licenseeCustomProperty) {
 
             if (!productNumber.equals(productNumber)) {
                 return unexpectedValueErrorResponse("productNumber");
             }
             if (!"Test Licensee".equals(licenseeName)) {
                 return unexpectedValueErrorResponse("licenseeName");
+            }
+
+            if (!"Licensee Custom Property".equals(licenseeCustomProperty)) {
+                return unexpectedValueErrorResponse("customProperty");
             }
 
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE

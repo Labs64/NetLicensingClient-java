@@ -108,12 +108,14 @@ public class ValidationService {
             if (StringUtils.isNotBlank(validationParameters.getProductNumber())) {
                 form.param(Constants.Product.PRODUCT_NUMBER, validationParameters.getProductNumber());
             }
-            if (StringUtils.isNotBlank(validationParameters.getLicenseeName())) {
-                form.param(Constants.Licensee.PROP_LICENSEE_NAME, validationParameters.getLicenseeName());
-            }
-            if (StringUtils.isNotBlank(validationParameters.getLicenseeSecret())) {
-                form.param(Constants.Licensee.PROP_LICENSEE_SECRET, validationParameters.getLicenseeSecret());
-            }
+
+            validationParameters.getLicenseeProperties()
+                    .forEach((k, v) -> {
+                        if (StringUtils.isNotBlank(k)) {
+                            form.param(k, v);
+                        }
+                    });
+
             if (Boolean.TRUE.equals(validationParameters.isDryRun())) {
                 form.param(Constants.Validation.DRY_RUN, Boolean.TRUE.toString());
             }
