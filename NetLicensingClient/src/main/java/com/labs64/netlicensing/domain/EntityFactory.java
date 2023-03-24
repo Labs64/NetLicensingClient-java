@@ -12,46 +12,18 @@
  */
 package com.labs64.netlicensing.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import com.labs64.netlicensing.domain.entity.Country;
-import com.labs64.netlicensing.domain.entity.License;
-import com.labs64.netlicensing.domain.entity.LicenseTemplate;
-import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.PaymentMethod;
-import com.labs64.netlicensing.domain.entity.Product;
-import com.labs64.netlicensing.domain.entity.ProductModule;
-import com.labs64.netlicensing.domain.entity.Token;
-import com.labs64.netlicensing.domain.entity.Transaction;
-import com.labs64.netlicensing.domain.vo.LicenseTypeProperties;
-import com.labs64.netlicensing.domain.vo.LicensingModelProperties;
-import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.domain.vo.PageImpl;
-import com.labs64.netlicensing.domain.vo.ValidationResult;
+import com.labs64.netlicensing.domain.entity.*;
+import com.labs64.netlicensing.domain.vo.*;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
-import com.labs64.netlicensing.schema.converter.Converter;
-import com.labs64.netlicensing.schema.converter.ItemToCountryConverter;
-import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
-import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
-import com.labs64.netlicensing.schema.converter.ItemToLicenseTypePropertiesConverter;
-import com.labs64.netlicensing.schema.converter.ItemToLicenseeConverter;
-import com.labs64.netlicensing.schema.converter.ItemToLicensingModelPropertiesConverter;
-import com.labs64.netlicensing.schema.converter.ItemToPaymentMethodConverter;
-import com.labs64.netlicensing.schema.converter.ItemToProductConverter;
-import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
-import com.labs64.netlicensing.schema.converter.ItemToTokenConverter;
-import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
-import com.labs64.netlicensing.schema.converter.ItemsToValidationResultConverter;
+import com.labs64.netlicensing.schema.converter.*;
 import com.labs64.netlicensing.util.Visitable;
 import com.labs64.netlicensing.util.Visitor;
+
+import java.util.*;
 
 /**
  * Factory that contains static methods for creating entities
@@ -72,6 +44,7 @@ public class EntityFactory {
         entityToConverterMap.put(Country.class, ItemToCountryConverter.class);
         entityToConverterMap.put(LicensingModelProperties.class, ItemToLicensingModelPropertiesConverter.class);
         entityToConverterMap.put(LicenseTypeProperties.class, ItemToLicenseTypePropertiesConverter.class);
+        entityToConverterMap.put(Notification.class, ItemToNotificationConverter.class);
     }
 
     private Map<Class<?>, Converter<Item, ?>> convertersCache;

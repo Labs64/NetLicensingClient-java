@@ -1,0 +1,17 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://netlicensing.labs64.com/schema/context
+                                  https://go.netlicensing.io/schema/context/netlicensing-context-2.1.xsd">
+    <items>
+        <item type="Notification">
+            <property name="number">N014-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Notification 14</property>
+            <property name="events">CREATE_LICENSEE,CREATE_LICENSE</property>
+            <property name="type">WEBHOOK</property>
+            <property name="url">http://www.test.test</property>
+            <property name="payload">${event}</property>
+            <property name="CustomProperty">CustomPropertyValue</property>
+        </item>
+    </items>
+</netlicensing>

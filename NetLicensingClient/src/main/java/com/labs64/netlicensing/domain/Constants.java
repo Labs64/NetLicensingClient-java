@@ -211,5 +211,13 @@ public final class Constants {
         public static final String WARNING_LEVEL = "warningLevel";
     }
 
+    public static final class Notification {
+        public static final String ENDPOINT_PATH = "countries";
+        public static final String EVENTS = "events";
+        public static final String TYPE = "type";
+        public static final String URL = "url";
+        public static final String PAYLOAD = "payload";
+    }
+
     // CHECKSTYLE:ON
 }
