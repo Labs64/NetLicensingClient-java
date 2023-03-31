@@ -14,6 +14,15 @@ jobs:
   build:
     runs-on: [self-hosted]
     container: maven:3.8.6-openjdk-11
+    env:
+      # This is needed, as java doesn't respect the environment variable $HOME, but gets the
+      # user home by other means from the system. The default user in the above container is
+      # 'root' with the home at '/root', while GitHub runner overrides $HOME to the mounted
+      # '/github/home'. As a result, maven uses the ~/.m2 at a different location than assumed
+      # by the standard GitHub actions like 'actions/setup-java', causing caching of the maven
+      # local repository not working.
+      # TODO(2K): This can be better solved by preparing a custom image for the container.
+      MAVEN_OPTS: -Duser.home=/github/home
     strategy:
       matrix:
         java-version: [11]
@@ -27,7 +36,7 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
-      run: mvn clean verify
+      run: mvn -B clean verify
     - name: Run Demo App
       run: |
         ls -la NetLicensingClient-demo/target/
