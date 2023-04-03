@@ -206,7 +206,7 @@ public class NotificationServiceTest extends BaseServiceTest {
         return NotificationServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.Notification.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/notification")
     public static class NotificationServiceResource extends AbstractNLICServiceResource {
 
         public NotificationServiceResource() {
