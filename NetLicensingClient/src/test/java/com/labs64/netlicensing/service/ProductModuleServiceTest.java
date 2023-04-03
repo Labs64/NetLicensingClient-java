@@ -158,7 +158,7 @@ public class ProductModuleServiceTest extends BaseServiceTest {
         return ProductModuleServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.ProductModule.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/productmodule")
     public static class ProductModuleServiceResource extends AbstractNLICServiceResource {
 
         public ProductModuleServiceResource() {

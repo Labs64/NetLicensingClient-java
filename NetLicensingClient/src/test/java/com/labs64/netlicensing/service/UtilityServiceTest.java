@@ -12,10 +12,6 @@
  */
 package com.labs64.netlicensing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
 
 import javax.ws.rs.GET;
@@ -25,12 +21,15 @@ import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link UtilityService}.
@@ -88,23 +87,23 @@ public class UtilityServiceTest extends BaseServiceTest {
         return UtilityServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.Utility.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/utility")
     public static class UtilityServiceResource {
 
         @GET
-        @Path(Constants.Utility.ENDPOINT_PATH_LICENSING_MODELS)
+        @Path("licensingModels")
         public Response listLicensingModels() {
             return listFromResource("netlicensing-licensingModels-list.xml");
         }
 
         @GET
-        @Path(Constants.Utility.ENDPOINT_PATH_LICENSE_TYPES)
+        @Path("licenseTypes")
         public Response listLicenseTypes() {
             return listFromResource("netlicensing-licenseTypes-list.xml");
         }
 
         @GET
-        @Path(Constants.Country.ENDPOINT_PATH)
+        @Path("countries")
         public Response listCountries() {
             return listFromResource("netlicensing-countries-list.xml");
         }
