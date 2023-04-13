@@ -214,8 +214,8 @@ public final class Constants {
     public static final class Notification {
         public static final String ENDPOINT_PATH = "notification";
         public static final String EVENTS = "events";
-        public static final String TYPE = "type";
-        public static final String URL = "url";
+        public static final String PROTOCOL = "protocol";
+        public static final String ENDPOINT = "endpoint";
         public static final String PAYLOAD = "payload";
     }
 

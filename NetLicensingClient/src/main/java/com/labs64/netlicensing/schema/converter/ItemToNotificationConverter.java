@@ -12,20 +12,20 @@
  */
 package com.labs64.netlicensing.schema.converter;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Notification;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.impl.NotificationImpl;
 import com.labs64.netlicensing.domain.vo.Event;
-import com.labs64.netlicensing.domain.vo.NotificationType;
+import com.labs64.netlicensing.domain.vo.NotificationProtocol;
 import com.labs64.netlicensing.exception.ConversionException;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Property;
-
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Convert {@link Item} entity into {@link Product} object.
@@ -44,8 +44,14 @@ public class ItemToNotificationConverter extends ItemToEntityBaseConverter<Notif
                 .collect(Collectors.toSet());
 
         target.setEvents(events);
-        target.setType(NotificationType.parseString(SchemaFunction.propertyByName(source.getProperty(), Constants.Notification.TYPE).getValue()));
-        target.setURL(SchemaFunction.propertyByName(source.getProperty(), Constants.Notification.URL).getValue());
+        target.setProtocol(NotificationProtocol.parseString(SchemaFunction.propertyByName(source.getProperty(), Constants.Notification.PROTOCOL).getValue()));
+        
+        final String endpoint = SchemaFunction.propertyByName(source.getProperty(), Constants.Notification.ENDPOINT).getValue();
+
+        if (endpoint != null) {
+            target.addProperty(Constants.Notification.ENDPOINT, endpoint);
+        }
+
         target.setPayload(SchemaFunction.propertyByName(source.getProperty(), Constants.Notification.PAYLOAD).getValue());
 
         // Custom properties

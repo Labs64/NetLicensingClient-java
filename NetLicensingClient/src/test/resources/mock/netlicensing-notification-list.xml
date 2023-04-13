@@ -8,8 +8,8 @@
             <property name="active">true</property>
             <property name="name">Notification 1</property>
             <property name="events">CREATE_LICENSEE</property>
-            <property name="type">WEBHOOK</property>
-            <property name="url">http://www.test1.test</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test1.test</property>
             <property name="payload">${event}</property>
         </item>
         <item type="Notification">
@@ -17,8 +17,8 @@
             <property name="active">true</property>
             <property name="name">Notification 2</property>
             <property name="events">CREATE_LICENSE</property>
-            <property name="type">WEBHOOK</property>
-            <property name="url">http://www.test2.test</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test2.test</property>
             <property name="payload">${event.timestamp}</property>
         </item>
         <item type="Notification">
@@ -26,8 +26,8 @@
             <property name="active">true</property>
             <property name="name">Notification 3</property>
             <property name="events">CREATE_LICENSEE</property>
-            <property name="type">WEBHOOK</property>
-            <property name="url">http://www.test3.test</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test3.test</property>
             <property name="payload">${event.data}</property>
         </item>
     </items>

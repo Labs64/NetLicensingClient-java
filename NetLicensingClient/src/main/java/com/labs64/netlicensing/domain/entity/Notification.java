@@ -1,9 +1,9 @@
 package com.labs64.netlicensing.domain.entity;
 
-import com.labs64.netlicensing.domain.vo.Event;
-import com.labs64.netlicensing.domain.vo.NotificationType;
-
 import java.util.Set;
+
+import com.labs64.netlicensing.domain.vo.Event;
+import com.labs64.netlicensing.domain.vo.NotificationProtocol;
 
 public interface Notification extends BaseEntity {
     String getName();
@@ -16,13 +16,9 @@ public interface Notification extends BaseEntity {
 
     void addEvent(final Event event);
     
-    NotificationType getType();
+    NotificationProtocol getProtocol();
 
-    void setType(NotificationType notificationType);
-
-    String getURL();
-
-    void setURL(String url);
+    void setProtocol(NotificationProtocol notificationProtocol);
 
     String getPayload();
 

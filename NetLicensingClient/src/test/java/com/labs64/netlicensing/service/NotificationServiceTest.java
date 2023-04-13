@@ -12,29 +12,34 @@
  */
 package com.labs64.netlicensing.service;
 
-import com.labs64.netlicensing.domain.Constants;
-import com.labs64.netlicensing.domain.entity.Notification;
-import com.labs64.netlicensing.domain.entity.impl.NotificationImpl;
-import com.labs64.netlicensing.domain.vo.Context;
-import com.labs64.netlicensing.domain.vo.Event;
-import com.labs64.netlicensing.domain.vo.NotificationType;
-import com.labs64.netlicensing.domain.vo.Page;
-import com.labs64.netlicensing.exception.ServiceException;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.ws.rs.Path;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.lang3.StringUtils;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Notification;
+import com.labs64.netlicensing.domain.entity.impl.NotificationImpl;
+import com.labs64.netlicensing.domain.vo.Context;
+import com.labs64.netlicensing.domain.vo.Event;
+import com.labs64.netlicensing.domain.vo.NotificationProtocol;
+import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.exception.ServiceException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for {@link ProductService}.
@@ -63,8 +68,8 @@ public class NotificationServiceTest extends BaseServiceTest {
         events.add(Event.CREATE_LICENSEE);
 
         newNotification.setEvents(events);
-        newNotification.setType(NotificationType.WEBHOOK);
-        newNotification.setURL("http://www.test.test");
+        newNotification.setProtocol(NotificationProtocol.WEBHOOK);
+        newNotification.addProperty(Constants.Notification.ENDPOINT, "http://www.test.test");
         newNotification.setPayload("${event}");
         newNotification.addProperty(NOTIFICATION_CUSTOM_PROPERTY, "Test Value");
 
@@ -75,8 +80,8 @@ public class NotificationServiceTest extends BaseServiceTest {
         assertEquals("N001-TEST", createdNotification.getNumber());
         assertEquals(true, createdNotification.getActive());
         assertEquals(events, createdNotification.getEvents());
-        assertEquals(NotificationType.WEBHOOK, createdNotification.getType());
-        assertEquals("http://www.test.test", createdNotification.getURL());
+        assertEquals(NotificationProtocol.WEBHOOK, createdNotification.getProtocol());
+        assertEquals("http://www.test.test", createdNotification.getProperties().get(Constants.Notification.ENDPOINT));
         assertEquals("${event}", createdNotification.getPayload());
         assertEquals("Test Value", createdNotification.getProperties().get(NOTIFICATION_CUSTOM_PROPERTY));
     }
@@ -85,8 +90,8 @@ public class NotificationServiceTest extends BaseServiceTest {
     public void testNameIsRequired() throws Exception {
         final Notification newNotification = new NotificationImpl();
         newNotification.addEvent(Event.CREATE_LICENSEE);
-        newNotification.setType(NotificationType.WEBHOOK);
-        newNotification.setURL("http://www.test.test");
+        newNotification.setProtocol(NotificationProtocol.WEBHOOK);
+        newNotification.addProperty(Constants.Notification.ENDPOINT, "http://www.test.test");
 
         final Exception e = assertThrows(ServiceException.class, () -> {
             NotificationService.create(context, newNotification);
@@ -99,8 +104,8 @@ public class NotificationServiceTest extends BaseServiceTest {
     public void testEventsIsRequired() throws Exception {
         final Notification newNotification = new NotificationImpl();
         newNotification.setName("Notification 1");
-        newNotification.setType(NotificationType.WEBHOOK);
-        newNotification.setURL("http://www.test.test");
+        newNotification.setProtocol(NotificationProtocol.WEBHOOK);
+        newNotification.addProperty(Constants.Notification.ENDPOINT, "http://www.test.test");
 
         final Exception e = assertThrows(ServiceException.class, () -> {
             NotificationService.create(context, newNotification);
@@ -114,7 +119,7 @@ public class NotificationServiceTest extends BaseServiceTest {
         final Notification newNotification = new NotificationImpl();
         newNotification.setName("Notification 1");
         newNotification.addEvent(Event.CREATE_LICENSEE);
-        newNotification.setURL("http://www.test.test");
+        newNotification.addProperty(Constants.Notification.ENDPOINT, "http://www.test.test");
         newNotification.setPayload("${event}");
 
         final Exception e = assertThrows(ServiceException.class, () -> {
@@ -125,17 +130,17 @@ public class NotificationServiceTest extends BaseServiceTest {
     }
 
     @Test
-    public void testURLIsRequired() throws Exception {
+    public void testEndpointIsRequired() throws Exception {
         final Notification newNotification = new NotificationImpl();
         newNotification.setName("Notification 1");
         newNotification.addEvent(Event.CREATE_LICENSEE);
-        newNotification.setType(NotificationType.WEBHOOK);
+        newNotification.setProtocol(NotificationProtocol.WEBHOOK);
 
         final Exception e = assertThrows(ServiceException.class, () -> {
             NotificationService.create(context, newNotification);
         });
 
-        assertEquals("ValidationException: Notification URL must be a valid URL.", e.getMessage());
+        assertEquals("ValidationException: Notification endpoint must be a valid URL.", e.getMessage());
     }
 
     @Test
@@ -150,8 +155,8 @@ public class NotificationServiceTest extends BaseServiceTest {
         expectedEvents.add(Event.CREATE_LICENSE);
 
         assertEquals(expectedEvents, notification.getEvents());
-        assertEquals(NotificationType.WEBHOOK, notification.getType());
-        assertEquals("http://www.test.test", notification.getURL());
+        assertEquals(NotificationProtocol.WEBHOOK, notification.getProtocol());
+        assertEquals("http://www.test.test", notification.getProperties().get(Constants.Notification.ENDPOINT));
         assertEquals("${event}", notification.getPayload());
         assertEquals("CustomPropertyValue", notification.getProperties().get(NOTIFICATION_CUSTOM_PROPERTY));
     }
@@ -223,20 +228,20 @@ public class NotificationServiceTest extends BaseServiceTest {
             final boolean isEventEmpty = (isEventsContain)
                     ? StringUtils.isBlank(formParams.get(Constants.Notification.EVENTS).get(0))
                     : true;
-            
+
             if (!isEventsContain || isEventEmpty) {
                 return errorResponse("ValidationException", "Notification events are required.");
             }
 
-            if (!formParams.containsKey(Constants.Notification.TYPE)) {
+            if (!formParams.containsKey(Constants.Notification.PROTOCOL)) {
                 return errorResponse("ValidationException", "Notification type is required.");
             }
 
-            String type = String.valueOf(formParams.get(Constants.Notification.TYPE).get(0));
+            String protocol = String.valueOf(formParams.get(Constants.Notification.PROTOCOL).get(0));
 
-            if (NotificationType.WEBHOOK.name().equals(type)) {
-                if (!formParams.containsKey(Constants.Notification.URL)) {
-                    return errorResponse("ValidationException", "Notification URL must be a valid URL.");
+            if (NotificationProtocol.WEBHOOK.name().equals(protocol)) {
+                if (!formParams.containsKey(Constants.Notification.ENDPOINT)) {
+                    return errorResponse("ValidationException", "Notification endpoint must be a valid URL.");
                 }
             }
 

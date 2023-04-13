@@ -8,8 +8,8 @@
             <property name="active">true</property>
             <property name="name">Notification 14</property>
             <property name="events">CREATE_LICENSEE,CREATE_LICENSE</property>
-            <property name="type">WEBHOOK</property>
-            <property name="url">http://www.test.test</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test.test</property>
             <property name="payload">${event}</property>
             <property name="CustomProperty">CustomPropertyValue</property>
         </item>

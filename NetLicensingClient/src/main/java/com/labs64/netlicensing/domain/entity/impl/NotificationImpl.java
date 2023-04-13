@@ -12,14 +12,18 @@
  */
 package com.labs64.netlicensing.domain.entity.impl;
 
-import com.labs64.netlicensing.domain.Constants;
-import com.labs64.netlicensing.domain.entity.*;
-import com.labs64.netlicensing.domain.vo.Event;
-import com.labs64.netlicensing.domain.vo.NotificationType;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.core.MultivaluedMap;
-import java.util.*;
-import java.util.stream.Collectors;
+
+import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Notification;
+import com.labs64.netlicensing.domain.entity.Product;
+import com.labs64.netlicensing.domain.vo.Event;
+import com.labs64.netlicensing.domain.vo.NotificationProtocol;
 
 /**
  * Default implementation of {@link Product}.
@@ -29,9 +33,7 @@ public class NotificationImpl extends BaseEntityImpl implements Notification {
 
     private Set<Event> events = new HashSet<>();
 
-    private NotificationType type;
-
-    private String url;
+    private NotificationProtocol protocol;
 
     private String payload;
 
@@ -64,23 +66,13 @@ public class NotificationImpl extends BaseEntityImpl implements Notification {
     }
 
     @Override
-    public NotificationType getType() {
-        return type;
+    public NotificationProtocol getProtocol() {
+        return protocol;
     }
 
     @Override
-    public void setType(final NotificationType type) {
-        this.type = type;
-    }
-
-    @Override
-    public String getURL() {
-        return url;
-    }
-
-    @Override
-    public void setURL(final String url) {
-        this.url = url;
+    public void setProtocol(final NotificationProtocol protocol) {
+        this.protocol = protocol;
     }
 
     @Override
@@ -96,8 +88,8 @@ public class NotificationImpl extends BaseEntityImpl implements Notification {
     public static List<String> getReservedProps() {
         final List<String> reserved = BaseEntityImpl.getReservedProps();
         reserved.add(Constants.Notification.EVENTS);
-        reserved.add(Constants.Notification.TYPE);
-        reserved.add(Constants.Notification.URL);
+        reserved.add(Constants.Notification.PROTOCOL);
+        reserved.add(Constants.Notification.ENDPOINT);
         reserved.add(Constants.Notification.PAYLOAD);
         return reserved;
     }
@@ -105,18 +97,18 @@ public class NotificationImpl extends BaseEntityImpl implements Notification {
     @Override
     protected MultivaluedMap<String, Object> asPropertiesMap() {
         final Set<Event> events = getEvents();
-        final NotificationType type = getType();
+        final NotificationProtocol protocol = getProtocol();
 
         final MultivaluedMap<String, Object> map = super.asPropertiesMap();
         map.add(Constants.NAME, getName());
         map.add(Constants.Notification.EVENTS, events.stream().map(Enum::name).collect(Collectors.joining(",")));
 
-        if (type != null) {
-            map.add(Constants.Notification.TYPE, type.name());
+        if (protocol != null) {
+            map.add(Constants.Notification.PROTOCOL, protocol.name());
         }
 
-        if (NotificationType.WEBHOOK.equals(type)) {
-            map.add(Constants.Notification.URL, getURL());
+        if (NotificationProtocol.WEBHOOK.equals(protocol)) {
+            map.add(Constants.Notification.ENDPOINT, getProperties().get(Constants.Notification.ENDPOINT));
         }
 
         map.add(Constants.Notification.PAYLOAD, getPayload());

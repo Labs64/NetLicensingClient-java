@@ -12,6 +12,11 @@
  */
 package com.labs64.netlicensing.domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.License;
@@ -49,12 +54,6 @@ import com.labs64.netlicensing.schema.converter.ItemToTransactionConverter;
 import com.labs64.netlicensing.schema.converter.ItemsToValidationResultConverter;
 import com.labs64.netlicensing.util.Visitable;
 import com.labs64.netlicensing.util.Visitor;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Factory that contains static methods for creating entities
