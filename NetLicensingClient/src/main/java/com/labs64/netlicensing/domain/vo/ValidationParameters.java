@@ -57,14 +57,23 @@ public class ValidationParameters {
 
     /**
      * Sets the licensee secret
+     * 
+     * @deprecated Use the NodeLocked licensing model instead.
      *
      * @param licenseeSecret
      *            licensee secret stored on the client side. Refer to Licensee Secret documentation for details.
      */
+    @Deprecated
     public void setLicenseeSecret(final String licenseeSecret) {
         setLicenseeProperty(Constants.Licensee.PROP_LICENSEE_SECRET, licenseeSecret);
     }
 
+    /**
+     * Gets the licensee secret
+     * 
+     * @deprecated Use the NodeLocked licensing model instead.
+     */
+    @Deprecated
     public String getLicenseeSecret() {
         return getLicenseeProperties().get(Constants.Licensee.PROP_LICENSEE_SECRET);
     }

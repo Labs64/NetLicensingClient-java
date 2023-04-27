@@ -29,7 +29,10 @@ import com.labs64.netlicensing.domain.vo.NotificationProtocol;
  * Default implementation of {@link Product}.
  */
 public class NotificationImpl extends BaseEntityImpl implements Notification {
-    private String name;
+
+    private static final long serialVersionUID = -4059438768485180571L;
+
+	private String name;
 
     private Set<Event> events = new HashSet<>();
 
@@ -60,9 +63,7 @@ public class NotificationImpl extends BaseEntityImpl implements Notification {
 
     @Override
     public void addEvent(final Event event) {
-        final Set<Event> events = getEvents();
-        events.add(event);
-        setEvents(events);
+        getEvents().add(event);
     }
 
     @Override

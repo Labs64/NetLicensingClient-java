@@ -101,6 +101,10 @@ public final class Constants {
         public static final String AUTOMATIC = "automatic";
         public static final String HIDDEN = "hidden";
         public static final String HIDE_LICENSES = "hideLicenses";
+        /**
+         * @deprecated Use the NodeLocked licensing model instead.
+         */
+        @Deprecated
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
@@ -123,6 +127,10 @@ public final class Constants {
         public static final String ENDPOINT_PATH = "license";
         public static final String HIDDEN = "hidden";
         public static final String LICENSE_NUMBER = "licenseNumber";
+        /**
+         * @deprecated Use the NodeLocked licensing model instead.
+         */
+        @Deprecated
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
