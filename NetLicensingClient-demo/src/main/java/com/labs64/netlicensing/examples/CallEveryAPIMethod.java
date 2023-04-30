@@ -70,6 +70,7 @@ public class CallEveryAPIMethod implements NetLicensingExample {
     private static final String randomLicenseeSecret = UUID.randomUUID().toString();
 
     @Override
+    @SuppressWarnings("deprecation")
     public void execute() {
 
         final Context context = new Context();

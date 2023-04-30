@@ -105,7 +105,7 @@ public class PaymentMethodServiceTest extends BaseServiceTest {
         return PaymentMethodServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.PaymentMethod.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/paymentmethod")
     public static class PaymentMethodServiceResource extends AbstractNLICServiceResource {
 
         public PaymentMethodServiceResource() {

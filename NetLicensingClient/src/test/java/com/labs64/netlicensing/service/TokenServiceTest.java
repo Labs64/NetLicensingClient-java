@@ -157,7 +157,7 @@ public class TokenServiceTest extends BaseServiceTest {
         return TokenServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.Token.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/token")
     public static class TokenServiceResource extends AbstractNLICServiceResource {
 
         public TokenServiceResource() {

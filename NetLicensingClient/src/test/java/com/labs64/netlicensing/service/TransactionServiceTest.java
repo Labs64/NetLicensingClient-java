@@ -184,7 +184,7 @@ public class TransactionServiceTest extends BaseServiceTest {
         return TransactionServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.Transaction.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/transaction")
     public static class TransactionServiceResource extends AbstractNLICServiceResource {
 
         public TransactionServiceResource() {

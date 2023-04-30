@@ -22,6 +22,7 @@ import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Licensee;
+import com.labs64.netlicensing.domain.entity.Notification;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
@@ -44,6 +45,7 @@ import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTypePropertiesConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseeConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicensingModelPropertiesConverter;
+import com.labs64.netlicensing.schema.converter.ItemToNotificationConverter;
 import com.labs64.netlicensing.schema.converter.ItemToPaymentMethodConverter;
 import com.labs64.netlicensing.schema.converter.ItemToProductConverter;
 import com.labs64.netlicensing.schema.converter.ItemToProductModuleConverter;
@@ -72,6 +74,7 @@ public class EntityFactory {
         entityToConverterMap.put(Country.class, ItemToCountryConverter.class);
         entityToConverterMap.put(LicensingModelProperties.class, ItemToLicensingModelPropertiesConverter.class);
         entityToConverterMap.put(LicenseTypeProperties.class, ItemToLicenseTypePropertiesConverter.class);
+        entityToConverterMap.put(Notification.class, ItemToNotificationConverter.class);
     }
 
     private Map<Class<?>, Converter<Item, ?>> convertersCache;

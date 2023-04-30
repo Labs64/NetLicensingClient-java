@@ -1,0 +1,34 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://netlicensing.labs64.com/schema/context
+                                  https://go.netlicensing.io/schema/context/netlicensing-context-2.1.xsd">
+    <items pagenumber="0" itemsnumber="3" totalpages="1" totalitems="3" hasnext="false">
+        <item type="Notification">
+            <property name="number">N001-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Notification 1</property>
+            <property name="events">CREATE_LICENSEE</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test1.test</property>
+            <property name="payload">${event}</property>
+        </item>
+        <item type="Notification">
+            <property name="number">N002-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Notification 2</property>
+            <property name="events">CREATE_LICENSE</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test2.test</property>
+            <property name="payload">${event.timestamp}</property>
+        </item>
+        <item type="Notification">
+            <property name="number">N003-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Notification 3</property>
+            <property name="events">CREATE_LICENSEE</property>
+            <property name="protocol">WEBHOOK</property>
+            <property name="endpoint">http://www.test3.test</property>
+            <property name="payload">${event.data}</property>
+        </item>
+    </items>
+</netlicensing>

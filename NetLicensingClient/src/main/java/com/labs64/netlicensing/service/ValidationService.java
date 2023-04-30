@@ -101,7 +101,6 @@ public class ValidationService {
         return convertValidationResult(validationFile, meta);
     }
 
-    @SuppressWarnings("deprecation")
     private static Form convertValidationParameters(final ValidationParameters validationParameters) {
         final Form form = new Form();
         if (validationParameters != null) {

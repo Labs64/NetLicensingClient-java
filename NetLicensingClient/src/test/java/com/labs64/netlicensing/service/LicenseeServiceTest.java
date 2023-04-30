@@ -200,7 +200,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         return LicenseeServiceResource.class;
     }
 
-    @Path(REST_API_PATH + "/" + Constants.Licensee.ENDPOINT_PATH)
+    @Path(REST_API_PATH + "/licensee")
     public static class LicenseeServiceResource extends AbstractNLICServiceResource {
 
         public LicenseeServiceResource() {

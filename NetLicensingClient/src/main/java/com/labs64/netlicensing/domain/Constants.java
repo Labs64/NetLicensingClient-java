@@ -101,6 +101,10 @@ public final class Constants {
         public static final String AUTOMATIC = "automatic";
         public static final String HIDDEN = "hidden";
         public static final String HIDE_LICENSES = "hideLicenses";
+        /**
+         * @deprecated Use the NodeLocked licensing model instead.
+         */
+        @Deprecated
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
@@ -123,6 +127,10 @@ public final class Constants {
         public static final String ENDPOINT_PATH = "license";
         public static final String HIDDEN = "hidden";
         public static final String LICENSE_NUMBER = "licenseNumber";
+        /**
+         * @deprecated Use the NodeLocked licensing model instead.
+         */
+        @Deprecated
         public static final String PROP_LICENSEE_SECRET = "licenseeSecret";
     }
 
@@ -209,6 +217,14 @@ public final class Constants {
         public static final String VALIDATION_RESULT_TYPE = "ProductModuleValidation";
         public static final int DEFAULT_TTL_MINUTES = 60 * 24; // 1 day
         public static final String WARNING_LEVEL = "warningLevel";
+    }
+
+    public static final class Notification {
+        public static final String ENDPOINT_PATH = "notification";
+        public static final String EVENTS = "events";
+        public static final String PROTOCOL = "protocol";
+        public static final String ENDPOINT = "endpoint";
+        public static final String PAYLOAD = "payload";
     }
 
     // CHECKSTYLE:ON
