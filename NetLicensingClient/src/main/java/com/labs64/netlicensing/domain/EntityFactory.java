@@ -18,11 +18,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.labs64.netlicensing.domain.entity.Bundle;
 import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Licensee;
-import com.labs64.netlicensing.domain.entity.Notification;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
@@ -39,6 +39,7 @@ import com.labs64.netlicensing.exception.WrongResponseFormatException;
 import com.labs64.netlicensing.schema.context.Item;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.converter.Converter;
+import com.labs64.netlicensing.schema.converter.ItemToBundleConverter;
 import com.labs64.netlicensing.schema.converter.ItemToCountryConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseConverter;
 import com.labs64.netlicensing.schema.converter.ItemToLicenseTemplateConverter;
@@ -75,6 +76,7 @@ public class EntityFactory {
         entityToConverterMap.put(LicensingModelProperties.class, ItemToLicensingModelPropertiesConverter.class);
         entityToConverterMap.put(LicenseTypeProperties.class, ItemToLicenseTypePropertiesConverter.class);
         entityToConverterMap.put(Notification.class, ItemToNotificationConverter.class);
+        entityToConverterMap.put(Bundle.class, ItemToBundleConverter.class);
     }
 
     private Map<Class<?>, Converter<Item, ?>> convertersCache;
