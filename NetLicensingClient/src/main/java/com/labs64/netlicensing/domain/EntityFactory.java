@@ -23,6 +23,7 @@ import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Licensee;
+import com.labs64.netlicensing.domain.entity.Notification;
 import com.labs64.netlicensing.domain.entity.PaymentMethod;
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductModule;
