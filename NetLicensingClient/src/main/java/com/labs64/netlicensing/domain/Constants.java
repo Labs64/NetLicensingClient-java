@@ -231,7 +231,7 @@ public final class Constants {
         public static final String ENDPOINT_PATH = "bundle";
         public static final String ENDPOINT_OBTAIN_PATH = "obtain";
         public static final String DESCRIPTION = "description";
-        public static final String LICENSE_TEMPLATES_NUMBERS = "licenseTemplatesNumbers";
+        public static final String LICENSE_TEMPLATE_NUMBERS = "licenseTemplateNumbers";
     }
     // CHECKSTYLE:ON
 }

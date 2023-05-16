@@ -19,7 +19,7 @@ public class BundleImpl extends BaseEntityImpl implements Bundle {
 
     private Currency currency;
 
-    private List<String> licenseTemplatesNumbers;
+    private List<String> licenseTemplateNumbers;
 
     @Override
     public void setName(final String name) {
@@ -62,31 +62,31 @@ public class BundleImpl extends BaseEntityImpl implements Bundle {
     }
 
     @Override
-    public void setLicenseTemplatesNumbers(final List<String> licenseTemplatesNumbers) {
-        this.licenseTemplatesNumbers = licenseTemplatesNumbers;
+    public void setLicenseTemplateNumbers(final List<String> licenseTemplateNumbers) {
+        this.licenseTemplateNumbers = licenseTemplateNumbers;
     }
 
     @Override
-    public List<String> getLicenseTemplatesNumbers() {
-        return licenseTemplatesNumbers;
+    public List<String> getLicenseTemplateNumbers() {
+        return licenseTemplateNumbers;
     }
 
     @Override
     public void addLicenseTemplateNumber(final String licenseTemplateNumber) {
-        if (getLicenseTemplatesNumbers() == null) {
-            this.licenseTemplatesNumbers = new ArrayList<>();
+        if (getLicenseTemplateNumbers() == null) {
+            this.licenseTemplateNumbers = new ArrayList<>();
         }
 
-        this.licenseTemplatesNumbers.add(licenseTemplateNumber);
+        this.licenseTemplateNumbers.add(licenseTemplateNumber);
     }
 
     @Override
     public void removeLicenseTemplateNumber(final String licenseTemplateNumber) {
-        if (getLicenseTemplatesNumbers() == null) {
+        if (getLicenseTemplateNumbers() == null) {
             return;
         }
 
-        getLicenseTemplatesNumbers().remove(licenseTemplateNumber);
+        getLicenseTemplateNumbers().remove(licenseTemplateNumber);
     }
 
     public static List<String> getReservedProps() {
@@ -95,7 +95,7 @@ public class BundleImpl extends BaseEntityImpl implements Bundle {
         reserved.add(Constants.Bundle.DESCRIPTION);
         reserved.add(Constants.PRICE);
         reserved.add(Constants.CURRENCY);
-        reserved.add(Constants.Bundle.LICENSE_TEMPLATES_NUMBERS);
+        reserved.add(Constants.Bundle.LICENSE_TEMPLATE_NUMBERS);
         return reserved;
     }
 
@@ -111,8 +111,8 @@ public class BundleImpl extends BaseEntityImpl implements Bundle {
         map.add(Constants.PRICE, getPrice());
         map.add(Constants.CURRENCY, getCurrency());
 
-        if (getLicenseTemplatesNumbers() != null) {
-            map.add(Constants.Bundle.LICENSE_TEMPLATES_NUMBERS, String.join(",", getLicenseTemplatesNumbers()));
+        if (getLicenseTemplateNumbers() != null) {
+            map.add(Constants.Bundle.LICENSE_TEMPLATE_NUMBERS, String.join(",", getLicenseTemplateNumbers()));
         }
 
         return map;

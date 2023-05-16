@@ -42,10 +42,10 @@ public class ItemToBundleConverter extends ItemToEntityBaseConverter<Bundle> {
             target.setCurrency(Currency.valueOf(price.getCurrencyCode()));
         }
 
-        final String licenseTemplatesNumbers = SchemaFunction.propertyByName(source.getProperty(), Constants.Bundle.LICENSE_TEMPLATES_NUMBERS).getValue();
+        final String licenseTemplateNumbers = SchemaFunction.propertyByName(source.getProperty(), Constants.Bundle.LICENSE_TEMPLATE_NUMBERS).getValue();
 
-        if (licenseTemplatesNumbers != null) {
-            target.setLicenseTemplatesNumbers(Arrays.asList(licenseTemplatesNumbers.split(",")));
+        if (licenseTemplateNumbers != null) {
+            target.setLicenseTemplateNumbers(Arrays.asList(licenseTemplateNumbers.split(",")));
         }
         
         // Custom properties

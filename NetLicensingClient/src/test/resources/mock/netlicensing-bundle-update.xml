@@ -10,7 +10,7 @@
             <property name="description">Description 2</property>
             <property name="price">20.00</property>
             <property name="currency">USD</property>
-            <property name="licenseTemplatesNumbers">LT003-TEST,LT004-TEST</property>
+            <property name="licenseTemplateNumbers">LT003-TEST,LT004-TEST</property>
         </item>
     </items>
 </netlicensing>

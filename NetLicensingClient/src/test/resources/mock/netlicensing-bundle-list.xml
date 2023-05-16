@@ -10,7 +10,7 @@
             <property name="description">Description 1</property>
             <property name="price">10</property>
             <property name="currency">EUR</property>
-            <property name="licenseTemplatesNumbers">LT001-TEST,LT002-TEST</property>
+            <property name="licenseTemplateNumbers">LT001-TEST,LT002-TEST</property>
         </item>
         <item type="Bundle">
             <property name="number">B002-TEST</property>
@@ -19,7 +19,7 @@
             <property name="description">Description 2</property>
             <property name="price">20</property>
             <property name="currency">USD</property>
-            <property name="licenseTemplatesNumbers">LT003-TEST,LT004-TEST</property>
+            <property name="licenseTemplateNumbers">LT003-TEST,LT004-TEST</property>
         </item>
         <item type="Bundle">
             <property name="number">B003-TEST</property>
@@ -28,7 +28,7 @@
             <property name="description">Description 3</property>
             <property name="price">30</property>
             <property name="currency">EUR</property>
-            <property name="licenseTemplatesNumbers">LT005-TEST,LT006-TEST</property>
+            <property name="licenseTemplateNumbers">LT005-TEST,LT006-TEST</property>
         </item>
     </items>
 </netlicensing>

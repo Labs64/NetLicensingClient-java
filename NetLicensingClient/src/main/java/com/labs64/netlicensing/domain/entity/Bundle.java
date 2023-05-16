@@ -22,9 +22,9 @@ public interface Bundle extends BaseEntity {
     
     String getDescription();
 
-    void setLicenseTemplatesNumbers(List<String> licenseTemplatesNumbers);
+    void setLicenseTemplateNumbers(List<String> licenseTemplateNumbers);
 
-    List<String> getLicenseTemplatesNumbers();
+    List<String> getLicenseTemplateNumbers();
 
     void addLicenseTemplateNumber(String licenseTemplateNumber);
 

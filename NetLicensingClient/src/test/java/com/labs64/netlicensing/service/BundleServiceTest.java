@@ -108,9 +108,9 @@ public class BundleServiceTest extends BaseServiceTest {
         final boolean active = true;
         final BigDecimal price = new BigDecimal(10);
         final Currency currency = Currency.EUR;
-        final List<String> licenseTemplatesNumbers = new ArrayList<>();
-        licenseTemplatesNumbers.add("LT001-TEST");
-        licenseTemplatesNumbers.add("LT002-TEST");
+        final List<String> licenseTemplateNumbers = new ArrayList<>();
+        licenseTemplateNumbers.add("LT001-TEST");
+        licenseTemplateNumbers.add("LT002-TEST");
 
         final Bundle bundle = new BundleImpl();
         bundle.setName(name);
@@ -119,7 +119,7 @@ public class BundleServiceTest extends BaseServiceTest {
         bundle.setActive(active);
         bundle.setPrice(price);
         bundle.setCurrency(currency);
-        bundle.setLicenseTemplatesNumbers(licenseTemplatesNumbers);
+        bundle.setLicenseTemplateNumbers(licenseTemplateNumbers);
 
         final Bundle createdBundle = BundleService.create(context, bundle);
 
@@ -130,7 +130,7 @@ public class BundleServiceTest extends BaseServiceTest {
         assertEquals(active, createdBundle.getActive());
         assertEquals(price, createdBundle.getPrice());
         assertEquals(currency, createdBundle.getCurrency());
-        assertEquals(licenseTemplatesNumbers, createdBundle.getLicenseTemplatesNumbers());
+        assertEquals(licenseTemplateNumbers, createdBundle.getLicenseTemplateNumbers());
     }
 
     @Test
@@ -141,9 +141,9 @@ public class BundleServiceTest extends BaseServiceTest {
         final boolean active = true;
         final BigDecimal price = new BigDecimal(10);
         final Currency currency = Currency.EUR;
-        final List<String> licenseTemplatesNumbers = new ArrayList<>();
-        licenseTemplatesNumbers.add("LT001-TEST");
-        licenseTemplatesNumbers.add("LT002-TEST");
+        final List<String> licenseTemplateNumbers = new ArrayList<>();
+        licenseTemplateNumbers.add("LT001-TEST");
+        licenseTemplateNumbers.add("LT002-TEST");
 
         final Bundle bundle = BundleService.get(context, "B014-TEST");
         assertNotNull(bundle);
@@ -153,15 +153,15 @@ public class BundleServiceTest extends BaseServiceTest {
         assertEquals(active, bundle.getActive());
         assertEquals(price, bundle.getPrice());
         assertEquals(currency, bundle.getCurrency());
-        assertEquals(licenseTemplatesNumbers, bundle.getLicenseTemplatesNumbers());
+        assertEquals(licenseTemplateNumbers, bundle.getLicenseTemplateNumbers());
     }
 
     @Test
     public void testList() throws Exception {
         final Page<Bundle> bundles = BundleService.list(context, null);
-        final List<String> licenseTemplatesNumbers = new ArrayList<>();
-        licenseTemplatesNumbers.add("LT005-TEST");
-        licenseTemplatesNumbers.add("LT006-TEST");
+        final List<String> licenseTemplateNumbers = new ArrayList<>();
+        licenseTemplateNumbers.add("LT005-TEST");
+        licenseTemplateNumbers.add("LT006-TEST");
 
 
         assertNotNull(bundles);
@@ -171,7 +171,7 @@ public class BundleServiceTest extends BaseServiceTest {
         assertEquals("Bundle 2", bundles.getContent().get(1).getName());
         assertEquals(Currency.USD, bundles.getContent().get(1).getCurrency());
         assertEquals(BigDecimal.valueOf(30), bundles.getContent().get(2).getPrice());
-        assertEquals(licenseTemplatesNumbers, bundles.getContent().get(2).getLicenseTemplatesNumbers());
+        assertEquals(licenseTemplateNumbers, bundles.getContent().get(2).getLicenseTemplateNumbers());
     }
 
     @Test
@@ -182,9 +182,9 @@ public class BundleServiceTest extends BaseServiceTest {
         final boolean active = false;
         final BigDecimal price = new BigDecimal(20);
         final Currency currency = Currency.USD;
-        final List<String> licenseTemplatesNumbers = new ArrayList<>();
-        licenseTemplatesNumbers.add("LT003-TEST");
-        licenseTemplatesNumbers.add("LT004-TEST");
+        final List<String> licenseTemplateNumbers = new ArrayList<>();
+        licenseTemplateNumbers.add("LT003-TEST");
+        licenseTemplateNumbers.add("LT004-TEST");
 
         final Bundle bundle = new BundleImpl();
         bundle.setName(name);
@@ -193,7 +193,7 @@ public class BundleServiceTest extends BaseServiceTest {
         bundle.setActive(active);
         bundle.setPrice(price);
         bundle.setCurrency(currency);
-        bundle.setLicenseTemplatesNumbers(licenseTemplatesNumbers);
+        bundle.setLicenseTemplateNumbers(licenseTemplateNumbers);
 
         final Bundle updatedBundle = BundleService.create(context, bundle);
 
@@ -204,7 +204,7 @@ public class BundleServiceTest extends BaseServiceTest {
         assertEquals(active, updatedBundle.getActive());
         assertEquals(price, updatedBundle.getPrice());
         assertEquals(currency, updatedBundle.getCurrency());
-        assertEquals(licenseTemplatesNumbers, updatedBundle.getLicenseTemplatesNumbers());
+        assertEquals(licenseTemplateNumbers, updatedBundle.getLicenseTemplateNumbers());
     }
 
     @Test
