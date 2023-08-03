@@ -8,7 +8,7 @@ public enum Event {
     WARNING_LEVEL_TO_ANY,
     WARNING_LEVEL_TO_GREEN,
     WARNING_LEVEL_TO_YELLOW,
-    WARNING_LEVEL_TO_RED;;
+    WARNING_LEVEL_TO_RED;
 
     public static Event parseString(final String value) {
         return Arrays.stream(Event.values()).filter((e) -> e.name().equalsIgnoreCase(value)).findFirst().orElse(null);
