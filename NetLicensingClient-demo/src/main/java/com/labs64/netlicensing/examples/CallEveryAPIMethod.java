@@ -74,7 +74,8 @@ public class CallEveryAPIMethod implements NetLicensingExample {
     public void execute() {
 
         final Context context = new Context();
-        context.setBaseUrl("https://go.netlicensing.io/core/v2/rest");
+//        context.setBaseUrl("https://go.netlicensing.io/core/v2/rest");
+        context.setBaseUrl("http://localhost:28080/core/v2/rest");
         context.setSecurityMode(SecurityMode.BASIC_AUTHENTICATION);
         context.setUsername("demo");
         context.setPassword("demo");
@@ -217,6 +218,7 @@ public class CallEveryAPIMethod implements NetLicensingExample {
 
             final Licensee newLicensee = new LicenseeImpl();
             newLicensee.setNumber(licenseeNumber);
+            newLicensee.addProperty("custom-property", "custom");
             Licensee licensee = LicenseeService.create(context, productNumber, newLicensee);
             out.writeObject("Added licensee:", licensee);
 
@@ -345,6 +347,7 @@ public class CallEveryAPIMethod implements NetLicensingExample {
             context.setPublicKey(publicKey);
             validationResult = LicenseeService.validate(context, licenseeNumber, validationParameters);
             out.writeObject("Validation result (APIKey / signed):", validationResult);
+            out.writeObject("Validation result (APIKey / signed) licensee", validationResult.getLicensee());
 
             // Validate using APIKey wrongly signed
             context.setSecurityMode(SecurityMode.APIKEY_IDENTIFICATION);

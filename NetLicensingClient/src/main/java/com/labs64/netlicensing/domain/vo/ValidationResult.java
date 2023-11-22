@@ -19,21 +19,38 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import com.labs64.netlicensing.domain.Constants;
+import com.labs64.netlicensing.domain.entity.Licensee;
+import com.labs64.netlicensing.domain.entity.impl.LicenseeImpl;
 
 public class ValidationResult implements Serializable {
 
     private static final long serialVersionUID = -4160421171524379008L;
 
-    private String licenseeNumber;
     private Calendar ttl;
     private Map<String, Composition> validations;
 
-    public void setLicenseeNumber(final String licenseeNumber) {
-        this.licenseeNumber = licenseeNumber;
+    private Licensee licensee;
+
+    public void setLicensee(final Licensee licensee) {
+        this.licensee = licensee;
     }
 
+    public Licensee getLicensee() {
+        return this.licensee;
+    }
+
+    @Deprecated
+    public void setLicenseeNumber(final String licenseeNumber) {
+        if (this.licensee == null) {
+            this.licensee = new LicenseeImpl();
+        }
+
+        this.licensee.setNumber(licenseeNumber);
+    }
+
+    @Deprecated
     public String getLicenseeNumber() {
-        return licenseeNumber;
+        return (this.licensee != null) ? this.licensee.getNumber() : null;
     }
 
     public void setTtl(final Calendar ttl) {
@@ -52,7 +69,6 @@ public class ValidationResult implements Serializable {
     }
 
     public ValidationResult() {
-        licenseeNumber = null;
         ttl = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         ttl.add(Calendar.MINUTE, Constants.ValidationResult.DEFAULT_TTL_MINUTES);
     }
@@ -74,8 +90,8 @@ public class ValidationResult implements Serializable {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("ValidationResult");
-        if (licenseeNumber != null) {
-            builder.append("(").append(licenseeNumber).append(")");
+        if (licensee != null && licensee.getNumber() != null) {
+            builder.append("(").append(licensee.getNumber()).append(")");
         }
         builder.append(" [");
         boolean first = true;
