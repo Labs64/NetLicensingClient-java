@@ -7,7 +7,7 @@
             <property name="number">N014-TEST</property>
             <property name="active">true</property>
             <property name="name">Notification 14</property>
-            <property name="events">CREATE_LICENSEE,CREATE_LICENSE</property>
+            <property name="events">LICENSEE_CREATED,LICENSE_CREATED,WARNING_LEVEL_CHANGED</property>
             <property name="protocol">WEBHOOK</property>
             <property name="endpoint">http://www.test.test</property>
             <property name="payload">${event}</property>
