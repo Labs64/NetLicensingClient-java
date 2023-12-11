@@ -38,7 +38,7 @@ public class ItemsToValidationResultConverter implements Converter<Netlicensing,
                 LicenseeImpl licensee = new LicenseeImpl();
 
                 for (final Property property : item.getProperty()) {
-                    if (Constants.Licensee.LICENSEE_NUMBER.equals(property.getName())) {
+                    if (Constants.NUMBER.equals(property.getName())) {
                         licensee.setNumber(property.getValue());
                         continue;
                     }
