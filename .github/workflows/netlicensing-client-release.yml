@@ -13,7 +13,7 @@ jobs:
   release:
     name: Release ${{ github.event.inputs.release-version }}
     runs-on: self-hosted
-    container: maven:3.8.6-openjdk-11
+    container: maven:3-amazoncorretto-17
 
     steps:
     - uses: actions/checkout@v3

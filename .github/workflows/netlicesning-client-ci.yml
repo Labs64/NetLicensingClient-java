@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     runs-on: [self-hosted]
-    container: maven:3.8.6-openjdk-11
+    container: maven:3-amazoncorretto-17
     env:
       # This is needed, as java doesn't respect the environment variable $HOME, but gets the
       # user home by other means from the system. The default user in the above container is
@@ -25,7 +25,7 @@ jobs:
       MAVEN_OPTS: -Duser.home=/github/home
     strategy:
       matrix:
-        java-version: [11]
+        java-version: [11, 17]
 
     steps:
     - uses: actions/checkout@v3
