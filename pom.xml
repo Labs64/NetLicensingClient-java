@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.labs64.netlicensing</groupId>
     <artifactId>netlicensing-client-parent</artifactId>
-    <version>${revision}</version>
+    <version>${revision}${sha1}${changelist}</version>
     <packaging>pom</packaging>
     <name>Labs64 :: NetLicensing :: Client :: Parent</name>
     <url>https://netlicensing.io</url>
@@ -63,7 +63,9 @@
     </modules>
 
     <properties>
-        <revision>2.10.0-SNAPSHOT</revision>
+        <revision>2.10.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <sha1/>
         <project.title>${project.name}</project.title>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
