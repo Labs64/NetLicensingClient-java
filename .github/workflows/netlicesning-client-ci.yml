@@ -30,7 +30,7 @@ jobs:
           - java-version: 11
             mvn-goal: deploy
           - java-version: 17
-            mvn-goal: install
+            mvn-goal: verify
 
 
     steps:
@@ -59,8 +59,21 @@ jobs:
         </settings>
         EOF
 
+    - name: Calculate branch suffix
+      run: |
+        if [ "$GITHUB_REF_NAME" = "master" ]
+        then
+          # No suffix when running against "master" branch
+          BRANCH_SUFFIX=
+        else
+          # When running from pull request, use "-pr-<N>" suffix, where <N> is a PR number
+          BRANCH_SUFFIX=-pr-${GITHUB_REF_NAME//\/merge/}
+        fi
+        echo "Branch suffix: '$BRANCH_SUFFIX'"
+        echo "BRANCH_SUFFIX=$BRANCH_SUFFIX" >> "$GITHUB_ENV"
+
     - name: Build with Maven
-      run: mvn -B clean ${{ matrix.mvn-goal }} -Drepo.snapshots.url=${{ secrets.SNAPSHOTS_URL }} -Dsha1=${GITHUB_REF_NAME//\//-/}
+      run: mvn -B clean ${{ matrix.mvn-goal }} -Drepo.snapshots.url=${{ secrets.SNAPSHOTS_URL }} -Dsha1=$BRANCH_SUFFIX
 
     - name: Run Demo App
       run: |
