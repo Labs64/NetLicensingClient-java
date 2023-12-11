@@ -26,6 +26,12 @@ jobs:
     strategy:
       matrix:
         java-version: [11, 17]
+        include:
+          - java-version: 11
+            mvn-goal: deploy
+          - java-version: 17
+            mvn-goal: install
+
 
     steps:
     - uses: actions/checkout@v3
@@ -54,7 +60,7 @@ jobs:
         EOF
 
     - name: Build with Maven
-      run: mvn -B clean install -Drepo.snapshots.url=${{ secrets.SNAPSHOTS_URL }} -Dsha1=${{ github.ref_name }}
+      run: mvn -B clean ${{ matrix.mvn-goal }} -Drepo.snapshots.url=${{ secrets.SNAPSHOTS_URL }} -Dsha1=${GITHUB_REF_NAME//\//-/}
 
     - name: Run Demo App
       run: |
