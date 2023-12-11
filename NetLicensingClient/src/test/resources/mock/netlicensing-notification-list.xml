@@ -7,7 +7,7 @@
             <property name="number">N001-TEST</property>
             <property name="active">true</property>
             <property name="name">Notification 1</property>
-            <property name="events">CREATE_LICENSEE</property>
+            <property name="events">LICENSEE_CREATED</property>
             <property name="protocol">WEBHOOK</property>
             <property name="endpoint">http://www.test1.test</property>
             <property name="payload">${event}</property>
@@ -16,7 +16,7 @@
             <property name="number">N002-TEST</property>
             <property name="active">true</property>
             <property name="name">Notification 2</property>
-            <property name="events">CREATE_LICENSE</property>
+            <property name="events">LICENSE_CREATED</property>
             <property name="protocol">WEBHOOK</property>
             <property name="endpoint">http://www.test2.test</property>
             <property name="payload">${event.timestamp}</property>
@@ -25,7 +25,7 @@
             <property name="number">N003-TEST</property>
             <property name="active">true</property>
             <property name="name">Notification 3</property>
-            <property name="events">CREATE_LICENSEE</property>
+            <property name="events">LICENSEE_CREATED</property>
             <property name="protocol">WEBHOOK</property>
             <property name="endpoint">http://www.test3.test</property>
             <property name="payload">${event.data}</property>

@@ -65,7 +65,7 @@ public class NotificationServiceTest extends BaseServiceTest {
         newNotification.setActive(true);
 
         final Set<Event> events = new HashSet<>();
-        events.add(Event.CREATE_LICENSEE);
+        events.add(Event.LICENSEE_CREATED);
 
         newNotification.setEvents(events);
         newNotification.setProtocol(NotificationProtocol.WEBHOOK);
@@ -89,7 +89,7 @@ public class NotificationServiceTest extends BaseServiceTest {
     @Test
     public void testNameIsRequired() throws Exception {
         final Notification newNotification = new NotificationImpl();
-        newNotification.addEvent(Event.CREATE_LICENSEE);
+        newNotification.addEvent(Event.LICENSEE_CREATED);
         newNotification.setProtocol(NotificationProtocol.WEBHOOK);
         newNotification.addProperty(Constants.Notification.ENDPOINT, "http://www.test.test");
 
@@ -118,7 +118,7 @@ public class NotificationServiceTest extends BaseServiceTest {
     public void testTypeIsRequired() throws Exception {
         final Notification newNotification = new NotificationImpl();
         newNotification.setName("Notification 1");
-        newNotification.addEvent(Event.CREATE_LICENSEE);
+        newNotification.addEvent(Event.LICENSEE_CREATED);
         newNotification.addProperty(Constants.Notification.ENDPOINT, "http://www.test.test");
         newNotification.setPayload("${event}");
 
@@ -133,7 +133,7 @@ public class NotificationServiceTest extends BaseServiceTest {
     public void testEndpointIsRequired() throws Exception {
         final Notification newNotification = new NotificationImpl();
         newNotification.setName("Notification 1");
-        newNotification.addEvent(Event.CREATE_LICENSEE);
+        newNotification.addEvent(Event.LICENSEE_CREATED);
         newNotification.setProtocol(NotificationProtocol.WEBHOOK);
 
         final Exception e = assertThrows(ServiceException.class, () -> {
@@ -151,8 +151,9 @@ public class NotificationServiceTest extends BaseServiceTest {
         assertEquals("Notification 14", notification.getName());
 
         final Set<Event> expectedEvents = new HashSet<>();
-        expectedEvents.add(Event.CREATE_LICENSEE);
-        expectedEvents.add(Event.CREATE_LICENSE);
+        expectedEvents.add(Event.LICENSEE_CREATED);
+        expectedEvents.add(Event.LICENSE_CREATED);
+        expectedEvents.add(Event.WARNING_LEVEL_CHANGED);
 
         assertEquals(expectedEvents, notification.getEvents());
         assertEquals(NotificationProtocol.WEBHOOK, notification.getProtocol());
@@ -170,7 +171,7 @@ public class NotificationServiceTest extends BaseServiceTest {
         assertEquals(3, notifications.getItemsNumber());
         assertEquals("N001-TEST", notifications.getContent().get(0).getNumber());
         assertEquals("Notification 2", notifications.getContent().get(1).getName());
-        assertEquals(Event.CREATE_LICENSEE.name(), notifications.getContent().get(2).getEvents().stream().map(Enum::name).collect(Collectors.joining(",")));
+        assertEquals(Event.LICENSEE_CREATED.name(), notifications.getContent().get(2).getEvents().stream().map(Enum::name).collect(Collectors.joining(",")));
     }
 
     @Test
@@ -181,7 +182,7 @@ public class NotificationServiceTest extends BaseServiceTest {
         notification.addProperty(NOTIFICATION_CUSTOM_PROPERTY, "Test Value");
 
         final Set<Event> events = new HashSet<>();
-        events.add(Event.CREATE_LICENSE);
+        events.add(Event.LICENSE_CREATED);
 
         notification.setEvents(events);
 
@@ -191,7 +192,7 @@ public class NotificationServiceTest extends BaseServiceTest {
         assertEquals("Notification 2", updatedNotification.getName());
         assertEquals("N002-TEST", updatedNotification.getNumber());
         assertEquals(false, updatedNotification.getActive());
-        assertEquals(Event.CREATE_LICENSE.name(), updatedNotification.getEvents().stream().map(Enum::name).collect(Collectors.joining(",")));
+        assertEquals(Event.LICENSE_CREATED.name(), updatedNotification.getEvents().stream().map(Enum::name).collect(Collectors.joining(",")));
     }
 
     @Test
