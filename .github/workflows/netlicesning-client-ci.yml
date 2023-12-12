@@ -26,17 +26,55 @@ jobs:
     strategy:
       matrix:
         java-version: [11, 17]
+        include:
+          - java-version: 11
+            mvn-goal: deploy
+          - java-version: 17
+            mvn-goal: verify
+
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up JDK ${{ matrix.java-version }}
       uses: actions/setup-java@v3
       with:
         java-version: ${{ matrix.java-version }}
         distribution: 'adopt'
         cache: maven
+
+    - name: Prepare maven settings.xml
+      run: |
+        mkdir -p ~/.m2
+        cat << EOF >~/.m2/settings.xml
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>nlic-snapshots</id>
+              <username>${{ secrets.SNAPSHOTS_USER }}</username>
+              <password>${{ secrets.SNAPSHOTS_PASS }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+
+    - name: Calculate branch suffix
+      run: |
+        if [ "$GITHUB_REF_NAME" = "master" ]
+        then
+          # No suffix when running against "master" branch
+          BRANCH_SUFFIX=
+        else
+          # When running from pull request, use "-pr-<N>" suffix, where <N> is a PR number
+          BRANCH_SUFFIX=-pr-${GITHUB_REF_NAME//\/merge/}
+        fi
+        echo "Branch suffix: '$BRANCH_SUFFIX'"
+        echo "BRANCH_SUFFIX=$BRANCH_SUFFIX" >> "$GITHUB_ENV"
+
     - name: Build with Maven
-      run: mvn -B clean verify
+      run: mvn -B clean ${{ matrix.mvn-goal }} -Drepo.snapshots.url=${{ secrets.SNAPSHOTS_URL }} -Dsha1=$BRANCH_SUFFIX
+
     - name: Run Demo App
       run: |
         ls -la NetLicensingClient-demo/target/

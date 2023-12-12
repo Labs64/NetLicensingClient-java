@@ -51,5 +51,6 @@ jobs:
             clean deploy scm:tag \
             -P release \
             -Drevision=${{ github.event.inputs.release-version }} \
+            -Dchangelist= \
             -Dmessage="Release ${{ github.event.inputs.release-version }}" \
             -Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}

@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.labs64.netlicensing</groupId>
         <artifactId>netlicensing-client-parent</artifactId>
-        <version>${revision}</version>
+        <version>${revision}${sha1}${changelist}</version>
     </parent>
 
     <artifactId>netlicensing-client-demo</artifactId>
