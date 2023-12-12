@@ -14,6 +14,14 @@ jobs:
     name: Release ${{ github.event.inputs.release-version }}
     runs-on: self-hosted
     container: maven:3-amazoncorretto-17
+    strategy:
+      matrix:
+        java-version: [11, 17]
+        include:
+          - java-version: 11
+            jdk-suffix:
+          - java-version: 17
+            jdk-suffix: -jdk17
 
     steps:
     - uses: actions/checkout@v3
@@ -45,12 +53,20 @@ jobs:
     - name: Import GPG key
       run: echo "${{ secrets.GPG_KEY }}" | base64 -d | gpg --pinentry-mode loopback --passphrase "${{ secrets.GPG_KEY_PASS }}" --import
 
+    - name: Calculate branch suffix
+      run: |
+        BRANCH_SUFFIX=${{  matrix.jdk-suffix }}
+        echo "Branch suffix: '$BRANCH_SUFFIX'"
+        echo "BRANCH_SUFFIX=$BRANCH_SUFFIX" >> "$GITHUB_ENV"
+
     - name: Release to Maven Central staging
       run: |
         mvn -s ~/.m2/settings.xml -B \
             clean deploy scm:tag \
             -P release \
             -Drevision=${{ github.event.inputs.release-version }} \
+            -Dsha1=$BRANCH_SUFFIX \
             -Dchangelist= \
+            -Djava.version=${{ matrix.java-version }}
             -Dmessage="Release ${{ github.event.inputs.release-version }}" \
             -Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}
