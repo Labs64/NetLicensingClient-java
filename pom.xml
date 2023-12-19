@@ -97,7 +97,7 @@
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
-        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <!-- TODO(AY): change version when the new release comes. Java 11 Warning https://github.com/highsource/maven-jaxb2-plugin/issues/148 -->
         <maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
         <jaxb.version>2.3.1</jaxb.version>

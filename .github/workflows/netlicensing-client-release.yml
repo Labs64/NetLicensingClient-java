@@ -11,10 +11,13 @@ on:
 
 jobs:
   release:
-    name: Release ${{ github.event.inputs.release-version }}
+    name: Release ${{ github.event.inputs.release-version }} / Java ${{ matrix.java-version }}
     runs-on: self-hosted
-    container: maven:3-amazoncorretto-17
+    env:
+      RELEASE_WORK_DIR: checkout-for-release
+    container: maven:3-amazoncorretto-17-al2023
     strategy:
+      fail-fast: false
       matrix:
         java-version: [11, 17]
         include:
@@ -24,13 +27,20 @@ jobs:
             jdk-suffix: -jdk17
 
     steps:
-    - uses: actions/checkout@v3
+    # Specific to maven:3-amazoncorretto-17-al2023 image
+    - name: Install required tooling
+      run: yum install -y --allowerasing git gnupg2
+
+    - name: Checkout the sources
+      uses: actions/checkout@v4
       with:
+        path: ${{ env.RELEASE_WORK_DIR }}
         ssh-key: '${{ secrets.REPO_SSH_KEY }}'
 
     # Relies on actions/checkout with 'ssh-key' parameter.
     - name: Prepare git config
       run: |
+        cd $RELEASE_WORK_DIR
         git config user.name "GitHub Actions Bot"
         git config user.email "netlicensing@labs64.com"
 
@@ -61,12 +71,13 @@ jobs:
 
     - name: Release to Maven Central staging
       run: |
+        cd $RELEASE_WORK_DIR
         mvn -s ~/.m2/settings.xml -B \
             clean deploy scm:tag \
             -P release \
             -Drevision=${{ github.event.inputs.release-version }} \
             -Dsha1=$BRANCH_SUFFIX \
             -Dchangelist= \
-            -Djava.version=${{ matrix.java-version }}
+            -Djava.version=${{ matrix.java-version }} \
             -Dmessage="Release ${{ github.event.inputs.release-version }}" \
             -Dgpg.passphrase=${{ secrets.GPG_KEY_PASS }}
