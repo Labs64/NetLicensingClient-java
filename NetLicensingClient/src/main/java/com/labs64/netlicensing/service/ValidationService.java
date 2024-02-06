@@ -16,8 +16,8 @@ package com.labs64.netlicensing.service;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Form;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 

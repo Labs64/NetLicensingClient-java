@@ -14,10 +14,9 @@ package com.labs64.netlicensing.domain.entity.impl;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Notification;
@@ -96,23 +95,23 @@ public class NotificationImpl extends BaseEntityImpl implements Notification {
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
+    public Map<String, Object> asMap() {
         final Set<Event> events = getEvents();
         final NotificationProtocol protocol = getProtocol();
 
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.NAME, getName());
-        map.add(Constants.Notification.EVENTS, events.stream().map(Enum::name).collect(Collectors.joining(",")));
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.Notification.EVENTS, events.stream().map(Enum::name).collect(Collectors.joining(",")));
 
         if (protocol != null) {
-            map.add(Constants.Notification.PROTOCOL, protocol.name());
+            map.put(Constants.Notification.PROTOCOL, protocol.name());
         }
 
         if (NotificationProtocol.WEBHOOK.equals(protocol)) {
-            map.add(Constants.Notification.ENDPOINT, getProperties().get(Constants.Notification.ENDPOINT));
+            map.put(Constants.Notification.ENDPOINT, getProperties().get(Constants.Notification.ENDPOINT));
         }
 
-        map.add(Constants.Notification.PAYLOAD, getPayload());
+        map.put(Constants.Notification.PAYLOAD, getPayload());
 
         return map;
     }

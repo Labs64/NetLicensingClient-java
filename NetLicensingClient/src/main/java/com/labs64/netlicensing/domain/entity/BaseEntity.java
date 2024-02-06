@@ -15,8 +15,6 @@ package com.labs64.netlicensing.domain.entity;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.ws.rs.core.Form;
-
 /**
  * Defines properties common to all (or most) of other entities.
  */
@@ -39,13 +37,6 @@ public interface BaseEntity extends Serializable {
     void addProperty(String property, String value);
 
     void removeProperty(final String property);
-
-    /**
-     * Converts properties of the entity to the body of POST request
-     *
-     * @return object that represents HTML form data request encoded using the "application/x-www-form-urlencoded"
-     *         content type
-     */
-    Form asRequestForm();
-
+    
+    Map<String, Object> asMap();
 }

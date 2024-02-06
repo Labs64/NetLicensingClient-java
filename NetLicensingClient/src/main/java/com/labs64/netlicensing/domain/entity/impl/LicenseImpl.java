@@ -16,8 +16,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
@@ -129,12 +127,12 @@ public class LicenseImpl extends BaseEntityImpl implements License {
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.NAME, getName());
-        map.add(Constants.PRICE, getPrice());
-        map.add(Constants.CURRENCY, getCurrency());
-        map.add(Constants.License.HIDDEN, getHidden());
+    public Map<String, Object> asMap() {
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.PRICE, getPrice());
+        map.put(Constants.CURRENCY, getCurrency());
+        map.put(Constants.License.HIDDEN, getHidden());
         return map;
     }
 

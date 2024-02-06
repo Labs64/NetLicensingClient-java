@@ -12,8 +12,8 @@
  */
 package com.labs64.netlicensing.provider;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 /**
  * Contains info about response together with response entity.

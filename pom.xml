@@ -77,15 +77,15 @@
         <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
 
         <!-- dependency.version>0.0.0</dependency.version -->
-        <commons-lang3.version>3.13.0</commons-lang3.version>
+        <commons-lang3.version>3.14.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.16.0</commons-codec.version>
-        <commons-io.version>2.15.0</commons-io.version>
+        <commons-io.version>2.15.1</commons-io.version>
         <commons-cli.version>1.6.0</commons-cli.version>
         <commons-text.version>1.11.0</commons-text.version>
         <log4j.version>2.21.1</log4j.version>
         <junit.version>4.13.2</junit.version>
-        <jersey.version>2.33</jersey.version>
+        <jersey.version>3.1.5</jersey.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
         <ph-xmldsig.version>5.0.1</ph-xmldsig.version>

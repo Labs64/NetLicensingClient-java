@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.Form;
+import jakarta.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +25,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 /**
  * Provides license handling routines.
@@ -70,7 +71,7 @@ public class LicenseService {
 
         CheckUtils.paramNotNull(license, "license");
 
-        final Form form = license.asRequestForm();
+        final Form form = FormConverter.convert(license);
         if (StringUtils.isNotBlank(licenseeNumber)) {
             form.param(Constants.Licensee.LICENSEE_NUMBER, licenseeNumber);
         }
@@ -141,7 +142,7 @@ public class LicenseService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(license, "license");
 
-        final Form form = license.asRequestForm();
+        final Form form = FormConverter.convert(license);
         if (StringUtils.isNotBlank(transactionNumber)) {
             form.param(Constants.Transaction.TRANSACTION_NUMBER, transactionNumber);
         }

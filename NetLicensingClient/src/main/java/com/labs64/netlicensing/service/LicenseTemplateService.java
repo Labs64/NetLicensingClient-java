@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.Form;
+import jakarta.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +25,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 /**
  * Provides license template handling routines.
@@ -56,7 +57,7 @@ public class LicenseTemplateService {
             final LicenseTemplate licenseTemplate) throws NetLicensingException {
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
-        final Form form = licenseTemplate.asRequestForm();
+        final Form form = FormConverter.convert(licenseTemplate);
         if (StringUtils.isNotBlank(productModuleNumber)) {
             form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER, productModuleNumber);
         }
@@ -121,7 +122,7 @@ public class LicenseTemplateService {
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
         return NetLicensingService.getInstance().post(context, Constants.LicenseTemplate.ENDPOINT_PATH + "/" + number,
-                licenseTemplate.asRequestForm(), LicenseTemplate.class);
+                FormConverter.convert(licenseTemplate), LicenseTemplate.class);
     }
 
     /**

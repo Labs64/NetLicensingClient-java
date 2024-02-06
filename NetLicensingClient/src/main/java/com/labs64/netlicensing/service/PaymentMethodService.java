@@ -23,6 +23,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 /**
  * Provides payment method entity handling routines.
@@ -87,7 +88,7 @@ public class PaymentMethodService {
         CheckUtils.paramNotNull(paymentMethod, "paymentMethod");
 
         return NetLicensingService.getInstance().post(context, Constants.PaymentMethod.ENDPOINT_PATH + "/" + number,
-                paymentMethod.asRequestForm(), PaymentMethod.class);
+                FormConverter.convert(paymentMethod), PaymentMethod.class);
     }
 
 }

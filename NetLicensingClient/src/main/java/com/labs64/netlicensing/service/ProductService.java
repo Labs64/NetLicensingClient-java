@@ -23,6 +23,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 /**
  * Provides product handling routines.
@@ -53,7 +54,7 @@ public class ProductService {
     public static Product create(final Context context, final Product product) throws NetLicensingException {
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH, product.asRequestForm(), Product.class);
+        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH, FormConverter.convert(product), Product.class);
     }
 
     /**
@@ -114,7 +115,7 @@ public class ProductService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH + "/" + number, product.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH + "/" + number, FormConverter.convert(product),
                 Product.class);
     }
 
