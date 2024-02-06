@@ -23,7 +23,7 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-jaxb</artifactId>
         </dependency>
-        <dependency><!-- from 2.26 on: https://github.com/jersey/jersey/issues/3584 -->
+        <dependency> <!-- from 2.26 on: https://github.com/eclipse-ee4j/jersey/issues/3584 -->
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
         </dependency>
@@ -92,7 +92,7 @@
                     </instructions>
                 </configuration>
             </plugin>
-            <!-- Maven JAXB2 Plugin Documentation : https://confluence.highsource.org/x/HgBJ -->
+            <!-- Maven JAXB2 Plugin Documentation : https://github.com/highsource/jaxb-tools/wiki/Using-JAXB2-Basics-Plugins -->
             <plugin>
                 <groupId>org.jvnet.jaxb</groupId>
                 <artifactId>jaxb-maven-plugin</artifactId>
@@ -113,7 +113,6 @@
                          Please refer to the following link for more information:
                          https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode -->
                     <strict>false</strict>
-                    <!-- see also https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-89 -->
                     <bindingDirectory>src/main/resources</bindingDirectory>
                     <bindingIncludes>
                         <bindingInclude>nlic-schema-bindings.xjb</bindingInclude>

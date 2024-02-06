@@ -77,17 +77,17 @@
         <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
 
         <!-- dependency.version>0.0.0</dependency.version -->
-        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <commons-lang3.version>3.14.0</commons-lang3.version> <!-- https://commons.apache.org/ -->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.16.0</commons-codec.version>
         <commons-io.version>2.15.1</commons-io.version>
         <commons-cli.version>1.6.0</commons-cli.version>
         <commons-text.version>1.11.0</commons-text.version>
         <log4j.version>2.21.1</log4j.version>
-        <junit.version>4.13.2</junit.version>
-        <jersey.version>3.1.5</jersey.version>
-        <jaxb-api.version>4.0.0</jaxb-api.version>
-        <jaxb-impl.version>4.0.3</jaxb-impl.version>
+        <junit.version>4.13.2</junit.version> <!-- https://junit.org/junit4/ -->
+        <jersey.version>3.1.5</jersey.version> <!-- https://projects.eclipse.org/projects/ee4j.jersey -->
+        <jaxb-api.version>4.0.0</jaxb-api.version> <!-- https://jakarta.ee/specifications/xml-binding/4.0/ -->
+        <jaxb-impl.version>4.0.3</jaxb-impl.version> <!-- https://projects.eclipse.org/projects/ee4j.jaxb-impl -->
         <ph-xmldsig.version>5.0.1</ph-xmldsig.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
@@ -99,7 +99,7 @@
         <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-        <jaxb-maven-plugin.version>4.0.2</jaxb-maven-plugin.version>
+        <jaxb-maven-plugin.version>4.0.2</jaxb-maven-plugin.version> <!-- https://github.com/highsource/jaxb-tools -->
         <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
@@ -449,7 +449,7 @@
                 <version>${jersey.version}</version>
                 <scope>compile</scope>
             </dependency>
-            <dependency><!-- from 2.26 on: https://github.com/jersey/jersey/issues/3584 -->
+            <dependency> <!-- from 2.26 on: https://github.com/eclipse-ee4j/jersey/issues/3584 -->
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey.version}</version>
