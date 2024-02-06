@@ -45,10 +45,9 @@
             <artifactId>commons-io</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--Support JAXB in Java 9 +-->
         <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -95,8 +94,8 @@
             </plugin>
             <!-- Maven JAXB2 Plugin Documentation : https://confluence.highsource.org/x/HgBJ -->
             <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
@@ -119,15 +118,15 @@
                     <bindingIncludes>
                         <bindingInclude>nlic-schema-bindings.xjb</bindingInclude>
                     </bindingIncludes>
-                    <specVersion>2.1</specVersion>
+                    <specVersion>3.0</specVersion>
                     <extension>true</extension>
                     <args>
                         <arg>-Xvalue-constructor</arg>
                     </args>
                     <plugins>
                         <plugin>
-                            <groupId>org.jvnet.jaxb2_commons</groupId>
-                            <artifactId>jaxb2-value-constructor</artifactId>
+                            <groupId>org.jvnet.jaxb</groupId>
+                            <artifactId>jaxb-plugins</artifactId>
                         </plugin>
                     </plugins>
                 </configuration>

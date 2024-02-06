@@ -86,8 +86,8 @@
         <log4j.version>2.21.1</log4j.version>
         <junit.version>4.13.2</junit.version>
         <jersey.version>3.1.5</jersey.version>
-        <jaxb-api.version>2.3.1</jaxb-api.version>
-        <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
+        <jaxb-api.version>4.0.0</jaxb-api.version>
+        <jaxb-impl.version>4.0.3</jaxb-impl.version>
         <ph-xmldsig.version>5.0.1</ph-xmldsig.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
@@ -99,9 +99,7 @@
         <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
         <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-        <!-- TODO(AY): change version when the new release comes. Java 11 Warning https://github.com/highsource/maven-jaxb2-plugin/issues/148 -->
-        <maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
-        <jaxb.version>2.3.1</jaxb.version>
+        <jaxb-maven-plugin.version>4.0.2</jaxb-maven-plugin.version>
         <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
@@ -208,40 +206,18 @@
                     <version>${maven-dependency-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.jvnet.jaxb2.maven2</groupId>
-                    <artifactId>maven-jaxb2-plugin</artifactId>
-                    <version>${maven-jaxb2-plugin.version}</version>
+                    <groupId>org.jvnet.jaxb</groupId>
+                    <artifactId>jaxb-maven-plugin</artifactId>
+                    <version>${jaxb-maven-plugin.version}</version>
                     <configuration>
                         <plugins>
                             <plugin>
-                                <groupId>org.jvnet.jaxb2_commons</groupId>
-                                <artifactId>jaxb2-value-constructor</artifactId>
-                                <version>3.0</version>
+                                <groupId>org.jvnet.jaxb</groupId>
+                                <artifactId>jaxb-plugins</artifactId>
+                                <version>${jaxb-maven-plugin.version}</version>
                             </plugin>
                         </plugins>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>javax.xml.bind</groupId>
-                            <artifactId>jaxb-api</artifactId>
-                            <version>${jaxb.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.glassfish.jaxb</groupId>
-                            <artifactId>jaxb-runtime</artifactId>
-                            <version>${jaxb.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.glassfish.jaxb</groupId>
-                            <artifactId>jaxb-xjc</artifactId>
-                            <version>${jaxb.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.sun.xml.bind.external</groupId>
-                            <artifactId>rngom</artifactId>
-                            <version>${jaxb.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -480,14 +456,14 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
                 <version>${jaxb-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.glassfish.jaxb</groupId>
-                <artifactId>jaxb-runtime</artifactId>
-                <version>${jaxb-runtime.version}</version>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb-impl.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.helger</groupId>
