@@ -175,6 +175,31 @@ public class LicenseeServiceTest extends BaseServiceTest {
     }
 
     @Test
+    public void testOfflineValidation() throws Exception {
+        final ValidationParameters validationParameters = new ValidationParameters();
+        validationParameters.setLicenseeName("Test Licensee");
+        validationParameters.setProductNumber(productNumber);
+        validationParameters.setLicenseeProperty("customProperty", "Licensee Custom Property");
+        validationParameters.setForOfflineUse(true);
+        final ValidationResult result = LicenseeService.validate(context, licenseeNumber, validationParameters);
+
+        assertEquals(licenseeNumber, result.getLicensee().getNumber());
+
+        final Composition validation = result.getProductModuleValidation("M001-TEST");
+        assertNotNull(validation);
+        assertEquals("FeatureWithTimeVolume", validation.getProperties().get(Constants.ProductModule.LICENSING_MODEL)
+                .getValue());
+        assertEquals("Test module", validation.getProperties().get(Constants.ProductModule.PRODUCT_MODULE_NAME)
+                .getValue());
+        assertTrue(Boolean.parseBoolean(validation.getProperties().get("LIST1").getProperties()
+                .get(Constants.LicensingModel.VALID).getValue()));
+        assertEquals(
+                WarningLevel.GREEN,
+                WarningLevel.parseString(validation.getProperties().get("LIST2").getProperties()
+                        .get(Constants.ValidationResult.WARNING_LEVEL).getValue()));
+    }
+
+    @Test
     public void testTransfer() throws Exception {
         final String sourceLicenseeNumber = "L002-TEST";
 
@@ -239,7 +264,8 @@ public class LicenseeServiceTest extends BaseServiceTest {
         public Response validateLicensee(@PathParam("licenseeNumber") final String licenseeNumber,
                 @FormParam("productNumber") final String productNumber,
                 @FormParam("licenseeName") final String licenseeName,
-                @FormParam("customProperty") final String licenseeCustomProperty) {
+                @FormParam("customProperty") final String licenseeCustomProperty,
+                @FormParam("forOfflineUse") final String forOfflineUse) {
 
             if (!productNumber.equals(productNumber)) {
                 return unexpectedValueErrorResponse("productNumber");
@@ -252,8 +278,12 @@ public class LicenseeServiceTest extends BaseServiceTest {
                 return unexpectedValueErrorResponse("customProperty");
             }
 
+            final String validationFile = (Boolean.parseBoolean(forOfflineUse))
+                    ? "netlicensing-licensee-validate-offline.xml"
+                    : "netlicensing-licensee-validate.xml";
+
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
-                    + "netlicensing-licensee-validate.xml", Netlicensing.class);
+                    + validationFile, Netlicensing.class);
             return Response.ok(netlicensing).build();
         }
 
