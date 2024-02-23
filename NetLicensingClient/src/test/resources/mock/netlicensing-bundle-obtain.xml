@@ -1,0 +1,43 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://netlicensing.labs64.com/schema/context
+                                  https://go.netlicensing.io/schema/context/netlicensing-context-2.1.xsd">
+    <items pagenumber="0" itemsnumber="3" totalpages="1" totalitems="3" hasnext="false">
+        <item type="License">
+            <property name="number">L001-TEST</property>
+            <property name="active">true</property>
+            <property name="name">TimeVolume license</property>
+            <property name="price">10.00</property>
+            <property name="currency">EUR</property>
+            <property name="hidden">false</property>
+            <property name="licenseeNumber">LE001-TEST</property>
+            <property name="licenseTemplateNumber">LT001-TEST</property>
+            <property name="timeVolume">30</property>
+            <property name="parentFeature">LC001-PARENT</property>
+            <property name="startDate">2014-07-07T21:30:45.574Z</property>
+        </item>
+        <item type="License">
+            <property name="number">L002-TEST</property>
+            <property name="active">false</property>
+            <property name="name">Test License 2</property>
+            <property name="price">13.00</property>
+            <property name="currency">EUR</property>
+            <property name="hidden">false</property>
+            <property name="licenseeNumber">LE001-TEST</property>
+            <property name="licenseTemplateNumber">LT001-TEST</property>
+            <property name="timeVolume">30</property>
+            <property name="parentFeature">LC002-PARENT</property>
+            <property name="startDate">2014-07-07T08:10:12.449Z</property>
+        </item>
+        <item type="License">
+            <property name="number">L003-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Test License 3</property>
+            <property name="price">15.00</property>
+            <property name="currency">EUR</property>
+            <property name="hidden">false</property>
+            <property name="licenseeNumber">LE001-TEST</property>
+            <property name="licenseTemplateNumber">LT001-TEST</property>
+        </item>
+    </items>
+</netlicensing>

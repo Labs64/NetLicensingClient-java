@@ -1,0 +1,16 @@
+<netlicensing xmlns="http://netlicensing.labs64.com/schema/context"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://netlicensing.labs64.com/schema/context
+                                  https://go.netlicensing.io/schema/context/netlicensing-context-2.1.xsd">
+    <items>
+        <item type="LicenseTemplate">
+            <property name="number">B002-TEST</property>
+            <property name="active">true</property>
+            <property name="name">Bundle 2</property>
+            <property name="description">Description 2</property>
+            <property name="price">20.00</property>
+            <property name="currency">USD</property>
+            <property name="licenseTemplateNumbers">LT003-TEST,LT004-TEST</property>
+        </item>
+    </items>
+</netlicensing>

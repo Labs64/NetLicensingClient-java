@@ -68,5 +68,10 @@ public enum TransactionSource {
     /**
      * Transaction for cancel recurring payment.
      */
-    CANCEL_RECURRING_PAYMENT
+    CANCEL_RECURRING_PAYMENT,
+
+    /**
+     * Transaction for obtain bundle.
+     */
+    OBTAIN_BUNDLE;
 }
