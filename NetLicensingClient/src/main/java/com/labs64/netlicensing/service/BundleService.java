@@ -24,7 +24,6 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.entity.Bundle;
 import com.labs64.netlicensing.domain.entity.License;
-import com.labs64.netlicensing.domain.vo.BundleObtainParameters;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
@@ -120,32 +119,23 @@ public class BundleService {
      *
      * @param context                determines the vendor on whose behalf the call is performed
      * @param number                 bundle number
-     * @param bundleObtainParameters bundle obtain parameters
+     * @param licenseeNumber         licensee number
      * @return collection of created licenses.
      * @throws NetLicensingException any subclass of {@linkplain NetLicensingException}. These exceptions will be transformed to the
      *                               corresponding service response messages.
      */
-    public static Page<License> obtain(final Context context, final String number, final BundleObtainParameters bundleObtainParameters)
+    public static Page<License> obtain(final Context context, final String number, final String licenseeNumber)
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
-        CheckUtils.paramNotEmpty(bundleObtainParameters.getLicenseeNumber(), "licenseeNumber");
+        CheckUtils.paramNotEmpty(licenseeNumber, "licenseeNumber");
 
         final String endpoint = Constants.Bundle.ENDPOINT_PATH + "/" + number + "/" + Constants.Bundle.ENDPOINT_OBTAIN_PATH;
 
-        final Form form = convertBundleObtainParameters(bundleObtainParameters);
+        final Form form = new Form();
+        form.param(Constants.Licensee.LICENSEE_NUMBER, licenseeNumber);
 
         final Netlicensing response = NetLicensingService.getInstance().request(context, HttpMethod.POST, endpoint, form, null);
 
         return entityFactory.createPage(response, License.class);
-    }
-
-    private static Form convertBundleObtainParameters(final BundleObtainParameters bundleObtainParameters) {
-        final Form form = new Form();
-
-        if (bundleObtainParameters != null) {
-            form.param(Constants.Licensee.LICENSEE_NUMBER, bundleObtainParameters.getLicenseeNumber());
-        }
-
-        return form;
     }
 }

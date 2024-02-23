@@ -34,7 +34,6 @@ import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Bundle;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.impl.BundleImpl;
-import com.labs64.netlicensing.domain.vo.BundleObtainParameters;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Currency;
 import com.labs64.netlicensing.domain.vo.Page;
@@ -219,19 +218,14 @@ public class BundleServiceTest extends BaseServiceTest {
 
     @Test
     public void testObtain() throws Exception {
-        final BundleObtainParameters bundleObtainParameters = new BundleObtainParameters();
-        bundleObtainParameters.setLicenseeNumber("LE001-TEST");
-        
-        final Page<License> licenses = BundleService.obtain(context, "B001-TEST", bundleObtainParameters);
+        final Page<License> licenses = BundleService.obtain(context, "B001-TEST", "LE001-TEST");
 
         assertNotNull(licenses);
         assertTrue(licenses.hasContent());
         assertEquals(3, licenses.getItemsNumber());
 
         final Exception e = assertThrows(ServiceException.class, () -> {
-            final BundleObtainParameters bundleObtainParameters2 = new BundleObtainParameters();
-            bundleObtainParameters2.setLicenseeNumber("LE002-TEST");
-            BundleService.obtain(context, "B001-TEST", bundleObtainParameters2);
+            BundleService.obtain(context, "B001-TEST", "LE002-TEST");
         });
         assertEquals("NotFoundException: Requested licensee does not exist.", e.getMessage());
     }
@@ -285,7 +279,7 @@ public class BundleServiceTest extends BaseServiceTest {
             }
 
             final String xmlResourcePath = String.format("%snetlicensing-bundle-obtain.xml", TEST_CASE_BASE);
-            
+
             final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
             return Response.ok(netlicensing).build();
         }

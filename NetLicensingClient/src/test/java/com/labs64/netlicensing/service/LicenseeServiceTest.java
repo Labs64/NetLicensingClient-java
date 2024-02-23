@@ -262,7 +262,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
          *
          * @param licenseeNumber
          *            licensee number
-         * @param transfer
+         * @param transferLicensee
          *            transfer licensee number
          * @return response with XML representation of transfer result
          */
