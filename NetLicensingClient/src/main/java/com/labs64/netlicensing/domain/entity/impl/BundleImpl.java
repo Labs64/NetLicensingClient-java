@@ -3,8 +3,9 @@ package com.labs64.netlicensing.domain.entity.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Bundle;
@@ -100,19 +101,19 @@ public class BundleImpl extends BaseEntityImpl implements Bundle {
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.NAME, getName());
+    public Map<String, Object> asMap() {
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.NAME, getName());
 
         if (getDescription() != null) {
-            map.add(Constants.Bundle.DESCRIPTION, getDescription());
+            map.put(Constants.Bundle.DESCRIPTION, getDescription());
         }
 
-        map.add(Constants.PRICE, getPrice());
-        map.add(Constants.CURRENCY, getCurrency());
+        map.put(Constants.PRICE, getPrice());
+        map.put(Constants.CURRENCY, getCurrency());
 
         if (getLicenseTemplateNumbers() != null) {
-            map.add(Constants.Bundle.LICENSE_TEMPLATE_NUMBERS, String.join(",", getLicenseTemplateNumbers()));
+            map.put(Constants.Bundle.LICENSE_TEMPLATE_NUMBERS, String.join(",", getLicenseTemplateNumbers()));
         }
 
         return map;
