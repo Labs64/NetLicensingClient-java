@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Bundle;
 import com.labs64.netlicensing.domain.vo.Currency;
 
 public class BundleImpl extends BaseEntityImpl implements Bundle {
+
+    private static final long serialVersionUID = -1666422065511383898L;
+
     private String name;
 
     private String description;
