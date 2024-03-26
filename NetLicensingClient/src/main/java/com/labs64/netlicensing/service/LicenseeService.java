@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.Form;
+import jakarta.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,6 +28,7 @@ import com.labs64.netlicensing.domain.vo.ValidationParameters;
 import com.labs64.netlicensing.domain.vo.ValidationResult;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 /**
  * Provides licensee handling routines.
@@ -62,7 +63,7 @@ public class LicenseeService {
             throws NetLicensingException {
         CheckUtils.paramNotNull(licensee, "licensee");
 
-        final Form form = licensee.asRequestForm();
+        final Form form = FormConverter.convert(licensee);
         if (StringUtils.isNotBlank(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
@@ -123,7 +124,7 @@ public class LicenseeService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(licensee, "licensee");
 
-        return NetLicensingService.getInstance().post(context, Constants.Licensee.ENDPOINT_PATH + "/" + number, licensee.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Licensee.ENDPOINT_PATH + "/" + number, FormConverter.convert(licensee),
                 Licensee.class);
     }
 

@@ -14,7 +14,7 @@ package com.labs64.netlicensing.domain.vo;
 
 import java.math.BigDecimal;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang3.StringUtils;
 

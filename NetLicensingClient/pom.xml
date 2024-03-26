@@ -23,7 +23,7 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-jaxb</artifactId>
         </dependency>
-        <dependency><!-- from 2.26 on: https://github.com/jersey/jersey/issues/3584 -->
+        <dependency> <!-- from 2.26 on: https://github.com/eclipse-ee4j/jersey/issues/3584 -->
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
         </dependency>
@@ -45,10 +45,9 @@
             <artifactId>commons-io</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--Support JAXB in Java 9 +-->
         <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -93,10 +92,10 @@
                     </instructions>
                 </configuration>
             </plugin>
-            <!-- Maven JAXB2 Plugin Documentation : https://confluence.highsource.org/x/HgBJ -->
+            <!-- Maven JAXB2 Plugin Documentation : https://github.com/highsource/jaxb-tools/wiki/Using-JAXB2-Basics-Plugins -->
             <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
@@ -114,20 +113,20 @@
                          Please refer to the following link for more information:
                          https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode -->
                     <strict>false</strict>
-                    <!-- see also https://java.net/jira/browse/MAVEN_JAXB2_PLUGIN-89 -->
                     <bindingDirectory>src/main/resources</bindingDirectory>
                     <bindingIncludes>
                         <bindingInclude>nlic-schema-bindings.xjb</bindingInclude>
                     </bindingIncludes>
-                    <specVersion>2.1</specVersion>
+                    <specVersion>3.0</specVersion>
                     <extension>true</extension>
                     <args>
                         <arg>-Xvalue-constructor</arg>
+                        <arg>-Xnamespace-prefix</arg>
                     </args>
                     <plugins>
                         <plugin>
-                            <groupId>org.jvnet.jaxb2_commons</groupId>
-                            <artifactId>jaxb2-value-constructor</artifactId>
+                            <groupId>org.jvnet.jaxb</groupId>
+                            <artifactId>jaxb-plugins</artifactId>
                         </plugin>
                     </plugins>
                 </configuration>

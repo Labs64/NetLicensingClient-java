@@ -15,7 +15,7 @@ package com.labs64.netlicensing.domain.entity.impl;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.entity.Product;
 import com.labs64.netlicensing.domain.entity.ProductDiscount;

@@ -17,8 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Licensee;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -173,21 +171,19 @@ public class ProductImpl extends BaseEntityImpl implements Product {
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.NAME, getName());
-        map.add(Constants.VERSION, getVersion());
-        map.add(Constants.Product.LICENSEE_AUTO_CREATE, getLicenseeAutoCreate());
-        map.add(Constants.Product.DESCRIPTION, getDescription());
-        map.add(Constants.Product.LICENSING_INFO, getLicensingInfo());
+    public Map<String, Object> asMap() {
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.VERSION, getVersion());
+        map.put(Constants.Product.LICENSEE_AUTO_CREATE, getLicenseeAutoCreate());
+        map.put(Constants.Product.DESCRIPTION, getDescription());
+        map.put(Constants.Product.LICENSING_INFO, getLicensingInfo());
         if (productDiscounts != null) {
-            for (final ProductDiscount productDiscount : productDiscounts) {
-                map.add(Constants.DISCOUNT, productDiscount.toString());
-            }
+            map.put(Constants.DISCOUNT, productDiscounts);
         }
 
         if (map.get(Constants.DISCOUNT) == null && productDiscountsTouched) {
-            map.add(Constants.DISCOUNT, "");
+            map.put(Constants.DISCOUNT, "");
         }
 
         return map;

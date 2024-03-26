@@ -18,8 +18,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
@@ -171,15 +169,15 @@ public class LicenseTemplateImpl extends BaseEntityImpl implements LicenseTempla
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.NAME, getName());
-        map.add(Constants.LicenseTemplate.LICENSE_TYPE, getLicenseType());
-        map.add(Constants.PRICE, getPrice());
-        map.add(Constants.CURRENCY, getCurrency());
-        map.add(Constants.LicenseTemplate.AUTOMATIC, getAutomatic());
-        map.add(Constants.LicenseTemplate.HIDDEN, getHidden());
-        map.add(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
+    public Map<String, Object> asMap() {
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.LicenseTemplate.LICENSE_TYPE, getLicenseType());
+        map.put(Constants.PRICE, getPrice());
+        map.put(Constants.CURRENCY, getCurrency());
+        map.put(Constants.LicenseTemplate.AUTOMATIC, getAutomatic());
+        map.put(Constants.LicenseTemplate.HIDDEN, getHidden());
+        map.put(Constants.LicenseTemplate.HIDE_LICENSES, getHideLicenses());
         return map;
     }
 

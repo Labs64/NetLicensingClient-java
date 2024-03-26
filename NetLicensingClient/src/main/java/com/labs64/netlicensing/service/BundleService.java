@@ -15,8 +15,8 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Form;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -29,6 +29,7 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 public class BundleService {
     private static final EntityFactory entityFactory = new EntityFactory();
@@ -45,7 +46,7 @@ public class BundleService {
      */
     public static Bundle create(final Context context, final Bundle bundle) throws NetLicensingException {
         CheckUtils.paramNotNull(bundle, "bundle");
-        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH, bundle.asRequestForm(), Bundle.class);
+        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH, FormConverter.convert(bundle), Bundle.class);
     }
 
     /**
@@ -94,7 +95,7 @@ public class BundleService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(bundle, "bundle");
 
-        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH + "/" + number, bundle.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH + "/" + number, FormConverter.convert(bundle),
                 Bundle.class);
     }
 

@@ -18,6 +18,8 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -36,7 +38,7 @@ public class NotificationService {
      */
     public static Notification create(final Context context, final Notification notification) throws NetLicensingException {
         CheckUtils.paramNotNull(notification, "notification");
-        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH, notification.asRequestForm(), Notification.class);
+        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH, FormConverter.convert(notification), Notification.class);
     }
 
     /**
@@ -85,7 +87,7 @@ public class NotificationService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(notification, "notification");
 
-        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH + "/" + number, notification.asRequestForm(),
+        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH + "/" + number, FormConverter.convert(notification),
                 Notification.class);
     }
 

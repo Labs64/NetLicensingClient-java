@@ -13,8 +13,7 @@
 package com.labs64.netlicensing.domain.entity.impl;
 
 import java.math.BigDecimal;
-
-import javax.ws.rs.core.MultivaluedMap;
+import java.util.Map;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Country;
@@ -75,12 +74,12 @@ public class CountryImpl extends BaseEntityImpl implements Country {
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.Country.CODE, getCode());
-        map.add(Constants.Country.NAME, getName());
-        map.add(Constants.Country.VAT_PERCENT, getVatPercent());
-        map.add(Constants.Country.IS_EU, getIsEu());
+    public Map<String, Object> asMap() {
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.Country.CODE, getCode());
+        map.put(Constants.Country.NAME, getName());
+        map.put(Constants.Country.VAT_PERCENT, getVatPercent());
+        map.put(Constants.Country.IS_EU, getIsEu());
         return map;
     }
 

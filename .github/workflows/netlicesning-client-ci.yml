@@ -24,11 +24,12 @@ jobs:
       # TODO(2K): This can be better solved by preparing a custom image for the container.
       MAVEN_OPTS: -Duser.home=/github/home
     strategy:
+      fail-fast: false
       matrix:
         java-version: [11, 17]
         include:
           - java-version: 11
-            jdk-suffix:
+            jdk-suffix: ""
           - java-version: 17
             jdk-suffix: -jdk17
 

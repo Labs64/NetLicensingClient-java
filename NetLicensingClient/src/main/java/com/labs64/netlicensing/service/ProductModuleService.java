@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.Form;
+import jakarta.ws.rs.core.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +25,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.FormConverter;
 
 /**
  * Provides product module handling routines.
@@ -55,7 +56,7 @@ public class ProductModuleService {
             final ProductModule productModule) throws NetLicensingException {
         CheckUtils.paramNotNull(productModule, "productNumber");
 
-        final Form form = productModule.asRequestForm();
+        final Form form = FormConverter.convert(productModule);
         if (StringUtils.isNotBlank(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
@@ -120,7 +121,7 @@ public class ProductModuleService {
         CheckUtils.paramNotNull(productModule, "productModule");
 
         return NetLicensingService.getInstance().post(context, Constants.ProductModule.ENDPOINT_PATH + "/" + number,
-                productModule.asRequestForm(), ProductModule.class);
+                FormConverter.convert(productModule), ProductModule.class);
     }
 
     /**
