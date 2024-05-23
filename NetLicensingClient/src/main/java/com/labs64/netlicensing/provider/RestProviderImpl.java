@@ -35,8 +35,6 @@ import com.labs64.netlicensing.util.JAXBUtils;
 
 /**
  * Low level REST client implementation.
- * <p>
- * This will also log each request in INFO level.
  */
 public class RestProviderImpl extends AbstractRestProvider {
 
@@ -113,9 +111,7 @@ public class RestProviderImpl extends AbstractRestProvider {
             final RestResponse<RES> restResponse = new RestResponse<>();
             restResponse.setStatusCode(response.statusCode());
             restResponse.setHeaders(response.headers().map());
-            if ((response.statusCode() != 204) || !response.body().isEmpty()) {
-                restResponse.setEntity(readEntity(response.body(), response.statusCode(), responseType));
-            }
+            restResponse.setEntity(readEntity(response.body(), response.statusCode(), responseType));
             return restResponse;
         } catch (final IOException | InterruptedException e) {
             throw new RestException("Exception while calling service.", e);
