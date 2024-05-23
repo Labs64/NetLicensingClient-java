@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.core.Form;
+import com.labs64.netlicensing.provider.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +25,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.FormConverter;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 /**
  * Provides product module handling routines.
@@ -56,7 +56,7 @@ public class ProductModuleService {
             final ProductModule productModule) throws NetLicensingException {
         CheckUtils.paramNotNull(productModule, "productNumber");
 
-        final Form form = FormConverter.convert(productModule);
+        final Form form = ConvertUtils.entityToForm(productModule);
         if (StringUtils.isNotBlank(productNumber)) {
             form.param(Constants.Product.PRODUCT_NUMBER, productNumber);
         }
@@ -94,7 +94,7 @@ public class ProductModuleService {
      *             corresponding service response messages.
      */
     public static Page<ProductModule> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -121,7 +121,7 @@ public class ProductModuleService {
         CheckUtils.paramNotNull(productModule, "productModule");
 
         return NetLicensingService.getInstance().post(context, Constants.ProductModule.ENDPOINT_PATH + "/" + number,
-                FormConverter.convert(productModule), ProductModule.class);
+                ConvertUtils.entityToForm(productModule), ProductModule.class);
     }
 
     /**
@@ -141,8 +141,7 @@ public class ProductModuleService {
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.CASCADE, forceCascade);
+        Map<String, String> params = Map.of(Constants.CASCADE, String.valueOf(forceCascade));
         NetLicensingService.getInstance().delete(context, Constants.ProductModule.ENDPOINT_PATH + "/" + number, params);
     }
 

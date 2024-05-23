@@ -18,7 +18,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.FormConverter;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,7 +38,7 @@ public class NotificationService {
      */
     public static Notification create(final Context context, final Notification notification) throws NetLicensingException {
         CheckUtils.paramNotNull(notification, "notification");
-        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH, FormConverter.convert(notification), Notification.class);
+        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH, ConvertUtils.entityToForm(notification), Notification.class);
     }
 
     /**
@@ -65,7 +65,7 @@ public class NotificationService {
      *                               corresponding service response messages.
      */
     public static Page<Notification> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -87,7 +87,7 @@ public class NotificationService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(notification, "notification");
 
-        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH + "/" + number, FormConverter.convert(notification),
+        return NetLicensingService.getInstance().post(context, Constants.Notification.ENDPOINT_PATH + "/" + number, ConvertUtils.entityToForm(notification),
                 Notification.class);
     }
 
@@ -103,8 +103,7 @@ public class NotificationService {
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        NetLicensingService.getInstance().delete(context, Constants.Notification.ENDPOINT_PATH + "/" + number, params);
+        NetLicensingService.getInstance().delete(context, Constants.Notification.ENDPOINT_PATH + "/" + number, null);
     }
 
 }

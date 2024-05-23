@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.core.Form;
+import com.labs64.netlicensing.provider.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +25,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.FormConverter;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 /**
  * Provides license template handling routines.
@@ -57,7 +57,7 @@ public class LicenseTemplateService {
             final LicenseTemplate licenseTemplate) throws NetLicensingException {
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
-        final Form form = FormConverter.convert(licenseTemplate);
+        final Form form = ConvertUtils.entityToForm(licenseTemplate);
         if (StringUtils.isNotBlank(productModuleNumber)) {
             form.param(Constants.ProductModule.PRODUCT_MODULE_NUMBER, productModuleNumber);
         }
@@ -95,7 +95,7 @@ public class LicenseTemplateService {
      *             corresponding service response messages.
      */
     public static Page<LicenseTemplate> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -122,7 +122,7 @@ public class LicenseTemplateService {
         CheckUtils.paramNotNull(licenseTemplate, "licenseTemplate");
 
         return NetLicensingService.getInstance().post(context, Constants.LicenseTemplate.ENDPOINT_PATH + "/" + number,
-                FormConverter.convert(licenseTemplate), LicenseTemplate.class);
+                ConvertUtils.entityToForm(licenseTemplate), LicenseTemplate.class);
     }
 
     /**
@@ -142,8 +142,7 @@ public class LicenseTemplateService {
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.CASCADE, forceCascade);
+        Map<String, String> params = Map.of(Constants.CASCADE, String.valueOf(forceCascade));
         NetLicensingService.getInstance().delete(context, Constants.LicenseTemplate.ENDPOINT_PATH + "/" + number, params);
     }
 

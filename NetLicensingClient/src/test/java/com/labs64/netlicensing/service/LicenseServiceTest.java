@@ -21,9 +21,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import jakarta.xml.bind.JAXBException;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.License;
@@ -37,11 +38,11 @@ import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.schema.context.Property;
 import com.labs64.netlicensing.util.JAXBUtils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Integration tests for {@link LicenseService}.
@@ -55,7 +56,7 @@ public class LicenseServiceTest extends BaseServiceTest {
 
     private static Context context;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         context = createContext();
     }
@@ -206,7 +207,11 @@ public class LicenseServiceTest extends BaseServiceTest {
             formParams.remove(Constants.CURRENCY);
             formParams.remove(Constants.License.HIDDEN);
 
-            return create(formParams, getDefaultPropertyValuesFromLicenseTemplate());
+            try {
+                return create(formParams, getDefaultPropertyValuesFromLicenseTemplate());
+            } catch (JAXBException e) {
+                return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
+            }
         }
 
         @Override
@@ -223,7 +228,7 @@ public class LicenseServiceTest extends BaseServiceTest {
             return delete(number, "LC001-TEST", uriInfo.getQueryParameters());
         }
 
-        private Map<String, String> getDefaultPropertyValuesFromLicenseTemplate() {
+        private Map<String, String> getDefaultPropertyValuesFromLicenseTemplate() throws JAXBException {
             final Map<String, String> values = new HashMap<>();
 
             final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE

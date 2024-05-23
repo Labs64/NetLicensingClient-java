@@ -13,16 +13,18 @@
 package com.labs64.netlicensing.service;
 
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.HttpMethod;
+import com.labs64.netlicensing.provider.HttpMethod;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.schema.context.ObjectFactory;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Common integration tests for {@link NetLicensingService}.
@@ -33,19 +35,23 @@ public class NetLicensingServiceTest extends BaseServiceTest {
 
     private static Context context;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         context = createContext();
     }
 
-    @Test(expected = RestException.class)
+    @Test
     public void testNotExistingService() throws Exception {
-        NetLicensingService.getInstance().request(context, HttpMethod.GET, "non-existing-service", null, null);
+        assertThrows(RestException.class, () -> {
+            NetLicensingService.getInstance().request(context, HttpMethod.GET, "non-existing-service", null, null);            
+        });
     }
 
-    @Test(expected = RestException.class)
+    @Test
     public void testUnsupportedStatusCode() throws Exception {
-        NetLicensingService.getInstance().request(context, HttpMethod.GET, "unsupported-status-code", null, null);
+        assertThrows(RestException.class, () -> {
+            NetLicensingService.getInstance().request(context, HttpMethod.GET, "unsupported-status-code", null, null);
+        });
     }
 
     // *** NLIC test mock resource ***

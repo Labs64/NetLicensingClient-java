@@ -23,7 +23,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.FormConverter;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 /**
  * Provides product handling routines.
@@ -54,7 +54,7 @@ public class ProductService {
     public static Product create(final Context context, final Product product) throws NetLicensingException {
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH, FormConverter.convert(product), Product.class);
+        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH, ConvertUtils.entityToForm(product), Product.class);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ProductService {
      *             corresponding service response messages.
      */
     public static Page<Product> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -115,7 +115,7 @@ public class ProductService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(product, "product");
 
-        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH + "/" + number, FormConverter.convert(product),
+        return NetLicensingService.getInstance().post(context, Constants.Product.ENDPOINT_PATH + "/" + number, ConvertUtils.entityToForm(product),
                 Product.class);
     }
 
@@ -136,8 +136,7 @@ public class ProductService {
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.CASCADE, forceCascade);
+        Map<String, String> params = Map.of(Constants.CASCADE, String.valueOf(forceCascade));
         NetLicensingService.getInstance().delete(context, Constants.Product.ENDPOINT_PATH + "/" + number, params);
     }
 

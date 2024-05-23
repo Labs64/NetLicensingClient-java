@@ -15,7 +15,7 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.core.Form;
+import com.labs64.netlicensing.provider.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +25,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.FormConverter;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 /**
  * Provides license handling routines.
@@ -71,7 +71,7 @@ public class LicenseService {
 
         CheckUtils.paramNotNull(license, "license");
 
-        final Form form = FormConverter.convert(license);
+        final Form form = ConvertUtils.entityToForm(license);
         if (StringUtils.isNotBlank(licenseeNumber)) {
             form.param(Constants.Licensee.LICENSEE_NUMBER, licenseeNumber);
         }
@@ -113,7 +113,7 @@ public class LicenseService {
      *             corresponding service response messages.
      */
     public static Page<License> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -142,7 +142,7 @@ public class LicenseService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(license, "license");
 
-        final Form form = FormConverter.convert(license);
+        final Form form = ConvertUtils.entityToForm(license);
         if (StringUtils.isNotBlank(transactionNumber)) {
             form.param(Constants.Transaction.TRANSACTION_NUMBER, transactionNumber);
         }
@@ -167,9 +167,7 @@ public class LicenseService {
     public static void delete(final Context context, final String number, final boolean forceCascade)
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
-
-        final Map<String, Object> params = new HashMap<String, Object>();
-        params.put(Constants.CASCADE, forceCascade);
+        Map<String, String> params = Map.of(Constants.CASCADE, String.valueOf(forceCascade));
         NetLicensingService.getInstance().delete(context, Constants.License.ENDPOINT_PATH + "/" + number, params);
     }
 

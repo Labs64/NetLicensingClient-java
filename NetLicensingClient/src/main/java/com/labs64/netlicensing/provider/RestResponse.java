@@ -12,8 +12,13 @@
  */
 package com.labs64.netlicensing.provider;
 
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+//import jakarta.ws.rs.core.MultivaluedHashMap;
+//import jakarta.ws.rs.core.MultivaluedMap;
 
 /**
  * Contains info about response together with response entity.
@@ -25,7 +30,7 @@ public class RestResponse<T> {
 
     private int statusCode;
     
-    private MultivaluedMap<String, Object> headers;
+    private Map<String, List<String>> headers;
 
     private T entity;
 
@@ -37,13 +42,22 @@ public class RestResponse<T> {
         this.statusCode = statusCode;
     }
     
-    public MultivaluedMap<String, Object> getHeaders() {
+    public Map<String, List<String>> getHeaders() {
         return this.headers;
     }
     
-    public void setHeaders(MultivaluedMap<String, Object> headers) {
-        this.headers = new MultivaluedHashMap<String, Object>();
-        this.headers.putAll(headers);
+    public void setHeaders(Map<String, List<String>> headers) {
+        this.headers = new HashMap<>();
+        headers.forEach((header, values) -> {
+            List<String> this_values;
+            if (!this.headers.containsKey(header)) {
+                this_values = new ArrayList<>();
+                this.headers.put(header, this_values);
+            } else {
+                this_values = this.headers.get(header);
+            }
+            values.forEach(value -> this_values.add(value));
+        });
     }
 
     public T getEntity() {

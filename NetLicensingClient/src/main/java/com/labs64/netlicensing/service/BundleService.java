@@ -15,8 +15,8 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.Form;
+import com.labs64.netlicensing.provider.HttpMethod;
+import com.labs64.netlicensing.provider.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -29,7 +29,7 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.CheckUtils;
-import com.labs64.netlicensing.util.FormConverter;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 public class BundleService {
     private static final EntityFactory entityFactory = new EntityFactory();
@@ -46,7 +46,7 @@ public class BundleService {
      */
     public static Bundle create(final Context context, final Bundle bundle) throws NetLicensingException {
         CheckUtils.paramNotNull(bundle, "bundle");
-        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH, FormConverter.convert(bundle), Bundle.class);
+        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH, ConvertUtils.entityToForm(bundle), Bundle.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class BundleService {
      *                               corresponding service response messages.
      */
     public static Page<Bundle> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -95,7 +95,7 @@ public class BundleService {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotNull(bundle, "bundle");
 
-        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH + "/" + number, FormConverter.convert(bundle),
+        return NetLicensingService.getInstance().post(context, Constants.Bundle.ENDPOINT_PATH + "/" + number, ConvertUtils.entityToForm(bundle),
                 Bundle.class);
     }
 
@@ -111,8 +111,7 @@ public class BundleService {
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
 
-        final Map<String, Object> params = new HashMap<String, Object>();
-        NetLicensingService.getInstance().delete(context, Constants.Bundle.ENDPOINT_PATH + "/" + number, params);
+        NetLicensingService.getInstance().delete(context, Constants.Bundle.ENDPOINT_PATH + "/" + number, null);
     }
 
     /**

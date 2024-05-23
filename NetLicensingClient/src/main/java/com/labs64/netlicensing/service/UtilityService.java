@@ -106,7 +106,7 @@ public class UtilityService {
      *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Page<Country> listCountries(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }

@@ -15,9 +15,8 @@ package com.labs64.netlicensing.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.Form;
-import jakarta.ws.rs.core.Response;
+import com.labs64.netlicensing.provider.HttpMethod;
+import com.labs64.netlicensing.provider.Form;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,7 +29,7 @@ import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.provider.RestProvider;
-import com.labs64.netlicensing.provider.RestProviderJersey;
+import com.labs64.netlicensing.provider.RestProviderImpl;
 import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -81,7 +80,7 @@ public class NetLicensingService {
      * @return first suitable item with type resultType from the response
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
-    <RES> RES get(final Context context, final String urlTemplate, final Map<String, Object> queryParams,
+    <RES> RES get(final Context context, final String urlTemplate, final Map<String, String> queryParams,
             final Class<RES> resultType, final MetaInfo... meta) throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
         return processResponse(meta, netlicensing, resultType);
@@ -102,7 +101,7 @@ public class NetLicensingService {
      * @return page of items with type resultType from the response
      * @throws com.labs64.netlicensing.exception.NetLicensingException
      */
-    <RES> Page<RES> list(final Context context, final String urlTemplate, final Map<String, Object> queryParams,
+    <RES> Page<RES> list(final Context context, final String urlTemplate, final Map<String, String> queryParams,
             final Class<RES> resultType) throws NetLicensingException {
         final Netlicensing netlicensing = request(context, HttpMethod.GET, urlTemplate, null, queryParams);
         return entityFactory.createPage(netlicensing, resultType);
@@ -146,7 +145,7 @@ public class NetLicensingService {
      *            The REST query parameters values. May be null if there are no parameters.
      * @throws NetLicensingException
      */
-    void delete(final Context context, final String urlTemplate, final Map<String, Object> queryParams)
+    void delete(final Context context, final String urlTemplate, final Map<String, String> queryParams)
             throws NetLicensingException {
         request(context, HttpMethod.DELETE, urlTemplate, null, queryParams);
     }
@@ -168,13 +167,13 @@ public class NetLicensingService {
      * @return {@link Netlicensing} response object
      * @throws NetLicensingException
      */
-    public Netlicensing request(final Context context, final String method, final String urlTemplate,
+    public Netlicensing request(final Context context, final HttpMethod method, final String urlTemplate,
             final Form request,
-            final Map<String, Object> queryParams) throws NetLicensingException {
+            final Map<String, String> queryParams) throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
 
         Form combinedRequest = request;
-        Map<String, Object> combinedQueryParams = queryParams;
+        Map<String, String> combinedQueryParams = queryParams;
         if (StringUtils.isNotBlank(context.getVendorNumber())) {
             if (HttpMethod.POST.equals(method)) {
                 if (combinedRequest == null) {
@@ -189,31 +188,29 @@ public class NetLicensingService {
             }
         }
 
-        final RestProviderJersey restProvider = new RestProviderJersey(context.getBaseUrl());
+        final RestProviderImpl restProvider = new RestProviderImpl(context.getBaseUrl());
         configure(restProvider, context);
-
-        final RestResponse<Netlicensing> response = restProvider.call(method, urlTemplate, combinedRequest, Netlicensing.class,
+        
+        final RestResponse<Netlicensing> response = restProvider.call(method.name(), urlTemplate, combinedRequest, Netlicensing.class,
                 combinedQueryParams);
 
-        final Response.Status status = Response.Status.fromStatusCode(response.getStatusCode());
-        if (!isErrorStatus(status)) {
-            switch (status) {
-            case OK:
+        if (!isErrorStatus(response.getStatusCode())) {
+            switch (response.getStatusCode()) {
+            case 200:
                 final Netlicensing netlicensing = response.getEntity();
                 SignatureUtils.check(context, netlicensing);
                 return netlicensing;
-            case NO_CONTENT:
+            case 204:
                 return null;
             default:
-                throw new RestException(String.format("Unsupported response status code %s: %s.",
-                        status.getStatusCode(), status.getReasonPhrase()));
+                throw new RestException(String.format("Unsupported response status code %s.",
+                        response.getStatusCode()));
             }
         } else {
             if (SchemaFunction.hasErrorInfos(response.getEntity())) {
-                throw new ServiceException(status, response.getHeaders(), response.getEntity());
+                throw new ServiceException(response.getStatusCode(), response.getHeaders(), response.getEntity());
             } else {
-                throw new RestException(String.format("Unknown service error %s: %s.", status.getStatusCode(),
-                        status.getReasonPhrase()));
+                throw new RestException(String.format("Unknown service error %s.", response.getStatusCode()));
             }
         }
     }
@@ -256,9 +253,10 @@ public class NetLicensingService {
      *            info about status
      * @return true if HTTP status represents client error or server error, false otherwise
      */
-    private boolean isErrorStatus(final Response.Status status) {
-        return (status.getFamily() == Response.Status.Family.CLIENT_ERROR)
-                || (status.getFamily() == Response.Status.Family.SERVER_ERROR);
+    private boolean isErrorStatus(final int statusCode) {
+        int family = statusCode / 100;
+        return (family == 4) // client error 4xx
+                || (family == 5);  // server error 5xx
     }
 
     protected <RES> RES processResponse(final MetaInfo[] meta, final Netlicensing netlicensing, final Class<RES> resultType)

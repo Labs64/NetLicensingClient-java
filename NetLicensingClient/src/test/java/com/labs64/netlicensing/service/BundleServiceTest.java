@@ -26,9 +26,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import jakarta.xml.bind.JAXBException;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Bundle;
@@ -41,10 +42,10 @@ import com.labs64.netlicensing.exception.ServiceException;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Integration tests for {@link BundleService}.
@@ -52,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 public class BundleServiceTest extends BaseServiceTest {
     private static Context context;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         context = createContext();
     }
@@ -280,8 +281,12 @@ public class BundleServiceTest extends BaseServiceTest {
 
             final String xmlResourcePath = String.format("%snetlicensing-bundle-obtain.xml", TEST_CASE_BASE);
 
-            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
-            return Response.ok(netlicensing).build();
+            try {
+                final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
+                return Response.ok(netlicensing).build();
+            } catch (JAXBException e) {
+                return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
+            }
         }
     }
 }
