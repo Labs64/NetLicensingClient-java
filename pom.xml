@@ -86,7 +86,7 @@
         <jersey.version>3.1.5</jersey.version> <!-- https://projects.eclipse.org/projects/ee4j.jersey -->
         <jaxb-api.version>4.0.0</jaxb-api.version> <!-- https://jakarta.ee/specifications/xml-binding/4.0/ -->
         <jaxb-impl.version>4.0.3</jaxb-impl.version> <!-- https://projects.eclipse.org/projects/ee4j.jaxb-impl -->
-        <ph-xmldsig.version>5.0.1</ph-xmldsig.version>
+        <ph-xmldsig.version>5.0.2</ph-xmldsig.version>
         <slf4j.version>2.0.13</slf4j.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
