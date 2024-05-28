@@ -23,12 +23,13 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 /**
  * Provides token entity handling routines.
  */
 public class TokenService {
-
+    
     /**
      * Gets token by its number.
      * 
@@ -60,7 +61,7 @@ public class TokenService {
      *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Page<Token> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -82,7 +83,7 @@ public class TokenService {
     public static Token create(final Context context, final Token token) throws NetLicensingException {
         CheckUtils.paramNotNull(token, "token");
 
-        return NetLicensingService.getInstance().post(context, Constants.Token.ENDPOINT_PATH, token.asRequestForm(), Token.class);
+        return NetLicensingService.getInstance().post(context, Constants.Token.ENDPOINT_PATH, ConvertUtils.entityToForm(token), Token.class);
     }
 
     /**

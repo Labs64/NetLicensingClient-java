@@ -17,19 +17,22 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+import jakarta.xml.bind.JAXBException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
@@ -74,6 +77,9 @@ abstract class BaseServiceTest extends JerseyTest {
     @Override
     protected final Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
+        // Suppress console log noise from JerseyTest
+        Logger.getLogger("org.glassfish.jersey.test").setLevel(Level.WARNING);
+        Logger.getLogger("org.glassfish.grizzly.http").setLevel(Level.WARNING);
         return new ResourceConfig(getResourceClass());
     }
 
@@ -122,8 +128,12 @@ abstract class BaseServiceTest extends JerseyTest {
         public Response get(@PathParam("number") final String number) {
             final String xmlResourcePath = String.format("%snetlicensing-%s-get.xml", TEST_CASE_BASE,
                     serviceId.toLowerCase());
-            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
-            return Response.ok(netlicensing).build();
+            try {
+                final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
+                return Response.ok(netlicensing).build();
+            } catch (JAXBException e) {
+                return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
+            }
         }
 
         /**
@@ -135,8 +145,12 @@ abstract class BaseServiceTest extends JerseyTest {
         public Response list() {
             final String xmlResourcePath = String.format("%snetlicensing-%s-list.xml", TEST_CASE_BASE,
                     serviceId.toLowerCase());
-            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
-            return Response.ok(netlicensing).build();
+            try {
+                final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
+                return Response.ok(netlicensing).build();
+            } catch (JAXBException e) {
+                return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
+            }
         }
 
         /**
@@ -152,7 +166,12 @@ abstract class BaseServiceTest extends JerseyTest {
         public Response update(@PathParam("number") final String number, final MultivaluedMap<String, String> formParams) {
             final String resourcePath = String.format("%snetlicensing-%s-update.xml", TEST_CASE_BASE,
                     serviceId.toLowerCase());
-            final Netlicensing netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
+            Netlicensing netlicensing;
+            try {
+                netlicensing = JAXBUtils.readObject(resourcePath, Netlicensing.class);
+            } catch (JAXBException e) {
+                return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
+            }
 
             final List<Property> properties = netlicensing.getItems().getItem().get(0).getProperty();
             for (final String paramKey : formParams.keySet()) {

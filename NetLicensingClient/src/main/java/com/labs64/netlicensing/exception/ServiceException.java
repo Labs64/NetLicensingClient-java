@@ -12,9 +12,12 @@
  */
 package com.labs64.netlicensing.exception;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import java.util.List;
+import java.util.Map;
+
+//import jakarta.ws.rs.core.MultivaluedHashMap;
+//import jakarta.ws.rs.core.MultivaluedMap;
+//import jakarta.ws.rs.core.Response;
 
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
@@ -26,8 +29,8 @@ public class ServiceException extends NetLicensingException {
 
     private static final long serialVersionUID = 5253993578845477398L;
 
-    private final Response.Status status;
-    private final MultivaluedMap<String, Object> headers;
+    private final int statusCode;
+    private final Map<String, List<String>> headers;
     private final Netlicensing errorResponse;
 
     /**
@@ -40,19 +43,18 @@ public class ServiceException extends NetLicensingException {
      * @param errorResponse
      *            the service response containing the error info.
      */
-    public ServiceException(final Response.Status status, final MultivaluedMap<String, Object> headers, final Netlicensing errorResponse) {
+    public ServiceException(final int statusCode, final Map<String, List<String>> headers, final Netlicensing errorResponse) {
         super(SchemaFunction.infosToMessage(errorResponse));
-        this.status = status;
-        this.headers = new MultivaluedHashMap<String, Object>();
-        this.headers.putAll(headers);
+        this.statusCode = statusCode;
+        this.headers = headers;
         this.errorResponse = errorResponse;
     }
 
-    public Response.Status getStatus() {
-        return status;
+    public int getStatusCode() {
+        return statusCode;
     }
     
-    public MultivaluedMap<String, Object> getHeaders() {
+    public Map<String, List<String>> getHeaders() {
         return headers;
     }
 

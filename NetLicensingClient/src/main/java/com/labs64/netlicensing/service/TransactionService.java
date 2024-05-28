@@ -23,6 +23,7 @@ import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.util.CheckUtils;
+import com.labs64.netlicensing.util.ConvertUtils;
 
 /**
  * Provides transaction handling routines.
@@ -57,7 +58,7 @@ public class TransactionService {
         CheckUtils.paramNotNull(transaction, "transaction");
 
         return NetLicensingService.getInstance().post(context, Constants.Transaction.ENDPOINT_PATH,
-                transaction.asRequestForm(),
+                ConvertUtils.entityToForm(transaction),
                 Transaction.class);
     }
 
@@ -98,7 +99,7 @@ public class TransactionService {
      *             exceptions will be transformed to the corresponding service response messages.
      */
     public static Page<Transaction> list(final Context context, final String filter) throws NetLicensingException {
-        final Map<String, Object> params = new HashMap<String, Object>();
+        final Map<String, String> params = new HashMap<>();
         if (StringUtils.isNotBlank(filter)) {
             params.put(Constants.FILTER, filter);
         }
@@ -129,7 +130,7 @@ public class TransactionService {
         CheckUtils.paramNotNull(transaction, "transaction");
 
         return NetLicensingService.getInstance().post(context, Constants.Transaction.ENDPOINT_PATH + "/" + number,
-                transaction.asRequestForm(), Transaction.class);
+                ConvertUtils.entityToForm(transaction), Transaction.class);
     }
 
 }

@@ -15,7 +15,7 @@ package com.labs64.netlicensing.util;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 public class DateUtils {
 

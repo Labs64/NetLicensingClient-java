@@ -14,7 +14,7 @@ package com.labs64.netlicensing.schema.converter;
 
 import java.util.Collections;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.Product;

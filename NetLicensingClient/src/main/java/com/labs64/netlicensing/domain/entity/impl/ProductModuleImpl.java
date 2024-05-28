@@ -17,8 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.labs64.netlicensing.domain.Constants;
 import com.labs64.netlicensing.domain.entity.LicenseTemplate;
 import com.labs64.netlicensing.domain.entity.Product;
@@ -100,10 +98,10 @@ public class ProductModuleImpl extends BaseEntityImpl implements ProductModule {
     }
 
     @Override
-    protected MultivaluedMap<String, Object> asPropertiesMap() {
-        final MultivaluedMap<String, Object> map = super.asPropertiesMap();
-        map.add(Constants.NAME, getName());
-        map.add(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
+    public Map<String, Object> asMap() {
+        final Map<String, Object> map = super.asMap();
+        map.put(Constants.NAME, getName());
+        map.put(Constants.ProductModule.LICENSING_MODEL, getLicensingModel());
         return map;
     }
 

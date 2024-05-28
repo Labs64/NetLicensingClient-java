@@ -51,7 +51,7 @@ public interface RestProvider {
      * @return the responseType entity received from the server, or null if responseType is null.
      */
     <REQ, RES> RestResponse<RES> call(String method, String urlTemplate, REQ request, Class<RES> responseType,
-            Map<String, Object> queryParams) throws RestException;
+            Map<String, String> queryParams) throws RestException;
 
     /**
      * @param username

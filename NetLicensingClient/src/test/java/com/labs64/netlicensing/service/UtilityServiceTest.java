@@ -14,12 +14,13 @@ package com.labs64.netlicensing.service;
 
 import java.math.BigDecimal;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
+import jakarta.xml.bind.JAXBException;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.labs64.netlicensing.domain.entity.Country;
 import com.labs64.netlicensing.domain.vo.Context;
@@ -27,9 +28,9 @@ import com.labs64.netlicensing.domain.vo.Page;
 import com.labs64.netlicensing.schema.context.Netlicensing;
 import com.labs64.netlicensing.util.JAXBUtils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Integration tests for {@link UtilityService}.
@@ -40,7 +41,7 @@ public class UtilityServiceTest extends BaseServiceTest {
 
     private static Context context;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         context = createContext();
     }
@@ -110,8 +111,12 @@ public class UtilityServiceTest extends BaseServiceTest {
 
         private Response listFromResource(final String resourceFileName) {
             final String xmlResourcePath = TEST_CASE_BASE + resourceFileName;
-            final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
-            return Response.ok(netlicensing).build();
+            try {
+                final Netlicensing netlicensing = JAXBUtils.readObject(xmlResourcePath, Netlicensing.class);
+                return Response.ok(netlicensing).build();
+            } catch (JAXBException e) {
+                return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
+            }
         }
 
     }

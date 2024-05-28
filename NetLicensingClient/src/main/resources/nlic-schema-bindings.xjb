@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE bindings>
-<jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<jxb:bindings
+    version="3.0"
+    xmlns:jxb="https://jakarta.ee/xml/ns/jaxb"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:namespace="urn:jaxb.jvnet.org:plugin:namespace-prefix"
+>
 
   <jxb:globalBindings>
     <jxb:serializable uid="1"/>
   </jxb:globalBindings>
 
+  <jxb:bindings schemaLocation="schema/netlicensing-context-2.1.xsd">
+    <jxb:schemaBindings>
+      <jxb:package name="com.labs64.netlicensing.schema.context" />
+    </jxb:schemaBindings>
+    <jxb:bindings>
+      <namespace:prefix name="ns2" />
+    </jxb:bindings>
+  </jxb:bindings>
+ 
+  <jxb:bindings schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd">
+    <jxb:schemaBindings>
+      <jxb:package name="org.w3._2000._09.xmldsig_" />
+    </jxb:schemaBindings>
+    <jxb:bindings>
+      <namespace:prefix name="" />
+    </jxb:bindings>
+  </jxb:bindings>
+ 
 </jxb:bindings>
-

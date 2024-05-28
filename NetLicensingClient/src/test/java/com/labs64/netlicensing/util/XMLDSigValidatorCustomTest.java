@@ -20,14 +20,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
-import static java.lang.System.out;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class XMLDSigValidatorCustomTest {
 
@@ -38,8 +36,6 @@ public final class XMLDSigValidatorCustomTest {
   }
 
   private static Document loadXmlDocument(final String fileName) throws Exception {
-    out.println("Load XML file " + fileName);
-
     final DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
     dFactory.setNamespaceAware(true);
     final DocumentBuilder dBuilder = dFactory.newDocumentBuilder();

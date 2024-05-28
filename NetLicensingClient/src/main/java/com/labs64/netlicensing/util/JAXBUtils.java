@@ -16,34 +16,30 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 /**
  */
 public final class JAXBUtils {
 
-    public static <T> T readObject(final String resource, final Class<T> expectedType) {
+    public static <T> T readObject(final String resource, final Class<T> expectedType) throws JAXBException {
         return readObjectFromInputStream(JAXBUtils.class.getClassLoader().getResourceAsStream(resource), expectedType);
     }
 
-    public static <T> T readObjectFromString(final String content, final Class<T> expectedType) {
+    public static <T> T readObjectFromString(final String content, final Class<T> expectedType) throws JAXBException {
         return readObjectFromInputStream(new ByteArrayInputStream(content.getBytes()), expectedType);
     }
 
-    public static <T> T readObjectFromInputStream(final InputStream inputStream, final Class<T> expectedType) {
-        try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(expectedType);
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            final JAXBElement<T> element = unmarshaller.unmarshal(new StreamSource(inputStream), expectedType);
-            return element.getValue();
-        } catch (final JAXBException e) {
-            throw new RuntimeException("Cannot process resource.", e);
-        }
+    public static <T> T readObjectFromInputStream(final InputStream inputStream, final Class<T> expectedType) throws JAXBException {
+        final JAXBContext jaxbContext = JAXBContext.newInstance(expectedType);
+        final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        final JAXBElement<T> element = unmarshaller.unmarshal(new StreamSource(inputStream), expectedType);
+        return element.getValue();
     }
 
     public static <T> String xmlEntityToString(final T entity) {
