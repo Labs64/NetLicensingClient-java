@@ -58,6 +58,9 @@ public final class Constants {
         public static final String TOKEN_PROP_VENDORNUMBER = "vendorNumber";
         public static final String TOKEN_PROP_SHOP_URL = "shopURL";
         public static final String TOKEN_PROP_PRIVATE_KEY = "privateKey";
+        public static final String TOKEN_PROP_BUNDLE_NUMBER = "bundleNumber";
+        public static final String TOKEN_PROP_BUNDLE_PRICE = "bundlePrice";
+        public static final String TOKEN_PROP_TOKEN_EXPIRATION = "tokenExpiration";
     }
 
     public static final class Vendor {
