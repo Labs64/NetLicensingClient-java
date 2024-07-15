@@ -64,7 +64,7 @@
     </modules>
 
     <properties>
-        <revision>2.10.0</revision>
+        <revision>2.999.0</revision>
         <changelist>-SNAPSHOT</changelist>
         <sha1/>
         <project.title>${project.name}</project.title>
