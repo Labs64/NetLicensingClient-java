@@ -15,7 +15,7 @@ jobs:
     runs-on: self-hosted
     env:
       RELEASE_WORK_DIR: checkout-for-release
-    container: maven:3-amazoncorretto-17-al2023
+    container: maven:3-eclipse-temurin-17
     strategy:
       fail-fast: false
       matrix:
@@ -28,8 +28,8 @@ jobs:
 
     steps:
     # Specific to maven:3-amazoncorretto-17-al2023 image
-    - name: Install required tooling
-      run: yum install -y --allowerasing git gnupg2
+    # - name: Install required tooling
+    #   run: yum install -y --allowerasing git gnupg2
 
     - name: Checkout the sources
       uses: actions/checkout@v4
