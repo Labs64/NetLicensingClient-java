@@ -120,11 +120,13 @@ public class BundleService {
      * @param context                determines the vendor on whose behalf the call is performed
      * @param number                 bundle number
      * @param licenseeNumber         licensee number
+     * @param transactionNumber      transaction number
      * @return collection of created licenses.
      * @throws NetLicensingException any subclass of {@linkplain NetLicensingException}. These exceptions will be transformed to the
      *                               corresponding service response messages.
      */
-    public static Page<License> obtain(final Context context, final String number, final String licenseeNumber)
+    public static Page<License> obtain(final Context context, final String number, final String licenseeNumber,
+            final String transactionNumber)
             throws NetLicensingException {
         CheckUtils.paramNotEmpty(number, "number");
         CheckUtils.paramNotEmpty(licenseeNumber, "licenseeNumber");
@@ -134,8 +136,28 @@ public class BundleService {
         final Form form = new Form();
         form.param(Constants.Licensee.LICENSEE_NUMBER, licenseeNumber);
 
-        final Netlicensing response = NetLicensingService.getInstance().request(context, HttpMethod.POST, endpoint, form, null);
+        if (StringUtils.isNotBlank(transactionNumber)) {
+            form.param(Constants.Transaction.TRANSACTION_NUMBER, transactionNumber);
+        }
+
+        final Netlicensing response = NetLicensingService.getInstance()
+                .request(context, HttpMethod.POST, endpoint, form, null);
 
         return entityFactory.createPage(response, License.class);
+    }
+
+    /**
+     * Obtain bundle(create licenses from a bundle license templates).
+     *
+     * @param context                determines the vendor on whose behalf the call is performed
+     * @param number                 bundle number
+     * @param licenseeNumber         licensee number
+     * @return collection of created licenses.
+     * @throws NetLicensingException any subclass of {@linkplain NetLicensingException}. These exceptions will be transformed to the
+     *                               corresponding service response messages.
+     */
+    public static Page<License> obtain(final Context context, final String number, final String licenseeNumber)
+            throws NetLicensingException {
+        return obtain(context, number,licenseeNumber, null);
     }
 }
