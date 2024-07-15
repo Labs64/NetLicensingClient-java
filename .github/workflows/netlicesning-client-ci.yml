@@ -54,6 +54,8 @@ jobs:
         EOF
 
     - name: Calculate branch suffix
+      # Ensure bash is used, as the script uses bash-specific syntax
+      shell: bash
       run: |
         if [ "$GITHUB_REF_NAME" = "master" ]
         then
