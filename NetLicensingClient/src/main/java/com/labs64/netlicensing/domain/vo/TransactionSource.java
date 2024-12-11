@@ -66,6 +66,11 @@ public enum TransactionSource {
     SUBSCRIPTION_UPDATE,
 
     /**
+     * Transaction for recurring payment.
+     */
+    RECURRING_PAYMENT,
+
+    /**
      * Transaction for cancel recurring payment.
      */
     CANCEL_RECURRING_PAYMENT,
