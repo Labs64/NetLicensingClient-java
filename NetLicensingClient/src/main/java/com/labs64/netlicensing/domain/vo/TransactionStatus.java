@@ -18,6 +18,10 @@ public enum TransactionStatus {
     /**
      * Transaction is cancelled.
      */
-    CANCELLED
+    CANCELLED,
 
+    /**
+     * Transaction is failed.
+     */
+    FAILED
 }
