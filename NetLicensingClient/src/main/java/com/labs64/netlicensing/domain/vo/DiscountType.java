@@ -5,7 +5,7 @@ public enum DiscountType {
 
     PERCENT;
 
-    public static DiscountType parseString(final String discountType) {
+    public static DiscountType parseValue(final String discountType) {
         if (discountType != null) {
             for (final DiscountType type : DiscountType.values()) {
                 if (discountType.equalsIgnoreCase(type.name())) {
@@ -14,5 +14,13 @@ public enum DiscountType {
             }
         }
         throw new IllegalArgumentException(discountType);
+    }
+
+    public static DiscountType parseValueSafe(final String discountType) {
+        try {
+            return parseValue(discountType);
+        } catch (final IllegalArgumentException e) {
+            return null;
+        }
     }
 }
