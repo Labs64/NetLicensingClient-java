@@ -13,6 +13,6 @@ public enum DiscountType {
                 }
             }
         }
-        return null;
+        throw new IllegalArgumentException(discountType);
     }
 }
