@@ -70,7 +70,7 @@ jobs:
 
     - name: Build with Maven
       run: |
-        mvn -B clean deploy \
+        mvn -B clean deploy -P develop \
         -Drepo.snapshots.url=${{ secrets.SNAPSHOTS_URL }} \
         -Dsha1=$BRANCH_SUFFIX \
         -Djava.version=${{ matrix.java-version }}

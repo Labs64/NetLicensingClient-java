@@ -92,7 +92,7 @@
         <!-- plugin.version>0.0.0</plugin.version -->
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-site-plugin.version>3.11.0</maven-site-plugin.version>
         <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
@@ -190,9 +190,9 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>${nexus-staging-maven-plugin.version}</version>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>${central-publishing-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -473,23 +473,25 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>nlic-snapshots</id>
-            <url>${repo.snapshots.url}</url>
-        </snapshotRepository>
-        <repository>
-            <id>nlic-releases</id>
-            <url>${repo.releases.url}</url>
-        </repository>
-    </distributionManagement>
-
     <profiles>
         <profile>
             <id>java17</id>
             <properties>
                 <java.version>17</java.version>
             </properties>
+        </profile>
+        <profile>
+            <id>develop</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>nlic-snapshots</id>
+                    <url>${repo.snapshots.url}</url>
+                </snapshotRepository>
+                <repository>
+                    <id>nlic-releases</id>
+                    <url>${repo.releases.url}</url>
+                </repository>
+            </distributionManagement>
         </profile>
         <profile>
             <id>release</id>
@@ -504,46 +506,15 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                     </plugin>
                     <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- This is necessary for gpg to not try to use the pinentry programs -->
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                    </gpgArguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                          <publishingServerId>ossrh</publishingServerId>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
         </profile>
     </profiles>
 
