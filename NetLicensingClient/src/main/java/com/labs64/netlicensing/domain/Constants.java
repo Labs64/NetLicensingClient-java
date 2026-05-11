@@ -82,6 +82,9 @@ public final class Constants {
         public static final String PROP_VAT_MODE = "vatMode";
 
         public static final class Discount {
+            public static final String ENDPOINT_PATH = "discount";
+            public static final String ENDPOINT_RESOLVE_PATH = "resolve";
+            public static final String CART_TOTAL = "cartTotal";
             public static final String TOTAL_PRICE = "totalPrice";
             public static final String AMOUNT_FIX = "amountFix";
             public static final String AMOUNT_PERCENT = "amountPercent";
