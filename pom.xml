@@ -168,7 +168,7 @@
                     <!--https://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete-->
                     <configuration>
                         <doclint>none</doclint>
-                        <source>11</source>
+                        <source>${java.version}</source>
                     </configuration>
                 </plugin>
                 <plugin>
