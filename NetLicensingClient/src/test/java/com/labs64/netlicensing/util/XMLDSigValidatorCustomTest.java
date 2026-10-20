@@ -13,18 +13,22 @@
 package com.labs64.netlicensing.util;
 
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 
+import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class XMLDSigValidatorCustomTest {
@@ -45,9 +49,31 @@ public final class XMLDSigValidatorCustomTest {
   }
 
   @Test
+  public void testUtilityClassConstructor() throws Exception {
+    final Constructor<XMLDSigValidatorCustom> constructor = XMLDSigValidatorCustom.class.getDeclaredConstructor();
+    constructor.setAccessible(true);
+    assertNotNull(constructor.newInstance());
+  }
+
+  @Test
+  public void testNullDocument() {
+    assertThrows(NullPointerException.class, () -> XMLDSigValidatorCustom.validateSignature(null));
+  }
+
+  @Test
   public void testNotSignedXml() throws Exception {
     final Document aDoc = loadXmlDocument("xmldsig/xml-not-signed.xml");
     assertFalse(XMLDSigValidatorCustom.containsSignature(aDoc));
+    assertThrows(IllegalArgumentException.class, () -> XMLDSigValidatorCustom.validateSignature(aDoc));
+  }
+
+  @Test
+  public void testMultipleSignaturesAreRejected() throws Exception {
+    final Document aDoc = loadXmlDocument("xmldsig/xml-signed-inline-01.xml");
+    final Element signature = (Element) aDoc.getElementsByTagNameNS(XMLSignature.XMLNS, "Signature").item(0);
+    aDoc.getDocumentElement().appendChild(signature.cloneNode(true));
+
+    assertThrows(IllegalArgumentException.class, () -> XMLDSigValidatorCustom.validateSignature(aDoc));
   }
 
   @Test

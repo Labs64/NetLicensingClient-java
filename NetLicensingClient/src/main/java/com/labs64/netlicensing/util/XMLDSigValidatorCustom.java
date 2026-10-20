@@ -2,7 +2,6 @@ package com.labs64.netlicensing.util;
 
 import java.security.Key;
 
-import javax.annotation.Nonnull;
 import javax.xml.crypto.KeySelector;
 import javax.xml.crypto.dsig.XMLSignature;
 import javax.xml.crypto.dsig.XMLSignatureException;
@@ -11,12 +10,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.xmldsig.XMLDSigSetup;
 import com.helger.xmldsig.XMLDSigValidationResult;
 import com.helger.xmldsig.XMLDSigValidator;
 
-public class XMLDSigValidatorCustom {
+public final class XMLDSigValidatorCustom {
 
     private XMLDSigValidatorCustom() {
     }
@@ -26,7 +25,7 @@ public class XMLDSigValidatorCustom {
      * @param aDoc document to be verified
      * @return true if Document contains XML signature
      */
-    public static boolean containsSignature(@Nonnull final Document aDoc) {
+    public static boolean containsSignature(final Document aDoc) {
         return XMLDSigValidator.containsSignature(aDoc);
     }
 
@@ -36,7 +35,7 @@ public class XMLDSigValidatorCustom {
      * @return XMLDSig validation result
      * @throws XMLSignatureException
      */
-    public static XMLDSigValidationResult validateSignature(@Nonnull final Document aDoc)
+    public static XMLDSigValidationResult validateSignature(final Document aDoc)
             throws XMLSignatureException {
         return validateSignature(aDoc, null);
     }
@@ -47,7 +46,7 @@ public class XMLDSigValidatorCustom {
      * @return XMLDSig validation result
      * @throws XMLSignatureException
      */
-    public static XMLDSigValidationResult validateSignature(@Nonnull final Document aDoc, final Key aKey)
+    public static XMLDSigValidationResult validateSignature(final Document aDoc, final Key aKey)
             throws XMLSignatureException {
         ValueEnforcer.notNull(aDoc, "Document");
 
