@@ -34,7 +34,7 @@ jobs:
         apt-get install -y ssh gnupg2
 
     - name: Checkout the sources
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         path: ${{ env.RELEASE_WORK_DIR }}
         ssh-key: '${{ secrets.REPO_SSH_KEY }}'
