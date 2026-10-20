@@ -19,12 +19,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java-version: [11, 17]
+        java-version: [17]
         include:
-          - java-version: 11
-            jdk-suffix:
           - java-version: 17
-            jdk-suffix: -jdk17
+            jdk-suffix:
 
     steps:
     - name: Install required tooling

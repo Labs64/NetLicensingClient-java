@@ -70,24 +70,28 @@
         <project.title>${project.name}</project.title>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <maven.version>3.6.0</maven.version>
 
         <repo.releases.url>OVERRIDE_REPO_URL</repo.releases.url>
         <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
 
         <!-- dependency.version>0.0.0</dependency.version -->
-        <commons-lang3.version>3.18.0</commons-lang3.version> <!-- https://commons.apache.org/ -->
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-io.version>2.15.1</commons-io.version>
-        <commons-cli.version>1.6.0</commons-cli.version>
-        <commons-text.version>1.11.0</commons-text.version>
-        <junit-jupiter.version>5.10.2</junit-jupiter.version>
-        <jersey.version>3.1.5</jersey.version> <!-- https://projects.eclipse.org/projects/ee4j.jersey -->
-        <jaxb-api.version>4.0.0</jaxb-api.version> <!-- https://jakarta.ee/specifications/xml-binding/4.0/ -->
-        <jaxb-impl.version>4.0.3</jaxb-impl.version> <!-- https://projects.eclipse.org/projects/ee4j.jaxb-impl -->
-        <ph-xmldsig.version>5.0.2</ph-xmldsig.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <commons-lang3.version>3.21.0</commons-lang3.version> <!-- https://commons.apache.org/ -->
+        <commons-collections4.version>4.6.0</commons-collections4.version>
+        <commons-io.version>2.22.0</commons-io.version>
+        <commons-cli.version>1.11.0</commons-cli.version>
+        <commons-text.version>1.15.0</commons-text.version>
+        <junit-jupiter.version>6.1.3</junit-jupiter.version>
+        <jersey.version>4.0.3</jersey.version> <!-- https://projects.eclipse.org/projects/ee4j.jersey -->
+        <jaxb-api.version>4.0.5</jaxb-api.version> <!-- https://jakarta.ee/specifications/xml-binding/4.0/ -->
+        <jaxb-impl.version>4.0.9</jaxb-impl.version> <!-- https://projects.eclipse.org/projects/ee4j.jaxb-impl -->
+        <ph-xmldsig.version>6.1.0</ph-xmldsig.version>
+        <!-- ph-xmldsig 6.1.0 manages Bouncy Castle 1.82. Override it because the
+             security fixes required by this client are only complete in 1.86. -->
+        <bouncycastle.version>1.86</bouncycastle.version>
+        <slf4j.version>2.0.20</slf4j.version>
+        <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
 
         <!-- plugin.version>0.0.0</plugin.version -->
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
@@ -351,6 +355,11 @@
                     <artifactId>maven-scm-plugin</artifactId>
                     <version>${maven-scm-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -448,6 +457,16 @@
                 <groupId>com.helger</groupId>
                 <artifactId>ph-xmldsig</artifactId>
                 <version>${ph-xmldsig.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>${bouncycastle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk18on</artifactId>
+                <version>${bouncycastle.version}</version>
             </dependency>
             <!-- com.helger.ph-xmldsig is using slf4j, use NOP provider for testing / demo -->
             <dependency>
