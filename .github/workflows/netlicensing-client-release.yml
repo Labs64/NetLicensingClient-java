@@ -13,6 +13,8 @@ jobs:
   release:
     name: Release ${{ github.event.inputs.release-version }} / Java ${{ matrix.java-version }}
     runs-on: self-hosted
+    permissions:
+      contents: write
     env:
       RELEASE_WORK_DIR: checkout-for-release
     container: maven:3-eclipse-temurin-17
@@ -31,15 +33,14 @@ jobs:
       # Specific to maven:3-eclipse-temurin-17 image
       run: |
         apt-get update
-        apt-get install -y ssh gnupg2
+        apt-get install -y gnupg2
 
     - name: Checkout the sources
       uses: actions/checkout@v7
       with:
         path: ${{ env.RELEASE_WORK_DIR }}
-        ssh-key: '${{ secrets.REPO_SSH_KEY }}'
 
-    # Relies on actions/checkout with 'ssh-key' parameter.
+    # Relies on the GITHUB_TOKEN credentials persisted by actions/checkout.
     - name: Prepare git config
       run: |
         cd $RELEASE_WORK_DIR
