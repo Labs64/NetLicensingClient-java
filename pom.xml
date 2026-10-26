@@ -87,6 +87,7 @@
         <jaxb-api.version>4.0.5</jaxb-api.version> <!-- https://jakarta.ee/specifications/xml-binding/4.0/ -->
         <jaxb-impl.version>4.0.9</jaxb-impl.version> <!-- https://projects.eclipse.org/projects/ee4j.jaxb-impl -->
         <ph-xmldsig.version>6.1.0</ph-xmldsig.version>
+        <nimbus-jose-jwt.version>10.10</nimbus-jose-jwt.version>
         <!-- ph-xmldsig 6.1.0 manages Bouncy Castle 1.82. Override it because the
              security fixes required by this client are only complete in 1.86. -->
         <bouncycastle.version>1.86</bouncycastle.version>
@@ -457,6 +458,11 @@
                 <groupId>com.helger</groupId>
                 <artifactId>ph-xmldsig</artifactId>
                 <version>${ph-xmldsig.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus-jose-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
