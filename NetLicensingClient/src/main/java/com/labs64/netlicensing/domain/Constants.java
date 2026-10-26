@@ -213,6 +213,7 @@ public final class Constants {
     public static final class Validation {
         public static final String DRY_RUN = "dryRun";
         public static final String FOR_OFFLINE_USE = "forOfflineUse";
+        public static final String NONCE = "nonce";
     }
 
     public static final class ValidationResult {
