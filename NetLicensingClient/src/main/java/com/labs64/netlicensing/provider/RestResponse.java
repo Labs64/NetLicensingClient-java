@@ -34,6 +34,8 @@ public class RestResponse<T> {
 
     private T entity;
 
+    private String rawEntity;
+
     public int getStatusCode() {
         return this.statusCode;
     }
@@ -66,6 +68,14 @@ public class RestResponse<T> {
 
     public void setEntity(final T entity) {
         this.entity = entity;
+    }
+
+    public String getRawEntity() {
+        return rawEntity;
+    }
+
+    public void setRawEntity(final String rawEntity) {
+        this.rawEntity = rawEntity;
     }
 
 }
