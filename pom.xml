@@ -109,7 +109,7 @@
         <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
         <maven-bundle-plugin.version>6.2.0</maven-bundle-plugin.version>
         <!-- Code Analysis -->
-        <labs64.code-analysis.version>2.0.1</labs64.code-analysis.version>
+        <labs64.code-analysis.version>3.0.1</labs64.code-analysis.version>
         <labs64.code-analysis.phase>site</labs64.code-analysis.phase>
         <labs64.code-analysis.failOnViolation>false</labs64.code-analysis.failOnViolation>
         <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
