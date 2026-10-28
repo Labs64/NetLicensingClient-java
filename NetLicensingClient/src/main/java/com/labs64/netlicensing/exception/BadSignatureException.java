@@ -29,4 +29,16 @@ public class BadSignatureException extends NetLicensingException {
         super(msg);
     }
 
+    /**
+     * Construct a <code>BadSignatureException</code> with the specified detail message and cause.
+     *
+     * @param msg
+     *            the detail message
+     * @param cause
+     *            the cause exception
+     */
+    public BadSignatureException(final String msg, final Throwable cause) {
+        super(msg, cause);
+    }
+
 }

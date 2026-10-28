@@ -36,3 +36,27 @@ OSGi:
 ```
 Require-Bundle: com.labs64.netlicensing.client;bundle-version="X.Y.Z"
 ```
+
+## Verify signed Agent validation responses
+
+Products using protected offline validation must verify the raw XML response before trusting its validation result.
+The Licensee API key public key can be supplied as a `PublicKey` or as PEM:
+
+```java
+import com.labs64.netlicensing.util.AgentResponseSignatureVerifier;
+
+AgentResponseSignatureVerifier.verify(
+        responseXml,
+        licenseeNumber,
+        licenseeApiKeyPublicKeyPem);
+```
+
+The verifier checks the Licensee scope and validity of the Agent signing certificate, the binding between that
+certificate and the Agent public key, and finally the signature of the complete XML response. It throws
+`BadSignatureException` when any check fails; the Product must reject the response in that case. If the request contains
+a nonce, the Product must additionally compare it with the signed `netlicensing@id` response attribute.
+
+`LicenseeService.validate` performs this selection automatically when `Context.publicKey` is configured: responses
+containing `agentSigning` use the Agent trust chain, while regular signed Core responses retain the existing direct
+signature verification. Call `ValidationParameters.setNonce(...)` when request/response replay protection is required;
+the client sends it and rejects a response whose signed `netlicensing@id` differs.
