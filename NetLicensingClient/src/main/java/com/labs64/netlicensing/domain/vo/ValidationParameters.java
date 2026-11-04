@@ -11,6 +11,7 @@ public class ValidationParameters {
     private Map<String, String> licenseeProperties;
     private Boolean dryRun;
     private Boolean forOfflineUse;
+    private String nonce;
     private Map<String, Map<String, String>> parameters;
 
     /**
@@ -105,6 +106,20 @@ public class ValidationParameters {
 
     public Boolean isForOfflineUse() {
         return forOfflineUse;
+    }
+
+    /**
+     * Sets an optional request value that must be returned as the signed validation response identifier.
+     *
+     * @param nonce
+     *            correlation value, up to 255 characters
+     */
+    public void setNonce(final String nonce) {
+        this.nonce = nonce;
+    }
+
+    public String getNonce() {
+        return nonce;
     }
 
     public Map<String, Map<String, String>> getParameters() {
