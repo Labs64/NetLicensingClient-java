@@ -4,6 +4,7 @@
 
 [![NetLicensing Client - CI](https://github.com/Labs64/NetLicensingClient-java/actions/workflows/netlicesning-client-ci.yml/badge.svg)](https://github.com/Labs64/NetLicensingClient-java/actions/workflows/netlicesning-client-ci.yml)
 [![Maven Central Version](https://img.shields.io/maven-central/v/com.labs64.netlicensing/netlicensing-client)](https://central.sonatype.com/artifact/com.labs64.netlicensing/netlicensing-client)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Labs64/NetLicensingClient-java/badge)](https://scorecard.dev/viewer/?uri=github.com/Labs64/NetLicensingClient-java)
 [![Apache License 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/Labs64/NetLicensingClient-java/blob/master/LICENSE)
 [![📖 Documentation](https://img.shields.io/badge/📖%20Documentation-Wiki-AB6543.svg)](https://netlicensing.io/wiki/restful-api)
 
