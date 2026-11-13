@@ -20,6 +20,17 @@
                         <xsd:documentation>XML Signature element.</xsd:documentation>
                     </xsd:annotation>
                 </xsd:element>
+                <xsd:element name="agentSigning" minOccurs="0" maxOccurs="1">
+                    <xsd:annotation>
+                        <xsd:documentation>Security metadata for a response signed by an offline Agent.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="certificate" type="xsd:string" />
+                            <xsd:element name="publicKey" type="xsd:string" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
                 <xsd:element name="infos" minOccurs="0" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:annotation>
@@ -173,12 +184,12 @@
 
     <xsd:simpleType name="id_type">
         <xsd:annotation>
-            <xsd:documentation>Base identifier type. Can be any string 1-32 characters length.
+            <xsd:documentation>Base identifier type. Can be any string 1-255 characters length.
             </xsd:documentation>
         </xsd:annotation>
         <xsd:restriction base="xsd:string">
             <xsd:minLength value="1" />
-            <xsd:maxLength value="32" />
+            <xsd:maxLength value="255" />
         </xsd:restriction>
     </xsd:simpleType>
 

@@ -25,6 +25,7 @@ import com.labs64.netlicensing.domain.EntityFactory;
 import com.labs64.netlicensing.domain.vo.Context;
 import com.labs64.netlicensing.domain.vo.MetaInfo;
 import com.labs64.netlicensing.domain.vo.Page;
+import com.labs64.netlicensing.exception.BadSignatureException;
 import com.labs64.netlicensing.exception.NetLicensingException;
 import com.labs64.netlicensing.exception.RestException;
 import com.labs64.netlicensing.exception.ServiceException;
@@ -33,6 +34,7 @@ import com.labs64.netlicensing.provider.RestProviderImpl;
 import com.labs64.netlicensing.provider.RestResponse;
 import com.labs64.netlicensing.schema.SchemaFunction;
 import com.labs64.netlicensing.schema.context.Netlicensing;
+import com.labs64.netlicensing.util.AgentResponseSignatureVerifier;
 import com.labs64.netlicensing.util.CheckUtils;
 import com.labs64.netlicensing.util.SignatureUtils;
 
@@ -170,7 +172,15 @@ public class NetLicensingService {
     public Netlicensing request(final Context context, final HttpMethod method, final String urlTemplate,
             final Form request,
             final Map<String, String> queryParams) throws NetLicensingException {
+        return request(context, method, urlTemplate, request, queryParams, null);
+    }
+
+    Netlicensing request(final Context context, final HttpMethod method, final String urlTemplate,
+            final Form request, final Map<String, String> queryParams, final String expectedLicensee)
+            throws NetLicensingException {
         CheckUtils.paramNotNull(context, "context");
+
+        final String expectedNonce = request == null ? null : request.getParams().get(Constants.Validation.NONCE);
 
         Form combinedRequest = request;
         Map<String, String> combinedQueryParams = queryParams;
@@ -190,21 +200,32 @@ public class NetLicensingService {
 
         final RestProviderImpl restProvider = new RestProviderImpl(context.getBaseUrl());
         configure(restProvider, context);
-        
-        final RestResponse<Netlicensing> response = restProvider.call(method.name(), urlTemplate, combinedRequest, Netlicensing.class,
-                combinedQueryParams);
+
+        final RestResponse<Netlicensing> response = restProvider.call(method.name(), urlTemplate, combinedRequest,
+                Netlicensing.class, combinedQueryParams);
 
         if (!isErrorStatus(response.getStatusCode())) {
             switch (response.getStatusCode()) {
-            case 200:
-                final Netlicensing netlicensing = response.getEntity();
-                SignatureUtils.check(context, netlicensing);
-                return netlicensing;
-            case 204:
-                return null;
-            default:
-                throw new RestException(String.format("Unsupported response status code %s.",
-                        response.getStatusCode()));
+                case 200:
+                    final Netlicensing netlicensing = response.getEntity();
+                    if (StringUtils.isNotEmpty(context.getPublicKey()) && netlicensing.getAgentSigning() != null) {
+                        AgentResponseSignatureVerifier.verify(response.getRawEntity(), expectedLicensee,
+                                context.getPublicKey());
+                    } else {
+                        SignatureUtils.check(context, netlicensing);
+                    }
+
+                    if (StringUtils.isNotBlank(expectedNonce) && !expectedNonce.equals(netlicensing.getId())) {
+                        throw new BadSignatureException(
+                                "Validation response identifier does not match the request nonce.");
+                    }
+
+                    return netlicensing;
+                case 204:
+                    return null;
+                default:
+                    throw new RestException(String.format("Unsupported response status code %s.",
+                            response.getStatusCode()));
             }
         } else {
             if (SchemaFunction.hasErrorInfos(response.getEntity())) {

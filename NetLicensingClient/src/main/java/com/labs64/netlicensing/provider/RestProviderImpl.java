@@ -111,6 +111,7 @@ public class RestProviderImpl extends AbstractRestProvider {
             final RestResponse<RES> restResponse = new RestResponse<>();
             restResponse.setStatusCode(response.statusCode());
             restResponse.setHeaders(response.headers().map());
+            restResponse.setRawEntity(response.body());
             restResponse.setEntity(readEntity(response.body(), response.statusCode(), responseType));
             return restResponse;
         } catch (final IOException | InterruptedException e) {

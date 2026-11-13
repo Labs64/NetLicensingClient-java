@@ -80,7 +80,7 @@ public class ValidationService {
         final NetLicensingService service = NetLicensingService.getInstance();
         return service.request(context, HttpMethod.POST,
                 Constants.Licensee.ENDPOINT_PATH + "/" + number + "/" + Constants.Licensee.ENDPOINT_PATH_VALIDATE, form,
-                null);
+                null, number);
     }
 
     /**
@@ -120,6 +120,9 @@ public class ValidationService {
             }
             if (Boolean.TRUE.equals(validationParameters.isForOfflineUse())) {
                 form.param(Constants.Validation.FOR_OFFLINE_USE, Boolean.TRUE.toString());
+            }
+            if (StringUtils.isNotBlank(validationParameters.getNonce())) {
+                form.param(Constants.Validation.NONCE, validationParameters.getNonce());
             }
             int pmIndex = 0;
             for (final Entry<String, Map<String, String>> productModuleValidationParams : validationParameters
