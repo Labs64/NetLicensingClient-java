@@ -77,7 +77,7 @@
         <repo.snapshots.url>OVERRIDE_REPO_URL</repo.snapshots.url>
 
         <!-- dependency.version>0.0.0</dependency.version -->
-        <commons-lang3.version>3.21.0</commons-lang3.version> <!-- https://commons.apache.org/ -->
+        <commons-lang3.version>3.22.0</commons-lang3.version> <!-- https://commons.apache.org/ -->
         <commons-collections4.version>4.6.0</commons-collections4.version>
         <commons-io.version>2.22.0</commons-io.version>
         <commons-cli.version>1.11.0</commons-cli.version>
@@ -89,7 +89,7 @@
         <ph-xmldsig.version>6.1.0</ph-xmldsig.version>
         <!-- ph-xmldsig 6.1.0 manages Bouncy Castle 1.82. Override it because the
              security fixes required by this client are only complete in 1.86. -->
-        <bouncycastle.version>1.86</bouncycastle.version>
+        <bouncycastle.version>1.87</bouncycastle.version>
         <slf4j.version>2.0.20</slf4j.version>
         <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
 
@@ -103,7 +103,7 @@
         <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <jaxb-maven-plugin.version>4.0.16</jaxb-maven-plugin.version> <!-- https://github.com/highsource/jaxb-tools -->
-        <build-helper-maven-plugin.version>3.7.0</build-helper-maven-plugin.version>
+        <build-helper-maven-plugin.version>3.8.0</build-helper-maven-plugin.version>
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <maven-jar-plugin.version>3.5.1</maven-jar-plugin.version>
         <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
