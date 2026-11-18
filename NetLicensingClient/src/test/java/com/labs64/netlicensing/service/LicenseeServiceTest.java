@@ -156,6 +156,7 @@ public class LicenseeServiceTest extends BaseServiceTest {
         validationParameters.setLicenseeName("Test Licensee");
         validationParameters.setProductNumber(productNumber);
         validationParameters.setLicenseeProperty("customProperty", "Licensee Custom Property");
+        validationParameters.setNonce("validation-request-001");
         final ValidationResult result = LicenseeService.validate(context, licenseeNumber, validationParameters);
 
         assertNotNull(result);
@@ -266,7 +267,8 @@ public class LicenseeServiceTest extends BaseServiceTest {
                 @FormParam("productNumber") final String productNumber,
                 @FormParam("licenseeName") final String licenseeName,
                 @FormParam("customProperty") final String licenseeCustomProperty,
-                @FormParam("forOfflineUse") final String forOfflineUse) {
+                @FormParam("forOfflineUse") final String forOfflineUse,
+                @FormParam("nonce") final String nonce) {
 
             if (!productNumber.equals(productNumber)) {
                 return unexpectedValueErrorResponse("productNumber");
@@ -286,6 +288,9 @@ public class LicenseeServiceTest extends BaseServiceTest {
             try {
                 final Netlicensing netlicensing = JAXBUtils.readObject(TEST_CASE_BASE
                         + validationFile, Netlicensing.class);
+                if (nonce != null) {
+                    netlicensing.setId(nonce);
+                }
                 return Response.ok(netlicensing).build();
             } catch (JAXBException e) {
                 return Response.serverError().entity("Exception in mocked server: " + e.getMessage()).build();
